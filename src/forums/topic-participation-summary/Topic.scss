@@ -2,10 +2,25 @@
 
 .topic-participation-summary-topic {
 	color: $primary-grey;
+	padding: 1.5rem;
+	border-bottom: 1px solid $border-grey-light;
 
-	h3 {
-		font: normal 300 1.75rem/2.5rem $body-font-family;
-		margin: 0 0 0.5rem;
+	.header {
+		display: flex;
+		align-items: flex-start;
+
+		h3 {
+			flex: 1 1 auto;
+			font: normal 300 1.75rem/2.2rem $body-font-family;
+			margin: 0 0.5rem 1.5rem 0;
+		}
+
+
+		.basic-button {
+			flex: 0 0 auto;
+			padding-top: 0.6rem;
+			padding-bottom: 0.6rem;
+		}
 	}
 
 	.modeled-content {
