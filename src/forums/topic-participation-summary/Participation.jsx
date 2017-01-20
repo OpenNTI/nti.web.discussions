@@ -1,11 +1,13 @@
 import React from 'react';
 import {scoped} from 'nti-lib-locale';
 import {DisplayName} from 'nti-web-commons';
+import {getAppUsername} from 'nti-web-client';
 
 import ParticipationItem from './ParticipationItem';
 
 const DEFAULT_TEXT = {
-	header: 'Activity for %(name)s:',
+	headerForOthers: 'Activity for %(name)s:',
+	headerForYou: 'Your activity:',
 	commentCount: {
 		one: 'Comment Created',
 		other: 'Comments Created'
@@ -25,21 +27,32 @@ const t = scoped('TOPIC_PARICIPATION_SUMMARY_PARICIPATION', DEFAULT_TEXT);
 export default class Participation extends React.Component {
 	static propTypes = {
 		participation: React.PropTypes.object.isRequired,
-		userID: React.PropTypes.string.isRequired,
+		userID: React.PropTypes.string,
 		gotoComment: React.PropTypes.object
 	}
 
+	constructor (props) {
+		super(props);
+
+		const {userID} = props;
+
+		this.state = {
+			user: userID || getAppUsername()
+		};
+	}
+
 	getHeaderString (data) {
-		return t('header', data);
+		return t('headerForOthers', data);
 	}
 
 	render () {
-		const {participation, userID} = this.props;
+		const {participation} = this.props;
+		const {user} = this.state;
 		const {Contexts:contexts} = participation;
 
 		return (
 			<div className="topic-participation-summary-participation">
-				{this.renderHeader(userID)}
+				{this.renderHeader(user)}
 				{this.renderCounts(participation)}
 				<ul>
 					{(contexts || []).map(this.renderItem)}
@@ -49,8 +62,8 @@ export default class Participation extends React.Component {
 	}
 
 
-	renderHeader = (userID) => {
-		return userID && (<DisplayName className="header" entity={userID} localeKey={this.getHeaderString} />);
+	renderHeader = (user) => {
+		return user && (<DisplayName className="header" entity={user} localeKey={this.getHeaderString} usePronoun />);
 	}
 
 
