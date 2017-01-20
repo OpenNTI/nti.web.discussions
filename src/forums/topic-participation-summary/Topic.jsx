@@ -15,6 +15,11 @@ export default class Topic extends React.Component {
 		gotoTopic: React.PropTypes.object
 	}
 
+
+	onJoin = () => {
+
+	}
+
 	render () {
 		const {topic} = this.props;
 		const {headline, title} = topic;
@@ -23,7 +28,7 @@ export default class Topic extends React.Component {
 			<div className="topic-participation-summary-topic">
 				<div className="header">
 					<h3>{title}</h3>
-					<Button>
+					<Button onClick={this.onJoin}>
 						<span>{t('join')}</span>
 					</Button>
 				</div>

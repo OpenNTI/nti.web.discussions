@@ -1,0 +1,23 @@
+@import "~nti-style-common";
+
+.topic-participation-summary-participation {
+	background-color: $panel-background;
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		li {
+			padding: 0.75rem 1.5rem;
+		}
+	}
+
+	.item-seperator {
+		&::after {
+			content: '\b7\b7\b7';
+			display: block;
+			text-align: center;
+		}
+	}
+}

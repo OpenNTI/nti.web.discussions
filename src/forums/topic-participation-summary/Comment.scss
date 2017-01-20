@@ -1,0 +1,46 @@
+@import "~nti-style-common";
+
+.topic-participation-summary-comment {
+	display: flex;
+
+	&:hover {
+		.wrap .meta time {
+			display: initial;
+		}
+	}
+
+	.avatar {
+		flex: 0 0 auto;
+		margin-right: 10px;
+		width: 30px;
+		height: 30px;
+	}
+
+	.wrap {
+		flext: 1 1 auto;
+
+		.meta {
+			//the line height centers this row of text with the avatar
+			font: normal 400 0.875rem/1.875rem $body-font-family;
+			color: $tertiary-grey;
+
+			.username {
+				margin: 0 0.5rem 0 0;
+			}
+
+			time {
+				display: none;
+			}
+		}
+
+		.modeled-content {
+			font: normal 400 0.875rem/1.75rem $body-font-family;
+			color: $primary-grey;
+		}
+
+		.comments {
+			font: normal 400 0.875rem/1.75rem $body-font-family;
+			color: $tertiary-grey;
+		}
+	}
+}

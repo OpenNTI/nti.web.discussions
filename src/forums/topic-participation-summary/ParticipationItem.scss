@@ -1,0 +1,11 @@
+@import "~nti-style-common";
+
+.topic-participation-summary-participation-item {
+	padding: 0.75rem;
+	background: white;
+	box-shadow: 0 0 0 1px $border-grey-light;
+
+	.parent-context {
+		padding-left: 2.5rem;
+	}
+}
