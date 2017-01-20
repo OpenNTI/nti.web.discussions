@@ -5,6 +5,10 @@
 	color: $secondary-grey;
 
 	&.expanded {
+		.body {
+			padding-bottom: 0.75rem;
+		}
+
 		i {
 			transform: rotate(90deg);
 		}
