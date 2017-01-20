@@ -7,7 +7,8 @@ const DEFAULT_TEXT = {
 	comments: {
 		one: '%(count)s Comment',
 		other: '%(count)s Comments'
-	}
+	},
+	jumpTo: 'Jump to Comment'
 };
 
 const t = scoped('TOPIC_PARCITIPATION_ITEM_COMMENT', DEFAULT_TEXT);
@@ -16,7 +17,6 @@ export default class Comment extends React.Component {
 	static propTypes = {
 		comment: React.PropTypes.object,
 		gotoComment: React.PropTypes.func,
-		hideComments: React.PropTypes.bool
 	}
 
 	gotoComment () {
@@ -24,10 +24,9 @@ export default class Comment extends React.Component {
 	}
 
 	render () {
-		const {comment, hideComments} = this.props;
+		const {comment} = this.props;
 		const {creator, body, ReferencedByCount:commentCount} = comment;
 		const created = comment.getCreatedTime();
-		const now = Date.now();
 
 		return (
 			<div className="topic-participation-summary-comment">
@@ -35,10 +34,13 @@ export default class Comment extends React.Component {
 				<div className="wrap">
 					<div className="meta">
 						<DisplayName entity={creator} />
-						<DateTime date={created} relativeTo={now} />
+						<DateTime date={created} format="llll"/>
 					</div>
 					<Panel body={body || []} />
-					{!hideComments && (<span className="comments">{t('comments', {count: commentCount})}</span>)}
+					<span className="comments">{t('comments', {count: commentCount})}</span>
+				</div>
+				<div className="navigate">
+					<i className="icon-chevron-right" onClick={this.gotoComment} />
 				</div>
 			</div>
 		);

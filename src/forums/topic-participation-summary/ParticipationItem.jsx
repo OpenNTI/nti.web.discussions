@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Comment from './Comment';
+import ParentComment from './ParentComment';
 
 function renderContext (context, gotoComment) {
 	return (
@@ -13,8 +14,7 @@ function renderContext (context, gotoComment) {
 function renderParentContext (context, gotoComment) {
 	return (
 		<div className="parent-context">
-			<span>In Reply To:</span>
-			<Comment comment={context} gotoComment={gotoComment} />
+			<ParentComment comment={context} gotoComment={gotoComment} />
 		</div>
 	);
 }
@@ -28,8 +28,8 @@ export default function ParticipationItem ({item, gotoComment}) {
 
 	return (
 		<div className="topic-participation-summary-participation-item">
+			{parentContext && renderParentContext(parentContext, gotoComment)}
 			{context && renderContext(context, gotoComment)}
-			{parentContext && renderParentContext(context, gotoComment)}
 		</div>
 	);
 }

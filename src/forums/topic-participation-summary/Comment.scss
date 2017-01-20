@@ -2,10 +2,11 @@
 
 .topic-participation-summary-comment {
 	display: flex;
+	padding: 0.75rem;
 
 	&:hover {
-		.wrap .meta time {
-			display: initial;
+		.navigate i {
+			display: inline-block;
 		}
 	}
 
@@ -17,7 +18,7 @@
 	}
 
 	.wrap {
-		flext: 1 1 auto;
+		flex: 1 1 auto;
 
 		.meta {
 			//the line height centers this row of text with the avatar
@@ -26,10 +27,6 @@
 
 			.username {
 				margin: 0 0.5rem 0 0;
-			}
-
-			time {
-				display: none;
 			}
 		}
 
@@ -41,6 +38,21 @@
 		.comments {
 			font: normal 400 0.875rem/1.75rem $body-font-family;
 			color: $tertiary-grey;
+		}
+	}
+
+	.navigate {
+		flex: 0 0 auto;
+		position: relative;
+		text-align: center;
+		width: 1rem;
+		color: $primary-blue;
+
+		i {
+			position: absolute;
+			cursor: pointer;
+			bottom: 0;
+			display: none;
 		}
 	}
 }

@@ -1,0 +1,41 @@
+@import "~nti-style-common";
+
+.topic-participation-summary-parent-comment {
+	padding: 0.5rem 0.75rem;
+	border-bottom: 1px solid $border-grey-light;
+	color: $secondary-grey;
+
+	&.expanded {
+		i {
+			transform: rotate(90deg);
+		}
+	}
+
+	.header {
+		cursor: pointer;
+	}
+
+	.username {
+		display: inline-block;
+		font: normal 400 0.875rem/1.5 $body-font-family;
+		margin-right: 0.125rem;
+	}
+
+	i {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 0.625rem;
+		transition: transform 0.1s;
+	}
+
+	.body {
+		overflow: hidden;
+		transition: max-height 0.5s;
+		padding-left: 1rem;
+
+		.body-container {
+			padding-left: 0.5rem;
+			border-left: 1px solid $border-grey;
+		}
+	}
+}
