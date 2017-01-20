@@ -3,6 +3,12 @@
 .topic-participation-summary-participation {
 	background-color: $panel-background;
 
+	.header {
+		font: normal 400 0.875rem/1rem $body-font-family;
+		color: $secondary-grey;
+		padding: 0.75rem 1.5rem;
+	}
+
 	ul {
 		list-style: none;
 		padding: 0;
@@ -13,11 +19,27 @@
 		}
 	}
 
-	.item-seperator {
-		&::after {
-			content: '\b7\b7\b7';
-			display: block;
+	.counts {
+		display: flex;
+		padding: 0.75rem 1.5rem 1.5rem;
+
+		.count {
+			flex: 1 1 auto;
 			text-align: center;
+
+			.value {
+				font-size: 2.25rem;
+				font-weight: 300;
+				color: $primary-grey;
+			}
+
+			.label {
+				font-size: 0.625rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				color: $secondary-grey;
+
+			}
 		}
 	}
 }

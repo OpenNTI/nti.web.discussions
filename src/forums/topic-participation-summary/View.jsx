@@ -8,7 +8,7 @@ import Participation from './Participation';
 export default class TopicSummary extends React.Component {
 	static propTypes = {
 		topicID: React.PropTypes.string,
-		user: React.PropTypes.string,
+		userID: React.PropTypes.string,
 		gotoTopic: React.PropTypes.func,
 		gotoComment: React.PropTypes.func
 	}
@@ -32,8 +32,13 @@ export default class TopicSummary extends React.Component {
 	}
 
 
+	componentWillUnmount () {
+		this.unmounted = true;
+	}
+
+
 	loadTopic (topicID) {
-		const {user} = this.props;
+		const {userID} = this.props;
 
 		this.setState({
 			loading: true
@@ -42,33 +47,37 @@ export default class TopicSummary extends React.Component {
 		getService()
 			.then(s => s.getObject(topicID))
 			.then((topic) => {
-				topic.loadUserSummary(user)
+				topic.loadUserSummary(userID)
 					.then((participation) => {
-						this.setState({
-							loading: false,
-							topic,
-							participation
-						});
+						if (!this.unmounted) {
+							this.setState({
+								loading: false,
+								topic,
+								participation
+							});
+						}
 					})
 					.catch(() => {
-						this.setState({
-							loading: false,
-							topic
-						});
+						if (!this.unmounted) {
+							this.setState({
+								loading: false,
+								topic
+							});
+						}
 					});
 			});
 	}
 
 
 	render () {
-		const {gotoTopic, gotoComment} = this.props;
+		const {gotoTopic, gotoComment, userID} = this.props;
 		const {loading, topic, participation} = this.state;
 
 		return (
 			<div className="topic-participation-summary">
 				{loading && (<Loading.Mask />)}
 				{!loading && topic && (<Topic topic={topic} gotoTopic={gotoTopic}/>)}
-				{!loading && participation && (<Participation participation={participation} gotoComment={gotoComment} />)}
+				{!loading && participation && (<Participation userID={userID} participation={participation} gotoComment={gotoComment} />)}
 			</div>
 		);
 	}
