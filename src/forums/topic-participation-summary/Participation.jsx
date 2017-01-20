@@ -1,7 +1,6 @@
 import React from 'react';
 import {scoped} from 'nti-lib-locale';
 import {DisplayName} from 'nti-web-commons';
-import {getAppUsername} from 'nti-web-client';
 
 import ParticipationItem from './ParticipationItem';
 
@@ -31,28 +30,18 @@ export default class Participation extends React.Component {
 		gotoComment: React.PropTypes.object
 	}
 
-	constructor (props) {
-		super(props);
-
-		const {userID} = props;
-
-		this.state = {
-			user: userID || getAppUsername()
-		};
-	}
 
 	getHeaderString (data) {
 		return t('headerForOthers', data);
 	}
 
 	render () {
-		const {participation} = this.props;
-		const {user} = this.state;
+		const {participation, userID} = this.props;
 		const {Contexts:contexts} = participation;
 
 		return (
 			<div className="topic-participation-summary-participation">
-				{this.renderHeader(user)}
+				{this.renderHeader(userID)}
 				{this.renderCounts(participation)}
 				<ul>
 					{(contexts || []).map(this.renderItem)}
@@ -62,8 +51,10 @@ export default class Participation extends React.Component {
 	}
 
 
-	renderHeader = (user) => {
-		return user && (<DisplayName className="header" entity={user} localeKey={this.getHeaderString} usePronoun />);
+	renderHeader = (userID) => {
+		return userID ?
+					(<DisplayName className="header" entity={userID} localeKey={this.getHeaderString} usePronoun />) :
+					(<span className="header">{t('headerForYou')}</span>);
 	}
 
 
