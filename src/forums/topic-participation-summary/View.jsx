@@ -37,6 +37,13 @@ export default class TopicSummary extends React.Component {
 	}
 
 
+	refresh () {
+		const {topicID} = this.props;
+
+		this.loadTopic(topicID);
+	}
+
+
 	loadTopic (topicID) {
 		const {userID} = this.props;
 

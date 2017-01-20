@@ -19,8 +19,12 @@ export default class Comment extends React.Component {
 		gotoComment: React.PropTypes.func,
 	}
 
-	gotoComment () {
+	gotoComment = () => {
+		const {gotoComment, comment} = this.props;
 
+		if (gotoComment) {
+			gotoComment(comment);
+		}
 	}
 
 	render () {
@@ -29,18 +33,15 @@ export default class Comment extends React.Component {
 		const created = comment.getCreatedTime();
 
 		return (
-			<div className="topic-participation-summary-comment">
+			<div className="topic-participation-summary-comment" onClick={this.gotoComment}>
 				<Avatar entity={creator} />
 				<div className="wrap">
 					<div className="meta">
 						<DisplayName entity={creator} />
 						<DateTime date={created} format="llll"/>
 					</div>
-					<Panel body={body || []} />
+					<Panel className="body-content" body={body || []} />
 					<span className="comments">{t('comments', {count: commentCount})}</span>
-				</div>
-				<div className="navigate">
-					<i className="icon-chevron-right" onClick={this.gotoComment} />
 				</div>
 			</div>
 		);

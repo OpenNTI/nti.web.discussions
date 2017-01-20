@@ -5,6 +5,10 @@
 	padding: 1.5rem;
 	border-bottom: 1px solid $border-grey-light;
 
+	.basic-button {
+		cursor: pointer;
+	}
+
 	.header {
 		display: flex;
 		align-items: flex-start;

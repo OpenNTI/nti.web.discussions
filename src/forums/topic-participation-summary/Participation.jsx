@@ -53,8 +53,8 @@ export default class Participation extends React.Component {
 
 	renderHeader = (userID) => {
 		return userID ?
-					(<DisplayName className="header" entity={userID} localeKey={this.getHeaderString} usePronoun />) :
-					(<span className="header">{t('headerForYou')}</span>);
+					(<DisplayName className="participation-header" entity={userID} localeKey={this.getHeaderString} usePronoun />) :
+					(<span className="participation-header">{t('headerForYou')}</span>);
 	}
 
 

@@ -1,7 +1,6 @@
 @import "~nti-style-common";
 
 .topic-participation-summary-parent-comment {
-	padding: 0.5rem 0.75rem;
 	border-bottom: 1px solid $border-grey-light;
 	color: $secondary-grey;
 
@@ -13,6 +12,7 @@
 
 	.header {
 		cursor: pointer;
+		padding: 0.5rem 0.75rem;
 	}
 
 	.username {
