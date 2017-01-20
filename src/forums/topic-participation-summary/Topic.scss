@@ -1,0 +1,14 @@
+@import "~nti-style-common";
+
+.topic-participation-summary-topic {
+	color: $primary-grey;
+
+	h3 {
+		font: normal 300 1.75rem/2.5rem $body-font-family;
+		margin: 0 0 0.5rem;
+	}
+
+	.modeled-content {
+		font-size: 0.875rem;
+	}
+}
