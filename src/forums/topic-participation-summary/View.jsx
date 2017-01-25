@@ -54,6 +54,14 @@ export default class TopicSummary extends React.Component {
 	loadTopic (topicID) {
 		const {userID} = this.props;
 
+		if (!topicID) {
+			this.setState({
+				loading: false
+			});
+
+			return;
+		}
+
 		this.setState({
 			loading: true
 		});
