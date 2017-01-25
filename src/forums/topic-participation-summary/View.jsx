@@ -1,9 +1,16 @@
 import React from 'react';
 import {getService} from 'nti-web-client';
-import {Loading} from 'nti-web-commons';
+import {Loading, EmptyState} from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
 
 import Topic from './Topic';
 import Participation from './Participation';
+
+const DEFAULT_TEXT = {
+	noAccess: 'You do not have access to this discussion.'
+};
+
+const t = scoped('TOPIC_PARTICIPATION_SUMMARY', DEFAULT_TEXT);
 
 export default class TopicSummary extends React.Component {
 	static propTypes = {
@@ -72,6 +79,11 @@ export default class TopicSummary extends React.Component {
 							});
 						}
 					});
+			})
+			.catch(() => {
+				this.setState({
+					loading: false
+				});
 			});
 	}
 
@@ -83,6 +95,7 @@ export default class TopicSummary extends React.Component {
 		return (
 			<div className="topic-participation-summary">
 				{loading && (<Loading.Mask />)}
+				{!loading && !topic && (<EmptyState header={t('noAccess')} />)}
 				{!loading && topic && (<Topic topic={topic} gotoTopic={gotoTopic}/>)}
 				{!loading && participation && (<Participation userID={userID} participation={participation} gotoComment={gotoComment} />)}
 			</div>
