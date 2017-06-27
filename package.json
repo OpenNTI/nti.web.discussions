@@ -1,6 +1,6 @@
 {
   "name": "nti-web-discussions",
-  "version": "0.0.3",
+  "version": "0.1.0-alpha",
   "author": "nextthought",
   "description": "ReactJS Discussions Components",
   "license": "UNLICENSED",
@@ -16,10 +16,8 @@
   "scripts": {
     "test": "karma start --single-run --reporters dots,html,junit,coverage",
     "start": "make check; webpack-dev-server -d --config ./webpack.config.test.js  --host 0.0.0.0 --port 8000 --watch --progress --inline --info false --content-base ./test/app/ || true",
-    "prepublish": "not-in-install && make || in-install",
-    "bump": "npm version",
-    "preversion": "make check && make test",
-    "postversion": "git push && git push --tags && npm publish"
+    "prepack": "make",
+    "preversion": "make check && make test"
   },
   "repository": {
     "type": "git",
