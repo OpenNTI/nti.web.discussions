@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Panel} from 'nti-modeled-content';
 import {Avatar, DisplayName, DateTime} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
@@ -15,8 +16,8 @@ const t = scoped('TOPIC_PARCITIPATION_ITEM_COMMENT', DEFAULT_TEXT);
 
 export default class Comment extends React.Component {
 	static propTypes = {
-		comment: React.PropTypes.object,
-		gotoComment: React.PropTypes.func,
+		comment: PropTypes.object,
+		gotoComment: PropTypes.func,
 	}
 
 	gotoComment = () => {

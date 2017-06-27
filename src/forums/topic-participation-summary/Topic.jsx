@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Panel} from 'nti-modeled-content';
 import {Button} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
@@ -11,8 +12,8 @@ const t = scoped('TOPIC_PARTICIPATION_SUMMARY_TOPIC', DEFAULT_TEXT);
 
 export default class Topic extends React.Component {
 	static propTypes = {
-		topic: React.PropTypes.object,
-		gotoTopic: React.PropTypes.func
+		topic: PropTypes.object,
+		gotoTopic: PropTypes.func
 	}
 
 

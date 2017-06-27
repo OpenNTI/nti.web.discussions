@@ -1,5 +1,6 @@
+/* eslint-env jest */
 describe('Topic Participation Summary View', () => {
-	it('placeholder', () => {
+	test('placeholder', () => {
 		expect(true).toBeTruthy();
 	});
 });

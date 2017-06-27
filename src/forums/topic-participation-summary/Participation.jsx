@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {DisplayName} from 'nti-web-commons';
 
@@ -25,9 +26,9 @@ const t = scoped('TOPIC_PARICIPATION_SUMMARY_PARICIPATION', DEFAULT_TEXT);
 
 export default class Participation extends React.Component {
 	static propTypes = {
-		participation: React.PropTypes.object.isRequired,
-		userID: React.PropTypes.string,
-		gotoComment: React.PropTypes.object
+		participation: PropTypes.object.isRequired,
+		userID: PropTypes.string,
+		gotoComment: PropTypes.object
 	}
 
 
@@ -53,8 +54,8 @@ export default class Participation extends React.Component {
 
 	renderHeader = (userID) => {
 		return userID ?
-					(<DisplayName className="participation-header" entity={userID} localeKey={this.getHeaderString} usePronoun />) :
-					(<span className="participation-header">{t('headerForYou')}</span>);
+			(<DisplayName className="participation-header" entity={userID} localeKey={this.getHeaderString} usePronoun />) :
+			(<span className="participation-header">{t('headerForYou')}</span>);
 	}
 
 

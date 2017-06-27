@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {Panel} from 'nti-modeled-content';
 import {DisplayName} from 'nti-web-commons';
@@ -12,8 +13,8 @@ const t = scoped('TOPIC_PARTICIPATION_SUMMARY_PARENT_COMMENT', DEFAULT_TEXT);
 
 export default class ParentComment extends React.Component {
 	static propTypes = {
-		comment: React.PropTypes.object,
-		gotoComment: React.PropTypes.func
+		comment: PropTypes.object,
+		gotoComment: PropTypes.func
 	}
 
 

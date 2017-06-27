@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Comment from './Comment';
 import ParentComment from './ParentComment';
@@ -20,8 +21,8 @@ function renderParentContext (context, gotoComment) {
 }
 
 ParticipationItem.propTypes = {
-	item: React.PropTypes.object,
-	gotoComment: React.PropTypes.func
+	item: PropTypes.object,
+	gotoComment: PropTypes.func
 };
 export default function ParticipationItem ({item, gotoComment}) {
 	const {Context:context, ParentContext:parentContext} = item;

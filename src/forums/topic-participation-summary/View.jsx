@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {getService} from 'nti-web-client';
 import {Loading, EmptyState} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
@@ -14,10 +15,10 @@ const t = scoped('TOPIC_PARTICIPATION_SUMMARY', DEFAULT_TEXT);
 
 export default class TopicSummary extends React.Component {
 	static propTypes = {
-		topicID: React.PropTypes.string,
-		userID: React.PropTypes.string,
-		gotoTopic: React.PropTypes.func,
-		gotoComment: React.PropTypes.func
+		topicID: PropTypes.string,
+		userID: PropTypes.string,
+		gotoTopic: PropTypes.func,
+		gotoComment: PropTypes.func
 	}
 
 
