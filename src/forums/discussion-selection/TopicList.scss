@@ -1,0 +1,44 @@
+@import "~nti-style-common";
+
+.discussion-selection-topic {
+	cursor: pointer;
+	background-color: white;
+	line-height: 3em;
+	border: solid 1px rgb(237, 237, 237);
+	height: 61px;
+
+	&.selected {
+		border: solid 1px #3fb3f6 !important;
+	}
+}
+
+.discussion-selection-topic-author {
+	width: 600px;
+	font: normal 600 0.65em/1 "Open Sans", sans-serif;
+	color: #3fb3f6;
+	padding: 4px;
+	padding-left: 65px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	text-transform: uppercase;
+}
+
+.discussion-selection-topic-title {
+	color: #494949;
+	font: normal 400 1.25em/1.5 "Open Sans", sans-serif;
+	width: 600px;
+	white-space: nowrap;
+	padding: 4px;
+	padding-left: 65px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+
+.discussion-selection-avatar {
+	float: left;
+	position: absolute;
+	height: 59px;
+	width: 59px;
+}

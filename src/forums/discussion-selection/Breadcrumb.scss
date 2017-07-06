@@ -1,0 +1,22 @@
+@import "~nti-style-common";
+
+.discussion-selection-breadcrumb {
+	font: normal 600 0.75em/1 "Open Sans", sans-serif;
+	color: #3fb3f6;
+	margin-right: 5px;
+	cursor: pointer;
+
+	&.inactive {
+		cursor: auto;
+		color: black;
+	}
+}
+
+.discussion-selection-breadcrumb-container {
+	margin-bottom: 10px;
+}
+
+.discussion-selection-breadcrumb-separator {
+	margin-right: 3px;
+	font: normal 600 0.75em/1 "Open Sans", sans-serif;
+}
