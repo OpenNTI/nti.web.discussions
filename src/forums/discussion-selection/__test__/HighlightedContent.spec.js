@@ -20,6 +20,6 @@ describe('Highlighted content', () => {
 
 		highlighted.map((x) => {
 			expect(x.text()).toBe('cd');
-		})
+		});
 	});
 });
