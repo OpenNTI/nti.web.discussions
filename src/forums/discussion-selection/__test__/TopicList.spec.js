@@ -28,9 +28,9 @@ describe('Topic list test', () => {
 		expect(topicListCmp.find('.discussion-selection-topic').length).toBe(3);
 		const texts = topicListCmp.find('.discussion-selection-topic').map((node) => node.text());
 
-		expect(texts[0]).toMatch(/studentitem 1/);
-		expect(texts[1]).toMatch(/studentitem 2/);
-		expect(texts[2]).toMatch(/instructoritem 3/);
+		expect(texts[0]).toMatch(/item 1/);
+		expect(texts[1]).toMatch(/item 2/);
+		expect(texts[2]).toMatch(/item 3/);
 
 		topicListCmp.find('.discussion-selection-topic').first().simulate('click');
 

@@ -133,9 +133,9 @@ describe('Discussion selection editor', () => {
 
 		setImmediate( () => {
 			expect(editor.state().step).toBe(4);
-			expect(editor.text()).toMatch(/studentitem 1/);
-			expect(editor.text()).toMatch(/studentitem 2/);
-			expect(editor.text()).toMatch(/instructoritem 3/);
+			expect(editor.text()).toMatch(/item 1/);
+			expect(editor.text()).toMatch(/item 2/);
+			expect(editor.text()).toMatch(/item 3/);
 			expect(editor.text()).toMatch(/Page 1 of 1/);
 
 			editor.find('.discussion-selection-topic').first().simulate('click');

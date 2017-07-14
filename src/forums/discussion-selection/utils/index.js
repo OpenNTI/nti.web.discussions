@@ -1,4 +1,4 @@
-import {User, getService } from 'nti-web-client';
+import { getService } from 'nti-web-client';
 
 function safeValue (value) {
 	if(!value) {
@@ -34,16 +34,7 @@ export function loadTopicsFromService (baseUrl, pageNum, pageSize, searchTerm, c
 				const total = resp.FilteredTotalItemCount;
 				const totalPages = Math.ceil(total / pageSize);
 
-				Promise.all(topics.map((topic) => {
-					return User.resolve({ entityId: topic.Creator })
-						.then((user) => {
-							topic.user = user;
-
-							return topic;
-						});
-				})).then((modifiedTopics) => {
-					callback(modifiedTopics, totalPages);
-				});
+				callback(topics, totalPages);
 			});
 	});
 }

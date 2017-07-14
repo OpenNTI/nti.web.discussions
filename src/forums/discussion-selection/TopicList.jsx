@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Avatar } from 'nti-web-commons';
+import { DisplayName, Avatar } from 'nti-web-commons';
 
 export default class TopicList extends React.Component {
 	static propTypes = {
@@ -22,9 +22,9 @@ export default class TopicList extends React.Component {
 			'selected': this.props.selectedTopics.has(topic)
 		});
 
-		return (<div key={topic.user.alias + '--' + topic.title} className={className} onClick={clickHandler}>
+		return (<div key={topic.Creator + '--' + topic.title} className={className} onClick={clickHandler}>
 			<Avatar className="discussion-selection-avatar" entityId={topic.Creator}/>
-			<div className="discussion-selection-topic-author">{topic.user.alias}</div>
+			<div className="discussion-selection-topic-author"><DisplayName entityId={topic.Creator}/></div>
 			<div className="discussion-selection-topic-title">{topic.title}</div>
 		</div>);
 	}
