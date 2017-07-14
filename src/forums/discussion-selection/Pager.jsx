@@ -58,7 +58,7 @@ export default class Pager extends React.Component {
 	render () {
 		const { currentPage, totalPages } = this.props;
 
-		return (<div className="pager">Page {currentPage} of {totalPages}
+		return (<div className="discussion-selection-pager">Page {currentPage} of {totalPages}
 			{this.renderPrev()}
 			{this.renderNext()}
 		</div>);

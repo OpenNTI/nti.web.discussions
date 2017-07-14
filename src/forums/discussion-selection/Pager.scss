@@ -1,19 +1,19 @@
 @import "~nti-style-common";
 
-.pager {
+.discussion-selection-pager {
 	font-size: 0.75em;
 	height: 20px;
 	margin-left: 2px;
-}
 
-.prev, .next {
-	color: #3fb3f6;
-	margin-left: 3px;
-	margin-right: 3px;
-	cursor: pointer;
+	.prev, .next {
+		color: #3fb3f6;
+		margin-left: 3px;
+		margin-right: 3px;
+		cursor: pointer;
 
-	&.disabled {
-		color: black;
-		cursor: auto;
+		&.disabled {
+			color: black;
+			cursor: auto;
+		}
 	}
 }
