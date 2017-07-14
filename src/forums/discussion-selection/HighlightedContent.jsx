@@ -21,7 +21,7 @@ export default function HighlightedContent ({ content, term }) {
 				results.push(<span key={startIndex}>{nonHighlightedText}</span>);
 				nonHighlightedText = '';
 			}
-			results.push(<span key={startIndex + '--highlight'} className="highlight">{content.substring(startIndex, startIndex + term.length)}</span>);
+			results.push(<span key={startIndex + '--highlight'} className="discussion-selection-highlight">{content.substring(startIndex, startIndex + term.length)}</span>);
 			startIndex += term.length;
 		}
 		else {

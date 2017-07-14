@@ -6,7 +6,7 @@ import HighlightedContent from '../HighlightedContent';
 /* eslint-env jest */
 describe('Highlighted content', () => {
 	test('Single hit', () => {
-		const highlighted = shallow(<HighlightedContent content="abcdefg" term="cd"/>).find('.highlight');
+		const highlighted = shallow(<HighlightedContent content="abcdefg" term="cd"/>).find('.discussion-selection-highlight');
 
 		expect(highlighted.text())
 			.toBe('cd');
@@ -14,7 +14,7 @@ describe('Highlighted content', () => {
 
 
 	test('Multiple hits', () => {
-		const highlighted = shallow(<HighlightedContent content="abcdefcdg" term="cd"/>).find('.highlight');
+		const highlighted = shallow(<HighlightedContent content="abcdefcdg" term="cd"/>).find('.discussion-selection-highlight');
 
 		expect(highlighted.length).toBe(2);
 
