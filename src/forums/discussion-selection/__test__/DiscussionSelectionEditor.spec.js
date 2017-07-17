@@ -6,7 +6,7 @@ import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 
 /* eslint-env jest */
 describe('Discussion selection editor', () => {
-	test('Test skip ahead', (done) => {
+	test('Test skip ahead', () => {
 		const forums = [
 			{ title: 'Forum 1', children:
 				[
@@ -24,28 +24,33 @@ describe('Discussion selection editor', () => {
 					}
 					}
 				]
-			}
+			},
+			{ title: 'Forum 2' }
 		];
 
 		const bundle = {
 			getForumList: () => {
 				return Promise.resolve(forums);
+			},
+			getDiscussionAssets: () => {
+				return Promise.resolve([]);
 			}
 		};
 
-		let editor = mount(<DiscussionSelectionEditor bundle={ bundle }/>);
+		const onDiscussionTopicSelect = (topic) => {};
 
+		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
+
+		editor.setState({ step: 1, forums: forums });
+
+		// click Forum 1
+		editor.find('.discussion-selection-item').first().simulate('click');
 		editor = editor.update();
 
-		setImmediate( () => {
-			// since there is only one forum and one section, the editor
-			// should automatically skip ahead to step 3 (board list)
-			expect(editor.state().step).toBe(3);
-			expect(editor.text()).toMatch(/Board 1/);
-			expect(editor.text()).toMatch(/Board 2/);
-
-			done();
-		});
+		// should have skipped to step 3 since there was only one section in step 2
+		expect(editor.state().step).toBe(3);
+		expect(editor.text()).toMatch(/Board 1/);
+		expect(editor.text()).toMatch(/Board 2/);
 	});
 
 	test('Test editor steps', (done) => {
@@ -79,6 +84,9 @@ describe('Discussion selection editor', () => {
 		const bundle = {
 			getForumList: () => {
 				return Promise.resolve(forums);
+			},
+			getDiscussionAssets: () => {
+				return Promise.resolve([]);
 			}
 		};
 
@@ -133,10 +141,6 @@ describe('Discussion selection editor', () => {
 
 		setImmediate( () => {
 			expect(editor.state().step).toBe(4);
-			expect(editor.text()).toMatch(/studentitem 1/);
-			expect(editor.text()).toMatch(/studentitem 2/);
-			expect(editor.text()).toMatch(/instructoritem 3/);
-			expect(editor.text()).toMatch(/Page 1 of 1/);
 
 			editor.find('.discussion-selection-topic').first().simulate('click');
 

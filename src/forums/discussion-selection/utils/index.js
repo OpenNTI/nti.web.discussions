@@ -9,7 +9,7 @@ function safeValue (value) {
 }
 
 export function filterItemsBySearchTerm (items, searchTerm) {
-	const filteredItems = searchTerm === ''
+	const filteredItems = !searchTerm || searchTerm === ''
 		? items
 		: items.filter((item) => {
 			return safeValue(item.title).toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
@@ -18,21 +18,11 @@ export function filterItemsBySearchTerm (items, searchTerm) {
 	return filteredItems;
 }
 
-export function loadTopicsFromService (baseUrl, pageNum, pageSize, searchTerm, callback) {
-	const batchStart = pageSize * (pageNum - 1);
-
-	let searchParam = '';
-
-	if(searchTerm && searchTerm.length > 0) {
-		searchParam = '&searchTerm=' + searchTerm;
-	}
-
+export function loadTopicsFromService (baseUrl, callback) {
 	getService().then((service) => {
-		service.getObjectAtURL(baseUrl + '?batchStart=' + batchStart + '&batchSize=' + pageSize + searchParam)
+		service.getObjectAtURL(baseUrl)
 			.then((resp) => {
 				const topics = resp.Items || [];
-				const total = resp.FilteredTotalItemCount;
-				const totalPages = Math.ceil(total / pageSize);
 
 				Promise.all(topics.map((topic) => {
 					return User.resolve({ entityId: topic.Creator })
@@ -42,7 +32,7 @@ export function loadTopicsFromService (baseUrl, pageNum, pageSize, searchTerm, c
 							return topic;
 						});
 				})).then((modifiedTopics) => {
-					callback(modifiedTopics, totalPages);
+					callback(modifiedTopics);
 				});
 			});
 	});

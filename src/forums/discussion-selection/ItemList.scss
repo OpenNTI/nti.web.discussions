@@ -2,12 +2,40 @@
 
 .discussion-selection-item {
 	cursor: pointer;
-	padding: 10px;
-	margin-bottom: 3px;
-	background-color: white;
-	line-height: 3em;
+	width: 246px;
+	height: 50px;
+	background: white;
+	margin: 0 10px 10px 0;
+	padding: 12px;
+	position: relative;
+	float: left;
+	-webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
+
+	.content {
+		float: left;
+		position: relative;
+	}
+
+	.arrow-icon {
+		float: right;
+		position: relative;
+	}
 }
 
 .discussion-selection-item-container {
 	margin-top: 30px;
+
+	.header {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		font-size: 18px;
+		font-weight: 600;
+		color: #494949;
+	}
+
+	.no-results {
+		position: relative;
+		float: left;
+	}
 }
