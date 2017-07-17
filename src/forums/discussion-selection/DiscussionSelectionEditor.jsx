@@ -5,8 +5,7 @@ import {Search} from 'nti-web-commons';
 import TopicList from './TopicList';
 import ItemList from './ItemList';
 import Breadcrumb from './Breadcrumb';
-import Pager from './Pager';
-import { loadTopicsFromService } from './utils';
+import { loadTopicsFromService, filterItemsBySearchTerm } from './utils';
 
 const STEPS = {
 	FORUM_LIST: 1,
@@ -14,8 +13,6 @@ const STEPS = {
 	BOARD_LIST: 3,
 	TOPIC_LIST: 4
 };
-
-const PAGE_SIZE = 5, SEARCH_DELAY = 500;
 
 export default class DiscussionSelectionEditor extends React.Component {
 	static propTypes = {
@@ -26,50 +23,48 @@ export default class DiscussionSelectionEditor extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.props.bundle.getForumList().then((forums) => {
-			this.onForumsLoaded(forums);
+		Promise.all([
+			this.props.bundle.getDiscussionAssets(),
+			this.props.bundle.getForumList()
+		]).then((result) => {
+			this.onForumsLoaded(result[0], result[1]);
 		});
 
 		this.state = {
 			step: STEPS.FORUM_LIST,
-			currentPage: 1,
-			totalPages: 0,
 			searchTerm: '',
 			selectedTopics: new Set()
 		};
 	}
 
-	loadTopics (currentPage, board, searchTerm) {
+	loadTopics (board, searchTerm) {
 		const me = this;
 
-		const callback = (topics, totalPages) => {
-			me.setState( { currentPage: currentPage, selectedBoard: board, searchTerm: searchTerm, step: STEPS.TOPIC_LIST, topics : topics, totalPages: totalPages }, () => {
+		const callback = (topics) => {
+			me.setState( { selectedBoard: board, searchTerm: searchTerm, step: STEPS.TOPIC_LIST, topics : topics }, () => {
 				me.updateTopicSelection(new Set());
 			});
 		};
 
-		loadTopicsFromService(board.getLink('contents'), currentPage, PAGE_SIZE, searchTerm, callback);
+		loadTopicsFromService(board.getLink('contents'), callback);
 	}
 
-	onForumsLoaded (forums) {
+	onForumsLoaded (courseDiscussionTopics, forums) {
 		// initialize breadcrumb for forums list
 		let newState = { breadcrumb: [{
 			title: 'Forums',
 			step: STEPS.FORUM_LIST,
-			onClick: () => { return this.onForumsLoaded(this.state.forums); }
+			onClick: () => { return this.onForumsLoaded(this.state.courseDiscussionTopics, this.state.forums); }
 		}]};
+
+		const modifiedCourseDiscussionTopics = courseDiscussionTopics.map((t) => {
+			t.title = t.get('title');
+			return t;
+		});
+
 		let stateCallback = () => { };
 
-		// if only one forum to choose from, skip ahead to the next step automatically
-		if(forums && forums.length === 1) {
-			newState.forums = forums;
-			stateCallback = () => {
-				this.onForumSelect(forums[0], true);
-			};
-		}
-		else {
-			newState = { ...newState, step: STEPS.FORUM_LIST, forums: forums };
-		}
+		newState = { ...newState, step: STEPS.FORUM_LIST, forums: forums, courseDiscussionTopics: modifiedCourseDiscussionTopics };
 
 		this.setState(newState, stateCallback);
 	}
@@ -87,6 +82,9 @@ export default class DiscussionSelectionEditor extends React.Component {
 		let stateCallback = () => { };
 
 		const sections = forum.children;
+
+		// in case anything was selected from course discussions, clear it out now
+		this.updateTopicSelection(new Set());
 
 		// if only one section to choose from, skip ahead to the next step automatically
 		if(sections && sections.length === 1) {
@@ -137,7 +135,7 @@ export default class DiscussionSelectionEditor extends React.Component {
 			isHidden: isHidden,
 			onClick: () => { this.onBoardSelect(board, isHidden); } });
 
-		this.setState( { breadcrumb: breadcrumb }, () => { this.loadTopics(1, board, ''); });
+		this.setState( { breadcrumb: breadcrumb }, () => { this.loadTopics(board, ''); });
 	}
 
 	onTopicSelect (topic) {
@@ -168,6 +166,10 @@ export default class DiscussionSelectionEditor extends React.Component {
 	renderBreadcrumb () {
 		const me = this;
 
+		if(me.state.step === 1) {
+			return;
+		}
+
 		const clickHandler = (bc) => {
 			if(me.state.step === bc.step) {
 				// no need to do anything if we aren't navigating elsewhere
@@ -189,29 +191,15 @@ export default class DiscussionSelectionEditor extends React.Component {
 		return (<Breadcrumb breadcrumb={this.state.breadcrumb} clickHandler={clickHandler}/>);
 	}
 
+	renderTopControls () {
+		return (<div className="discussion-selection-topcontrols">{this.renderSearchBar()}</div>);
+	}
+
 	renderSearchBar () {
 		const me = this, buffered = false;
 
-		const doSearch = (searchTerm) => {
-			if(me.state.step === STEPS.TOPIC_LIST) {
-				me.loadTopics(1, me.state.selectedBoard, searchTerm);
-			}
-		};
-
 		const onChange = (value) => {
 			me.setState({ searchTerm: value });
-
-			// implement a delay here (instead of relying on underlying
-			// BufferedInput, which is deprecated).  delay is needed so
-			// that server calls aren't made on every keystroke
-			const delay = SEARCH_DELAY;
-
-			let {inputBufferDelayTimer} = me;
-			if (inputBufferDelayTimer) {
-				clearTimeout(inputBufferDelayTimer);
-			}
-
-			me.inputBufferDelayTimer = setTimeout(() => doSearch(value), delay);
 		};
 
 		return (<div className="discussion-selection-search">
@@ -219,37 +207,36 @@ export default class DiscussionSelectionEditor extends React.Component {
 		</div>);
 	}
 
-	renderPager () {
-		if(this.state.totalPages === 0) {
-			return;
-		}
-
-		const me = this;
-
-		const onPageChange = (newPage) => {
-			me.loadTopics(newPage, this.state.selectedBoard, this.state.searchTerm);
-		};
-
-		if(this.state.step === STEPS.TOPIC_LIST) {
-			return (<Pager currentPage={this.state.currentPage} totalPages={this.state.totalPages} onPageChange={onPageChange}/>);
-		}
-	}
-
 	renderForums () {
 		if(this.state.forums) {
-			return (<ItemList items={this.state.forums} onSelect={this.onForumSelect} searchTerm={this.state.searchTerm}/>);
+			const me = this;
+
+			const onTopicSelect = (topic) => {
+				me.onTopicSelect(topic);
+			};
+
+			const filteredDiscussionTopics = filterItemsBySearchTerm(this.state.courseDiscussionTopics, this.state.searchTerm);
+
+			return (
+				<div>
+					<ItemList items={this.state.forums} headerText="Your Discussions" onSelect={this.onForumSelect} searchTerm={this.state.searchTerm}/>
+					<div className="discussion-selection-course-discussions"><TopicList topics={filteredDiscussionTopics} headerText="Choose a Discussion" onTopicSelect={onTopicSelect}
+						searchTerm={this.state.searchTerm} selectedTopics={this.state.selectedTopics}/>
+					</div>
+				</div>
+			);
 		}
 	}
 
 	renderSections () {
 		if(this.state.selectedForum) {
-			return (<ItemList items={this.state.sections} onSelect={this.onSectionSelect} searchTerm={this.state.searchTerm}/>);
+			return (<ItemList items={this.state.sections} headerText="Choose a Section" onSelect={this.onSectionSelect} searchTerm={this.state.searchTerm}/>);
 		}
 	}
 
 	renderBoards () {
 		if(this.state.selectedSection) {
-			return (<ItemList items={this.state.boards} onSelect={this.onBoardSelect} searchTerm={this.state.searchTerm}/>);
+			return (<ItemList items={this.state.boards} headerText="Choose a Forum" onSelect={this.onBoardSelect} searchTerm={this.state.searchTerm}/>);
 		}
 	}
 
@@ -264,7 +251,8 @@ export default class DiscussionSelectionEditor extends React.Component {
 			me.onTopicSelect(topic);
 		};
 
-		return (<TopicList topics={this.state.topics} onTopicSelect={onTopicSelect} selectedTopics={this.state.selectedTopics}/>);
+		return (<TopicList topics={this.state.topics} headerText="Choose a Discussion" onTopicSelect={onTopicSelect}
+			selectedTopics={this.state.selectedTopics} searchTerm={this.state.searchTerm}/>);
 	}
 
 	renderBody () {
@@ -286,9 +274,9 @@ export default class DiscussionSelectionEditor extends React.Component {
 
 	render () {
 		return(<div>
-			{this.renderSearchBar()}
+			{this.renderTopControls()}
 			{this.renderBreadcrumb()}
-			{this.renderPager()}
+
 			{this.renderBody()}
 		</div>);
 	}

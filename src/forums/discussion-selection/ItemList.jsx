@@ -7,6 +7,7 @@ import { filterItemsBySearchTerm } from './utils';
 export default class ItemList extends React.Component {
 	static propTypes = {
 		items: PropTypes.arrayOf(PropTypes.object),
+		headerText: PropTypes.string,
 		searchTerm: PropTypes.string,
 		onSelect: PropTypes.func
 	}
@@ -21,19 +22,33 @@ export default class ItemList extends React.Component {
 		};
 
 		return (<div key={item.title} className="discussion-selection-item" onClick={clickHandler}>
-			<HighlightedContent content={item.title} term={this.props.searchTerm}/>
+			<div className="content"><HighlightedContent content={item.title} term={this.props.searchTerm}/></div>
+			<div className="arrow-icon"><i className="icon-chevron-right" /></div>
 		</div>);
 	}
 
-	render () {
+	renderItems () {
 		const { items, onSelect, searchTerm } = this.props;
 
 		const filteredItems = filterItemsBySearchTerm(items, searchTerm);
 
-		if(filteredItems) {
-			return (<div className="discussion-selection-item-container">
-				{filteredItems.map((item) => { return this.renderItem(item, onSelect); })}
-			</div>);
+		if(!filteredItems || filteredItems.length === 0) {
+			return (<div className="no-results">No discussions found</div>);
 		}
+
+		return (<div>{filteredItems.map((item) => { return this.renderItem(item, onSelect); })}</div>);
+	}
+
+	renderHeader () {
+		if(this.props.headerText) {
+			return (<div className="header">{this.props.headerText}</div>);
+		}
+	}
+
+	render () {
+		return (<div className="discussion-selection-item-container">
+			{this.renderHeader()}
+			{this.renderItems()}
+		</div>);
 	}
 }

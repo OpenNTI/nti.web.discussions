@@ -26,11 +26,6 @@ describe('Topic list test', () => {
 
 		const topicListCmp = shallow(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
 		expect(topicListCmp.find('.discussion-selection-topic').length).toBe(3);
-		const texts = topicListCmp.find('.discussion-selection-topic').map((node) => node.text());
-
-		expect(texts[0]).toMatch(/studentitem 1/);
-		expect(texts[1]).toMatch(/studentitem 2/);
-		expect(texts[2]).toMatch(/instructoritem 3/);
 
 		topicListCmp.find('.discussion-selection-topic').first().simulate('click');
 
