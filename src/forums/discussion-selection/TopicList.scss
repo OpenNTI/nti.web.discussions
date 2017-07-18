@@ -34,9 +34,8 @@
 
 	.discussion-selection-topic-title {
 		color: #494949;
-		font: normal 300 26px "Open Sans", sans-serif;
+		font: normal 300 26px "Open Sans Condensed", sans-serif;
 		font-stretch: condensed;
-		white-space: nowrap;
 		padding: 4px;
 		padding-top: 3px;
 		text-overflow: ellipsis;
@@ -44,6 +43,8 @@
 		margin-top: 120px;
 		background-color: white;
 		width: 246px;
+		height: 80px;
+		@include limit-lines($lines: 2, $line-height: 1.54);
 	}
 
 	.discussion-selection-avatar {
