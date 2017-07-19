@@ -1,4 +1,4 @@
-import {User, getService } from 'nti-web-client';
+import { getService } from 'nti-web-client';
 
 function safeValue (value) {
 	if(!value) {
@@ -24,16 +24,7 @@ export function loadTopicsFromService (baseUrl, callback) {
 			.then((resp) => {
 				const topics = resp.Items || [];
 
-				Promise.all(topics.map((topic) => {
-					return User.resolve({ entityId: topic.Creator })
-						.then((user) => {
-							topic.user = user;
-
-							return topic;
-						});
-				})).then((modifiedTopics) => {
-					callback(modifiedTopics);
-				});
+				callback(topics, totalPages);
 			});
 	});
 }
