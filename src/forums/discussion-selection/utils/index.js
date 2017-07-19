@@ -24,7 +24,7 @@ export function loadTopicsFromService (baseUrl, callback) {
 			.then((resp) => {
 				const topics = resp.Items || [];
 
-				callback(topics, totalPages);
+				callback(topics);
 			});
 	});
 }
