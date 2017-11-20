@@ -4,6 +4,8 @@ import { TestUtils } from 'nti-web-client';
 
 import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 
+const onDiscussionTopicSelect = jest.fn();
+
 /* eslint-env jest */
 describe('Discussion selection editor', () => {
 	test('Test skip ahead', () => {
@@ -36,8 +38,6 @@ describe('Discussion selection editor', () => {
 				return Promise.resolve([]);
 			}
 		};
-
-		const onDiscussionTopicSelect = (topic) => {};
 
 		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
 
@@ -108,8 +108,6 @@ describe('Discussion selection editor', () => {
 			}
 
 		});
-
-		const onDiscussionTopicSelect = (topic) => {};
 
 		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
 

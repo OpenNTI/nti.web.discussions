@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import ItemList from '../ItemList';
 
@@ -12,7 +12,7 @@ describe('Item list test', () => {
 			{ title: 'item 3' }
 		];
 
-		const itemListCmp = shallow(<ItemList items={items} searchTerm="item"/>);
+		const itemListCmp = mount(<ItemList items={items} searchTerm="item"/>);
 		expect(itemListCmp.find('.discussion-selection-item').length).toBe(3);
 	});
 
@@ -23,7 +23,7 @@ describe('Item list test', () => {
 			{ title: 'item 3' }
 		];
 
-		const itemListCmp = shallow(<ItemList items={items} searchTerm="2"/>);
+		const itemListCmp = mount(<ItemList items={items} searchTerm="2"/>);
 		expect(itemListCmp.find('.discussion-selection-item').length).toBe(1);
 	});
 });

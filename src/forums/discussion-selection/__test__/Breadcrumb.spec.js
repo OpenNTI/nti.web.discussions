@@ -1,7 +1,9 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Breadcrumb from '../Breadcrumb';
+
+const clickHandler = jest.fn();
 
 /* eslint-env jest */
 describe('Breadcrumb test', () => {
@@ -11,8 +13,6 @@ describe('Breadcrumb test', () => {
 			{ step: 2, title: 'Second' },
 			{ step: 3, title: 'Last' }
 		];
-
-		const clickHandler = () => { };
 
 		let bcCmp = mount(<Breadcrumb breadcrumb={breadcrumb} clickHandler={clickHandler}/>);
 		const allBCs = bcCmp.find('.discussion-selection-breadcrumb');
@@ -40,7 +40,8 @@ describe('Breadcrumb test', () => {
 			{ step: 3, title: 'Last' }
 		];
 
-		const bcCmp = shallow(<Breadcrumb breadcrumb={breadcrumb}/>);
+		const bcCmp = mount(<Breadcrumb breadcrumb={breadcrumb}/>);
+
 		const allBCs = bcCmp.find('.discussion-selection-breadcrumb');
 
 		// only two items, since 'Second' was hidden, it should not be rendered

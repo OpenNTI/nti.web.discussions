@@ -163,64 +163,60 @@ export default class DiscussionSelectionEditor extends React.Component {
 		this.props.onDiscussionTopicSelect([...selectedTopics]);
 	}
 
-	renderBreadcrumb () {
-		const me = this;
-
-		if(me.state.step === 1) {
+	onBreadcrumbClick = (bc) => {
+		if(this.state.step === bc.step) {
+			// no need to do anything if we aren't navigating elsewhere
 			return;
 		}
 
-		const clickHandler = (bc) => {
-			if(me.state.step === bc.step) {
-				// no need to do anything if we aren't navigating elsewhere
-				return;
-			}
+		// clear selected topics when moving back to a previous step
+		this.updateTopicSelection(new Set());
 
-			// clear selected topics when moving back to a previous step
-			me.updateTopicSelection(new Set());
+		// need to trim the breadcrumb down to the selection, minus one
+		// minus one because the breadcrumb click handler will push
+		// the appropriate current breadcrumb
+		this.setState( { searchTerm: '', breadcrumb : this.state.breadcrumb.slice(0, bc.step - 1) },
+			() => {
+				bc.onClick();
+			});
+	};
 
-			// need to trim the breadcrumb down to the selection, minus one
-			// minus one because the breadcrumb click handler will push
-			// the appropriate current breadcrumb
-			this.setState( { searchTerm: '', breadcrumb : me.state.breadcrumb.slice(0, bc.step - 1) },
-				() => {
-					bc.onClick();
-				});
-		};
+	renderBreadcrumb () {
+		if(this.state.step === 1) {
+			return;
+		}
 
-		return (<Breadcrumb breadcrumb={this.state.breadcrumb} clickHandler={clickHandler}/>);
+		return (<Breadcrumb breadcrumb={this.state.breadcrumb} clickHandler={this.onBreadcrumbClick}/>);
 	}
 
 	renderTopControls () {
 		return (<div className="discussion-selection-topcontrols">{this.renderSearchBar()}</div>);
 	}
 
-	renderSearchBar () {
-		const me = this, buffered = false;
+	onChange = (value) => {
+		this.setState({ searchTerm: value });
+	}
 
-		const onChange = (value) => {
-			me.setState({ searchTerm: value });
-		};
+	renderSearchBar () {
+		const buffered = false;
 
 		return (<div className="discussion-selection-search">
-			<Search value={this.state.searchTerm} buffered={buffered} onChange={onChange}/>
+			<Search value={this.state.searchTerm} buffered={buffered} onChange={this.onChange}/>
 		</div>);
 	}
 
+	topicSelect = (topic) => {
+		this.onTopicSelect(topic);
+	};
+
 	renderForums () {
 		if(this.state.forums) {
-			const me = this;
-
-			const onTopicSelect = (topic) => {
-				me.onTopicSelect(topic);
-			};
-
 			const filteredDiscussionTopics = filterItemsBySearchTerm(this.state.courseDiscussionTopics, this.state.searchTerm);
 
 			return (
 				<div>
 					<ItemList items={this.state.forums} headerText="Your Discussions" onSelect={this.onForumSelect} searchTerm={this.state.searchTerm}/>
-					<div className="discussion-selection-course-discussions"><TopicList topics={filteredDiscussionTopics} headerText="Choose a Discussion" onTopicSelect={onTopicSelect}
+					<div className="discussion-selection-course-discussions"><TopicList topics={filteredDiscussionTopics} headerText="Choose a Discussion" onTopicSelect={this.topicSelect}
 						searchTerm={this.state.searchTerm} selectedTopics={this.state.selectedTopics}/>
 					</div>
 				</div>
@@ -245,13 +241,7 @@ export default class DiscussionSelectionEditor extends React.Component {
 			return null;
 		}
 
-		const me = this;
-
-		const onTopicSelect = (topic) => {
-			me.onTopicSelect(topic);
-		};
-
-		return (<TopicList topics={this.state.topics} headerText="Choose a Discussion" onTopicSelect={onTopicSelect}
+		return (<TopicList topics={this.state.topics} headerText="Choose a Discussion" onTopicSelect={this.topicSelect}
 			selectedTopics={this.state.selectedTopics} searchTerm={this.state.searchTerm}/>);
 	}
 

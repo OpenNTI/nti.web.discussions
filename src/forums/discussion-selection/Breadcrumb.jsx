@@ -2,6 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+class BreadcrumbPart extends React.Component {
+	static propTypes = {
+		part: PropTypes.object.isRequired,
+		onClick: PropTypes.func,
+		inactive: PropTypes.bool
+	}
+
+	constructor (props) {
+		super(props);
+	}
+
+	onPartClick = () => {
+		const { onClick, part, inactive } = this.props;
+
+		onClick && onClick(part, inactive);
+	}
+
+	render () {
+		const { part, inactive } = this.props;
+
+		const cls = cx('discussion-selection-breadcrumb', { inactive });
+
+		return (<span onClick={this.onPartClick} className={cls}>{part.title}</span>);
+	}
+}
+
+
 export default class Breadcrumb extends React.Component {
 	static propTypes = {
 		breadcrumb: PropTypes.arrayOf(PropTypes.object),
@@ -12,23 +39,22 @@ export default class Breadcrumb extends React.Component {
 		super(props);
 	}
 
+	onBreadcrumbPartClick = (part, inactive) => {
+		const { clickHandler } = this.props;
+
+		if(inactive) {
+			return;
+		}
+
+		clickHandler && clickHandler(part);
+	};
+
 	renderBreadcrumbPart (bc, clickHandler, inactive) {
 		if(!bc.isHidden) {
-			const handler = () => {
-				if(inactive) {
-					return;
-				}
-
-				clickHandler(bc);
-			};
-
-			const className = cx({
-				'discussion-selection-breadcrumb' : true,
-				inactive: inactive
-			});
-
-			return (<span onClick={handler} className={className} key={bc.step + '--' + bc.title}>{bc.title}</span>);
+			return <BreadcrumbPart key={bc.step + '--' + bc.title} part={bc} onClick={this.onBreadcrumbPartClick} inactive={inactive}/>;
 		}
+
+		return null;
 	}
 
 	render () {

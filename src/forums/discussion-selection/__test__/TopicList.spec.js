@@ -1,7 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import TopicList from '../TopicList';
+
+const onTopicSelect = jest.fn();
 
 /* eslint-env jest */
 describe('Topic list test', () => {
@@ -22,9 +24,7 @@ describe('Topic list test', () => {
 
 		const selectedTopics = new Set();
 
-		const onTopicSelect = () => { };
-
-		const topicListCmp = shallow(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
+		const topicListCmp = mount(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
 		expect(topicListCmp.find('.discussion-selection-topic').length).toBe(3);
 
 		topicListCmp.find('.discussion-selection-topic').first().simulate('click');

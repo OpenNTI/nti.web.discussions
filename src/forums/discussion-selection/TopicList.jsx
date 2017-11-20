@@ -5,6 +5,43 @@ import cx from 'classnames';
 import { filterItemsBySearchTerm } from './utils';
 import HighlightedContent from './HighlightedContent';
 
+class Topic extends React.Component {
+	static propTypes = {
+		topic: PropTypes.object.isRequired,
+		onClick: PropTypes.func,
+		searchTerm: PropTypes.string,
+		selected: PropTypes.bool
+	}
+
+	constructor (props) {
+		super(props);
+	}
+
+	onTopicClick = () => {
+		const { topic, onClick } = this.props;
+
+		onClick && onClick(topic);
+	}
+
+	render () {
+		const { topic, selected, searchTerm } = this.props;
+
+		const cls = cx('discussion-selection-topic', { selected });
+
+		const img = topic.get && topic.get('icon')
+			? topic.get('icon')
+			: '/app/resources/images/elements/discussion-icon.png';
+
+		return (<div key={topic.Creator + '--' + topic.title} className={cls} onClick={this.onTopicClick}>
+			<div className="discussion-selection-avatar" style={{
+				backgroundImage: 'url("' + img + '")'
+			}}/>
+			<div className="discussion-selection-topic-title"><HighlightedContent content={topic.title} term={searchTerm}/></div>
+		</div>);
+	}
+}
+
+
 export default class TopicList extends React.Component {
 	static propTypes = {
 		topics: PropTypes.arrayOf(PropTypes.object),
@@ -18,24 +55,23 @@ export default class TopicList extends React.Component {
 		super(props);
 	}
 
+	onTopicClick = (topic) => {
+		const { onTopicSelect } = this.props;
+
+		onTopicSelect && onTopicSelect(topic);
+	}
+
 	renderTopic (topic, onTopicSelect, searchTerm) {
-		const clickHandler = () => { onTopicSelect(topic); };
+		const { selectedTopics } = this.props;
 
-		let className = cx({
-			'discussion-selection-topic': true,
-			'selected': this.props.selectedTopics.has(topic)
-		});
-
-		const img = topic.get && topic.get('icon')
-			? topic.get('icon')
-			: '/app/resources/images/elements/discussion-icon.png';
-
-		return (<div key={topic.Creator + '--' + topic.title} className={className} onClick={clickHandler}>
-			<div className="discussion-selection-avatar" style={{
-				backgroundImage: 'url("' + img + '")'
-			}}/>
-			<div className="discussion-selection-topic-title"><HighlightedContent content={topic.title} term={searchTerm}/></div>
-		</div>);
+		return (
+			<Topic key={topic.Creator + '--' + topic.title}
+				topic={topic}
+				onClick={this.onTopicClick}
+				searchTerm={searchTerm}
+				selected={selectedTopics.has(topic)}
+			/>
+		);
 	}
 
 	renderTopics () {

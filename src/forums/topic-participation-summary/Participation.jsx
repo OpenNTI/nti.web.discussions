@@ -28,7 +28,7 @@ export default class Participation extends React.Component {
 	static propTypes = {
 		participation: PropTypes.object.isRequired,
 		userID: PropTypes.string,
-		gotoComment: PropTypes.object
+		gotoComment: PropTypes.func
 	}
 
 
