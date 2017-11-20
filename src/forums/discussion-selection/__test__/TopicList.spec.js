@@ -4,8 +4,10 @@ import { mount } from 'enzyme';
 
 import TopicList from '../TopicList';
 
+const sleep = x => new Promise(a => setTimeout(a, x));
+
 describe('Topic list test', () => {
-	test('Simple list', () => {
+	test('Simple list', async () => {
 		const student = {
 			alias: 'student'
 		};
@@ -22,13 +24,15 @@ describe('Topic list test', () => {
 
 		const selectedTopics = new Set();
 
+		const onTopicSelect = jest.fn();
+
 		const topicListCmp = mount(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
 		expect(topicListCmp.find('.discussion-selection-topic').length).toBe(3);
 
 		topicListCmp.find('.discussion-selection-topic').first().simulate('click');
 
-		setTimeout(function () {
-			expect(onTopicSelect).toHaveBeenCalled();
-		},500);
+		await sleep(500);
+
+		expect(onTopicSelect).toHaveBeenCalled();
 	});
 });

@@ -14,6 +14,8 @@ const STEPS = {
 	TOPIC_LIST: 4
 };
 
+
+//FIXME: Spit this appart into multiple small components.
 export default class DiscussionSelectionEditor extends React.Component {
 	static propTypes = {
 		bundle: PropTypes.object,
@@ -138,7 +140,7 @@ export default class DiscussionSelectionEditor extends React.Component {
 		this.setState( { breadcrumb: breadcrumb }, () => { this.loadTopics(board, ''); });
 	}
 
-	onTopicSelect (topic) {
+	onTopicSelect = (topic) => {
 		let selectedTopics = this.state.selectedTopics;
 
 		// leaving this as set operations so that multi-selection is easily
@@ -179,30 +181,35 @@ export default class DiscussionSelectionEditor extends React.Component {
 			() => {
 				bc.onClick();
 			});
-	};
+	}
 
 	renderBreadcrumb () {
 		if(this.state.step === 1) {
 			return;
 		}
 
-		return (<Breadcrumb breadcrumb={this.state.breadcrumb} clickHandler={this.onBreadcrumbClick}/>);
+		return (
+			<Breadcrumb breadcrumb={this.state.breadcrumb} onClick={this.onBreadcrumbClick}/>
+		);
 	}
 
 	renderTopControls () {
 		return (<div className="discussion-selection-topcontrols">{this.renderSearchBar()}</div>);
 	}
 
-	onChange = (value) => {
+	onSearchBarChange = (value) => {
 		this.setState({ searchTerm: value });
 	}
 
 	renderSearchBar () {
 		const buffered = false;
 
-		return (<div className="discussion-selection-search">
-			<Search value={this.state.searchTerm} buffered={buffered} onChange={this.onChange}/>
-		</div>);
+
+		return (
+			<div className="discussion-selection-search">
+				<Search value={this.state.searchTerm} buffered={buffered} onChange={this.onSearchBarChange}/>
+			</div>
+		);
 	}
 
 	topicSelect = (topic) => {
@@ -216,8 +223,14 @@ export default class DiscussionSelectionEditor extends React.Component {
 			return (
 				<div>
 					<ItemList items={this.state.forums} headerText="Your Discussions" onSelect={this.onForumSelect} searchTerm={this.state.searchTerm}/>
-					<div className="discussion-selection-course-discussions"><TopicList topics={filteredDiscussionTopics} headerText="Choose a Discussion" onTopicSelect={this.topicSelect}
-						searchTerm={this.state.searchTerm} selectedTopics={this.state.selectedTopics}/>
+					<div className="discussion-selection-course-discussions">
+						<TopicList
+							topics={filteredDiscussionTopics}
+							headerText="Choose a Discussion"
+							onTopicSelect={this.onTopicSelect}
+							searchTerm={this.state.searchTerm}
+							selectedTopics={this.state.selectedTopics}
+						/>
 					</div>
 				</div>
 			);
@@ -236,13 +249,21 @@ export default class DiscussionSelectionEditor extends React.Component {
 		}
 	}
 
+
 	renderTopics () {
 		if(!this.state.topics) {
 			return null;
 		}
 
-		return (<TopicList topics={this.state.topics} headerText="Choose a Discussion" onTopicSelect={this.topicSelect}
-			selectedTopics={this.state.selectedTopics} searchTerm={this.state.searchTerm}/>);
+		return (
+			<TopicList
+				topics={this.state.topics}
+				headerText="Choose a Discussion"
+				onTopicSelect={this.onTopicSelect}
+				selectedTopics={this.state.selectedTopics}
+				searchTerm={this.state.searchTerm}
+			/>
+		);
 	}
 
 	renderBody () {

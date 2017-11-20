@@ -12,7 +12,9 @@ describe('Breadcrumb test', () => {
 			{ step: 3, title: 'Last' }
 		];
 
-		let bcCmp = mount(<Breadcrumb breadcrumb={breadcrumb} clickHandler={clickHandler}/>);
+		function clickHandler () { }
+
+		let bcCmp = mount(<Breadcrumb breadcrumb={breadcrumb} onClick={clickHandler}/>);
 		const allBCs = bcCmp.find('.discussion-selection-breadcrumb');
 
 		expect(allBCs.length).toBe(3);
@@ -39,7 +41,6 @@ describe('Breadcrumb test', () => {
 		];
 
 		const bcCmp = mount(<Breadcrumb breadcrumb={breadcrumb}/>);
-
 		const allBCs = bcCmp.find('.discussion-selection-breadcrumb');
 
 		// only two items, since 'Second' was hidden, it should not be rendered

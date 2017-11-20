@@ -2,81 +2,91 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-class BreadcrumbPart extends React.Component {
+
+class Part extends React.Component {
 	static propTypes = {
-		part: PropTypes.object.isRequired,
+		inactive: PropTypes.bool,
+		item: PropTypes.object,
 		onClick: PropTypes.func,
-		inactive: PropTypes.bool
 	}
 
-	constructor (props) {
-		super(props);
-	}
+	onClick = () => {
+		const {inactive, onClick, item} = this.props;
+		if(inactive) {
+			return;
+		}
 
-	onPartClick = () => {
-		const { onClick, part, inactive } = this.props;
-
-		onClick && onClick(part, inactive);
+		onClick(item);
 	}
 
 	render () {
-		const { part, inactive } = this.props;
+		const {item, inactive} = this.props;
+		if(item.isHidden) {
+			return null;
+		}
 
-		const cls = cx('discussion-selection-breadcrumb', { inactive });
+		const className = cx({
+			'discussion-selection-breadcrumb' : true,
+			inactive: inactive
+		});
 
-		return (<span onClick={this.onPartClick} className={cls}>{part.title}</span>);
+		return (
+			<span
+				onClick={this.onClick}
+				className={className}
+			>
+				{item.title}
+			</span>
+		);
 	}
 }
+
 
 
 export default class Breadcrumb extends React.Component {
 	static propTypes = {
 		breadcrumb: PropTypes.arrayOf(PropTypes.object),
-		clickHandler: PropTypes.func
+		onClick: PropTypes.func
 	}
 
 	constructor (props) {
 		super(props);
 	}
 
-	onBreadcrumbPartClick = (part, inactive) => {
-		const { clickHandler } = this.props;
-
-		if(inactive) {
-			return;
-		}
-
-		clickHandler && clickHandler(part);
-	};
-
-	renderBreadcrumbPart (bc, clickHandler, inactive) {
-		if(!bc.isHidden) {
-			return <BreadcrumbPart key={bc.step + '--' + bc.title} part={bc} onClick={this.onBreadcrumbPartClick} inactive={inactive}/>;
-		}
-
-		return null;
-	}
-
 	render () {
-		const { breadcrumb, clickHandler } = this.props;
+		const { breadcrumb, onClick } = this.props;
 
 		if(!breadcrumb || breadcrumb.length === 0) {
 			return (<div/>);
 		}
 
-		let components = [];
+		const getKey = i => `${i.step}--${i.title}`;
+		const components = [];
 
 		// don't worry about rendering hidden breadcrumbs.. those only exist
 		// for accurate step tracking in the container
 		const filteredBreadcrumbs = breadcrumb.filter((bc) => { return !bc.isHidden; });
 
 		for(let i = 0; i < filteredBreadcrumbs.length - 1; i++) {
-			components.push(this.renderBreadcrumbPart(filteredBreadcrumbs[i], clickHandler));
-			components.push(<span key={i + '--separator'} className="discussion-selection-breadcrumb-separator">/</span>);
+
+			const item = filteredBreadcrumbs[i];
+			components.push(
+				<Part key={getKey(item)} item={item} onClick={onClick}/>
+			);
+			components.push(
+				<span key={i + '--separator'} className="discussion-selection-breadcrumb-separator">/</span>
+			);
+
 		}
 
-		components.push(this.renderBreadcrumbPart(filteredBreadcrumbs[filteredBreadcrumbs.length - 1], clickHandler, true));
+		const lastItem = filteredBreadcrumbs[filteredBreadcrumbs.length - 1];
 
-		return (<div className="discussion-selection-breadcrumb-container">{components}</div>);
+		components.push(
+			<Part key={getKey(lastItem)} item={lastItem} onClick={onClick} inactive/>
+		);
+
+		return (
+			<div className="discussion-selection-breadcrumb-container">{components}</div>
+		);
 	}
 }

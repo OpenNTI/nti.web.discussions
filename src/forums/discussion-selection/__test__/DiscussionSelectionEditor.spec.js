@@ -5,6 +5,8 @@ import { TestUtils } from 'nti-web-client';
 
 import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 
+const sleep = (n) => new Promise(a => setTimeout(a, n));
+
 describe('Discussion selection editor', () => {
 	test('Test skip ahead', () => {
 		const forums = [
@@ -37,6 +39,8 @@ describe('Discussion selection editor', () => {
 			}
 		};
 
+		function onDiscussionTopicSelect (topic) {}
+
 		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
 
 		editor.setState({ step: 1, forums: forums });
@@ -51,7 +55,7 @@ describe('Discussion selection editor', () => {
 		expect(editor.text()).toMatch(/Board 2/);
 	});
 
-	test('Test editor steps', (done) => {
+	test('Test editor steps', async () => {
 		const forums = [
 			{ title: 'Forum 1', children:
 				[
@@ -107,6 +111,8 @@ describe('Discussion selection editor', () => {
 
 		});
 
+		const onDiscussionTopicSelect = jest.fn();
+
 		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
 
 		editor.setState({ step: 1, forums: forums });
@@ -135,18 +141,16 @@ describe('Discussion selection editor', () => {
 		editor.find('.discussion-selection-item').first().simulate('click');
 		editor = editor.update();
 
-		setImmediate( () => {
-			expect(editor.state().step).toBe(4);
+		await sleep(500);
 
-			editor.find('.discussion-selection-topic').first().simulate('click');
+		expect(editor.state().step).toBe(4);
 
-			// verify that the component's provided callback is called
-			// when a topic is selected
-			setTimeout(function () {
-				expect(onDiscussionTopicSelect).toHaveBeenCalled();
-			},500);
+		editor.find('.discussion-selection-topic').first().simulate('click');
 
-			done();
-		});
+		await sleep(500);
+
+		// verify that the component's provided callback is called
+		// when a topic is selected
+		expect(onDiscussionTopicSelect).toHaveBeenCalled();
 	});
 });
