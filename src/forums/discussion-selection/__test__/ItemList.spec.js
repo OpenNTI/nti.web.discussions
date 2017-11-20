@@ -1,9 +1,9 @@
+/* eslint-env jest */
 import React from 'react';
 import { mount } from 'enzyme';
 
 import ItemList from '../ItemList';
 
-/* eslint-env jest */
 describe('Item list test', () => {
 	test('Simple list', () => {
 		const items = [

@@ -1,9 +1,9 @@
+/* eslint-env jest */
 import React from 'react';
 import { shallow } from 'enzyme';
 
 import HighlightedContent from '../HighlightedContent';
 
-/* eslint-env jest */
 describe('Highlighted content', () => {
 	test('Single hit', () => {
 		const highlighted = shallow(<HighlightedContent content="abcdefg" term="cd"/>).find('.discussion-selection-highlight');

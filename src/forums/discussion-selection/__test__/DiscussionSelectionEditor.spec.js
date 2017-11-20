@@ -1,12 +1,10 @@
+/* eslint-env jest */
 import React from 'react';
 import { mount } from 'enzyme';
 import { TestUtils } from 'nti-web-client';
 
 import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 
-const onDiscussionTopicSelect = jest.fn();
-
-/* eslint-env jest */
 describe('Discussion selection editor', () => {
 	test('Test skip ahead', () => {
 		const forums = [

@@ -1,11 +1,9 @@
+/* eslint-env jest */
 import React from 'react';
 import { mount } from 'enzyme';
 
 import Breadcrumb from '../Breadcrumb';
 
-const clickHandler = jest.fn();
-
-/* eslint-env jest */
 describe('Breadcrumb test', () => {
 	test('Simple breadcrumb', () => {
 		const breadcrumb = [

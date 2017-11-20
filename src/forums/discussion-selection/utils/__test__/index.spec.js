@@ -1,6 +1,6 @@
+/* eslint-env jest */
 import { filterItemsBySearchTerm } from '../';
 
-/* eslint-env jest */
 describe('Filter items by search term', () => {
 	test('Filter simple list', () => {
 		const original = [

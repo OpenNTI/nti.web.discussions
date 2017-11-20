@@ -1,11 +1,9 @@
+/* eslint-env jest */
 import React from 'react';
 import { mount } from 'enzyme';
 
 import TopicList from '../TopicList';
 
-const onTopicSelect = jest.fn();
-
-/* eslint-env jest */
 describe('Topic list test', () => {
 	test('Simple list', () => {
 		const student = {
