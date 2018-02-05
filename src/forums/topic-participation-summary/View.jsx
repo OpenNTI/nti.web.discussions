@@ -11,7 +11,7 @@ const DEFAULT_TEXT = {
 	noAccess: 'You do not have access to this discussion.'
 };
 
-const t = scoped('TOPIC_PARTICIPATION_SUMMARY', DEFAULT_TEXT);
+const t = scoped('nti-discussions.topic-parcitipation-summary.View', DEFAULT_TEXT);
 
 export default class TopicSummary extends React.Component {
 	static propTypes = {

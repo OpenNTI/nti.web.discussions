@@ -8,7 +8,7 @@ const DEFAULT_TEXT = {
 	join: 'Join the Discussion'
 };
 
-const t = scoped('TOPIC_PARTICIPATION_SUMMARY_TOPIC', DEFAULT_TEXT);
+const t = scoped('nti-discussions.topic-parcitipation-summary.Topic', DEFAULT_TEXT);
 
 export default class Topic extends React.Component {
 	static propTypes = {

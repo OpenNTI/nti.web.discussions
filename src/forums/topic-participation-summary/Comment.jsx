@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	jumpTo: 'Jump to Comment'
 };
 
-const t = scoped('TOPIC_PARCITIPATION_ITEM_COMMENT', DEFAULT_TEXT);
+const t = scoped('nti-discussions.topic-parcitipation-summary.Comment', DEFAULT_TEXT);
 
 export default class Comment extends React.Component {
 	static propTypes = {

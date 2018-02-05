@@ -22,7 +22,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('TOPIC_PARICIPATION_SUMMARY_PARICIPATION', DEFAULT_TEXT);
+const t = scoped('nti-discussions.topic-parcitipation-summary.Paricipation', DEFAULT_TEXT);
 
 export default class Participation extends React.Component {
 	static propTypes = {

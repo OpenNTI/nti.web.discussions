@@ -9,7 +9,7 @@ const DEFAULT_TEXT = {
 	inReplyTo: 'In reply to %(name)s'
 };
 
-const t = scoped('TOPIC_PARTICIPATION_SUMMARY_PARENT_COMMENT', DEFAULT_TEXT);
+const t = scoped('nti-discussions.topic-parcitipation-summary.ParentComment', DEFAULT_TEXT);
 
 export default class ParentComment extends React.Component {
 	static propTypes = {
