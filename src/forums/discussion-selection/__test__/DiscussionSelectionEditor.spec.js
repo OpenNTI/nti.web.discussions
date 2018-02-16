@@ -142,7 +142,7 @@ describe('Discussion selection editor', () => {
 		editor = editor.update();
 
 		await sleep(500);
-
+		editor.update();
 		expect(editor.state().step).toBe(4);
 
 		editor.find('.discussion-selection-topic').first().simulate('click');
