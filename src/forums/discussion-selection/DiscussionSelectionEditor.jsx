@@ -284,11 +284,13 @@ export default class DiscussionSelectionEditor extends React.Component {
 	}
 
 	render () {
-		return(<div>
-			{this.renderTopControls()}
-			{this.renderBreadcrumb()}
+		return(
+			<div>
+				{this.renderTopControls()}
+				{this.renderBreadcrumb()}
 
-			{this.renderBody()}
-		</div>);
+				{this.renderBody()}
+			</div>
+		);
 	}
 }
