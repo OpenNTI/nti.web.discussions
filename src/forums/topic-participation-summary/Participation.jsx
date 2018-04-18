@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
-import {DisplayName} from 'nti-web-commons';
+import {scoped} from '@nti/lib-locale';
+import {DisplayName} from '@nti/web-commons';
 
 import ParticipationItem from './ParticipationItem';
 
@@ -22,7 +22,7 @@ const DEFAULT_TEXT = {
 	}
 };
 
-const t = scoped('nti-discussions.topic-parcitipation-summary.Paricipation', DEFAULT_TEXT);
+const t = scoped('discussions.topic-parcitipation-summary.Paricipation', DEFAULT_TEXT);
 
 export default class Participation extends React.Component {
 	static propTypes = {

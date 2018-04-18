@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Panel} from 'nti-modeled-content';
-import {DisplayName} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Panel} from '@nti/web-modeled-content';
+import {DisplayName} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
 	inReplyTo: 'In reply to %(name)s'
 };
 
-const t = scoped('nti-discussions.topic-parcitipation-summary.ParentComment', DEFAULT_TEXT);
+const t = scoped('discussions.topic-parcitipation-summary.ParentComment', DEFAULT_TEXT);
 
 export default class ParentComment extends React.Component {
 	static propTypes = {

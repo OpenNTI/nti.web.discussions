@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from 'nti-web-client';
-import {Loading, EmptyState} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {getService} from '@nti/web-client';
+import {Loading, EmptyState} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import Topic from './Topic';
 import Participation from './Participation';
@@ -11,7 +11,7 @@ const DEFAULT_TEXT = {
 	noAccess: 'You do not have access to this discussion.'
 };
 
-const t = scoped('nti-discussions.topic-parcitipation-summary.View', DEFAULT_TEXT);
+const t = scoped('discussions.topic-parcitipation-summary.View', DEFAULT_TEXT);
 
 export default class TopicSummary extends React.Component {
 	static propTypes = {

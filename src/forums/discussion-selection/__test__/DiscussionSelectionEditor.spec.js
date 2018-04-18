@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import { mount } from 'enzyme';
-import { TestUtils } from 'nti-web-client';
+import { TestUtils } from '@nti/web-client';
 
 import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 

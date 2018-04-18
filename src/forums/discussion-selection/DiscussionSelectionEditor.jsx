@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Search} from 'nti-web-commons';
+import {Search} from '@nti/web-commons';
 
 import TopicList from './TopicList';
 import ItemList from './ItemList';

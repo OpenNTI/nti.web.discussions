@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel} from 'nti-modeled-content';
-import {Button} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Panel} from '@nti/web-modeled-content';
+import {Button} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
 	join: 'Join the Discussion'
 };
 
-const t = scoped('nti-discussions.topic-parcitipation-summary.Topic', DEFAULT_TEXT);
+const t = scoped('discussions.topic-parcitipation-summary.Topic', DEFAULT_TEXT);
 
 export default class Topic extends React.Component {
 	static propTypes = {

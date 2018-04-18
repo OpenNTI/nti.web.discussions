@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import {Forums} from '../../src';
 
 import 'normalize.css';
-import 'nti-style-common/all.scss';
-import 'nti-web-commons/lib/index.css';
-import 'nti-modeled-content/lib/index.css';
+import '@nti/style-common/all.scss';
+import '@nti/web-commons/lib/index.css';
+import '@nti/web-modeled-content/lib/index.css';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 

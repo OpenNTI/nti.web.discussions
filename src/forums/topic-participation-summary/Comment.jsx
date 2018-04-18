@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel} from 'nti-modeled-content';
-import {Avatar, DisplayName, DateTime} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Panel} from '@nti/web-modeled-content';
+import {Avatar, DisplayName, DateTime} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
 	comments: {
@@ -12,7 +12,7 @@ const DEFAULT_TEXT = {
 	jumpTo: 'Jump to Comment'
 };
 
-const t = scoped('nti-discussions.topic-parcitipation-summary.Comment', DEFAULT_TEXT);
+const t = scoped('discussions.topic-parcitipation-summary.Comment', DEFAULT_TEXT);
 
 export default class Comment extends React.Component {
 	static propTypes = {
