@@ -13,7 +13,7 @@ const STEPS = {
 	BOARD_LIST: 3,
 	TOPIC_LIST: 4
 };
-
+const OTHER = 'Other Discussions';
 
 //FIXME: Spit this appart into multiple small components.
 export default class DiscussionSelectionEditor extends React.Component {
@@ -53,6 +53,8 @@ export default class DiscussionSelectionEditor extends React.Component {
 
 	onForumsLoaded (courseDiscussionTopics, forums) {
 		// initialize breadcrumb for forums list
+		const isSimple = courseDiscussionTopics.length === 0 && forums.length === 1 && forums[0].title === OTHER;
+
 		let newState = { breadcrumb: [{
 			title: 'Forums',
 			step: STEPS.FORUM_LIST,
@@ -65,6 +67,10 @@ export default class DiscussionSelectionEditor extends React.Component {
 		});
 
 		let stateCallback = () => { };
+
+		if (isSimple) {
+			stateCallback = () => { this.onForumSelect(forums[0], true); };
+		}
 
 		newState = { ...newState, step: STEPS.FORUM_LIST, forums: forums, courseDiscussionTopics: modifiedCourseDiscussionTopics };
 
