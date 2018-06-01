@@ -16,7 +16,8 @@ export default
 class ForumCreate extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func,
-		onSubmit: PropTypes.func.isRequired
+		onSubmit: PropTypes.func.isRequired,
+		error: PropTypes.string
 	}
 
 	state = {
@@ -33,7 +34,7 @@ class ForumCreate extends Component {
 	}
 
 	render () {
-		const { onBeforeDismiss } = this.props;
+		const { onBeforeDismiss, error } = this.props;
 		const { title } = this.state;
 
 		const buttons = [
@@ -44,6 +45,7 @@ class ForumCreate extends Component {
 		return (
 			<div className="forum-create-form">
 				<Panels.TitleBar title={t('header')} iconAction={onBeforeDismiss} />
+				{error && <div className="error">{error}</div>}
 				<Label className="forum-title-label" label={t('title')}>
 					<Text
 						className="forum-title"
@@ -58,4 +60,3 @@ class ForumCreate extends Component {
 		);
 	}
 }
-

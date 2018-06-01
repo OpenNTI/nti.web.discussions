@@ -1,3 +1,5 @@
+@import "~@nti/style-common";
+
 .forum-create-form {
 	.forum-title {
 		width: 50%;
@@ -7,5 +9,10 @@
 
 	.forum-title-label span {
 		margin-left: 1.25rem;
+	}
+
+	.error {
+		color: $primary-red;
+		padding: 1.25rem;
 	}
 }
