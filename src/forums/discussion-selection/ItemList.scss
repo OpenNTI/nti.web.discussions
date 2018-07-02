@@ -15,6 +15,13 @@
 	.content {
 		float: left;
 		position: relative;
+		width: calc(100% - 30px);
+
+		> div {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 
 	.arrow-icon {
