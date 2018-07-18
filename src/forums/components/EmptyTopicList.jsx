@@ -1,16 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 
 const DEAFULT_TEXT = {
-	text: 'Create a forum. There are no forums to display.'
+	editorText: 'Create a forum. There are no forums to display.',
+	nonEditorText: 'There are no forums to display.'
 };
 
 const t = scoped('nti.web.disscussions.forums.emptytopiclist', DEAFULT_TEXT);
 
-const EmptyTopicList = () => (
+const EmptyTopicList = ({isEditor}) => (
 	<div className="empty-topic-list">
-		{t('text')}
+		{isEditor ? t('editorText') : t('nonEditorText')}
 	</div>
 );
+
+EmptyTopicList.propTypes = {
+	isEditor: PropTypes.bool
+};
 
 export default EmptyTopicList;
