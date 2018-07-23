@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
-import { Panels, DialogButtons, Input } from '@nti/web-commons';
+import { Panels, DialogButtons, Input, Loading } from '@nti/web-commons';
 
 const { Label, Text } = Input;
 const DEAFULT_TEXT = {
@@ -17,7 +17,8 @@ class ForumCreate extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func,
 		onSubmit: PropTypes.func.isRequired,
-		error: PropTypes.string
+		error: PropTypes.string,
+		loading: PropTypes.bool
 	}
 
 	state = {
@@ -29,17 +30,19 @@ class ForumCreate extends Component {
 	}
 
 	onSubmit = () => {
-		const { onSubmit } = this.props;
-		onSubmit(this.state);
+		const { onSubmit, loading } = this.props;
+		if (!loading) {
+			onSubmit(this.state);
+		}
 	}
 
 	render () {
-		const { onBeforeDismiss, error } = this.props;
+		const { onBeforeDismiss, error, loading } = this.props;
 		const { title } = this.state;
 
 		const buttons = [
 			{ label: t('cancel'), onClick: onBeforeDismiss },
-			{ label: t('submit'), onClick: this.onSubmit }
+			{ label: t('submit'), onClick: this.onSubmit, disabled: loading }
 		];
 
 		return (
@@ -56,6 +59,7 @@ class ForumCreate extends Component {
 					/>
 				</Label>
 				<DialogButtons buttons={buttons} />
+				{loading && <Loading.Mask maskScreen />}
 			</div>
 		);
 	}
