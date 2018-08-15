@@ -1,0 +1,15 @@
+@import "~normalize.css";
+@import "~@nti/style-common/all.scss";
+@import "~@nti/web-commons/lib/index.css";
+@import "~@nti/web-modeled-content/lib/index.css";
+
+body {
+	background-color: black;
+}
+
+#content {
+	max-width: 764px;
+	margin: 0 auto;
+	padding: 1rem;
+	background: white;
+}
