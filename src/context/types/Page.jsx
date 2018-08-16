@@ -83,6 +83,7 @@ class PageInfo extends React.Component {
 		});
 	}
 
+
 	render () {
 		const {renderer} = this.state;
 		return renderer
