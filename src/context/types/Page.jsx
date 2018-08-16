@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import * as Anchors from '@nti/lib-anchors';
 import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-processing';
+import { declareCustomElement } from '@nti/lib-dom';
 import { Models } from '@nti/lib-interfaces';
 import { getService } from '@nti/web-client';
 import Logger from '@nti/util-logger';
@@ -10,6 +11,8 @@ import getRenderer from 'html-reactifier';
 import Registry from './Registry';
 
 import getType from './index';
+
+declareCustomElement('nti:content');
 
 const isWidget = tag => tag === 'widget';
 const objectsToPlaceholders = x => typeof x === 'string' ? x : `<widget id="${x.guid}"/>`;
