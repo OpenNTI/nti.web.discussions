@@ -14,6 +14,8 @@ import getType from './index';
 const isWidget = tag => tag === 'widget';
 const objectsToPlaceholders = x => typeof x === 'string' ? x : `<widget id="${x.guid}"/>`;
 
+const getBlock = x => x && x.nodeType === 3 ? x.parentNode : x;
+
 const logger = Logger.get('lib:components:discussions:context:Page');
 
 export default
@@ -66,7 +68,7 @@ class PageInfo extends React.Component {
 
 		// Expand out the range to include a little more than just selected bits.
 		Anchors.expandRangeToIncludeImmutableBlocks(range);
-		range.setStartBefore(range.startContainer);
+		range.setStartBefore(getBlock(range.startContainer));
 		range.setEndAfter(range.endContainer);
 
 		const {body: node} = partial;
