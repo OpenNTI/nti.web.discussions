@@ -2,6 +2,7 @@
 
 .discussuion-context-markupframe {
 	border: 1px solid $border-grey;
+	overflow: hidden;
 
 	&.bare {
 		border: none;
@@ -13,7 +14,6 @@
 
 	.bar {
 		border-top: 1px solid $border-grey;
-		cursor: default;
 		padding: 10px;
 		background: $panel-background;
 

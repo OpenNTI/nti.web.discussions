@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import * as Anchors from '@nti/lib-anchors';
 import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-processing';
 import { declareCustomElement } from '@nti/lib-dom';
@@ -84,10 +85,13 @@ class PageInfo extends React.Component {
 		// pass the partial content to our widget / body builder
 		const {widgets, parts} = buildContentBody(partial, await getService());
 
+		const widgetOnly = parts.filter(x => x).every(x => typeof x === 'object');
+
 		// Now we have a map of widgets and our content parts chunked, we can render the content with html-reactifier...
 		const html = parts.map(objectsToPlaceholders).join('');
 		this.setState({
 			widgets,
+			widgetOnly,
 			styles,
 			renderer: getRenderer(html, isWidget)
 		});
@@ -95,10 +99,10 @@ class PageInfo extends React.Component {
 
 
 	render () {
-		const {renderer, styles = []} = this.state;
+		const {renderer, styles = [], widgetOnly} = this.state;
 		return !renderer
 			? null : (
-				<NTIContent>
+				<NTIContent className={cx('discussion-context-view-pageinfo', 'snippet', {'only-widget': widgetOnly})}>
 					{styles.map((x, i) => (
 						<style scoped key={i}>{x}</style>
 					))}
@@ -126,6 +130,13 @@ class PageInfo extends React.Component {
 }
 
 
-function NTIContent (props) {
-	return React.createElement('nti:content', props);
+NTIContent.propTypes = {
+	className: PropTypes.string
+};
+function NTIContent ({ className, ...props }) {
+	return React.createElement('nti:content', {
+		is: 'div', //We are using a custom element that mimics a div
+		class: className, // react can't map custom element's attributes
+		...props
+	});
 }
