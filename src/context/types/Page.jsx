@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Anchors from '@nti/lib-anchors';
-import { rawContent } from '@nti/lib-commons';
 import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-processing';
 import { Models } from '@nti/lib-interfaces';
 import { getService } from '@nti/web-client';
