@@ -9,6 +9,8 @@ import getRenderer from 'html-reactifier';
 
 import Registry from './Registry';
 
+import getType from './index';
+
 const isWidget = tag => tag === 'widget';
 const objectsToPlaceholders = x => typeof x === 'string' ? x : `<widget id="${x.guid}"/>`;
 
@@ -94,14 +96,17 @@ class PageInfo extends React.Component {
 
 	renderWidget (tagName, {id}) {
 		const {widgets} = this.state;
-		const data = (widgets || {})[id];
+		const widget = (widgets || {})[id];
 
-		if (!data) {
+		if (!widget) {
 			return null;
 		}
 
+		//Pick a widget
+		const Widget = getType(widget);
+
 		return (
-			<div>Hey! {id}</div>
+			<Widget item={widget} />
 		);
 	}
 }

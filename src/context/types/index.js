@@ -5,7 +5,7 @@ import './Page';
 
 export default function getType (item) {
 	try {
-		return (item && Registry.getInstance().getItemFor(item.MimeType)) || Unknown;
+		return (item && Registry.getInstance().getItemFor(item.MimeType || item.type)) || Unknown;
 	}
 	catch(e) {
 		//eslint-disable-next-line

@@ -7,7 +7,7 @@ Unknown.propTypes = {
 export default function Unknown ({item}) {
 	return (
 		<div className="unknown-context-type">
-			Unknown: {item.MimeType || JSON.stringify(item)}
+			Unknown: {item.MimeType || item.type || JSON.stringify(item)}
 		</div>
 	);
 }
