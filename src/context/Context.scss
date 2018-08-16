@@ -1,19 +1,9 @@
 .discussion-context-view {
-	margin: 2rem 0;
-	padding: 10px;
-	overflow: hidden auto;
-	max-height: 400px;
 	box-shadow: 0 0 2px -1px rgba(0, 0, 0, 0.5);
 	background: #fdfdfd;
+	margin: 2rem 0;
 
 	&:empty {
 		display: none;
-	}
-
-	img {
-		max-width: 100%;
-		max-height: 300px;
-		height: auto !important;
-		width: auto !important;
 	}
 }

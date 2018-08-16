@@ -1,0 +1,12 @@
+.discussion-context-view.pageinfo {
+	padding: 10px;
+	overflow: hidden auto;
+	max-height: 400px;
+
+	img {
+		max-width: 100%;
+		max-height: 300px;
+		height: auto !important;
+		width: auto !important;
+	}
+}
