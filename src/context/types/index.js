@@ -1,6 +1,7 @@
 import Registry from './Registry';
 import Unknown from './Unknown';
 
+import './Image';
 import './Page';
 
 export default function getType (item) {

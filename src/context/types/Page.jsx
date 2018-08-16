@@ -75,6 +75,8 @@ class PageInfo extends React.Component {
 
 		// copy out the selected range into our empty document,
 		node.append(range.cloneContents());
+		Array.from(node.querySelectorAll('[href]')).forEach(a => a.removeAttribute('href'));
+		Array.from(node.querySelectorAll('[onClick]')).forEach(a => a.removeAttribute('onClick'));
 
 		// pass the partial content to our widget / body builder
 		const {widgets, parts} = buildContentBody(partial, await getService());

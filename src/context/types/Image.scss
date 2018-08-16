@@ -1,0 +1,66 @@
+@import '~@nti/style-common';
+
+.discussuion-context-markupframe {
+	border: 1px solid $border-grey;
+
+	&.bare {
+		border: none;
+	}
+
+	&.loading {
+		visibility: hidden;
+	}
+
+	.bar {
+		border-top: 1px solid $border-grey;
+		cursor: default;
+		padding: 0 0.875rem 1.25rem;
+		background: $panel-background;
+		min-height: 2.3125rem;
+
+		.image-caption,
+		.image-title {
+			line-height: 1.2rem;
+			font-size: 1rem;
+			font-weight: 600;
+			color: $primary-grey;
+		}
+
+		.image-caption {
+			font-size: 0.875rem;
+			font-weight: normal;
+			color: $secondary-grey;
+		}
+
+		.bar-cell {
+			margin-top: 0.875rem;
+		}
+
+		a.bar-cell {
+			border-left: 1px solid $border-grey;
+		}
+	}
+
+	&.card {
+		overflow: hidden;
+		border: 0;
+
+		a.content-link.related-work-ref {
+			height: 100%;
+			padding: 15px 0 0 165px;
+
+			.file-type.icon {
+				background-size: cover;
+				width: 152px;
+				height: 100%;
+			}
+		}
+
+		img[id], .bar {
+			//This is for anchors
+			visibility: hidden;
+			position: absolute;
+			top: 0;
+		}
+	}
+}
