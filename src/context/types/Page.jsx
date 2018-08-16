@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as Anchors from '@nti/lib-anchors';
 import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-processing';
