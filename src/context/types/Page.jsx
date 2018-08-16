@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import * as Anchors from '@nti/lib-anchors';
 import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-processing';
@@ -50,7 +50,7 @@ class PageInfo extends React.Component {
 		const { item: pageInfo, for: item } = this.props;
 		// we don't want to load all the extra page data (such as notes) so don't use loadPageDescriptor(), we call the
 		// getPageContent() directly and build our own widget map AFTER we locate our range.
-		const { contentRaw } = await getPageContent(pageInfo);
+		const { contentRaw, styles } = await getPageContent(pageInfo);
 		const pageId = pageInfo.getID();
 
 		// create an empty document to hold our snippet
@@ -85,16 +85,23 @@ class PageInfo extends React.Component {
 		const html = parts.map(objectsToPlaceholders).join('');
 		this.setState({
 			widgets,
+			styles,
 			renderer: getRenderer(html, isWidget)
 		});
 	}
 
 
 	render () {
-		const {renderer} = this.state;
-		return renderer
-			? renderer(React, (...args) => this.renderWidget(...args))
-			: null;
+		const {renderer, styles = []} = this.state;
+		return !renderer
+			? null : (
+				<NTIContent>
+					{styles.map((x, i) => (
+						<style scoped key={i}>{x}</style>
+					))}
+					{renderer(React, (...args) => this.renderWidget(...args))}
+				</NTIContent>
+			);
 	}
 
 
@@ -113,4 +120,9 @@ class PageInfo extends React.Component {
 			<Widget item={widget} />
 		);
 	}
+}
+
+
+function NTIContent (props) {
+	return React.createElement('nti:content', props);
 }
