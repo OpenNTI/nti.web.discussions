@@ -6,9 +6,12 @@ import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-pr
 import { Models } from '@nti/lib-interfaces';
 import { getService } from '@nti/web-client';
 import Logger from '@nti/util-logger';
+import getRenderer from 'html-reactifier';
 
 import Registry from './Registry';
 
+const isWidget = tag => tag === 'widget';
+const objectsToPlaceholders = x => typeof x === 'string' ? x : `<widget id="${x.guid}"/>`;
 
 const logger = Logger.get('lib:components:discussions:context:Page');
 
@@ -70,21 +73,35 @@ class PageInfo extends React.Component {
 		// copy out the selected range into our empty document,
 		node.append(range.cloneContents());
 
-		// set the newly generated HTML to state for now (we will skip this step soon)
-		this.setState({html: node.innerHTML});
-
 		// pass the partial content to our widget / body builder
 		const {widgets, parts} = buildContentBody(partial, await getService());
 
 		// Now we have a map of widgets and our content parts chunked, we can render the content with html-reactifier...
-		// Once this is done, we can skip the setState above.
-		logger.debug(widgets, parts);
+		const html = parts.map(objectsToPlaceholders).join('');
+		this.setState({
+			widgets,
+			renderer: getRenderer(html, isWidget)
+		});
 	}
 
 	render () {
-		const {html} = this.state;
+		const {renderer} = this.state;
+		return renderer
+			? renderer(React, (...args) => this.renderWidget(...args))
+			: null;
+	}
+
+
+	renderWidget (tagName, {id}) {
+		const {widgets} = this.state;
+		const data = (widgets || {})[id];
+
+		if (!data) {
+			return null;
+		}
+
 		return (
-			<div {...rawContent(html || '')}/>
+			<div>Hey! {id}</div>
 		);
 	}
 }
