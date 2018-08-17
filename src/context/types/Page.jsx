@@ -72,8 +72,10 @@ class PageInfo extends React.Component {
 
 		// Expand out the range to include a little more than just selected bits.
 		Anchors.expandRangeToIncludeImmutableBlocks(range);
+		if (range.endContainer !== getBlock(range.endContainer)) {
+			range.setEndAfter(range.endContainer);
+		}
 		range.setStartBefore(getBlock(range.startContainer));
-		range.setEndAfter(range.endContainer);
 
 		const {body: node} = partial;
 
