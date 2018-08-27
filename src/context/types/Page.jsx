@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import * as Anchors from '@nti/lib-anchors';
 import { getPageContent, parseHTML, buildContentBody } from '@nti/lib-content-processing';
-import { declareCustomElement } from '@nti/lib-dom';
 import { Models } from '@nti/lib-interfaces';
 import { getService } from '@nti/web-client';
+import { NTIContent } from '@nti/web-commons';
 import Logger from '@nti/util-logger';
 import getRenderer from 'html-reactifier';
 
 import Registry from './Registry';
 
 import getType from './index';
-
-declareCustomElement('nti:content');
 
 const isWidget = tag => tag === 'widget';
 const objectsToPlaceholders = x => typeof x === 'string' ? x : `<widget id="${x.guid}"/>`;
@@ -129,16 +127,4 @@ class PageInfo extends React.Component {
 			<Widget item={widget} />
 		);
 	}
-}
-
-
-NTIContent.propTypes = {
-	className: PropTypes.string
-};
-function NTIContent ({ className, ...props }) {
-	return React.createElement('nti:content', {
-		is: 'div', //We are using a custom element that mimics a div
-		class: className, // react can't map custom element's attributes
-		...props
-	});
 }
