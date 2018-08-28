@@ -37,6 +37,7 @@ export default class Context extends React.Component {
 			this.setState({context: await item.getContextData()});
 
 		} catch (error) {
+			logger.error(error.stack || error.message || error);
 			this.setState({ error });
 		} finally {
 			this.setState({ loading: false });
