@@ -3,6 +3,7 @@ import Unknown from './Unknown';
 
 import './Image';
 import './Page';
+import './RealPageNumber';
 
 export default function getType (item) {
 	try {
