@@ -56,7 +56,7 @@ class PageInfo extends React.Component {
 		const pageId = pageInfo.getID();
 
 		// create an empty document to hold our snippet
-		const partial = document.implementation.createHTMLDocument();
+		const partial = document.implementation.createHTMLDocument('-');//IE requires a title argument
 		// parse the content into a document
 		const fullDoc = await parseHTML(contentRaw);
 
@@ -78,7 +78,7 @@ class PageInfo extends React.Component {
 		const {body: node} = partial;
 
 		// copy out the selected range into our empty document,
-		node.append(range.cloneContents());
+		node.appendChild(range.cloneContents());
 		Array.from(node.querySelectorAll('[href]')).forEach(a => a.removeAttribute('href'));
 		Array.from(node.querySelectorAll('[onClick]')).forEach(a => a.removeAttribute('onClick'));
 
