@@ -42,7 +42,7 @@ ReactDOM.render(
 		<Test/>
 		<div className="test-kitchen">
 			<Forums.TopicParticipationSummary topicID="tag:nextthought.com,2011-10:unknown-OID-0x4e6552:5573657273:Rb83ESkeGSX" />
-		</div>,
+		</div>
 	</React.Fragment>,
 	document.getElementById('content')
 );
