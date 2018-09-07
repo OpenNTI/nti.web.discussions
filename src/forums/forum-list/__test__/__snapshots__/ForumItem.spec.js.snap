@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Forum Item No Discussions - Snapshot 1`] = `
+<li
+  className="forum-item-li"
+>
+  <div
+    className="nti-link-to-path blockLink"
+    to="#"
+  >
+    <span
+      className="title"
+    >
+      Forum
+    </span>
+    <div
+      className="meta"
+    >
+      <span
+        className="see-all count"
+      >
+        No Discussions
+      </span>
+    </div>
+    <span
+      className="arrow-right"
+    />
+  </div>
+</li>
+`;
