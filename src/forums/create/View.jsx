@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
-import { Panels, DialogButtons, Input, Loading } from '@nti/web-commons';
+import { Panels, DialogButtons, Input, Loading, Prompt } from '@nti/web-commons';
 
 const { Label, Text } = Input;
 const DEAFULT_TEXT = {
@@ -11,9 +11,9 @@ const DEAFULT_TEXT = {
 	cancel: 'Cancel'
 };
 const t = scoped('nti.web.disscussions.forums.create', DEAFULT_TEXT);
+const { Dialog } = Prompt;
 
-export default
-class ForumCreate extends Component {
+export default class ForumCreate extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func,
 		onSubmit: PropTypes.func.isRequired,
@@ -46,21 +46,23 @@ class ForumCreate extends Component {
 		];
 
 		return (
-			<div className="forum-create-form">
-				<Panels.TitleBar title={t('header')} iconAction={onBeforeDismiss} />
-				{error && <div className="error">{error}</div>}
-				<Label className="forum-title-label" label={t('title')}>
-					<Text
-						className="forum-title"
-						value={title}
-						onChange={(value) => this.onChange('title', value)}
-						name="title"
-						required
-					/>
-				</Label>
-				<DialogButtons buttons={buttons} />
-				{loading && <Loading.Mask maskScreen />}
-			</div>
+			<Dialog>
+				<div className="forum-create-form">
+					<Panels.TitleBar title={t('header')} iconAction={onBeforeDismiss} />
+					{error && <div className="error">{error}</div>}
+					<Label className="forum-title-label" label={t('title')}>
+						<Text
+							className="forum-title"
+							value={title}
+							onChange={(value) => this.onChange('title', value)}
+							name="title"
+							required
+						/>
+					</Label>
+					<DialogButtons buttons={buttons} />
+					{loading && <Loading.Mask maskScreen />}
+				</div>
+			</Dialog>
 		);
 	}
 }
