@@ -58,3 +58,11 @@ export const binDiscussions = (section, parent) => {
 
 	return bins;
 };
+
+
+export const getFirstForum = (items) => {
+	const parts = items[Object.keys(items)[0]];
+	const part = parts && (parts.Section || parts.Parent);
+	const forums = part && part.forums;
+	return forums && forums[0];
+};
