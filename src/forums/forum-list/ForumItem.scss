@@ -8,6 +8,19 @@
     	border-bottom: none;
 	}
 
+	&.active {
+		background: #3fb3f6;
+		box-shadow: inset 3px 0 0 0 #107eed;
+
+		.title {
+			color: white;
+		}
+
+		.meta {
+			color: white;
+		}
+	}
+
 	.title {
 		display: block;
 		font-size: 1rem;

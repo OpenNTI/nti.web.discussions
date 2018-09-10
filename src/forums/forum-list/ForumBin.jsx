@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ForumBoard from './ForumBoard';
 
-export default function ForumBin ({ title, bin }) {
+export default function ForumBin ({ title, bin, activeForum }) {
 	return (
 		<li className="bin">
 			{title && <h2 className="bin-title">{title}</h2>}
@@ -14,6 +14,7 @@ export default function ForumBin ({ title, bin }) {
 							title={!title && key === 'Section' && boards.length === 1 ? '' : key}
 							board={bin[key]}
 							key={key}
+							activeForum={activeForum}
 						/>
 					))
 				}
@@ -40,5 +41,7 @@ ForumBin.propTypes = {
 	/**
 	* The localized title for this bin (e.g. "Enrolled For-Credit")
 	*/
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
+
+	activeForum: PropTypes.string
 };

@@ -4,8 +4,11 @@ import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 
+import ForumCreate from '../create';
+
 import Store from './Store';
 import ForumBin from './ForumBin';
+import { getFirstForum } from './utils';
 
 const DEFAULT_TEXT = {
 	forcredit: 'Enrolled For-Credit',
@@ -28,12 +31,40 @@ class ForumListView extends React.Component {
 		bundle: PropTypes.shape({
 			getDiscussions: PropTypes.func.isRequired,
 			getID: PropTypes.func.isRequired
-		}).isRequired,
+		}),
 		isSimple: PropTypes.bool,
 		items: PropTypes.object,
 		loading: PropTypes.bool,
 		loaded: PropTypes.bool,
-		hasForums: PropTypes.bool
+		hasForums: PropTypes.bool,
+		activeForum: PropTypes.string,
+		setActiveForum: PropTypes.func
+	}
+
+	state = {
+		showCreate: false
+	}
+
+	componentDidMount () {
+		this.setActiveForum();
+	}
+
+	componentDidUpdate (prevProps, prevState) {
+		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true) {
+			this.setActiveForum();
+		}
+	}
+
+	setActiveForum () {
+		const { items, hasForums, setActiveForum } = this.props;
+		if (items && hasForums && setActiveForum) {
+			this.props.setActiveForum(getFirstForum(items));
+		}
+	}
+
+	toggleCreateForum = () => {
+		const { showCreate } = this.state;
+		this.setState({ showCreate: !showCreate });
 	}
 
 	canCreateForum () {
@@ -44,15 +75,15 @@ class ForumListView extends React.Component {
 	renderCreate () {
 		const { isSimple } = this.props;
 		if (this.canCreateForum() && isSimple) {
-			return <LinkTo.Path className="action-link create-forum" to="/newforum/">{t('create')}</LinkTo.Path>;
-		} else {
-			return null;
+			return <div className="action-link create-forum" onClick={this.toggleCreateForum}>{t('create')}</div>;
 		}
+
+		return null;
 	}
 
 	render () {
-		const { items, loading, hasForums } = this.props;
-
+		const { items, loading, hasForums, activeForum } = this.props;
+		const { showCreate } = this.state;
 		return (
 			<div className="discussion-forum-list">
 				{loading && <Loading.Mask maskScreen message="Loading..." />}
@@ -64,6 +95,7 @@ class ForumListView extends React.Component {
 									title={key.toLowerCase() === 'other' && bins.length === 1 ? '' : t(key.toLowerCase())}
 									bin={items[key]}
 									key={key}
+									activeForum={activeForum}
 								/>
 							))
 						}
@@ -74,6 +106,7 @@ class ForumListView extends React.Component {
 					</div>
 				)}
 				{this.renderCreate()}
+				{showCreate && <ForumCreate onBeforeDismiss={this.toggleCreateForum} />}
 			</div>
 		);
 	}

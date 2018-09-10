@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
 import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
+import cx from 'classnames';
 
 const DEFAULT_TEXT = {
 	count: {
@@ -17,7 +18,11 @@ const t = scoped('forums.topic', DEFAULT_TEXT);
 
 export default class ForumItem extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
+		item: PropTypes.shape({
+			getRecentActivity: PropTypes.func,
+			title: PropTypes.string
+		}),
+		isActive: PropTypes.bool
 	}
 
 	state = {
@@ -47,10 +52,11 @@ export default class ForumItem extends React.Component {
 
 	render () {
 		let { totalItemCount, loading } = this.state;
-		let { item } = this.props;
+		let { item, isActive } = this.props;
+		const forumItemClassname = cx('forum-item-li', { active: isActive });
 
 		return (
-			<li className="forum-item-li">
+			<li className={forumItemClassname}>
 				{loading ? (
 					<Loading.Ellipse />
 				) : (
