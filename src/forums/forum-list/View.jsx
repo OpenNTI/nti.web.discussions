@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import { LinkTo } from '@nti/web-routing';
+import { Models } from '@nti/lib-interfaces';
 
-import ForumCreate from '../create';
+import ForumCreate from '../forum-editor';
 
 import Store from './Store';
 import ForumBin from './ForumBin';
@@ -49,10 +49,16 @@ class ForumListView extends React.Component {
 		this.setActiveForum();
 	}
 
-	componentDidUpdate (prevProps, prevState) {
+	componentDidUpdate (prevProps) {
 		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true) {
 			this.setActiveForum();
 		}
+	}
+
+	createForum = async (newForum) => {
+		const { bundle: { Discussions } } = this.props;
+		await Discussions.createForum({ ...newForum, MimeType: Models.forums.Forum.MimeTypes[1] });
+		this.setState({ showCreate: false });
 	}
 
 	setActiveForum () {
@@ -67,14 +73,11 @@ class ForumListView extends React.Component {
 		this.setState({ showCreate: !showCreate });
 	}
 
-	canCreateForum () {
-		const { bundle } = this.props;
-		return bundle && bundle.Discussions && bundle.Discussions.hasLink('add');
-	}
-
 	renderCreate () {
-		const { isSimple } = this.props;
-		if (this.canCreateForum() && isSimple) {
+		const { isSimple, bundle } = this.props;
+		const canCreateForum = bundle && bundle.Discussions && bundle.Discussions.hasLink('add');
+
+		if (canCreateForum && isSimple) {
 			return <div className="action-link create-forum" onClick={this.toggleCreateForum}>{t('create')}</div>;
 		}
 
@@ -84,6 +87,7 @@ class ForumListView extends React.Component {
 	render () {
 		const { items, loading, hasForums, activeForum } = this.props;
 		const { showCreate } = this.state;
+
 		return (
 			<div className="discussion-forum-list">
 				{loading && <Loading.Mask maskScreen message="Loading..." />}
@@ -106,7 +110,7 @@ class ForumListView extends React.Component {
 					</div>
 				)}
 				{this.renderCreate()}
-				{showCreate && <ForumCreate onBeforeDismiss={this.toggleCreateForum} />}
+				{showCreate && <ForumCreate onBeforeDismiss={this.toggleCreateForum} onSubmit={this.createForum} />}
 			</div>
 		);
 	}

@@ -5,6 +5,8 @@ import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
+import Editor from '../forum-editor';
+
 const DEFAULT_TEXT = {
 	count: {
 		zero: 'No Discussions',
@@ -19,16 +21,18 @@ const t = scoped('forums.topic', DEFAULT_TEXT);
 export default class ForumItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
-			getRecentActivity: PropTypes.func,
-			title: PropTypes.string
-		}),
+			getRecentActivity: PropTypes.func.isRequired,
+			title: PropTypes.string.isRequired,
+			edit: PropTypes.func.isRequired
+		}).isRequired,
 		isActive: PropTypes.bool
 	}
 
 	state = {
 		loading: true,
 		showRecentActivity: false,
-		recentActivity: []
+		recentActivity: [],
+		showEditor: false
 	}
 
 	componentDidMount () {
@@ -50,10 +54,20 @@ export default class ForumItem extends React.Component {
 		});
 	}
 
+	onSubmit = (payload) => {
+		this.props.item.edit(payload);
+		this.setState({ showEditor: false });
+	}
+
+	toggleEditor = () => {
+		this.setState({ showEditor: !this.state.showEditor });
+	}
+
 	render () {
-		let { totalItemCount, loading } = this.state;
+		let { totalItemCount, loading, showEditor } = this.state;
 		let { item, isActive } = this.props;
 		const forumItemClassname = cx('forum-item-li', { active: isActive });
+		const canEdit = item.hasLink('edit');
 
 		return (
 			<li className={forumItemClassname}>
@@ -61,13 +75,20 @@ export default class ForumItem extends React.Component {
 					<Loading.Ellipse />
 				) : (
 					<LinkTo.Object object={item} className="blockLink">
-						<span className="title">{item.title}</span>
-						<div className="meta">
-							<span className="see-all count">{t('count', { count: totalItemCount })}</span>
+						<div className="item-container">
+							<div className="item-main">
+								<span className="title">{item.title}</span>
+								<div className="meta">
+									<span className="see-all count">{t('count', { count: totalItemCount })}</span>
+								</div>
+							</div>
+							<div className="forum-item-edit" onClick={this.toggleEditor}>
+								<i className="icon-edit" />
+							</div>
 						</div>
-						<span className="arrow-right" />
 					</LinkTo.Object>
 				)}
+				{showEditor && canEdit && <Editor title={item.title} onSubmit={this.onSubmit} onBeforeDismiss={this.toggleEditor} />}
 			</li>
 		);
 	}
