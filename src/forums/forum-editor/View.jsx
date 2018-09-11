@@ -13,16 +13,25 @@ const DEAFULT_TEXT = {
 const t = scoped('nti.web.disscussions.forums.create', DEAFULT_TEXT);
 const { Dialog } = Prompt;
 
-export default class ForumCreate extends Component {
+export default class ForumEditor extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func,
 		onSubmit: PropTypes.func.isRequired,
 		error: PropTypes.string,
-		loading: PropTypes.bool
+		loading: PropTypes.bool,
+		title: PropTypes.string,
+
 	}
 
-	state = {
-		title: '',
+	static defaultProps = {
+		title: ''
+	}
+
+	constructor (props) {
+		super(props);
+		this.state = {
+			title: props.title
+		};
 	}
 
 	onChange = (name, value) => {
