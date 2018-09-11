@@ -11,30 +11,54 @@
 	&.active {
 		background: #3fb3f6;
 		box-shadow: inset 3px 0 0 0 #107eed;
+		.item-container {
+			.item-main {
+				.title {
+					color: white;
+				}
 
-		.title {
-			color: white;
-		}
+				.meta {
+					color: white;
+				}
+			}
 
-		.meta {
-			color: white;
+			.forum-item-edit {
+				color: white;
+			}
 		}
 	}
 
-	.title {
-		display: block;
-		font-size: 1rem;
-		color: $primary-grey;
-		font-family: "Open Sans Condensed";
-		font-weight: 600;
-	}
+	.item-container {
+		display: flex;
+		flex-direction: row;
 
-	.meta {
-		font-size: .75rem;
-		display: block;
-		color: $tertiary-grey;
-		padding: .5rem 0;
-		font-family: 'Open Sans';
-		font-weight: 600;
+		.item-main {
+			flex-grow: 1;
+
+			.title {
+				display: block;
+				font-size: 1rem;
+				color: $primary-grey;
+				font-family: "Open Sans Condensed";
+				font-weight: 600;
+			}
+
+			.meta {
+				font-size: .75rem;
+				display: block;
+				color: $tertiary-grey;
+				padding: .5rem 0;
+				font-family: 'Open Sans';
+				font-weight: 600;
+			}
+		}
+
+		.forum-item-edit {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0 rem-calc(5px);
+			color: $primary-grey;
+		}
 	}
 }
