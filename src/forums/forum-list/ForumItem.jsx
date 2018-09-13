@@ -4,6 +4,7 @@ import { LinkTo } from '@nti/web-routing';
 import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
+import { encodeForURI } from '@nti/lib-ntiids';
 
 import Editor from '../forum-editor';
 
@@ -24,8 +25,11 @@ export default class ForumItem extends React.Component {
 			getRecentActivity: PropTypes.func.isRequired,
 			title: PropTypes.string.isRequired,
 			edit: PropTypes.func.isRequired
-		}).isRequired,
-		isActive: PropTypes.bool
+		}).isRequired
+	}
+
+	static contextTypes = {
+		router: PropTypes.object
 	}
 
 	state = {
@@ -59,14 +63,15 @@ export default class ForumItem extends React.Component {
 		this.setState({ showEditor: false });
 	}
 
-	toggleEditor = () => {
+	toggleEditor = (e) => {
+		e.preventDefault();
 		this.setState({ showEditor: !this.state.showEditor });
 	}
 
 	render () {
 		let { totalItemCount, loading, showEditor } = this.state;
-		let { item, isActive } = this.props;
-		const forumItemClassname = cx('forum-item-li', { active: isActive });
+		let { item } = this.props;
+		const forumItemClassname = cx('forum-item-li', { active: global.location.pathname.indexOf(encodeForURI(item.NTIID)) > -1 });
 		const canEdit = item.hasLink('edit');
 
 		return (
@@ -88,7 +93,7 @@ export default class ForumItem extends React.Component {
 						</div>
 					</LinkTo.Object>
 				)}
-				{showEditor && canEdit && <Editor title={item.title} onSubmit={this.onSubmit} onBeforeDismiss={this.toggleEditor} />}
+				{showEditor && canEdit && <Editor title={item.title} onSubmit={this.onSubmit} onBeforeDismiss={this.toggleEditor} isEditing />}
 			</li>
 		);
 	}

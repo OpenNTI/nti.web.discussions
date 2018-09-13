@@ -37,7 +37,6 @@ class ForumListView extends React.Component {
 		loading: PropTypes.bool,
 		loaded: PropTypes.bool,
 		hasForums: PropTypes.bool,
-		activeForum: PropTypes.string,
 		setActiveForum: PropTypes.func
 	}
 
@@ -56,15 +55,17 @@ class ForumListView extends React.Component {
 	}
 
 	createForum = async (newForum) => {
-		const { bundle: { Discussions } } = this.props;
-		await Discussions.createForum({ ...newForum, MimeType: Models.forums.Forum.MimeTypes[1] });
-		this.setState({ showCreate: false });
+		const { bundle: { Discussions }} = this.props;
+		const forum = await Discussions.createForum({ ...newForum, MimeType: Models.forums.Forum.MimeTypes[1] });
+		this.setState({ showCreate: false, activeForum: forum });
 	}
 
 	setActiveForum () {
 		const { items, hasForums, setActiveForum } = this.props;
+		const { activeForum } = this.state;
 		if (items && hasForums && setActiveForum) {
-			this.props.setActiveForum(getFirstForum(items));
+			if (activeForum) { this.setState({ activeForum: null }); }
+			setActiveForum(activeForum || getFirstForum(items));
 		}
 	}
 
@@ -78,18 +79,19 @@ class ForumListView extends React.Component {
 		const canCreateForum = bundle && bundle.Discussions && bundle.Discussions.hasLink('add');
 
 		if (canCreateForum && isSimple) {
-			return <div className="action-link create-forum" onClick={this.toggleCreateForum}>{t('create')}</div>;
+			return <div className="create-forum" onClick={this.toggleCreateForum}>{t('create')}</div>;
 		}
 
 		return null;
 	}
 
 	render () {
-		const { items, loading, hasForums, activeForum } = this.props;
+		const { items, loading, hasForums } = this.props;
 		const { showCreate } = this.state;
 
 		return (
 			<div className="discussion-forum-list">
+				<div className="forum-list-header">Forums</div>
 				{loading && <Loading.Mask maskScreen message="Loading..." />}
 				{hasForums ? (
 					<ul className="forum-list">
@@ -99,7 +101,6 @@ class ForumListView extends React.Component {
 									title={key.toLowerCase() === 'other' && bins.length === 1 ? '' : t(key.toLowerCase())}
 									bin={items[key]}
 									key={key}
-									activeForum={activeForum}
 								/>
 							))
 						}
