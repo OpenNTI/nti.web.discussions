@@ -1,5 +1,5 @@
 import { Stores } from '@nti/lib-store';
-import { AppDispatcher } from '@nti/lib-dispatcher';
+import AppDispatcher from '@nti/lib-dispatcher';
 
 import {binDiscussions} from './utils';
 
