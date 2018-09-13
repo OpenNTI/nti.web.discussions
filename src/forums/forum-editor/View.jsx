@@ -6,6 +6,8 @@ import { Panels, DialogButtons, Input, Loading, Prompt } from '@nti/web-commons'
 const { Label, Text } = Input;
 const DEAFULT_TEXT = {
 	header: 'Create Forum',
+	editHeader: 'Edit Forum',
+	editSubmit: 'Save',
 	title: 'Title',
 	submit: 'Create',
 	cancel: 'Cancel'
@@ -20,7 +22,7 @@ export default class ForumEditor extends Component {
 		error: PropTypes.string,
 		loading: PropTypes.bool,
 		title: PropTypes.string,
-
+		isEditing: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -46,18 +48,18 @@ export default class ForumEditor extends Component {
 	}
 
 	render () {
-		const { onBeforeDismiss, error, loading } = this.props;
+		const { onBeforeDismiss, error, loading, isEditing } = this.props;
 		const { title } = this.state;
 
 		const buttons = [
 			{ label: t('cancel'), onClick: onBeforeDismiss },
-			{ label: t('submit'), onClick: this.onSubmit, disabled: loading }
+			{ label: t(isEditing ? 'editSubmit' : 'submit'), onClick: this.onSubmit, disabled: loading }
 		];
 
 		return (
 			<Dialog>
 				<div className="forum-create-form">
-					<Panels.TitleBar title={t('header')} iconAction={onBeforeDismiss} />
+					<Panels.TitleBar title={t(isEditing ? 'editHeader' : 'header')} iconAction={onBeforeDismiss} />
 					{error && <div className="error">{error}</div>}
 					<Label className="forum-title-label" label={t('title')}>
 						<Text
