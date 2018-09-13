@@ -1,11 +1,11 @@
 @import '~@nti/style-common';
 
 .forum-item-li {
-	padding: .625rem 0 .625rem 0.9375rem;
+	padding: .2rem 0 .2rem 0.9375rem;
 	border-bottom: 1px dotted #d8d8d8;
 
-	&:last-child {
-    	border-bottom: none;
+	@include responsive-range(mobile) {
+		padding: .625rem 0 .625rem 0.9375rem;
 	}
 
 	&.active {
@@ -37,19 +37,26 @@
 
 			.title {
 				display: block;
-				font-size: 1rem;
+				font-size: rem-calc(14px);
 				color: $primary-grey;
 				font-family: "Open Sans Condensed";
 				font-weight: 600;
+
+				@include responsive-range(mobile) {
+					font-size: 1rem;
+				}
 			}
 
 			.meta {
 				font-size: .75rem;
 				display: block;
 				color: $tertiary-grey;
-				padding: .5rem 0;
 				font-family: 'Open Sans';
 				font-weight: 600;
+
+				@include responsive-range(mobile) {
+					padding: .5rem 0;
+				}
 			}
 		}
 
