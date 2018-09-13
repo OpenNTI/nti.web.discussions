@@ -1,4 +1,5 @@
 import { Stores } from '@nti/lib-store';
+import { AppDispatcher } from '@nti/lib-dispatcher';
 
 import {binDiscussions} from './utils';
 
@@ -18,10 +19,41 @@ export default class FourmListStore extends Stores.BoundStore {
 		this.set(INIT_STATE);
 	}
 
+	cleanup () {
+		if (!this.binding) { return; }
+		const { Discussions, ParentDiscussions } = this.binding;
+
+		if (Discussions) {
+			Discussions.removeListener('change', this.onChange.bind(this));
+		}
+
+		if (ParentDiscussions) {
+			ParentDiscussions.removeListener('change', this.onChange.bind(this));
+		}
+	}
+
+	setupListeners () {
+		const { Discussions, ParentDiscussions } = this.binding;
+
+		if (Discussions) {
+			Discussions.addListener('change', this.onChange.bind(this));
+		}
+
+		if (ParentDiscussions) {
+			ParentDiscussions.addListener('change', this.onChange.bind(this));
+		}
+	}
+
+	onChange = () => {
+		this.load();
+	}
+
 	async load () {
 		if (!this.binding) { return; }
 
 		this.set(INIT_STATE);
+		this.cleanup();
+		this.setupListeners();
 
 		try {
 			const [section, parent] = await this.binding.getDiscussions(true);
