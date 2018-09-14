@@ -61,8 +61,15 @@ export const binDiscussions = (section, parent) => {
 
 
 export const getFirstForum = (items) => {
-	const parts = items[Object.keys(items)[0]];
-	const part = parts && (parts.Section || parts.Parent);
+	const parts = items[Object.keys(items).sort()[0]];
+	let part;
+
+	if (parts.Section && parts.Section.forums) {
+		part = parts.Section;
+	} else if (parts.Parent && parts.Parent.forums) {
+		part = parts.Parent;
+	}
+
 	const forums = part && part.forums;
 	return forums && forums[0];
 };
