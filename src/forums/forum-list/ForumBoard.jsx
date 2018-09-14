@@ -13,11 +13,13 @@ const t = scoped('forums.groups.groupings', DEFAULT_TEXT);
 
 export default function ForumBoard ({ title, board }) {
 	const forums = (board || {}).forums || [];
+	if (forums.length === 0) { return null; }
+
 	return (
 		<li className="board">
 			<h3 className="board-title">{title ? t(title) : ''}</h3>
 			<ul className="forum-item-list">
-				{forums.map(forum => <ForumItem item={forum} key={forum.getID()} />) }
+				{forums.map(forum => <ForumItem item={forum} key={forum.getID()} />)}
 			</ul>
 		</li>
 	);
