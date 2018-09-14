@@ -5,8 +5,11 @@ import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 import { encodeForURI } from '@nti/lib-ntiids';
+import { Connectors } from '@nti/lib-store';
 
 import Editor from '../forum-editor';
+
+import Store from './Store';
 
 const DEFAULT_TEXT = {
 	count: {
@@ -19,13 +22,19 @@ const DEFAULT_TEXT = {
 
 const t = scoped('forums.topic', DEFAULT_TEXT);
 
-export default class ForumItem extends React.Component {
+
+export default
+@Connectors.Any.connect(['refreshForumId', 'clearRefreshForum'])
+class ForumItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
 			getRecentActivity: PropTypes.func.isRequired,
 			title: PropTypes.string.isRequired,
-			edit: PropTypes.func.isRequired
-		}).isRequired
+			edit: PropTypes.func.isRequired,
+			getID: PropTypes.func.isRequired
+		}).isRequired,
+		refreshForumId: PropTypes.string,
+		clearRefreshForum: PropTypes.func
 	}
 
 	static contextTypes = {
@@ -44,18 +53,23 @@ export default class ForumItem extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-		if (prevProps.item !== this.props.item) {
-			this.load(this.props.item);
+		const refresh = this.props.refreshForumId === this.props.item.getID();
+		if (prevProps.item !== this.props.item || refresh) {
+			this.load(this.props.item, refresh);
 		}
 	}
 
-	async load (forum) {
+	async load (forum, refresh) {
 		const { Items, TotalItemCount } = await forum.getRecentActivity();
 		this.setState({
 			loading: false,
 			recentActivity: Items,
 			totalItemCount: TotalItemCount
 		});
+
+		if (refresh) {
+			this.props.clearRefreshForum();
+		}
 	}
 
 	onSubmit = (payload) => {
