@@ -63,9 +63,16 @@ class ForumListView extends React.Component {
 	setActiveForum () {
 		const { items, hasForums, setActiveForum } = this.props;
 		const { activeForum } = this.state;
-		if (items && hasForums && setActiveForum) {
-			if (activeForum) { this.setState({ activeForum: null }); }
+
+		if (!setActiveForum) { return; }
+
+		if (items && hasForums) {
+			if (activeForum) {
+				this.setState({ activeForum: null });
+			}
 			setActiveForum(activeForum || getFirstForum(items));
+		} else {
+			setActiveForum(null);
 		}
 	}
 
@@ -93,7 +100,7 @@ class ForumListView extends React.Component {
 			<div className="discussion-forum-list">
 				<div className="forum-list-header">Forums</div>
 				{loading && <Loading.Mask maskScreen message="Loading..." />}
-				{hasForums ? (
+				{hasForums && (
 					<ul className="forum-list">
 						{
 							Object.keys(items).sort().map((key, i, bins) => (
@@ -105,7 +112,8 @@ class ForumListView extends React.Component {
 							))
 						}
 					</ul>
-				) : (
+				)}
+				{!hasForums && !loading && (
 					<div className="forum-list-empty">
 						{t('empty')}
 					</div>

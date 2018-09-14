@@ -22,7 +22,7 @@
 			top: 10px;
 			left: 18px;
 			right: auto;
-			background-image: url(https://alpha.dev:8443/app/resources/images/707658e….svg);
+			background-image: url(./assets/outline.svg);
 			width: 25px;
 			background-size: contain;
 			background-repeat: no-repeat;
@@ -52,5 +52,6 @@
 		color: $primary-blue;
 		display: block;
 		cursor: pointer;
+		margin-top: rem-calc(10px);
 	}
 }
