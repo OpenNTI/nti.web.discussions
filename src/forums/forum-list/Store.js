@@ -12,6 +12,9 @@ const INIT_STATE = {
 	isSimple: false
 };
 
+const FORUM_LIST_REFRESH = 'FORUM_LIST_REFRESH';
+const FORUM_TOPIC_ADD = 'FORUM_TOPIC_ADD';
+
 export default class FourmListStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -24,31 +27,31 @@ export default class FourmListStore extends Stores.BoundStore {
 		const { Discussions, ParentDiscussions } = this.binding;
 
 		if (Discussions) {
-			Discussions.removeListener('change', this.onChange.bind(this));
+			Discussions.removeListener('change', this.load);
 		}
 
 		if (ParentDiscussions) {
-			ParentDiscussions.removeListener('change', this.onChange.bind(this));
+			ParentDiscussions.removeListener('change', this.load);
+		}
+
+		delete this.forums;
+	}
+
+	clearRefreshForum () {
+		this.set({ refreshForumId: null });
+	}
+
+	handleDispatch = (event) => {
+		const { action: { type } } = event;
+		if (type === FORUM_LIST_REFRESH) {
+			this.load();
+		} else if (type === FORUM_TOPIC_ADD) {
+			const { action: { response = {} } } = event;
+			this.refreshForum(response.forum);
 		}
 	}
 
-	setupListeners () {
-		const { Discussions, ParentDiscussions } = this.binding;
-
-		if (Discussions) {
-			Discussions.addListener('change', this.onChange.bind(this));
-		}
-
-		if (ParentDiscussions) {
-			ParentDiscussions.addListener('change', this.onChange.bind(this));
-		}
-	}
-
-	onChange = () => {
-		this.load();
-	}
-
-	async load () {
+	load = async () => {
 		if (!this.binding) { return; }
 
 		this.set(INIT_STATE);
@@ -57,29 +60,51 @@ export default class FourmListStore extends Stores.BoundStore {
 
 		try {
 			const [section, parent] = await this.binding.getDiscussions(true);
+			this.forums = new Map();
 
 			if (section) {
 				section.NTIID = this.binding.Discussions.getID();
+				if (section.Items) {
+					section.Items.forEach(forum => this.forums.set(forum.getID(), forum));
+				}
 			}
 
 			if (parent) {
 				parent.NTIID = this.binding.ParentDiscussions.getID();
+				if (parent.Items) {
+					parent.Items.forEach(forum => this.forums.set(forum.getID(), forum));
+				}
 			}
 
 			const bins = binDiscussions(section, parent);
 			const isSimple = (bins && Object.keys(bins).length === 1 && bins.Other) ? true : false;
-
-			const itemsWithForums = Object.values(bins).filter(x => x && x.Section && x.Section.forums && x.Section.forums.length > 0);
-			const hasForums = itemsWithForums && itemsWithForums.length > 0;
+			const hasForums = (section && section.TotalItemCount > 0) || (parent && parent.TotalItemCount > 0);
 
 			this.set({ loading: false, loaded: true, items: bins, isSimple, hasForums });
 		} catch (error) {
-			this.set({
-				loading: false,
-				loaded: true,
-				error: true,
-				items: {}
-			});
+			this.set({ loading: false, loaded: true, error: true, items: {} });
+		}
+	}
+
+	refreshForum (forumId) {
+		if (!this.forums || !this.forums.has(forumId)) { return; }
+
+		this.set({ refreshForumId: forumId });
+	}
+
+	setupListeners () {
+		const { Discussions, ParentDiscussions } = this.binding;
+
+		if (Discussions) {
+			Discussions.addListener('change', this.load);
+		}
+
+		if (ParentDiscussions) {
+			ParentDiscussions.addListener('change', this.load);
+		}
+
+		if (!this.dispatcher) {
+			this.dispatcher = AppDispatcher.register(this.handleDispatch);
 		}
 	}
 }
