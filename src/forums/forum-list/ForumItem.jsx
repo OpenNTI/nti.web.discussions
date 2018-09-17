@@ -101,9 +101,11 @@ class ForumItem extends React.Component {
 									<span className="see-all count">{t('count', { count: totalItemCount })}</span>
 								</div>
 							</div>
-							<div className="forum-item-edit" onClick={this.toggleEditor}>
-								<i className="icon-edit" />
-							</div>
+							{canEdit && (
+								<div className="forum-item-edit" onClick={this.toggleEditor}>
+									<i className="icon-edit" />
+								</div>
+							)}
 						</div>
 					</LinkTo.Object>
 				)}
