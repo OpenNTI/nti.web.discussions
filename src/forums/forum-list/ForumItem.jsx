@@ -9,8 +9,6 @@ import { Connectors } from '@nti/lib-store';
 
 import Editor from '../forum-editor';
 
-import Store from './Store';
-
 const DEFAULT_TEXT = {
 	count: {
 		zero: 'No Discussions',
@@ -96,7 +94,7 @@ class ForumItem extends React.Component {
 					<LinkTo.Object object={item} className="blockLink">
 						<div className="item-container">
 							<div className="item-main">
-								<span className="title">{item.title}</span>
+								<span className="title">{item.displayTitle}</span>
 								<div className="meta">
 									<span className="see-all count">{t('count', { count: totalItemCount })}</span>
 								</div>
