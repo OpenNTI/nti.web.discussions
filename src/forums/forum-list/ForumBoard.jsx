@@ -13,6 +13,7 @@ const t = scoped('forums.groups.groupings', DEFAULT_TEXT);
 
 export default function ForumBoard ({ title, board }) {
 	const forums = (board || {}).forums || [];
+
 	if (forums.length === 0) { return null; }
 
 	return (

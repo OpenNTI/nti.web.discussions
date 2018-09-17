@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
-import { Panels, DialogButtons, Input, Loading, Prompt } from '@nti/web-commons';
+import { Input, Loading, Prompt } from '@nti/web-commons';
 
 const { Label, Text } = Input;
 const DEAFULT_TEXT = {
-	header: 'Create Forum',
-	editHeader: 'Edit Forum',
-	editSubmit: 'Save',
-	title: 'Title',
-	submit: 'Create',
+	title: 'Create Forum',
+	save: 'Create',
+	cancel: 'Cancel'
+};
+const EDIT_TEXT = {
+	title: 'Edit Forum',
+	save: 'Save',
 	cancel: 'Cancel'
 };
 const t = scoped('nti.web.disscussions.forums.create', DEAFULT_TEXT);
-const { Dialog } = Prompt;
+const editScope = scoped('nti.web.disscussions.forums.create', EDIT_TEXT);
+
+const { SaveCancel } = Prompt;
 
 export default class ForumEditor extends Component {
 	static propTypes = {
@@ -40,7 +44,7 @@ export default class ForumEditor extends Component {
 		this.setState({ [name]: value });
 	}
 
-	onSubmit = () => {
+	onSave = () => {
 		const { onSubmit, loading } = this.props;
 		if (!loading) {
 			onSubmit(this.state);
@@ -48,32 +52,28 @@ export default class ForumEditor extends Component {
 	}
 
 	render () {
-		const { onBeforeDismiss, error, loading, isEditing } = this.props;
+		const { onBeforeDismiss, loading, isEditing } = this.props;
 		const { title } = this.state;
 
-		const buttons = [
-			{ label: t('cancel'), onClick: onBeforeDismiss },
-			{ label: t(isEditing ? 'editSubmit' : 'submit'), onClick: this.onSubmit, disabled: loading }
-		];
-
 		return (
-			<Dialog>
-				<div className="forum-create-form">
-					<Panels.TitleBar title={t(isEditing ? 'editHeader' : 'header')} iconAction={onBeforeDismiss} />
-					{error && <div className="error">{error}</div>}
-					<Label className="forum-title-label" label={t('title')}>
-						<Text
-							className="forum-title"
-							value={title}
-							onChange={(value) => this.onChange('title', value)}
-							name="title"
-							required
-						/>
-					</Label>
-					<DialogButtons buttons={buttons} />
-					{loading && <Loading.Mask maskScreen />}
-				</div>
-			</Dialog>
+			<SaveCancel
+				className="forum-editor"
+				getString={isEditing ? editScope : t}
+				onCancel={onBeforeDismiss}
+				onSave={this.onSave}
+				disableSave={loading}
+			>
+				<Label className="forum-title-label" label={t('title')}>
+					<Text
+						className="forum-title"
+						value={title}
+						onChange={(value) => this.onChange('title', value)}
+						name="title"
+						required
+					/>
+				</Label>
+				{loading && <Loading.Mask maskScreen />}
+			</SaveCancel>
 		);
 	}
 }
