@@ -2,6 +2,7 @@ import { Stores } from '@nti/lib-store';
 import AppDispatcher from '@nti/lib-dispatcher';
 
 import {binDiscussions} from './utils';
+import {FORUM_LIST_REFRESH, FORUM_TOPIC_CHANGE} from './constants';
 
 const INIT_STATE = {
 	loading: true,
@@ -11,9 +12,6 @@ const INIT_STATE = {
 	hasForums: false,
 	isSimple: false
 };
-
-const FORUM_LIST_REFRESH = 'FORUM_LIST_REFRESH';
-const FORUM_TOPIC_ADD = 'FORUM_TOPIC_ADD';
 
 export default class FourmListStore extends Stores.BoundStore {
 	constructor () {
@@ -45,7 +43,7 @@ export default class FourmListStore extends Stores.BoundStore {
 		const { action: { type } } = event;
 		if (type === FORUM_LIST_REFRESH) {
 			this.load();
-		} else if (type === FORUM_TOPIC_ADD) {
+		} else if (type === FORUM_TOPIC_CHANGE) {
 			const { action: { response = {} } } = event;
 			this.refreshForum(response.forum);
 		}

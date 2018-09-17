@@ -1,3 +1,2 @@
-import View from './View';
-
-export default View;
+export * from './constants';
+export { default as ForumList } from './View';
