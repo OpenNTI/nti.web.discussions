@@ -1,17 +1,16 @@
 @import "~@nti/style-common";
 
-.forum-create-form {
-    background: white;
-	min-width: 400px;
+.forum-editor {
+	height: 200px;
+	width: 400px;
 
-	.forum-title {
-		width: 50%;
-		margin-left: 1.25rem;
-		margin-bottom: 0.5625rem;
+	@include responsive-range(mobile) {
+		height: 100%;
+		width: 100%;
 	}
 
-	.forum-title-label span {
-		margin-left: 1.25rem;
+	.save-cancel-content {
+		padding: 1rem;
 	}
 
 	.error {
