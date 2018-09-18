@@ -16,7 +16,10 @@ describe('Forum Item', () => {
 	test('No Discussions - Snapshot', async () => {
 		const item = {
 			title: 'Forum',
-			getRecentActivity: () => Promise.resolve({ TotalItemCount: 0, Items: [] })
+			TopicCount: 0,
+			getRecentActivity: () => Promise.resolve({ TotalItemCount: 0, Items: [] }),
+			hasLink: () => { return false; },
+			edit: () => {}
 		};
 		const itemCmp = renderer.create(<ForumItem item={item} />);
 

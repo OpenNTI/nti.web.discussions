@@ -5,26 +5,29 @@ exports[`Forum Item No Discussions - Snapshot 1`] = `
   className="forum-item-li"
 >
   <div
-    className="nti-link-to-path blockLink"
+    className="nti-link-to-path forum-link"
     to="#"
   >
-    <span
-      className="title"
-    >
-      Forum
-    </span>
     <div
-      className="meta"
+      className="item-container"
     >
-      <span
-        className="see-all count"
+      <div
+        className="item-main"
       >
-        No Discussions
-      </span>
+        <span
+          className="title"
+        />
+        <div
+          className="meta"
+        >
+          <span
+            className="see-all count"
+          >
+            No Discussions
+          </span>
+        </div>
+      </div>
     </div>
-    <span
-      className="arrow-right"
-    />
   </div>
 </li>
 `;
