@@ -27,8 +27,8 @@ class ForumItem extends React.Component {
 		item: PropTypes.shape({
 			title: PropTypes.string.isRequired,
 			edit: PropTypes.func.isRequired,
-			getID: PropTypes.func.isRequired,
-			TopicCount: PropTypes.string.isRequired
+			TopicCount: PropTypes.number.isRequired,
+			hasLink: PropTypes.func.isRequired
 		}).isRequired,
 	}
 
@@ -53,14 +53,13 @@ class ForumItem extends React.Component {
 	}
 
 	render () {
-		let { showEditor } = this.state;
-		let { item } = this.props;
-		const forumItemClassname = cx('forum-item-li', { active: global.location.pathname.includes(encodeForURI(item.NTIID)) });
+		const { showEditor } = this.state;
+		const { item } = this.props;
 		const canEdit = item.hasLink('edit');
 
 		return (
-			<li className={forumItemClassname}>
-				<LinkTo.Object object={item} className="blockLink">
+			<li className="forum-item-li">
+				<LinkTo.Object object={item} activeClassName="active" className="forum-link">
 					<div className="item-container">
 						<div className="item-main">
 							<span className="title">{item.displayTitle}</span>

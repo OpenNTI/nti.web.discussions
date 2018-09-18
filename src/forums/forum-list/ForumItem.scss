@@ -1,29 +1,33 @@
 @import '~@nti/style-common';
 
 .forum-item-li {
-	padding: .2rem 0 .2rem 0.9375rem;
 	border-bottom: 1px dotted #d8d8d8;
 
-	@include responsive-range(mobile) {
-		padding: .625rem 0 .625rem 0.9375rem;
-	}
+	.forum-link {
+		padding: .2rem 0 .2rem 0.9375rem;
+		display: block;
 
-	&.active {
-		background: #3fb3f6;
-		box-shadow: inset 3px 0 0 0 #107eed;
-		.item-container {
-			.item-main {
-				.title {
-					color: white;
+		@include responsive-range(mobile) {
+			padding: .625rem 0 .625rem 0.9375rem;
+		}
+
+		&.active {
+			background: #3fb3f6;
+			box-shadow: inset 3px 0 0 0 #107eed;
+			.item-container {
+				.item-main {
+					.title {
+						color: white;
+					}
+
+					.meta {
+						color: white;
+					}
 				}
 
-				.meta {
+				.forum-item-edit {
 					color: white;
 				}
-			}
-
-			.forum-item-edit {
-				color: white;
 			}
 		}
 	}
