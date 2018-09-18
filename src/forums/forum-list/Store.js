@@ -35,10 +35,6 @@ export default class FourmListStore extends Stores.BoundStore {
 		delete this.forums;
 	}
 
-	clearRefreshForum () {
-		this.set({ refreshForumId: null });
-	}
-
 	handleDispatch = (event) => {
 		const { action: { type } } = event;
 		if (type === FORUM_LIST_REFRESH) {
@@ -84,10 +80,12 @@ export default class FourmListStore extends Stores.BoundStore {
 		}
 	}
 
-	refreshForum (forumId) {
+	async refreshForum (forumId) {
 		if (!this.forums || !this.forums.has(forumId)) { return; }
 
-		this.set({ refreshForumId: forumId });
+		const forum = this.forums.get(forumId);
+		await forum.refresh();
+		forum.emit('change');
 	}
 
 	setupListeners () {
