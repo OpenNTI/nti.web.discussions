@@ -30,8 +30,6 @@ class ForumItem extends React.Component {
 			getID: PropTypes.func.isRequired,
 			TopicCount: PropTypes.string.isRequired
 		}).isRequired,
-		refreshForumId: PropTypes.string,
-		clearRefreshForum: PropTypes.func
 	}
 
 	static contextTypes = {
