@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinkTo } from '@nti/web-routing';
-import { Loading, HOC } from '@nti/web-commons';
+import { HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 import { encodeForURI } from '@nti/lib-ntiids';
-import { Connectors } from '@nti/lib-store';
 
 import Editor from '../forum-editor';
 
@@ -23,15 +22,13 @@ const t = scoped('forums.topic', DEFAULT_TEXT);
 
 export default
 @HOC.ItemChanges.compose
-@Connectors.Any.connect(['refreshForumId', 'clearRefreshForum'])
 class ForumItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
-			getRecentActivity: PropTypes.func.isRequired,
 			title: PropTypes.string.isRequired,
 			edit: PropTypes.func.isRequired,
 			getID: PropTypes.func.isRequired,
-			addListener: PropTypes.func.isRequired
+			TopicCount: PropTypes.string.isRequired
 		}).isRequired,
 		refreshForumId: PropTypes.string,
 		clearRefreshForum: PropTypes.func
