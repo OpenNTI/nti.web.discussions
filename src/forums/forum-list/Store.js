@@ -56,18 +56,12 @@ export default class FourmListStore extends Stores.BoundStore {
 			const [section, parent] = await this.binding.getDiscussions(true);
 			this.forums = new Map();
 
-			if (section) {
-				section.NTIID = this.binding.Discussions.getID();
-				if (section.Items) {
-					section.Items.forEach(forum => this.forums.set(forum.getID(), forum));
-				}
+			if (section && section.Items) {
+				section.Items.forEach(forum => this.forums.set(forum.getID(), forum));
 			}
 
-			if (parent) {
-				parent.NTIID = this.binding.ParentDiscussions.getID();
-				if (parent.Items) {
-					parent.Items.forEach(forum => this.forums.set(forum.getID(), forum));
-				}
+			if (parent && parent.Items) {
+				parent.Items.forEach(forum => this.forums.set(forum.getID(), forum));
 			}
 
 			const bins = binDiscussions(section, parent);
