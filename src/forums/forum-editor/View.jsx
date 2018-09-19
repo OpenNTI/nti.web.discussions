@@ -4,8 +4,9 @@ import { scoped } from '@nti/lib-locale';
 import { Input, Loading, Prompt } from '@nti/web-commons';
 
 const { Label, Text } = Input;
-const DEAFULT_TEXT = {
+const DEFAULT_TEXT = {
 	title: 'Create Forum',
+	name: 'Forum Name',
 	save: 'Create',
 	cancel: 'Cancel'
 };
@@ -14,8 +15,8 @@ const EDIT_TEXT = {
 	save: 'Save',
 	cancel: 'Cancel'
 };
-const t = scoped('nti.web.disscussions.forums.create', DEAFULT_TEXT);
-const editScope = scoped('nti.web.disscussions.forums.create', EDIT_TEXT);
+const t = scoped('nti.web.disscussions.forums.create', DEFAULT_TEXT);
+const editScope = scoped('nti.web.disscussions.forums.create.edit', EDIT_TEXT);
 
 const { SaveCancel } = Prompt;
 
@@ -36,12 +37,15 @@ export default class ForumEditor extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			title: props.title
+			title: props.title,
+			missingFields: !props.title || props.title.trim() === ''
 		};
 	}
 
 	onChange = (name, value) => {
-		this.setState({ [name]: value });
+		const missingFields = !value || value.trim() === '';
+
+		this.setState({ [name]: value, missingFields });
 	}
 
 	onSave = () => {
@@ -53,7 +57,7 @@ export default class ForumEditor extends Component {
 
 	render () {
 		const { onBeforeDismiss, loading, isEditing } = this.props;
-		const { title } = this.state;
+		const { title, missingFields } = this.state;
 
 		return (
 			<SaveCancel
@@ -61,9 +65,9 @@ export default class ForumEditor extends Component {
 				getString={isEditing ? editScope : t}
 				onCancel={onBeforeDismiss}
 				onSave={this.onSave}
-				disableSave={loading}
+				disableSave={loading || missingFields}
 			>
-				<Label className="forum-title-label" label={t('title')}>
+				<Label className="forum-title-label" label={t('name')}>
 					<Text
 						className="forum-title"
 						value={title}
