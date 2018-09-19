@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import { Models } from '@nti/lib-interfaces';
+import { encodeForURI } from '@nti/lib-ntiids';
 
 import ForumCreate from '../forum-editor';
 
@@ -37,7 +37,12 @@ class ForumListView extends React.Component {
 		loading: PropTypes.bool,
 		loaded: PropTypes.bool,
 		hasForums: PropTypes.bool,
-		setActiveForum: PropTypes.func
+		setFirstForum: PropTypes.func,
+		activeForumId: PropTypes.string
+	}
+
+	static contextTypes = {
+		router: PropTypes.object
 	}
 
 	state = {
@@ -45,34 +50,32 @@ class ForumListView extends React.Component {
 	}
 
 	componentDidMount () {
-		this.setActiveForum();
+		this.setFirstForum();
 	}
 
 	componentDidUpdate (prevProps) {
-		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true) {
-			this.setActiveForum();
+		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true && !this.props.activeForumId) {
+			this.setFirstForum();
 		}
 	}
 
 	createForum = async (newForum) => {
-		const { bundle: { Discussions }} = this.props;
-		const forum = await Discussions.createForum({ ...newForum, MimeType: Models.forums.Forum.MimeTypes[1] });
-		this.setState({ showCreate: false, activeForum: forum });
+		const { bundle } = this.props;
+		const { router } = this.context;
+		const forum = await bundle.Discussions.createForum({ ...newForum, MimeType: bundle.getForumType() });
+		this.setState({ showCreate: false });
+		router.history.push(`${router.baseroute}/${encodeForURI(forum.getID())}`);
 	}
 
-	setActiveForum () {
-		const { items, hasForums, setActiveForum } = this.props;
-		const { activeForum } = this.state;
+	setFirstForum () {
+		const { items, hasForums, setFirstForum } = this.props;
 
-		if (!setActiveForum) { return; }
+		if (!setFirstForum) { return; }
 
 		if (items && hasForums) {
-			if (activeForum) {
-				this.setState({ activeForum: null });
-			}
-			setActiveForum(activeForum || getFirstForum(items));
+			setFirstForum(getFirstForum(items));
 		} else {
-			setActiveForum(null);
+			setFirstForum(null);
 		}
 	}
 
