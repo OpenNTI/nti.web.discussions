@@ -54,7 +54,7 @@ class ForumListView extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true && !this.props.activeForumId) {
+		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true) {
 			this.setFirstForum();
 		}
 	}
@@ -68,9 +68,9 @@ class ForumListView extends React.Component {
 	}
 
 	setFirstForum () {
-		const { items, hasForums, setFirstForum } = this.props;
+		const { items, hasForums, setFirstForum, activeForumId } = this.props;
 
-		if (!setFirstForum) { return; }
+		if (!setFirstForum || activeForumId) { return; }
 
 		if (items && hasForums) {
 			setFirstForum(getFirstForum(items));
