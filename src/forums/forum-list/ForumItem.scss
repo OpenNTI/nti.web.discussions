@@ -45,6 +45,10 @@
 				color: $primary-grey;
 				font-family: "Open Sans Condensed";
 				font-weight: 600;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 200px;
+				white-space: nowrap;
 
 				@include responsive-range(mobile) {
 					font-size: 1rem;
