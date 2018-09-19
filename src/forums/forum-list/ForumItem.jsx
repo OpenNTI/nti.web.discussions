@@ -4,19 +4,16 @@ import { LinkTo } from '@nti/web-routing';
 import { HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { Viewer } from '@nti/web-reports';
-import { getService } from '@nti/web-client';
 
 const DEFAULT_TEXT = {
 	count: {
 		zero: 'No Discussions',
 		one: '1 Discussion',
 		other: '%(count)s Discussions'
-	},
-	recentActivity: 'Recent Activity',
+	}
 };
 
 const t = scoped('forums.topic', DEFAULT_TEXT);
-
 
 export default
 @HOC.ItemChanges.compose
@@ -34,12 +31,6 @@ class ForumItem extends React.Component {
 
 	static contextTypes = {
 		router: PropTypes.object
-	}
-
-	state = {
-		showRecentActivity: false,
-		recentActivity: [],
-		showEditor: false
 	}
 
 	showReports = (e) => {
