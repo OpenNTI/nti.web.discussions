@@ -68,12 +68,18 @@
 			}
 		}
 
-		.forum-item-edit {
-			display: flex;
+		.forum-item-reports {
+			display: none;
 			justify-content: center;
 			align-items: center;
 			padding: 0 rem-calc(5px);
-			color: $primary-grey;
+			color: #ddd;
+		}
+
+		&:hover {
+			.forum-item-reports {
+				display: flex;
+			}
 		}
 	}
 }
