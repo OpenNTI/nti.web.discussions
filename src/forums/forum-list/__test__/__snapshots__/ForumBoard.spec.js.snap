@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Forum Board General Snapshot 1`] = `
+<li
+  className="board"
+>
+  <h3
+    className="board-title"
+  >
+    My Section
+  </h3>
+  <ul
+    className="forum-item-list"
+  >
+    <li
+      className="forum-item-li"
+    >
+      <div
+        className="nti-link-to-path forum-link"
+        to="/object/unknown-OID-0x0551b0%3A5573657273%3AZkMpTMuJZhf"
+      >
+        <div
+          className="item-container"
+        >
+          <div
+            className="item-main"
+          >
+            <span
+              className="title"
+            />
+            <div
+              className="meta"
+            >
+              <span
+                className="see-all count"
+              >
+                No Discussions
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li
+      className="forum-item-li"
+    >
+      <div
+        className="nti-link-to-path forum-link"
+        to="/object/unknown-OID-0x0551b8%3A5573657273%3AZkMpTMuJZhe"
+      >
+        <div
+          className="item-container"
+        >
+          <div
+            className="item-main"
+          >
+            <span
+              className="title"
+            />
+            <div
+              className="meta"
+            >
+              <span
+                className="see-all count"
+              >
+                No Discussions
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li>
+`;
