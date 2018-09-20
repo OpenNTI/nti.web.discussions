@@ -51,7 +51,8 @@ export default class ForumEditor extends Component {
 	onSave = () => {
 		const { onSubmit, loading } = this.props;
 		if (!loading) {
-			onSubmit(this.state);
+			const { title } = this.state;
+			onSubmit({ title });
 		}
 	}
 
