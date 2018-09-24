@@ -68,7 +68,7 @@ export default class FourmListStore extends Stores.BoundStore {
 			const bins = binDiscussions(section, parent);
 			const isSimple = (bins && Object.keys(bins).length === 1 && bins.Other) ? true : false;
 			const hasForums = (section && section.TotalItemCount > 0) || (parent && parent.TotalItemCount > 0);
-			console.log(bins);
+
 			this.set({ loading: false, loaded: true, items: bins, isSimple, hasForums, error: false });
 		} catch (error) {
 			this.set({ loading: false, loaded: true, error: true, items: {}, isSimple: false, hasForums: false });
