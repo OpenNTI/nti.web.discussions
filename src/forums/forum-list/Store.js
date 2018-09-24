@@ -5,7 +5,7 @@ import {binDiscussions} from './utils';
 import {FORUM_LIST_REFRESH, FORUM_TOPIC_CHANGE} from './constants';
 
 const INIT_STATE = {
-	loading: true,
+	loading: false,
 	loaded: false,
 	error: false,
 	items: {},
@@ -21,7 +21,6 @@ export default class FourmListStore extends Stores.BoundStore {
 	}
 
 	cleanup () {
-		if (!this.binding) { return; }
 		const { Discussions, ParentDiscussions } = this.binding;
 
 		if (Discussions) {
@@ -46,9 +45,11 @@ export default class FourmListStore extends Stores.BoundStore {
 	}
 
 	load = async () => {
-		if (!this.binding) { return; }
+		const loading = this.get('loading');
 
-		this.set(INIT_STATE);
+		if (!this.binding || loading) { return; }
+
+		this.set({ ...INIT_STATE, loading: true });
 		this.cleanup();
 		this.setupListeners();
 
@@ -67,10 +68,10 @@ export default class FourmListStore extends Stores.BoundStore {
 			const bins = binDiscussions(section, parent);
 			const isSimple = (bins && Object.keys(bins).length === 1 && bins.Other) ? true : false;
 			const hasForums = (section && section.TotalItemCount > 0) || (parent && parent.TotalItemCount > 0);
-
-			this.set({ loading: false, loaded: true, items: bins, isSimple, hasForums });
+			console.log(bins);
+			this.set({ loading: false, loaded: true, items: bins, isSimple, hasForums, error: false });
 		} catch (error) {
-			this.set({ loading: false, loaded: true, error: true, items: {} });
+			this.set({ loading: false, loaded: true, error: true, items: {}, isSimple: false, hasForums: false });
 		}
 	}
 
