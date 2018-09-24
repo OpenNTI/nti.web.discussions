@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import { Input, Loading, Prompt } from '@nti/web-commons';
 
+import { getPrefix, removePrefix } from './utils';
+
 const { Label, Text } = Input;
 const DEFAULT_TEXT = {
 	title: 'Create Forum',
@@ -22,7 +24,7 @@ const { SaveCancel } = Prompt;
 
 export default class ForumEditor extends Component {
 	static propTypes = {
-		onBeforeDismiss: PropTypes.func,
+		onBeforeDismiss: PropTypes.func.isRequired,
 		onSubmit: PropTypes.func.isRequired,
 		error: PropTypes.string,
 		loading: PropTypes.bool,
@@ -37,8 +39,9 @@ export default class ForumEditor extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			title: props.title,
-			missingFields: !props.title || props.title.trim() === ''
+			title: removePrefix(props.title),
+			missingFields: !props.title || props.title.trim() === '',
+			prefix: getPrefix(props.title)
 		};
 	}
 
@@ -51,8 +54,8 @@ export default class ForumEditor extends Component {
 	onSave = () => {
 		const { onSubmit, loading } = this.props;
 		if (!loading) {
-			const { title } = this.state;
-			onSubmit({ title });
+			const { title, prefix } = this.state;
+			onSubmit({ title: prefix ? `${prefix} ${title}` : title });
 		}
 	}
 
