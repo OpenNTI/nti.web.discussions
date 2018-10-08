@@ -140,7 +140,7 @@ export default class DiscussionSelectionEditor extends React.Component {
 		let breadcrumb = this.state.breadcrumb ? [...this.state.breadcrumb] : [];
 
 		breadcrumb.push({
-			title: board.title,
+			title: (board.get && board.get('displayTitle')) || board.title,
 			isHidden: isHidden,
 			onClick: () => { this.onBoardSelect(board, isHidden); } });
 
