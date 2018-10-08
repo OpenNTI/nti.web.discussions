@@ -5,6 +5,7 @@ import {Search} from '@nti/web-commons';
 import TopicList from './TopicList';
 import ItemList from './ItemList';
 import Breadcrumb from './Breadcrumb';
+import ForumItem from './ForumItem';
 import { loadTopicsFromService, filterItemsBySearchTerm } from './utils';
 
 const STEPS = {
@@ -250,8 +251,9 @@ export default class DiscussionSelectionEditor extends React.Component {
 	}
 
 	renderBoards () {
-		if(this.state.selectedSection) {
-			return (<ItemList items={this.state.boards} headerText="Choose a Forum" onSelect={this.onBoardSelect} searchTerm={this.state.searchTerm}/>);
+		const { selectedSection, boards, searchTerm } = this.state;
+		if(selectedSection) {
+			return (<ItemList items={boards} headerText="Choose a Forum" ItemCmp={ForumItem} onSelect={this.onBoardSelect} searchTerm={searchTerm}/>);
 		}
 	}
 
