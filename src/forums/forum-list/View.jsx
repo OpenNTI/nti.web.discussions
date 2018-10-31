@@ -50,7 +50,13 @@ class ForumListView extends React.Component {
 	}
 
 	componentDidMount () {
+		const {bundle} = this.props;
+
 		this.setFirstForum();
+
+		if(!bundle.Discussions) {
+			bundle.getDiscussions();
+		}
 	}
 
 	componentDidUpdate (prevProps) {
