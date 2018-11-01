@@ -46,7 +46,8 @@ class ForumListView extends React.Component {
 	}
 
 	state = {
-		showCreate: false
+		showCreate: false,
+		loadingDiscussions: true
 	}
 
 	componentDidMount () {
@@ -55,7 +56,9 @@ class ForumListView extends React.Component {
 		this.setFirstForum();
 
 		if(!bundle.Discussions) {
-			bundle.getDiscussions();
+			bundle.getDiscussions().then(this.setState({loadingDiscussions: false}));
+		} else {
+			this.setState({loadingDiscussions: false});
 		}
 	}
 
@@ -103,7 +106,7 @@ class ForumListView extends React.Component {
 
 	render () {
 		const { items, loading, hasForums } = this.props;
-		const { showCreate } = this.state;
+		const { showCreate, loadingDiscussions } = this.state;
 
 		return (
 			<div className="discussion-forum-list">
@@ -127,7 +130,7 @@ class ForumListView extends React.Component {
 						{t('empty')}
 					</div>
 				)}
-				{this.renderCreate()}
+				{!loadingDiscussions && this.renderCreate()}
 				{showCreate && <ForumCreate onBeforeDismiss={this.toggleCreateForum} onSubmit={this.createForum} />}
 			</div>
 		);
