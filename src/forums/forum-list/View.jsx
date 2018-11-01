@@ -49,12 +49,14 @@ class ForumListView extends React.Component {
 		showCreate: false
 	}
 
-	componentDidMount = async () => {
+	async componentDidMount () {
 		const {bundle} = this.props;
 
 		this.setFirstForum();
 
-		await bundle.getDiscussions().then(this.forceUpdate());
+		await bundle.getDiscussions();
+
+		this.forceUpdate();
 	}
 
 	componentDidUpdate (prevProps) {
