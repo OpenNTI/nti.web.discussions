@@ -1,0 +1,17 @@
+.discussuion-context-slide {
+	.content-launcher {
+		position: relative;
+		overflow: hidden;
+		background: #fafdff;
+		border: 1px solid #e3f2fc;
+
+		.image-wrap {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			img {
+				max-width: 640px;
+			}
+		}
+	}
+}

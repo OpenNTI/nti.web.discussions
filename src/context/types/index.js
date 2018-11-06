@@ -4,6 +4,8 @@ import Unknown from './Unknown';
 import './Image';
 import './Page';
 import './RealPageNumber';
+import './Slide';
+import './Video';
 
 export default function getType (item) {
 	try {
