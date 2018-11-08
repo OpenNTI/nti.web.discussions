@@ -6,6 +6,8 @@ import './Page';
 import './RealPageNumber';
 import './Slide';
 import './Video';
+import './Poll';
+import './RelatedWorkRef';
 
 export default function getType (item) {
 	try {
