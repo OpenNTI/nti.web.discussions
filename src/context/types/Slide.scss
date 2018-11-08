@@ -6,11 +6,12 @@
 		border: 1px solid #e3f2fc;
 
 		.image-wrap {
+			margin: 1rem 0px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			img {
-				max-width: 640px;
+				max-width: 500px;
 			}
 		}
 	}
