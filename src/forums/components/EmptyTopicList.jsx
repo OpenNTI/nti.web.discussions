@@ -9,14 +9,18 @@ const DEAFULT_TEXT = {
 
 const t = scoped('nti.web.disscussions.forums.emptytopiclist', DEAFULT_TEXT);
 
-const EmptyTopicList = ({isEditor}) => (
-	<div className="empty-topic-list">
-		{isEditor ? t('editorText') : t('nonEditorText')}
-	</div>
-);
+export default class EmptyTopicList extends React.PureComponent {
+	static propTypes = {
+		isEditor: PropTypes.bool
+	}
 
-EmptyTopicList.propTypes = {
-	isEditor: PropTypes.bool
-};
+	render () {
+		const {isEditor} = this.props;
 
-export default EmptyTopicList;
+		return (
+			<div className="empty-topic-list">
+				{isEditor ? t('editorText') : t('nonEditorText')}
+			</div>
+		);
+	}
+}
