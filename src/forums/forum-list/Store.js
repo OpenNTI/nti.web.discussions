@@ -49,6 +49,10 @@ export default class FourmListStore extends Stores.BoundStore {
 
 		if (!this.binding || loading) { return; }
 
+		if(!this.binding.Discussions) {
+			this.binding.Discussions = await this.binding.fetchLinkParsed('DiscussionBoard');
+		}
+
 		this.set({ ...INIT_STATE, loading: true });
 		this.cleanup();
 		this.setupListeners();
