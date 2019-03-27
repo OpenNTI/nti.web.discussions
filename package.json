@@ -57,7 +57,7 @@
     "prop-types": "^15.5.0"
   },
   "devDependencies": {
-    "@nti/cmp-scripts": "^2.0.0",
+    "@nti/cmp-scripts": "^2.6.10",
     "@nti/style-common": "^1.3.0",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.1",
