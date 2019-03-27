@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Ellipsed} from '@nti/web-commons';
+import {Panel} from '@nti/web-modeled-content';
 import classnames from 'classnames/bind';
 
 import styles from './NotePreview.css';
@@ -9,9 +9,7 @@ const cx = classnames.bind(styles);
 
 export default function NotePreview ({note, ...props}) {
 	return !note ? null : (
-		<div className={cx('note-preview')}>
-			<Ellipsed measureOverflow="parent">{note.title || (note.body || [])[0]}</Ellipsed>
-		</div>
+		<Panel className={cx('note-preview')} body={note.body} previewMode previewLength={80} />
 	);
 }
 

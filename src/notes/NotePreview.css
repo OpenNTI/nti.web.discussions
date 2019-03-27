@@ -5,3 +5,7 @@
 	max-height: 3.6rem;
 	overflow: hidden;
 }
+
+:global(.modeled-content).note-preview * {
+	max-width: 100%;
+}
