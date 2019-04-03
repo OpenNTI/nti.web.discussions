@@ -1,2 +1,2 @@
-export NoteSummary from './NoteSummary';
+export Sidebar from './sidebar';
 

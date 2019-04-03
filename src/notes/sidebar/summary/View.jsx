@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 
 import NoteMetadata from './NoteMetadata';
 import NotePreview from './NotePreview';
-import styles from './NoteSummary.css';
+import styles from './View.css';
 
 const cx = classnames.bind(styles);
 
