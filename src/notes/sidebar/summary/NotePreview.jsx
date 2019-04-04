@@ -8,8 +8,12 @@ import styles from './NotePreview.css';
 const cx = classnames.bind(styles);
 
 export default function NotePreview ({note, ...props}) {
-	return !note ? null : (
-		<Panel className={cx('note-preview')} body={note.body} previewMode previewLength={80} />
+	if (!note) { return null;}
+
+	const contents = note.title ? [note.title] : note.body;
+
+	return (
+		<Panel className={cx('note-preview')} body={contents} previewMode previewLength={80} />
 	);
 }
 
