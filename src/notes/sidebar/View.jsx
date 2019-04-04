@@ -20,24 +20,26 @@ export default class NotesSidebar extends React.Component {
 
 		notes: PropTypes.array,
 		emptyText: PropTypes.string,
-		fillToBottom: PropTypes.bool
+		fillToBottom: PropTypes.bool,
+		sticky: PropTypes.bool
 	}
 
 	render () {
-		const {className, fillToBottom} = this.props;
-		const Tag = fillToBottom ? FillToBottom : 'div';
+		const {className, fillToBottom, sticky} = this.props;
+		const cls = cx('note-sidebar', className, {sticky, fill: fillToBottom});
+		const content = this.renderNoteList();
 
-		return (
-			<Tag className={cx('note-sidebar', className)}>
-				{this.renderNoteList()}
-			</Tag>
-		);
+		return fillToBottom ?
+			(<FillToBottom className={cls} limit padding={-18}>{content}</FillToBottom>) :
+			(<div className={cls}>{content}</div>);
 	}
 
 	renderNoteList () {
 		const {notes = [], emptyText} = this.props;
+		const loading = !notes;
 		const empty = !(notes || []).length;
 
+		if (loading) { return null; }
 		if (empty) { return (<EmptyState subHeader={emptyText || t('empty')} />); }
 
 		return (

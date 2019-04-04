@@ -5,6 +5,16 @@
 	border-radius: 3px;
 }
 
+.note-sidebar.fill {
+	overflow: auto;
+	padding-bottom: 18px;
+}
+
+.note-sidebar.sticky {
+	position: sticky;
+	top: var(--note-sidebar-sticky-top, 0px);
+}
+
 .note-list {
 	list-style: none;
 	margin: 0;
@@ -13,4 +23,9 @@
 
 .note-list > :global(li:not(:last-of-type)) {
 	margin: 0 0 2px;
+}
+
+.header {
+	background: white;
+	line-height: 57px;
 }
