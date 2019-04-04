@@ -4,6 +4,7 @@
 	font-weight: 600;
 	max-height: 3.6rem;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 :global(.modeled-content).note-preview * {
