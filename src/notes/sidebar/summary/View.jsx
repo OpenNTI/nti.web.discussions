@@ -31,10 +31,11 @@ class NoteSummary extends React.Component {
 
 	render () {
 		const {note} = this.props;
+		const {placeholder} = note;
 
 		return (
-			<div className={cx('note-summary')}>
-				<DisplayName className={cx('author')} entity={note.creator} />
+			<div className={cx('note-summary', {placeholder})}>
+				{!placeholder && (<DisplayName className={cx('author')} entity={note.creator} />)}
 				<NotePreview note={note} />
 				<NoteMetadata note={note} />
 			</div>
