@@ -30,7 +30,7 @@ export default class NotesSidebar extends React.Component {
 		const content = this.renderNoteList();
 
 		return fillToBottom ?
-			(<FillToBottom className={cls} limit padding={-18}>{content}</FillToBottom>) :
+			(<FillToBottom className={cls} limit padding={18}>{content}</FillToBottom>) :
 			(<div className={cls}>{content}</div>);
 	}
 
