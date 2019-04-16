@@ -1,0 +1,24 @@
+.note-sidebar-empty-state {
+	background: #ededed;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1.4rem 1.4rem 1.875rem;
+}
+
+.icon {
+	background-image: url('./assets/create-note.svg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 50px;
+	height: 50px;
+	margin-bottom: 1rem;
+}
+
+.message {
+	text-align: center;
+	font: italic 400 0.875rem/1.3 var(--body-font-family);
+	color: var(--secondary-grey);
+}
