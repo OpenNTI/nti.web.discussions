@@ -21,8 +21,24 @@
 	padding: 0;
 }
 
-.note-list > :global(li:not(:last-of-type)) {
+.note-list > li {
+	overflow: hidden;
+}
+
+.note-list > li:not(:last-of-type) {
 	margin: 0 0 2px;
+}
+
+.note-list > li:first-of-type {
+	border-radius: 0 3px 0 0;
+}
+
+.note-list > li:last-of-type {
+	border-radius: 0 0 3px 0;
+}
+
+.note-list > li:first-of-type:last-of-type {
+	border-radius: 0 3px 3px 0;
 }
 
 .header {
