@@ -7,6 +7,7 @@
 	cursor: pointer;
 }
 
-:global(.modeled-content).note-preview * {
+.content * {
 	max-width: 100%;
 }
+
