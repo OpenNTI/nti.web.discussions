@@ -17,6 +17,7 @@ const STEPS = {
 const OTHER = 'Other Discussions';
 
 //FIXME: Spit this appart into multiple small components.
+//FIXME: This is expecting the extjs course instance modal.
 export default class DiscussionSelectionEditor extends React.Component {
 	static propTypes = {
 		bundle: PropTypes.object,
