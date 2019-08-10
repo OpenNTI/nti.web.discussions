@@ -3,8 +3,6 @@ import getColumnWidth from './get-column-width';
 export default function getColumnOffsets (width, columnCount, verticalGap) {
 	const columnWidth = getColumnWidth(width, columnCount, verticalGap);
 
-	debugger;
-
 	const offsets = [];
 	let pointer = 0;
 

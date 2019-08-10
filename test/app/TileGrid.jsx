@@ -17,6 +17,11 @@ const COLORS = [
 	'pink'
 ];
 
+const IMAGES = [
+	'http://placekitten.com/g/200/300',
+	'http://placekitten.com/g/500/500'
+];
+
 export default class TileGridTest extends React.Component {
 	state = {items: [], itemCount: 100}
 
@@ -39,8 +44,10 @@ export default class TileGridTest extends React.Component {
 
 		for (let i = 0; i < count; i++) {
 			items.push({
+				key: i,
+				img: IMAGES[Math.floor(Math.random() * IMAGES.length)],
 				style: {
-					height: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
+					minHeight: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
 					backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)]
 				}
 			});
@@ -56,8 +63,10 @@ export default class TileGridTest extends React.Component {
 		const {items} = this.state;
 
 		items.push({
+			key: items.length + 1,
+			img: IMAGES[Math.floor(Math.random() * IMAGES.length)],
 			style: {
-				height: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
+				minHeight: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
 				backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)]
 			}
 		});
@@ -73,8 +82,10 @@ export default class TileGridTest extends React.Component {
 
 		const newItems = [
 			{
+				key: items.length + 1,
+				img: IMAGES[Math.floor(Math.random() * IMAGES.length)],
 				style: {
-					height: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
+					minHeight: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
 					backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)]
 				}
 			},
@@ -107,9 +118,11 @@ export default class TileGridTest extends React.Component {
 				</div>
 				<div style={{width: '720px'}}>
 					<TileGrid columns={2} gap={10}>
-						{items.map((item, key) => {
+						{items.map((item) => {
 							return (
-								<div key={key} {...item} />
+								<div key={item.key} style={item.style}>
+									<img src={item.img} width="100%" />
+								</div>
 							);
 						})}
 					</TileGrid>

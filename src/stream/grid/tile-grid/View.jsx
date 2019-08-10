@@ -47,7 +47,6 @@ export default class TileGrid extends React.Component {
 		return columns || 1;
 	}
 
-
 	get tiles () {
 		if (!this.monitor) { return null; }
 
@@ -73,7 +72,10 @@ export default class TileGrid extends React.Component {
 		this.heightMap[id] = height;
 
 		if (!this.updateTimeout) {
-			this.updateTimeout = setTimeout(() => this.updateTileLayout(), 100);
+			this.updateTimeout = setTimeout(() => {
+				delete this.updateTimeout;
+				this.updateTileLayout();
+			}, 100);
 		}
 	}
 
