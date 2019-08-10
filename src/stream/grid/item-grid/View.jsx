@@ -12,7 +12,7 @@ const cx = classnames.bind(Styles);
 const TILE_ITEM_ATTRIBUTE = 'data-tile';
 const CHILD_SELECTOR = `[${TILE_ITEM_ATTRIBUTE}]`;
 
-export default class TileGrid extends React.Component {
+export default class ItemGrid extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 
@@ -111,14 +111,14 @@ export default class TileGrid extends React.Component {
 	render () {
 		const {className} = this.props;
 		const {containerHeight} = this.state;
-		const otherProps = restProps(TileGrid, this.props);
+		const otherProps = restProps(ItemGrid, this.props);
 
 		return (
 			<Monitor.ChildHeight
 				{...otherProps}
 				as="ul"
 				ref={this.attachMonitor}
-				className={cx('nti-tile-grid', className)}
+				className={cx('nti-item-grid', className)}
 				childSelector={CHILD_SELECTOR}
 				onHeightChange={this.onItemHeightChange}
 				style={{minHeight: `${containerHeight || 0}px`}}
@@ -139,7 +139,7 @@ export default class TileGrid extends React.Component {
 			const position = tilePositions[key];
 
 			const listAttributes = {
-				className: cx('tile', {computing: !position}),
+				className: cx('item-tile', {computing: !position}),
 				key,
 				[TILE_ITEM_ATTRIBUTE]: key,
 				style: !position ?

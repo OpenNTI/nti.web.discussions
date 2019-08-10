@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Test from './TileGrid';
+import Test from './ItemGrid';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 

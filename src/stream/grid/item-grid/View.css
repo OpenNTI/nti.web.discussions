@@ -1,4 +1,4 @@
-.nti-tile-grid {
+.nti-item-grid {
 	position: relative;
 	overflow: hidden;
 	list-style: none;
@@ -6,13 +6,13 @@
 	margin: 0;
 }
 
-.tile {
+.item-tile {
 	position: absolute;
 	margin: 0;
 	padding: 0;
 }
 
-.tile.computing {
+.item-tile.computing {
 	top: 0;
 	left: 0;
 	visibility: hidden;

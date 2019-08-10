@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TileGrid from '../../src/stream/grid/tile-grid/';
+import TileGrid from '../../src/stream/grid/item-grid/';
 
 const HEIGHTS = [
 	'100px',
