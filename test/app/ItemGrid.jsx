@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TileGrid from '../../src/stream/grid/item-grid/';
+import ItemGrid from '../../src/stream/grid/item-grid/';
 
 const HEIGHTS = [
 	'100px',
@@ -119,7 +119,7 @@ export default class TileGridTest extends React.Component {
 					</button>
 				</div>
 				<div style={{width: '720px'}}>
-					<TileGrid
+					<ItemGrid
 						columns={2}
 						gap={3}
 						items={items}
