@@ -44,7 +44,7 @@ export default class TileGridTest extends React.Component {
 
 		for (let i = 0; i < count; i++) {
 			items.push({
-				key: i,
+				getID: () => i,
 				img: IMAGES[Math.floor(Math.random() * IMAGES.length)],
 				style: {
 					minHeight: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
@@ -61,9 +61,10 @@ export default class TileGridTest extends React.Component {
 
 	addTile = () => {
 		const {items} = this.state;
+		const id = items.length + 1;
 
 		items.push({
-			key: items.length + 1,
+			getID: () => id,
 			img: IMAGES[Math.floor(Math.random() * IMAGES.length)],
 			style: {
 				minHeight: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
@@ -79,10 +80,11 @@ export default class TileGridTest extends React.Component {
 
 	prependTile = () => {
 		const {items} = this.state;
+		const id = items.length + 1;
 
 		const newItems = [
 			{
-				key: items.length + 1,
+				getID: () => id,
 				img: IMAGES[Math.floor(Math.random() * IMAGES.length)],
 				style: {
 					minHeight: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
@@ -117,16 +119,22 @@ export default class TileGridTest extends React.Component {
 					</button>
 				</div>
 				<div style={{width: '720px'}}>
-					<TileGrid columns={2} gap={10}>
-						{items.map((item) => {
-							return (
-								<div key={item.key} style={item.style}>
-									<img src={item.img} width="100%" />
-								</div>
-							);
-						})}
-					</TileGrid>
+					<TileGrid
+						columns={2}
+						gap={3}
+						items={items}
+						renderItem={this.renderItem}
+					/>
 				</div>
+			</div>
+		);
+	}
+
+
+	renderItem = (item) => {
+		return (
+			<div style={item.style}>
+				<img src={item.img} width="100%" />
 			</div>
 		);
 	}

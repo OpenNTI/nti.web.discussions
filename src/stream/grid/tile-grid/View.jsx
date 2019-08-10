@@ -15,6 +15,14 @@ const CHILD_SELECTOR = `[${TILE_ITEM_ATTRIBUTE}]`;
 export default class TileGrid extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
+
+		renderItem: PropTypes.func.isRequired,
+		items: PropTypes.arrayOf(
+			PropTypes.shape({
+				getID: PropTypes.func
+			})
+		),
+
 		children: PropTypes.any,
 
 		columns: PropTypes.number,
@@ -108,6 +116,7 @@ export default class TileGrid extends React.Component {
 		return (
 			<Monitor.ChildHeight
 				{...otherProps}
+				as="ul"
 				ref={this.attachMonitor}
 				className={cx('nti-tile-grid', className)}
 				childSelector={CHILD_SELECTOR}
@@ -121,30 +130,54 @@ export default class TileGrid extends React.Component {
 
 
 	renderChildren () {
-		const {children} = this.props;
+		const {items, renderItem} = this.props;
 		const {tilePositions} = this.state;
 
-		return React.Children.map(children, (child) => {
-			const key = child.key;
-			const name = `${key}-tile`;
+		return items.map((item) => {
+			const key = item.getID();
 
-			const position = tilePositions[name];
+			const position = tilePositions[key];
 
 			const listAttributes = {
 				className: cx('tile', {computing: !position}),
-				key: name,
-				[TILE_ITEM_ATTRIBUTE]: name,
+				key,
+				[TILE_ITEM_ATTRIBUTE]: key,
 				style: !position ?
 					null :
 					{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
-
 			};
 
 			return (
-				<div {...listAttributes} >
-					{child}
-				</div>
+				<li  key={key} {...listAttributes}>
+					{renderItem(item)}
+				</li>
 			);
 		});
+
+		// const {children} = this.props;
+		// const {tilePositions} = this.state;
+
+		// return React.Children.map(children, (child) => {
+		// 	const key = child.key;
+		// 	const name = `${key}-tile`;
+
+		// 	const position = tilePositions[name];
+
+		// 	const listAttributes = {
+		// 		className: cx('tile', {computing: !position}),
+		// 		key: name,
+		// 		[TILE_ITEM_ATTRIBUTE]: name,
+		// 		style: !position ?
+		// 			null :
+		// 			{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
+
+		// 	};
+
+		// 	return (
+		// 		<div {...listAttributes} >
+		// 			{child}
+		// 		</div>
+		// 	);
+		// });
 	}
 }
