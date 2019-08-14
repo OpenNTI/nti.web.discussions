@@ -153,31 +153,5 @@ export default class ItemGrid extends React.Component {
 				</li>
 			);
 		});
-
-		// const {children} = this.props;
-		// const {tilePositions} = this.state;
-
-		// return React.Children.map(children, (child) => {
-		// 	const key = child.key;
-		// 	const name = `${key}-tile`;
-
-		// 	const position = tilePositions[name];
-
-		// 	const listAttributes = {
-		// 		className: cx('tile', {computing: !position}),
-		// 		key: name,
-		// 		[TILE_ITEM_ATTRIBUTE]: name,
-		// 		style: !position ?
-		// 			null :
-		// 			{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
-
-		// 	};
-
-		// 	return (
-		// 		<div {...listAttributes} >
-		// 			{child}
-		// 		</div>
-		// 	);
-		// });
 	}
 }

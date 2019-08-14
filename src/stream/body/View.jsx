@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {restProps} from '@nti/lib-commons';
 import {Loading, Layouts} from '@nti/web-commons';
 
 import {List, Grid} from './Constants';
@@ -14,7 +15,7 @@ const {InfiniteScroll} = Layouts;
 
 export default
 @Store.connect(['items', 'loading', 'error', 'loadMore'])
-class DicussionsStream extends React.Component {
+class DiscussionsStream extends React.Component {
 	static List = List
 	static Grid = Grid
 
@@ -47,6 +48,7 @@ class DicussionsStream extends React.Component {
 
 	render () {
 		const {className, items, loading, error, layout, loadMore} = this.props;
+		const otherProps = restProps(DiscussionsStream, this.props);
 		const initial = !items;
 		const ItemCmp = layout === List ? ListCmp : GridCmp;
 
@@ -54,7 +56,7 @@ class DicussionsStream extends React.Component {
 			<Loading.Placeholder loading={loading} fallback={(<LoadingMask initial={initial} />)}>
 				<InfiniteScroll.Continuous className={className} loadMore={loadMore}>
 					{items && !items.length && this.renderEmpty()}
-					{items && (<ItemCmp items={items} />)}
+					{items && (<ItemCmp items={items} {...otherProps} />)}
 					{error && (<ErrorCmp error={error} initial={initial} />)}
 				</InfiniteScroll.Continuous>
 			</Loading.Placeholder>
