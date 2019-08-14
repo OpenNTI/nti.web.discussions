@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function DicussionCard () {
+import PostCard from '../../common/post-card';
+
+import {makePostInterface} from './utils';
+
+TopicDiscussionCard.propTypes = {
+	item: PropTypes.object
+};
+export default function TopicDiscussionCard ({item, ...otherProps}) {
 	return (
-		<div>
-			Discussion Card
-		</div>
+		<PostCard post={makePostInterface(item)} item={item} {...otherProps} />
 	);
 }
