@@ -22,7 +22,7 @@ const IMAGES = [
 	'http://placekitten.com/g/500/500'
 ];
 
-export default class TileGridTest extends React.Component {
+export default class ItemGridTest extends React.Component {
 	state = {items: [], itemCount: 100}
 
 	componentDidMount () {
