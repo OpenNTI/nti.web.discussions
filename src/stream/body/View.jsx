@@ -2,16 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Loading, Layouts} from '@nti/web-commons';
 
+import {List, Grid} from './Constants';
 import Store from './Store';
 import LoadingMask from './components/LoadingMask';
 import ErrorCmp from './components/Error';
 import EmptyCmp from './components/Empty';
+import ListCmp from './list';
+import GridCmp from './grid';
 
 const {InfiniteScroll} = Layouts;
 
 export default
 @Store.connect(['items', 'loading', 'error', 'loadMore'])
 class DicussionsStream extends React.Component {
+	static List = List
+	static Grid = Grid
+
 	static deriveBindingFromProps (props) {
 		return {
 			context: props.context,
@@ -27,6 +33,7 @@ class DicussionsStream extends React.Component {
 				loadPage: PropTypes.func
 			})
 		}),
+		layout: PropTypes.oneOf([List, Grid]),
 		sort: PropTypes.string,
 		batchSize: PropTypes.number,
 
@@ -41,11 +48,13 @@ class DicussionsStream extends React.Component {
 	render () {
 		const {className, items, loading, error, layout, loadMore} = this.props;
 		const initial = !items;
+		const ItemCmp = layout === List ? ListCmp : GridCmp;
 
 		return (
 			<Loading.Placeholder loading={loading} fallback={(<LoadingMask initial={initial} />)}>
 				<InfiniteScroll.Continuous className={className} loadMore={loadMore}>
 					{items && !items.length && this.renderEmpty()}
+					{items && (<ItemCmp items={items} />)}
 					{error && (<ErrorCmp error={error} initial={initial} />)}
 				</InfiniteScroll.Continuous>
 			</Loading.Placeholder>

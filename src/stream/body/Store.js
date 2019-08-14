@@ -32,7 +32,7 @@ export default class StreamStore extends Stores.BoundStore {
 		try {
 			const page = currentPage ?
 				await currentPage.loadNextPage() :
-				await contentsDataSource.loadPage(1, {batchSize, sort});
+				await contentsDataSource.loadPage(0, {batchSize, sort});
 
 			this.currentPage = page;
 
