@@ -6,10 +6,16 @@ class TopicPostInterface {
 
 		this.topic = topic;
 	}
+
+	getID () {
+		return this.topic.getID();
+	}
+
+	async getContainerTitle () {
+		return null;
+	}
 	
-	get containerId () { return this.topic.containerId; }
-	
-	get Creator () { return this.topic.Creator; }
+	get creator () { return this.topic.creator; }
 	
 	get CreatedTime () { return this.topic.getCreatedTime(); }
 	get LastModified () { return this.topic.getLastModified(); }
@@ -19,13 +25,10 @@ class TopicPostInterface {
 
 	get canAddComment () { return this.topic.canAddTopic(); }
 	get commentCount () { return this.topic.PostCount; }
-	get mostRecentComment () {
-		const {NewestDescendant: newest} = this.topic;
-
-		return newest && newest.isComment ? newest : null;
+	
+	async getMostRecentComments () {
+		debugger;
 	}
-
-	get contextData () { return null; }
 }
 
 export default function makePostInterface (topic) {

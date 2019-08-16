@@ -5,7 +5,7 @@ import {restProps} from '@nti/lib-commons';
 import {Monitor} from '@nti/web-commons';
 
 import Styles from './View.css';
-import {updateTilePositions} from './utils';
+import {updateTilePositions, getColumnPercentage} from './utils';
 
 const cx = classnames.bind(Styles);
 
@@ -130,8 +130,9 @@ export default class ItemGrid extends React.Component {
 
 
 	renderChildren () {
-		const {items, renderItem} = this.props;
+		const {items, renderItem, columns} = this.props;
 		const {tilePositions} = this.state;
+		const columnWidthGuess = getColumnPercentage(columns, this.gap.vertical);
 
 		return items.map((item) => {
 			const key = item.getID();
@@ -143,7 +144,7 @@ export default class ItemGrid extends React.Component {
 				key,
 				[TILE_ITEM_ATTRIBUTE]: key,
 				style: !position ?
-					null :
+					{width: `${columnWidthGuess}`} :
 					{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
 			};
 
