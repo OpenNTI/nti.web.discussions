@@ -7,7 +7,7 @@ import Styles from './Header.css';
 
 const cx = classnames.bind(Styles);
 
-const DateFormat = 'MMMM D [at] H:mm a';
+const DateFormat = 'MMMM D [at] h:mm a';
 
 export default class PostCardHeader extends React.Component {
 	static propTypes = {
@@ -51,7 +51,6 @@ export default class PostCardHeader extends React.Component {
 			});
 		}
 	}
-
 
 	render () {
 		const {post} = this.props;

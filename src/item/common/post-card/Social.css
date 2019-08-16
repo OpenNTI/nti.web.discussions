@@ -1,0 +1,39 @@
+.post-card-social {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+.post-like,
+.post-favorite,
+.post-comments {
+	flex: 0 0 auto;
+}
+
+.post-like :global(.like) {
+	margin: var(--side-padding, 0.625rem);
+}
+
+.post-comments {
+	padding: var(--side-pading, 0.625rem);
+}
+
+.post-comments .add {
+	font-size: 1.5rem;
+	color: var(--tertiary-grey);
+	vertical-align: middle;
+}
+
+.post-comments.has-comments .add {
+	color: var(--primary-blue);
+}
+
+.post-comments .count {
+	font-size: 0.875rem;
+	color: var(--primary-blue);
+	vertical-align: middle;
+}

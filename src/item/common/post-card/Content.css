@@ -11,16 +11,24 @@
 	padding: 0 var(--side-padding, 0.625rem);
 }
 
-.body {
+.modeled-content {
 	overflow: hidden;
-	padding: 0 var(--side-padding, 0.625rem)
-}
-
-.body.overflowing {
+	padding: 0 var(--side-padding, 0.625rem);
 	position: relative;
 }
 
-.body.overflowing::after {
+.overflow {
+	text-align: center;
+}
+
+.read-more {
+	font-size: 0.625rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: var(--tertiary-grey);
+}
+
+.body.overflowing .modeled-content::after {
 	content: '';
 	position: absolute;
 	display: block;
