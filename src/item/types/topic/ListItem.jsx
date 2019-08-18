@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function DicussionListItem () {
+import PostListItem from '../../common/post-list-item';
+
+import {makePostInterface} from './utils';
+
+TopicDicussionListItem.propTypes = {
+	item: PropTypes.object
+};
+export default function TopicDicussionListItem ({item, ...otherProps}) {
 	return (
-		<div>
-			Discussion List Item
-		</div>
+		<PostListItem post={makePostInterface(item)} item={item} {...otherProps} />
 	);
 }

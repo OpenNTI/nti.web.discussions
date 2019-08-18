@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {User, Text, DateTime} from '@nti/web-commons';
+import {User, Text} from '@nti/web-commons';
 
-import Styles from './Header.css';
+import Styles from './Creator.css';
 
 const cx = classnames.bind(Styles);
 
-const DateFormat = 'MMMM D [at] h:mm a';
-
-export default class PostCardHeader extends React.Component {
+export default class PostCardCreator extends React.Component {
 	static propTypes = {
 		post: PropTypes.shape({
 			getID: PropTypes.func,
 			creator: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			CreatedTime: PropTypes.object,
 			getContainerTitle: PropTypes.func
 		})
 	}
@@ -30,7 +27,7 @@ export default class PostCardHeader extends React.Component {
 		const {post:prevPost} = prevProps;
 
 		if (post.getID() !== prevPost.getID()) {
-			this.setState({loading: true, containerTitle: null}, () => this.setup());
+			this.setState({loading: true, container: null}, () => this.setup());
 		}
 	}
 
@@ -59,13 +56,9 @@ export default class PostCardHeader extends React.Component {
 		//TODO: if there is a container title display it
 
 		return (
-			<div className={cx('post-card-header', {'has-container': !!containerTitle})}>
-				<User.Avatar className={cx('avatar')} user={post.creator} />
+			<div className={cx('post-list-item-creator', {'has-container': !!containerTitle})}>
 				{!loading && (
-					<div className={cx('meta')}>
-						<User.DisplayName className={cx('username')} user={post.creator} tag={Text.Base} />
-						<DateTime className={cx('date')} date={post.CreatedTime} format={DateFormat} />
-					</div>
+					<User.DisplayName className={cx('name')} user={post.creator} tag={Text.Base} />
 				)}
 			</div>
 		);

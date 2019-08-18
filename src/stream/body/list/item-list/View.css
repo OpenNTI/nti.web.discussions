@@ -1,0 +1,12 @@
+.nti-item-list,
+.group-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nti-item-list > li,
+.group-list > li {
+	margin: 0;
+	padding: 0;
+}
