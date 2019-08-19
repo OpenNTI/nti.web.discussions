@@ -4,10 +4,10 @@ export default class StreamStore extends Stores.BoundStore {
 	load () {
 		this.batchSize = this.binding.batchSize;
 
-		if (this.binding.context === this.context && this.binding.sort === this.sort && this.binding.sortOrder === this.sortOrder) { return; }
+		if (this.binding.context === this.context && this.binding.sortOn === this.sortOn && this.binding.sortOrder === this.sortOrder) { return; }
 
 		this.context = this.binding.context;
-		this.sort = this.binding.sort;
+		this.sortOn = this.binding.sortOn;
 		this.sortOrder = this.binding.sortOrder;
 		this.currentPage = null;
 
@@ -23,7 +23,7 @@ export default class StreamStore extends Stores.BoundStore {
 		//Don't try to load if we are already loading...
 		if (this.get('loading')) { return; }
 
-		const {context, sort, sortOrder, currentPage, batchSize} = this;
+		const {context, sortOn, sortOrder, currentPage, batchSize} = this;
 		const {contentsDataSource} = context;
 		
 		this.set({
@@ -33,7 +33,7 @@ export default class StreamStore extends Stores.BoundStore {
 		try {
 			const page = currentPage ?
 				await currentPage.loadNextPage() :
-				await contentsDataSource.loadPage(0, {batchSize, sort, sortOrder});
+				await contentsDataSource.loadPage(0, {batchSize, sortOn, sortOrder});
 
 			this.currentPage = page;
 

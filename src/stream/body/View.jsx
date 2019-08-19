@@ -22,7 +22,7 @@ class DiscussionsStream extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
 			context: props.context,
-			sort: props.sort,
+			sortOn: props.sortOn,
 			sortOrder: props.sortOrder,
 			batchSize: props.batchSize
 		};
@@ -36,7 +36,7 @@ class DiscussionsStream extends React.Component {
 			})
 		}),
 		layout: PropTypes.oneOf([List, Grid]),
-		sort: PropTypes.string,
+		sortOn: PropTypes.string,
 		sortOrder: PropTypes.string,
 		batchSize: PropTypes.number,
 
