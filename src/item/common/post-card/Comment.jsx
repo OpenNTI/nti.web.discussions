@@ -9,6 +9,7 @@ import Styles from './Comment.css';
 
 const cx = classnames.bind(Styles);
 const Placeholder = 'placeholder';
+const DateFormat = 'MMM D [at] h:mm a';
 
 PostCardComment.Placeholder = Placeholder;
 PostCardComment.propTypes = {
@@ -41,7 +42,7 @@ export default function PostCardComment ({comment}) {
 					<div className={cx('meta')}>
 						<div className={cx('display')}>
 							<User.DisplayName className={cx('username')} user={comment.creator} tag={Text.Base} />
-							<DateTime className={cx('date')} date={comment.getCreatedTime()} />
+							<DateTime className={cx('date')} date={comment.getCreatedTime()} format={DateFormat} />
 						</div>
 						<Body className={cx('content')} body={comment.body} previewMode />
 					</div>
