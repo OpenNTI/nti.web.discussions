@@ -59,4 +59,28 @@ export default class StreamStore extends Stores.BoundStore {
 
 		return hasMore ? (() => this.loadNextPage()) : null;
 	}
+
+	async itemUpdated (update) {
+		try {
+			const items = this.get('items');
+			const updated = await Promise.all(
+				items
+					.map((item) => {
+						if (item.NTIID === update.NTIID) {
+							return item.refresh(update);
+						}
+
+						return item;
+					})
+			);
+
+			this.set({
+				items: updated
+			});
+		} catch (e) {
+			//swallow
+		}
+	}
+
+	itemDeleted (item) {}
 }

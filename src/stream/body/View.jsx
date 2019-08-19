@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {restProps} from '@nti/lib-commons';
+import {Events, Hooks} from '@nti/web-session';
 import {Loading, Layouts} from '@nti/web-commons';
 
 import {List, Grid} from './Constants';
@@ -14,7 +15,13 @@ import GridCmp from './grid';
 const {InfiniteScroll} = Layouts;
 
 export default
-@Store.connect(['items', 'loading', 'error', 'loadMore'])
+@Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted'])
+@Hooks.onEvent({
+	[Events.NOTE_UPDATED]: 'itemUpdated',
+	[Events.TOPIC_UPDATED]: 'itemUpdated',
+	[Events.NOTE_DELETED]: 'itemDeleted',
+	[Events.TOPIC_DELETED]: 'itemDeleted' 
+})
 class DiscussionsStream extends React.Component {
 	static List = List
 	static Grid = Grid
@@ -45,7 +52,25 @@ class DiscussionsStream extends React.Component {
 		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.any,
-		loadMore: PropTypes.func
+		loadMore: PropTypes.func,
+		itemUpdated: PropTypes.func,
+		itemDeleted: PropTypes.func
+	}
+
+	itemUpdated (item) {
+		const {itemUpdated} = this.props;
+
+		if (itemUpdated) {
+			itemUpdated(item);
+		}
+	}
+
+	itemDeleted (item) {
+		const {itemDeleted} = this.props;
+
+		if (itemDeleted) {
+			itemDeleted(item);
+		}
 	}
 
 	render () {
