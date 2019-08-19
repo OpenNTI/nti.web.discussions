@@ -46,6 +46,10 @@
 	margin: 0 0 0.5rem;
 }
 
+.body :global(.whiteboard) {
+	min-height: 205px;
+}
+
 .body :global(.whiteboard img) {
 	max-width: 100%;
 }
