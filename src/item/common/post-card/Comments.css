@@ -1,0 +1,32 @@
+.post-card-comments {
+	background: #f6fcff;
+	border-top: 1px solid var(--border-grey-light);
+}
+
+.add-comment {
+	display: block;
+	padding: var(--side-padding, 0.625rem);
+}
+
+.add-comment-label {
+	display: block;
+	font-size: 0.75rem;
+	font-weight: 400;
+	font-style: italic;
+	line-height: 1.5;
+	padding: 6px 1rem;
+	color: var(--tertiary-grey);
+	background: white;
+	box-shadow: 0 0 0 1px var(--border-grey-light);
+}
+
+.comment-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.comment-list li {
+	padding: 0;
+	margin: 0;
+}

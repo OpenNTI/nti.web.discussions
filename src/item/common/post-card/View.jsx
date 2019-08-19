@@ -4,6 +4,7 @@ import classnames from 'classnames/bind';
 import {LinkTo} from '@nti/web-routing';
 
 import Styles from './View.css';
+import Comments from './Comments';
 import Content from './Content';
 import Header from './Header';
 import Social from './Social';
@@ -21,6 +22,7 @@ export default function PostCard (props) {
 			<Header {...props} />
 			<Content {...props} />
 			<Social {...props} />
+			<Comments {...props} />
 		</LinkTo.Object>
 	);
 }

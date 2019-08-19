@@ -23,11 +23,18 @@ class TopicPostInterface {
 	get title () { return this.topic.title;	}
 	get body () { return this.topic.headline && this.topic.headline.body; }
 
-	get canAddComment () { return this.topic.canAddTopic(); }
+	get canAddComment () { return this.topic.canAddComment(); }
 	get commentCount () { return this.topic.PostCount; }
 	
 	async getMostRecentComments () {
-		debugger;
+		const {topic} = this;
+
+		if (topic.PostCount === 0) { return null; }
+		if (topic.PostCount === 1 && topic.NewestDescendant) { return [topic.NewestDescendant];	}
+
+		const contents = await topic.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'DESC'});
+
+		return contents.Items;
 	}
 }
 
