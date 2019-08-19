@@ -1,6 +1,12 @@
 import {Stores} from '@nti/lib-store';
 
 export default class StreamStore extends Stores.BoundStore {
+	cleanup () {
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
+		}
+	}
+
 	load () {
 		this.batchSize = this.binding.batchSize;
 
@@ -11,6 +17,17 @@ export default class StreamStore extends Stores.BoundStore {
 		this.sortOrder = this.binding.sortOrder;
 		this.currentPage = null;
 
+		if (this.cleanupListeners) { this.cleanupListeners(); }
+
+		const onItemAdded = (item) => this.onItemAdded(item);
+
+		this.context.addListener('item-added', onItemAdded);
+
+		this.cleanupListeners = () => {
+			this.context.removeListener('item-added', onItemAdded);
+			delete this.cleanupListeners;
+		};
+		
 		this.set({
 			items: null,
 			error: null
@@ -25,7 +42,7 @@ export default class StreamStore extends Stores.BoundStore {
 
 		const {context, sortOn, sortOrder, currentPage, batchSize} = this;
 		const {contentsDataSource} = context;
-		
+
 		this.set({
 			loading: true
 		});
@@ -58,6 +75,15 @@ export default class StreamStore extends Stores.BoundStore {
 		const hasMore = this.get('hasMore');
 
 		return hasMore ? (() => this.loadNextPage()) : null;
+	}
+
+
+	onItemAdded (item) {
+		const items = this.get('items');
+
+		this.set({
+			items: [item, ...items]
+		});
 	}
 
 	async itemUpdated (update) {
