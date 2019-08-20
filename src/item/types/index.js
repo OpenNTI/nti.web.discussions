@@ -1,9 +1,11 @@
 import Registry from './Registry';
+import Note from './note';
 import Topic from './topic';
 
 const typeRegistry = Registry.getInstance();
 
 export const TYPES = {
+	Note,
 	Topic
 };
 

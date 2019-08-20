@@ -1,0 +1,1 @@
+export makePostInterface from './make-post-interface';
