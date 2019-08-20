@@ -38,7 +38,7 @@
 	background-image: linear-gradient(transparent 50%, white);
 }
 
-.body :global(br) {
+.body :global(br + br) {
 	display: none;
 }
 
