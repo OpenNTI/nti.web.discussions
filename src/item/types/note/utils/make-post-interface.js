@@ -37,7 +37,6 @@ class NotePostInterface {
 			return t('action.noTitle', {name});
 		}
 
-		debugger;
 		return t('action.hasTitle', {name, title});
 	}
 
