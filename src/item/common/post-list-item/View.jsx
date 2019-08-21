@@ -5,8 +5,9 @@ import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 import {User, Text, Like, Favorite} from '@nti/web-commons';
 
+import Action from '../Action';
+
 import Styles from './View.css';
-import Creator from './Creator';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.item.common.post-list-item.View', {
@@ -31,7 +32,7 @@ export default function PostListItem (props) {
 		<LinkTo.Object object={item} className={cx('post-list-item')}>
 			<User.Avatar className={cx('avatar')} user={post.creator} />
 			<div className={cx('meta')}>
-				<Creator {...props} />
+				<Action className={cx('list-item-action')} {...props} />
 				<Text.Base className={cx('title')}>{post.title}</Text.Base>
 				<Text.Base className={cx('comments')}>{t('comments', {count: post.commentCount})}</Text.Base>
 			</div>

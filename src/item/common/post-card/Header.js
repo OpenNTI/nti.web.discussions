@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {User, Text, DateTime} from '@nti/web-commons';
+import {User, DateTime} from '@nti/web-commons';
+
+import Action from '../Action';
 
 import Styles from './Header.css';
 
@@ -9,65 +11,21 @@ const cx = classnames.bind(Styles);
 
 const DateFormat = 'MMMM D [at] h:mm a';
 
-export default class PostCardHeader extends React.Component {
-	static propTypes = {
-		post: PropTypes.shape({
-			getID: PropTypes.func,
-			creator: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			CreatedTime: PropTypes.object,
-			getContainerTitle: PropTypes.func
-		})
-	}
-
-	state = {loading: true, containerTitle: null}
-
-	componentDidMount () {
-		this.setup();
-	}
-
-	componentDidUpdate (prevProps) {
-		const {post} = this.props;
-		const {post:prevPost} = prevProps;
-
-		if (post.getID() !== prevPost.getID()) {
-			this.setState({loading: true, containerTitle: null}, () => this.setup());
-		}
-	}
-
-	async setup () {
-		const {post} = this.props;
-
-		try {
-			const containerTitle = await post.getContainerTitle();
-
-			this.setState({
-				loading: false,
-				containerTitle
-			});
-		} catch (e) {
-			this.setState({
-				loading: false,
-				containerTitle: null
-			});
-		}
-	}
-
-	render () {
-		const {post} = this.props;
-		const {loading, containerTitle} = this.state;
-
-		//TODO: if there is a container title display it
-
-		return (
-			<div className={cx('post-card-header', {'has-container': !!containerTitle})}>
-				<User.Avatar className={cx('avatar')} user={post.creator} />
-				{!loading && (
-					<div className={cx('meta')}>
-						<User.DisplayName className={cx('username')} user={post.creator} tag={Text.Base} />
-						<DateTime className={cx('date')} date={post.CreatedTime} format={DateFormat} />
-					</div>
-				)}
+PostCardHeader.propTypes = {
+	post: PropTypes.shape({
+		creator: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		CreatedTime: PropTypes.object
+	})
+};
+export default function PostCardHeader ({post}) {
+	return (
+		<div className={cx('post-card-header')}>
+			<User.Avatar className={cx('avatar')} user={post.creator} />
+			<div className={cx('meta')}>
+				<Action post={post} className={cx('action')}/>
+				<DateTime className={cx('date')} date={post.CreatedTime} format={DateFormat} />
 			</div>
-		);
-	}
+		</div>
+	);
 }
+

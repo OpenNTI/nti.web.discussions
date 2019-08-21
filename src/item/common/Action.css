@@ -1,0 +1,14 @@
+.action-username {
+	font-style: normal;
+}
+
+.action-username :global(a.username),
+.container-title {
+	color: #49758E;
+	font-weight: 600;
+	display: inline-block;
+	vertical-align: text-bottom;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

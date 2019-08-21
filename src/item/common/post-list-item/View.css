@@ -21,6 +21,12 @@
 	justify-content: center;
 }
 
+.meta .list-item-action {
+	font-size: 0.75rem;
+	line-height: 1.3;
+	/*text-transform: uppercase;*/
+}
+
 .meta .title {
 	flex: 1 1 auto;
 	font-size: 1.25rem;
