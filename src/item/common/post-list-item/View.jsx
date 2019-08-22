@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
+import {TextPreview} from '@nti/web-modeled-content';
 import {User, Text, Like, Favorite} from '@nti/web-commons';
 
 import Action from '../Action';
@@ -22,6 +23,7 @@ PostListItem.propTypes = {
 	post: PropTypes.shape({
 		creator: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		title: PropTypes.string,
+		body: PropTypes.any,
 		commentCount: PropTypes.number
 	})
 };
@@ -33,7 +35,8 @@ export default function PostListItem (props) {
 			<User.Avatar className={cx('avatar')} user={post.creator} />
 			<div className={cx('meta')}>
 				<Action className={cx('list-item-action')} {...props} />
-				<Text.Base className={cx('title')}>{post.title}</Text.Base>
+				{post.title && (<Text.Base className={cx('title')}>{post.title}</Text.Base>)}
+				{!post.title && post.body && (<TextPreview body={post.body} className={cx('body-preview')} />)}
 				<Text.Base className={cx('comments')}>{t('comments', {count: post.commentCount})}</Text.Base>
 			</div>
 			<div className={cx('social')}>
