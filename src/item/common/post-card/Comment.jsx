@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {Loading, User, Text, DateTime} from '@nti/web-commons';
-import {Panel as Body} from '@nti/web-modeled-content';
+import {TextPreview} from '@nti/web-modeled-content';
 import {LinkTo} from '@nti/web-routing';
 
 import Styles from './Comment.css';
@@ -44,7 +44,12 @@ export default function PostCardComment ({comment}) {
 							<User.DisplayName className={cx('username')} user={comment.creator} tag={Text.Base} />
 							<DateTime className={cx('date')} date={comment.getCreatedTime()} format={DateFormat} />
 						</div>
-						<Body className={cx('content')} body={comment.body} previewMode />
+						<TextPreview
+							className={cx('content')}
+							body={comment.body}
+							limitLines={2}
+							overflow={Text.Overflow.Ellipsis}
+						/>
 					</div>
 				</LinkTo.Object>
 			)}
