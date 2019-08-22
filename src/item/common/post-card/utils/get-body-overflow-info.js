@@ -32,40 +32,47 @@ function getHeight (node) {
 export default function getBodyOverflowInfo (body, desiredMax) {
 	if (!global.document) { return {isOverflowing: true, maxHeight: desiredMax}; }
 
-	const walker = document.createTreeWalker(
-		body,
-		global.NodeFilter.SHOW_ELEMENT,
-		{
-			acceptNode: (node) => {
-				if (isLeafNode(node)) {
-					return global.NodeFilter.FILTER_ACCEPT;
+	try {
+		const walker = document.createTreeWalker(
+			body,
+			global.NodeFilter.SHOW_ELEMENT,
+			{
+				acceptNode: (node) => {
+					if (isLeafNode(node)) {
+						return global.NodeFilter.FILTER_ACCEPT;
+					}
+
+					return global.NodeFilter.FILTER_SKIP;
 				}
+			},
+			false
+		);
 
-				return global.NodeFilter.FILTER_SKIP;
+		let knownHeight = 0;
+		
+		while (walker.nextNode()) {
+			const node = walker.currentNode;
+			const height = getHeight(node);
+
+			if (shouldShowInFull(node)) {
+				knownHeight += height;
+			} else {
+				knownHeight = Math.min(desiredMax, knownHeight + height);
 			}
-		},
-		false
-	);
 
-	let knownHeight = 0;
-	
-	while (walker.nextNode()) {
-		const node = walker.currentNode;
-		const height = getHeight(node);
-
-		if (shouldShowInFull(node)) {
-			knownHeight += height;
-		} else {
-			knownHeight = Math.min(desiredMax, knownHeight + height);
+			if (knownHeight >= desiredMax) {
+				break;
+			}
 		}
 
-		if (knownHeight >= desiredMax) {
-			break;
-		}
+		return {
+			isOverflowing: Boolean(walker.nextNode()),
+			maxHeight: Math.max(desiredMax, knownHeight)
+		};
+	} catch (e) {
+		return {
+			isOverflow: true,
+			maxHeight: desiredMax
+		};
 	}
-
-	return {
-		isOverflowing: Boolean(walker.nextNode()),
-		maxHeight: Math.max(desiredMax, knownHeight)
-	};
 }
