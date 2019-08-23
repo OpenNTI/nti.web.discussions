@@ -62,14 +62,15 @@ export default class ItemGrid extends React.Component {
 		const list = Array.from(children);
 		const heights = this.heightMap;
 
-		return list.map(item => {
-			const id = item.getAttribute(TILE_ITEM_ATTRIBUTE);
-		
-			return {
-				id,
-				height: heights[id]
-			};
-		});
+		return list
+			.map(item => {
+				const id = item.getAttribute(TILE_ITEM_ATTRIBUTE);
+			
+				return {
+					id,
+					height: heights[id]
+				};
+			});
 	}
 
 	onItemHeightChange = (li, height) => {
@@ -77,7 +78,11 @@ export default class ItemGrid extends React.Component {
 
 		const id = li.getAttribute(TILE_ITEM_ATTRIBUTE);
 
-		this.heightMap[id] = height;
+		if (height == null) {
+			delete this.heightMap[id];
+		} else {
+			this.heightMap[id] = height;
+		}
 
 		if (!this.updateTimeout) {
 			this.updateTimeout = setTimeout(() => {

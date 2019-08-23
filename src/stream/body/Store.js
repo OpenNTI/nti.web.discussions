@@ -113,5 +113,16 @@ export default class StreamStore extends Stores.BoundStore {
 		}
 	}
 
-	itemDeleted (item) {}
+	itemDeleted (deleted) {
+		try {
+			const items = this.get('items');
+			const filtered = items.filter(item => item.NTIID !== deleted.NTIID);
+
+			this.set({
+				items: filtered
+			});
+		} catch (e) {
+			//swallow
+		}
+	}
 }
