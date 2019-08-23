@@ -4,6 +4,7 @@
 	align-items: stretch;
 	background: white;
 	box-shadow: 0 -1px 0 0 var(--border-grey-light);
+	overflow: hidden;
 }
 
 .avatar {
@@ -19,6 +20,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
+	overflow: hidden;
 }
 
 .meta .list-item-action {
@@ -29,11 +31,13 @@
 
 .meta .title,
 .meta .body-preview {
+	display: inline-block;
 	flex: 1 1 auto;
 	font-size: 1.25rem;
 	font-weight: 400;
 	line-height: 1.5;
 	color: var(--primary-grey);
+	max-width: 100%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
