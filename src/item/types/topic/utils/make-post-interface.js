@@ -32,7 +32,7 @@ class TopicPostInterface {
 		if (topic.PostCount === 0) { return null; }
 		if (topic.PostCount === 1 && topic.NewestDescendant) { return [topic.NewestDescendant];	}
 
-		const contents = await topic.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'descending'});
+		const contents = await topic.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'descending', 'filter': 'TopLevel'});
 
 		return contents.Items;
 	}
