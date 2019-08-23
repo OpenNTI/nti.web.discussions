@@ -52,7 +52,11 @@ class NotePostInterface {
 	get commentCount () { return this.note.replyCount; }
 
 	async getMostRecentComments () {
+		const {note} = this;
 
+		const replies = await note.getRecentReplies(2);
+
+		return replies.reverse();
 	}
 }
 
