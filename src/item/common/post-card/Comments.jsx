@@ -82,7 +82,7 @@ export default class PostCardComments extends React.Component {
 
 		if (commentCount === 0) { return null; }
 
-		const toRender = Array.from({length: commentCount})
+		const toRender = Array.from({length: Math.min(commentCount, 2)})
 			.map((_, i) => comments ? comments[i] : Comment.Placeholder)
 			.filter(Boolean);
 
