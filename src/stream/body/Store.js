@@ -43,7 +43,7 @@ export default class StreamStore extends Stores.BoundStore {
 		const {context, sortOn, sortOrder, currentPage, batchSize} = this;
 		const {contentsDataSource} = context;
 
-		this.set({
+		this.setImmediate({
 			loading: true
 		});
 
@@ -52,18 +52,23 @@ export default class StreamStore extends Stores.BoundStore {
 				await currentPage.loadNextPage() :
 				await contentsDataSource.loadPage(0, {batchSize, sortOn, sortOrder});
 
+			if (!page) {
+				this.set({loading: false, hasMore: false});
+				return;
+			}
+
 			this.currentPage = page;
 
 			const existingItems = this.get('items') || [];
 			const {hasMore, Items} = page;
 
-			this.set({
+			this.setImmediate({
 				loading: false,
 				hasMore,
 				items: [...existingItems, ...Items]
 			});
 		} catch (e) {
-			this.set({
+			this.setImmediate({
 				loading: false,
 				error: e,
 				hasMore: false

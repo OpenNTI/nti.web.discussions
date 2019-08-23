@@ -80,11 +80,12 @@ class DiscussionsStream extends React.Component {
 		const ItemCmp = layout === List ? ListCmp : GridCmp;
 
 		return (
-			<Loading.Placeholder loading={loading} fallback={(<LoadingMask initial={initial} />)}>
-				<InfiniteScroll.Continuous className={className} loadMore={loadMore}>
+			<Loading.Placeholder loading={loading && initial} fallback={(<LoadingMask initial />)}>
+				<InfiniteScroll.Continuous className={className} loadMore={loadMore} buffer={200}>
 					{items && !items.length && this.renderEmpty()}
 					{items && (<ItemCmp items={items} {...otherProps} />)}
 					{error && (<ErrorCmp error={error} initial={initial} />)}
+					{loading && (<LoadingMask />)}
 				</InfiniteScroll.Continuous>
 			</Loading.Placeholder>
 		);
