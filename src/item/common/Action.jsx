@@ -70,7 +70,7 @@ export default class DiscussionItemAction extends React.Component {
 		const {loading, containerTitle} = this.state;
 
 		return (
-			<Text.Base className={cx('discussion-item-action', className, {'has-title': containerTitle})}>
+			<Text.Base className={cx('discussion-item-action-label', className, {'has-title': containerTitle})}>
 				{!loading && (
 					<User.DisplayName
 						className={cx('action-username')}
