@@ -3,6 +3,8 @@
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+	max-width: 285px;
+	overflow: hidden;
 }
 
 .post-card-header .avatar {
@@ -16,6 +18,17 @@
 	flex: 1 1 auto;
 	font-size: 0.875rem;
 	line-height: 1.3;
+	overflow: hidden;
+}
+
+.post-card-header .meta .user-name {
+	color: #49758E;
+	font-weight: 600;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
 }
 
 

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {User, DateTime} from '@nti/web-commons';
 
-import Action from '../Action';
-
 import Styles from './Header.css';
 
 const cx = classnames.bind(Styles);
@@ -22,7 +20,7 @@ export default function PostCardHeader ({post}) {
 		<div className={cx('post-card-header')}>
 			<User.Avatar className={cx('avatar')} user={post.creator} />
 			<div className={cx('meta')}>
-				<Action post={post} className={cx('action')}/>
+				<User.DisplayName className={cx('user-name')} user={post.creator} />
 				<DateTime className={cx('date')} date={post.CreatedTime} format={DateFormat} />
 			</div>
 		</div>

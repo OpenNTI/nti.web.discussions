@@ -8,3 +8,30 @@
 
 	--side-padding: 0.625rem;
 }
+
+.post-card :global(.charms) {
+	top: -1px;
+}
+
+.post-card :global(.charms .like) {
+	margin: 0;
+	padding: 0 0 0 0.875rem;
+}
+
+
+:global(.no-touch) .post-card :global(.charms .like),
+:global(.no-touch) .post-card :global(.charms .favorite)
+{
+	visibility: hidden;
+}
+
+:global(.no-touch) .post-card:hover :global(.charms .like),
+:global(.no-touch) .post-card:hover :global(.charms .favorite),
+:global(.no-touch) .post-card :global(.charms .like.active),
+:global(.no-touch) .post-card :global(.charms .like.count),
+:global(.no-touch) .post-card :global(.charms .favorite.active)
+{
+	visibility: visible;
+}
+
+
