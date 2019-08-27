@@ -59,7 +59,8 @@ class StreamStore extends Stores.BoundStore {
 			delete this.cleanupListeners;
 		};
 		
-		this.set({
+		this.setImmediate({
+			loading: false,
 			items: null,
 			error: null
 		});
@@ -82,6 +83,9 @@ class StreamStore extends Stores.BoundStore {
 			const page = currentPage ?
 				await currentPage.loadNextPage() :
 				await contentsDataSource.loadPage(0, getParams(batchSize, sortOn, sortOrder, lastSearchTerm));
+
+			//If the context or search change, don't set the results
+			if (context !== this.context || lastSearchTerm !== this.lastSearchTerm) { return; }
 
 			if (!page) {
 				this.set({loading: false, hasMore: false});
