@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {EmptyState} from '@nti/web-commons';
@@ -7,11 +8,21 @@ import Styles from './Empty.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.stream.body.components.Empty', {
-	message: 'There isn\'t any activity here yet.'
+	message: {
+		noSearch: 'There isn\'t any activity here yet.',
+		search: 'There are no results matching "%(searchTerm)s".'
+	}
 });
 
-export default function EmptyStream () {
+EmptyStream.propTypes = {
+	searchTerm: PropTypes.string
+};
+export default function EmptyStream ({searchTerm}) {
+	const header = searchTerm ? t('message.search', {searchTerm}) : t('message.noSearch');
+
 	return (
-		<EmptyState header={t('message')} />
+		<div className={cx('empty-discussion-stream')}>
+			<EmptyState header={header} />
+		</div>
 	);
 }

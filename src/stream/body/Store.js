@@ -1,20 +1,51 @@
-import {Stores} from '@nti/lib-store';
+import {Stores, Mixins} from '@nti/lib-store';
+import {mixin} from '@nti/lib-decorators';
 
-export default class StreamStore extends Stores.BoundStore {
+function getParams (batchSize, sortOn, sortOrder, searchTerm) {
+	const params = {};
+
+	if (batchSize != null) { params['batchSize'] = batchSize; }
+	if (sortOn != null) { params['sortOn'] = sortOn; }
+	if (sortOrder != null) { params['sortOrder'] = sortOrder; }
+	if (searchTerm != null) { params['searchTerm'] = searchTerm; }
+
+	return params;
+}
+
+export default
+@mixin(Mixins.Searchable)
+class StreamStore extends Stores.BoundStore {
 	cleanup () {
 		if (this.cleanupListeners) {
 			this.cleanupListeners();
 		}
 	}
 
+
+	bindingDidUpdate (prevBinding) {
+		const {context, sortOn, sortOrder} = this.binding;
+		const {context:prevContext, sortOn: prevSortOn, sortOrder: prevSortOrder} = prevBinding;
+
+		return context !== prevContext || sortOn !== prevSortOn || sortOrder !== prevSortOrder;
+	}
+
+
 	load () {
+		//NOTE: even though we are defining a bindingDidUpdate, we have to check the binding again here
+		//because this has the searchable mixin which will call load
 		this.batchSize = this.binding.batchSize;
 
-		if (this.binding.context === this.context && this.binding.sortOn === this.sortOn && this.binding.sortOrder === this.sortOrder) { return; }
+		if (
+			this.binding.context === this.context &&
+			this.binding.sortOn === this.sortOn &&
+			this.binding.sortOrder === this.sortOrder && 
+			this.searchTerm === this.lastSearchTerm
+		) { return; }
 
 		this.context = this.binding.context;
 		this.sortOn = this.binding.sortOn;
 		this.sortOrder = this.binding.sortOrder;
+		this.lastSearchTerm = this.searchTerm;
 		this.currentPage = null;
 
 		if (this.cleanupListeners) { this.cleanupListeners(); }
@@ -40,7 +71,7 @@ export default class StreamStore extends Stores.BoundStore {
 		//Don't try to load if we are already loading...
 		if (this.get('loading')) { return; }
 
-		const {context, sortOn, sortOrder, currentPage, batchSize} = this;
+		const {context, sortOn, sortOrder, currentPage, batchSize, lastSearchTerm} = this;
 		const {contentsDataSource} = context;
 
 		this.setImmediate({
@@ -50,7 +81,7 @@ export default class StreamStore extends Stores.BoundStore {
 		try {
 			const page = currentPage ?
 				await currentPage.loadNextPage() :
-				await contentsDataSource.loadPage(0, {batchSize, sortOn, sortOrder});
+				await contentsDataSource.loadPage(0, getParams(batchSize, sortOn, sortOrder, lastSearchTerm));
 
 			if (!page) {
 				this.set({loading: false, hasMore: false});
@@ -75,6 +106,7 @@ export default class StreamStore extends Stores.BoundStore {
 			});
 		}
 	}
+
 
 	get loadMore () {
 		const hasMore = this.get('hasMore');
