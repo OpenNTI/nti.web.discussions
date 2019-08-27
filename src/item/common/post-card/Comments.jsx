@@ -22,7 +22,8 @@ export default class PostCardComments extends React.Component {
 			canAddComment: PropTypes.bool,
 			getMostRecentComments: PropTypes.func,
 			addCommentAddedListener: PropTypes.func,
-			addCommentUpdatedListener: PropTypes.func
+			addCommentUpdatedListener: PropTypes.func,
+			addCommentDeletedListener: PropTypes.func
 		}),
 		item: PropTypes.object
 	}
@@ -51,6 +52,16 @@ export default class PostCardComments extends React.Component {
 		if (this.cleanupCommentAddedListener) {
 			this.cleanupCommentAddedListener();
 			delete this.cleanupCommentAddedListener;
+		}
+
+		if (this.cleanupCommentUpdatedListener) {
+			this.cleanupCommentUpdatedListener();
+			delete this.cleanupCommentUpdatedListener;
+		}
+
+		if (this.addCommentDeletedListener) {
+			this.addCommentDeletedListener();
+			delete this.addCommentDeletedListener;
 		}
 	}
 
@@ -81,6 +92,19 @@ export default class PostCardComments extends React.Component {
 						if (comment.getID() === updatedId) { return updatedComment; }
 						return comment;
 					})
+				});
+			});
+		}
+
+		if (post.addCommentDeletedListener) {
+			this.cleanupCommentDeletedListener = post.addCommentDeletedListener((deletedComment) => {
+				const {deleted} = this.state;
+
+				this.setState({
+					deleted: {
+						...(deleted || {}),
+						[deletedComment.getID()]: true
+					}
 				});
 			});
 		}
@@ -129,7 +153,7 @@ export default class PostCardComments extends React.Component {
 	renderComments () {
 		const {post} = this.props;
 		const {commentCount} = post;
-		const {comments, loading} = this.state;
+		const {comments, deleted, loading} = this.state;
 
 		if (commentCount === 0) { return null; }
 
@@ -142,7 +166,7 @@ export default class PostCardComments extends React.Component {
 				{toRender.map((comment, key) => {
 					return (
 						<li key={key}>
-							<Comment comment={comment} />
+							<Comment comment={comment} deleted={deleted && deleted[comment.getID()]} />
 						</li>
 					);
 				})}

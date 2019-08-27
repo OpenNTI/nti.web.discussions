@@ -1,4 +1,5 @@
 import {scoped} from '@nti/lib-locale';
+import {Events} from '@nti/web-session';
 
 const t = scoped('nti-discussions.item.types.note.utils.make-post-interface', {
 	action: {
@@ -57,6 +58,43 @@ class NotePostInterface {
 		const replies = await note.getRecentReplies(2);
 
 		return replies.reverse();
+	}
+
+	addCommentAddedListener (fn) {
+		const handler = (comment) => {
+			if (comment.inReplyTo === this.getID()) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.NOTE_CREATED, handler);
+
+		return () => Events.removeListener(Events.NOTE_CREATED, handler);
+	}
+
+
+	addCommentUpdatedListener (fn) {
+		const handler = (comment) => {
+			if (comment.inReplyTo === this.getID()) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.NOTE_UPDATED, handler);
+
+		return () => Events.removeListener(Events.NOTE_UPDATED, handler);
+	}
+
+	addCommentDeletedListener (fn) {
+		const handler = (comment) => {
+			if (comment.inReplyTo === this.getID()) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.NOTE_DELETED, handler);
+
+		return () => Events.removeListener(Events.NOTE_DELETED, handler);
 	}
 }
 

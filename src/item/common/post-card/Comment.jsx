@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {scoped} from '@nti/lib-locale';
 import {Loading, User, Text, DateTime} from '@nti/web-commons';
 import {TextPreview} from '@nti/web-modeled-content';
 import {LinkTo} from '@nti/web-routing';
@@ -8,6 +9,10 @@ import {LinkTo} from '@nti/web-routing';
 import Styles from './Comment.css';
 
 const cx = classnames.bind(Styles);
+const t = scoped('nti-discussions.item.common.post-card.Comment', {
+	deleted: 'This item has been deleted.'
+});
+
 const Placeholder = 'placeholder';
 const DateFormat = 'MMM D [at] h:mm a';
 
@@ -20,9 +25,10 @@ PostCardComment.propTypes = {
 			body: PropTypes.any,
 			getCreatedTime: PropTypes.func
 		})
-	])
+	]),
+	deleted: PropTypes.bool
 };
-export default function PostCardComment ({comment}) {
+export default function PostCardComment ({comment, deleted}) {
 	const loading = comment === Placeholder;
 	const skeleton = (
 		<div className={cx('comment', 'skeleton')}>
@@ -44,12 +50,19 @@ export default function PostCardComment ({comment}) {
 							<User.DisplayName className={cx('username')} user={comment.creator} tag={Text.Base} />
 							<DateTime className={cx('date')} date={comment.getCreatedTime()} format={DateFormat} />
 						</div>
-						<TextPreview
-							className={cx('content')}
-							body={comment.body}
-							limitLines={2}
-							overflow={Text.Overflow.Ellipsis}
-						/>
+						{!deleted && (
+							<TextPreview
+								className={cx('content')}
+								body={comment.body}
+								limitLines={2}
+								overflow={Text.Overflow.Ellipsis}
+							/>
+						)}
+						{deleted && (
+							<Text.Base className={cx('content', 'deleted')}>
+								{t('deleted')}
+							</Text.Base>
+						)}
 					</div>
 				</LinkTo.Object>
 			)}

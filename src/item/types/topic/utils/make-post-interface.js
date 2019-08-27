@@ -53,26 +53,27 @@ class TopicPostInterface {
 
 
 	addCommentUpdatedListener (fn) {
-		const updatedHandler = (comment) => {
+		const handler = (comment) => {
 			if (comment.ContainerId === this.getID()) {
 				fn(comment);
 			}
 		};
 
-		const deletedHandler = async (comment) => {
+		Events.addListener(Events.TOPIC_COMMENT_UPDATED, handler);
+
+		return () => Events.removeListener(Events.TOPIC_COMMENT_UPDATED, handler);
+	}
+
+	addCommentDeletedListener (fn) {
+		const handler = (comment) => {
 			if (comment.ContainerId === this.getID()) {
-				await comment.refresh();
 				fn(comment);
 			}
 		};
 
-		Events.addListener(Events.TOPIC_COMMENT_UPDATED, updatedHandler);
-		Events.addListener(Events.TOPIC_COMMENT_DELETED, deletedHandler);
+		Events.addListener(Events.TOPIC_COMMENT_DELETED, handler);
 
-		return () => {
-			Events.removeListener(Events.TOPIC_COMMENT_UPDATED, updatedHandler);
-			Events.removeListener(Events.TOPIC_COMMENT_DELETED, deletedHandler);
-		};
+		return () => Events.removeListener(Events.TOPIC_COMMENT_DELETED, handler);
 	}
 }
 
