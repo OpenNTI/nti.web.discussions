@@ -1,3 +1,5 @@
+import {Events} from '@nti/web-session';
+
 class TopicPostInterface {
 	constructor (topic) {
 		if (!topic) {
@@ -35,6 +37,42 @@ class TopicPostInterface {
 		const contents = await topic.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'descending', 'filter': 'TopLevel'});
 
 		return contents.Items;
+	}
+
+	addCommentAddedListener (fn) {
+		const handler = (comment) => {
+			if (comment.ContainerId === this.getID()) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.TOPIC_COMMENT_CREATED, handler);
+
+		return () => Events.removeListener(Events.TOPIC_COMMENT_CREATED, handler);
+	}
+
+
+	addCommentUpdatedListener (fn) {
+		const updatedHandler = (comment) => {
+			if (comment.ContainerId === this.getID()) {
+				fn(comment);
+			}
+		};
+
+		const deletedHandler = async (comment) => {
+			if (comment.ContainerId === this.getID()) {
+				await comment.refresh();
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.TOPIC_COMMENT_UPDATED, updatedHandler);
+		Events.addListener(Events.TOPIC_COMMENT_DELETED, deletedHandler);
+
+		return () => {
+			Events.removeListener(Events.TOPIC_COMMENT_UPDATED, updatedHandler);
+			Events.removeListener(Events.TOPIC_COMMENT_DELETED, deletedHandler);
+		};
 	}
 }
 

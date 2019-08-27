@@ -20,7 +20,9 @@ export default class PostCardComments extends React.Component {
 			getID: PropTypes.func,
 			commentCount: PropTypes.number,
 			canAddComment: PropTypes.bool,
-			getMostRecentComments: PropTypes.func
+			getMostRecentComments: PropTypes.func,
+			addCommentAddedListener: PropTypes.func,
+			addCommentUpdatedListener: PropTypes.func
 		}),
 		item: PropTypes.object
 	}
@@ -40,15 +42,64 @@ export default class PostCardComments extends React.Component {
 		}
 	}
 
+	componentWillUnmount () {
+		this.cleanupListeners();
+	}
+
+
+	cleanupListeners () {
+		if (this.cleanupCommentAddedListener) {
+			this.cleanupCommentAddedListener();
+			delete this.cleanupCommentAddedListener;
+		}
+	}
+
+	addListeners () {
+		const {post} = this.props;
+
+		this.cleanupListeners();
+
+		if (post.addCommentAddedListener) {
+			this.cleanupCommentAddedListener = post.addCommentAddedListener((newComment) => {
+				const {comments} = this.state;
+
+				this.setState({
+					comments: [newComment, ...(comments || [])]
+				});
+			});
+		}
+
+		if (post.addCommentUpdatedListener) {
+			this.cleanupCommentUpdatedListener = post.addCommentUpdatedListener((updatedComment) => {
+				const updatedId = updatedComment.getID();
+				const {comments} = this.state;
+
+				if (!comments) { return; }
+
+				this.setState({
+					comments: comments.map((comment) => {
+						if (comment.getID() === updatedId) { return updatedComment; }
+						return comment;
+					})
+				});
+			});
+		}
+	}
+
 	async setup (props) {
 		const {post} = props;
 
+		this.addListeners();
+
 		try {
 			const comments = await post.getMostRecentComments(2);
+			//if there are existing, it should only be because a comment
+			//was created before we finished loading
+			const {comments: existing} = this.state;
 
 			this.setState({
 				loading: false,
-				comments
+				comments: [...(existing || []), ...(comments || [])]
 			});
 		} catch (e) {
 			this.setState({
