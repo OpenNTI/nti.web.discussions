@@ -1,0 +1,14 @@
+.dicusssion-item-report {
+	border: none;
+	cursor: pointer;
+	box-sizing: border-box;
+	text-transform: none;
+	vertical-align: middle;
+	display: inline-block;
+	color: var(--tertiary-grey);
+}
+
+
+.no-touch .discussion-item-report:hover {
+	color: var(--primary-blue);
+}

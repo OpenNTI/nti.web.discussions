@@ -27,6 +27,10 @@ class TopicPostInterface {
 
 	get canAddComment () { return this.topic.canAddComment(); }
 	get commentCount () { return this.topic.PostCount; }
+
+	getReport () {
+		return (this.topic.Reports || [])[0];
+	}
 	
 	async getMostRecentComments () {
 		const {topic} = this;

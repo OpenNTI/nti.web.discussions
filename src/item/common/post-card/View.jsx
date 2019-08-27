@@ -4,6 +4,9 @@ import classnames from 'classnames/bind';
 import {LinkTo} from '@nti/web-routing';
 import {LuckyCharms} from '@nti/web-commons';
 
+import CommentCount from '../CommentCount';
+import Report from '../Report';
+
 import Styles from './View.css';
 import Comments from './Comments';
 import Content from './Content';
@@ -22,6 +25,10 @@ export default function PostCard (props) {
 			<LuckyCharms item={item} asButton />
 			<Header {...props} />
 			<Content {...props} />
+			<div className={cx('footer')}>
+				<CommentCount {...props} />
+				<Report className={cx('card-report')} {...props} />
+			</div>
 			<Comments {...props} />
 		</LinkTo.Object>
 	);
