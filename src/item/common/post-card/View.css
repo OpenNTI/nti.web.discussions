@@ -29,15 +29,15 @@
 
 
 :global(.no-touch) .post-card :global(.charms .like),
-:global(.no-touch) .post-card :global(.charms .favorite)
-:global(.no-couth) .post-card .card-report
+:global(.no-touch) .post-card :global(.charms .favorite),
+:global(.no-touch) .post-card .card-report
 {
 	visibility: hidden;
 }
 
 :global(.no-touch) .post-card:hover :global(.charms .like),
 :global(.no-touch) .post-card:hover :global(.charms .favorite),
-:global(.no-touch) .post-card:hover .card-report
+:global(.no-touch) .post-card:hover .card-report,
 :global(.no-touch) .post-card :global(.charms .like.active),
 :global(.no-touch) .post-card :global(.charms .like.count),
 :global(.no-touch) .post-card :global(.charms .favorite.active)
