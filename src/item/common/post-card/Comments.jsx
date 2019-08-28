@@ -8,6 +8,7 @@ import {Text} from '@nti/web-commons';
 import Styles from './Comments.css';
 import Comment from './Comment';
 
+const MaxShowCount = 2;
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.item.common.post-card.Comments', {
@@ -116,7 +117,7 @@ export default class PostCardComments extends React.Component {
 		this.addListeners();
 
 		try {
-			const comments = await post.getMostRecentComments(2);
+			const comments = await post.getMostRecentComments(MaxShowCount);
 			//if there are existing, it should only be because a comment
 			//was created before we finished loading
 			const {comments: existing} = this.state;
@@ -152,12 +153,12 @@ export default class PostCardComments extends React.Component {
 
 	renderComments () {
 		const {post} = this.props;
-		const {commentCount} = post;
 		const {comments, deleted, loading} = this.state;
+		const count = comments ? comments.length : post.commentCount;
 
-		if (commentCount === 0) { return null; }
+		if (count === 0) { return null; }
 
-		const toRender = Array.from({length: Math.min(commentCount, 2)})
+		const toRender = Array.from({length: Math.min(count, MaxShowCount)})
 			.map((_, i) => comments ? comments[i] : Comment.Placeholder)
 			.filter(Boolean);
 
