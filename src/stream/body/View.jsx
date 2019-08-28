@@ -84,7 +84,7 @@ class DiscussionsStream extends React.Component {
 	}
 
 	render () {
-		const {className, items, loading, error, layout, loadMore, searchTerm} = this.props;
+		const {context, className, items, loading, error, layout, loadMore, searchTerm} = this.props;
 		const otherProps = restProps(DiscussionsStream, this.props);
 		const initial = !items && !searchTerm;
 		const ItemCmp = layout === List ? ListCmp : GridCmp;
@@ -95,7 +95,7 @@ class DiscussionsStream extends React.Component {
 				<InfiniteScroll.Continuous className={className} loadMore={loadMore} buffer={200}>
 					{items && !items.length && this.renderEmpty()}
 					{shouldShowSearch && (<SearchInfo searchTerm={searchTerm} />)}
-					{items && (<ItemCmp items={items} {...otherProps} />)}
+					{items && (<ItemCmp items={items} context={context} {...otherProps} />)}
 					{error && (<ErrorCmp error={error} initial={initial} />)}
 					{loading && (<LoadingMask />)}
 				</InfiniteScroll.Continuous>

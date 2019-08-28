@@ -13,9 +13,8 @@ class TopicPostInterface {
 		return this.topic.getID();
 	}
 
-	async getContainerTitle () {
-		return null;
-	}
+	get contextId () { return this.topic.ContainerId; }
+	get contextTitle () { return this.topic.ContainerTitle; }
 	
 	get creator () { return this.topic.creator; }
 	
