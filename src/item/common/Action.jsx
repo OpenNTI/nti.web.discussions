@@ -7,77 +7,37 @@ import Styles from './Action.css';
 
 const cx = classnames.bind(Styles);
 
+
 export default class DiscussionItemAction extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
+		context: PropTypes.object,
 		post: PropTypes.shape({
-			getID: PropTypes.func,
 			creator: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			getActionString: PropTypes.func,
-			getContainerTitle: PropTypes.func
+			getActionString: PropTypes.func
 		})
-	}
-
-	state = {loading: true, containerTitle: null}
-
-	componentDidMount () {
-		this.setup();
-	}
-
-	componentDidUpdate (prevProps) {
-		const {post} = this.props;
-		const {post:prevPost} = prevProps;
-
-		if (post.getID() !== prevPost.getID()) {
-			this.setState({loading: true, containerTitle: null}, () => this.setup());
-		}
-	}
-
-	async setup () {
-		const {post} = this.props;
-
-		try {
-			const containerTitle = await post.getContainerTitle();
-
-			this.setState({
-				loading: false,
-				containerTitle
-			});
-		} catch (e) {
-			this.setState({
-				loading: false,
-				containerTitle: null
-			});
-		}
 	}
 
 
 	getLocale = ({name}) => {
-		const {post} = this.props;
-		const {containerTitle} = this.state;
+		const {post, context} = this.props;
 
 		if (!post.getActionString) { return name; }
 
-		return post.getActionString(
-			name,
-			containerTitle ? `<span class="${cx('container-title')}">${containerTitle}</span>` : ''
-		);
+		return post.getActionString(name, context && context.getID && context.getID(), (title) => `<span class="${cx('container-title')}">${title}</span>`);
 	}
 
 
 	render () {
 		const {post, className} = this.props;
-		const {loading, containerTitle} = this.state;
 
 		return (
-			<Text.Base className={cx('discussion-item-action-label', className, {'has-title': containerTitle})}>
-				{!loading && (
-					<User.DisplayName
-						className={cx('action-username')}
-						user={post.creator}
-						localeKey={this.getLocale}
-					/>
-				)}
+			<Text.Base className={cx('discussion-item-action-label', className)}>
+				<User.DisplayName
+					className={cx('action-username')}
+					user={post.creator}
+					localeKey={this.getLocale}
+				/>
 			</Text.Base>
 		);
 	}

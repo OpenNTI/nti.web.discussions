@@ -1,4 +1,12 @@
 import {Events} from '@nti/web-session';
+import {scoped} from '@nti/lib-locale';
+
+const t = scoped('nti-discussions.item.types.topic.utils.make-post-interface', {
+	action: {
+		hasTitle: '%(name)s posted on %(title)s',
+		noTitle: '%(name)s'
+	}
+});
 
 class TopicPostInterface {
 	constructor (topic) {
@@ -24,12 +32,24 @@ class TopicPostInterface {
 	get title () { return this.topic.title;	}
 	get body () { return this.topic.headline && this.topic.headline.body; }
 
-	get canAddComment () { return this.topic.canAddComment(); }
-	get commentCount () { return this.topic.PostCount; }
+	getActionString (name, contextId, makeTitle) {
+		const inContext = contextId === this.topic.ContainerId;
+		const title = this.topic.ContainerTitle;
+
+		if (!title || inContext) {
+			return t('action.noTitle', {name});
+		}
+
+		return t('action.hasTitle', {name, title: makeTitle(title)});
+	}
 
 	getReport () {
 		return (this.topic.Reports || [])[0];
 	}
+	
+	get canAddComment () { return this.topic.canAddComment(); }
+	get commentCount () { return this.topic.PostCount; }
+
 	
 	async getMostRecentComments () {
 		const {topic} = this;

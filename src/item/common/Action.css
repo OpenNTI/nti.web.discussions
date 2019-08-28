@@ -7,7 +7,7 @@
 	color: #49758E;
 	font-weight: 600;
 	display: inline-block;
-	vertical-align: text-bottom;
+	vertical-align: bottom;
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;

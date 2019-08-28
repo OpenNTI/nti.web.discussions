@@ -37,12 +37,15 @@ class NotePostInterface {
 		};
 	}
 
-	getActionString (name, title) {
-		if (!title) {
+	getActionString (name, contextId, makeTitle) {
+		const inContext = contextId === this.note.ContainerId;
+		const title = this.note.ContainerTitle;
+
+		if (!title || inContext) {
 			return t('action.noTitle', {name});
 		}
 
-		return t('action.hasTitle', {name, title});
+		return t('action.hasTitle', {name, title: makeTitle(title)});
 	}
 
 	get creator () { return this.note.creator; }
