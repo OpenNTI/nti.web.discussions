@@ -1,14 +1,25 @@
 import {isTextNode} from '@nti/lib-dom';
 
-const WHITEBOARD_RATIO = 1.618;//width / height
 const PARAGRAPH = 'P';
 
 const isObject = node => node.tagName === 'OBJECT';
 const isWhiteboard = node => node.classList.contains('whiteboard');
 const isVideo = node => node.classList.contains('nti-video');
 
-function isLeafNode (node) {
+const isInObject = (node, body) => {
+	let pointer = node.parentNode;
+
+	while (pointer && pointer !== body) {
+		if (isObject(pointer)) { return true; }
+		pointer = pointer.parentNode;
+	}
+
+	return false;
+};
+
+function isLeafNode (node, body) {
 	if (!node) { return false; }
+	if (isInObject(node)) { return false; }
 	if (node.tagName === PARAGRAPH) { return true; }
 	if (isTextNode(node.firstChild)) { return true; }
 	if (isObject(node)) { return true; }
@@ -22,11 +33,13 @@ function shouldShowInFull (node) {
 }
 
 function getHeight (node) {
-	if (isWhiteboard(node)) {
-		return Math.ceil((1 / WHITEBOARD_RATIO) * node.clientWidth);
-	}
+	if (!global.getComputedStyle) { return node.clientHeight; }
 
-	return node.clientHeight;
+	const style = global.getComputedStyle(node);
+	const marginTop = parseFloat(style['marginTop'], 10) || 0;
+	const marginBottom = parseFloat(style['marginBottom'], 10) || 0;
+
+	return Math.ceil(node.clientHeight + marginTop + marginBottom);
 }
 
 export default function getBodyOverflowInfo (body, desiredMax) {
@@ -38,7 +51,7 @@ export default function getBodyOverflowInfo (body, desiredMax) {
 			global.NodeFilter.SHOW_ELEMENT,
 			{
 				acceptNode: (node) => {
-					if (isLeafNode(node)) {
+					if (isLeafNode(node, body)) {
 						return global.NodeFilter.FILTER_ACCEPT;
 					}
 
@@ -49,15 +62,18 @@ export default function getBodyOverflowInfo (body, desiredMax) {
 		);
 
 		let knownHeight = 0;
+		let maxHeight = 0;
 		
 		while (walker.nextNode()) {
 			const node = walker.currentNode;
 			const height = getHeight(node);
 
+			knownHeight += height;
+
 			if (shouldShowInFull(node)) {
-				knownHeight += height;
+				maxHeight += height;
 			} else {
-				knownHeight = Math.min(desiredMax, knownHeight + height);
+				maxHeight = Math.min(desiredMax, maxHeight + height);
 			}
 
 			if (knownHeight >= desiredMax) {
@@ -65,9 +81,12 @@ export default function getBodyOverflowInfo (body, desiredMax) {
 			}
 		}
 
+
+		const adjustedMax = Math.max(desiredMax, maxHeight);
+
 		return {
-			isOverflowing: Boolean(walker.nextNode()),
-			maxHeight: Math.max(desiredMax, knownHeight)
+			isOverflowing: Boolean(walker.nextNode()) || knownHeight > adjustedMax,
+			maxHeight: adjustedMax
 		};
 	} catch (e) {
 		return {

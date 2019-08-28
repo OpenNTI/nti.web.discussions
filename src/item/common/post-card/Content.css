@@ -44,21 +44,26 @@
 }
 
 .body :global(p) {
-	margin: 0 0 0.5rem;
+	padding: 0 0 0.65em;
 }
 
 .body :global(.whiteboard) {
-	min-height: 205px;
+	height: 207px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .body :global(.whiteboard img) {
-	max-width: 100%;
+	max-height: 100%;
 }
 
 .body :global(.whiteboard),
 .body :global(.nti-video) {
 	margin: 0.5rem calc(-1 * var(--side-padding, 0.625rem));
-	box-shadow: 0 1px 0 0 var(--border-grey-light), 0 -1px 0 0 var(--border-grey-light);
+	border: 0px solid var(--border-grey-light);
+	border-top-width: 1px;
+	border-bottom-width: 1px;
 }
 
 .body :global(.body-divider.file .file-icon) {
