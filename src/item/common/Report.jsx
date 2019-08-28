@@ -30,7 +30,7 @@ export default class DiscussionItemReport extends React.Component {
 		if (!post || !post.getReport || !post.getReport()) { return null; }
 
 		return (
-			<button type="button" className={cx('dicusssion-item-report', className)} onClick={this.launchReport}>
+			<button type="button" className={cx('discussion-item-report', className)} onClick={this.launchReport}>
 				<i className={cx('icon-report', 'icon')} />
 			</button>
 		);

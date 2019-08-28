@@ -5,6 +5,7 @@
 	background: white;
 	box-shadow: 0 -1px 0 0 var(--border-grey-light);
 	overflow: hidden;
+	position: relative;
 }
 
 .avatar {
@@ -50,16 +51,35 @@
 	color: var(--tertiary-grey);
 }
 
-.social {
-	flex: 0 0 auto;
+.post-list-item :global(.charms) {
+	top: 0px;
 }
 
-.social :global(.like:not(.active)),
-.social :global(.favorite:not(.active)) {
+.post-list-item :global(.charms .like) {
+	margin: 0;
+	padding: 0 0 0 0.875rem;
+}
+
+.list-report {
+	display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 var(--side-padding, 0.625rem) 0.3125rem;
+}
+
+:global(.no-touch) .post-list-item :global(.charms .like),
+:global(.no-touch) .post-list-item :global(.charms .favorite),
+:global(.no-touch) .post-list-item .list-report
+{
 	visibility: hidden;
 }
 
-.post-list-item:hover .social :global(.like:not(.active)),
-.post-list-item:hover .social :global(.favorite:not(.active)) {
+:global(.no-touch) .post-list-item:hover :global(.charms .like),
+:global(.no-touch) .post-list-item:hover :global(.charms .favorite),
+:global(.no-touch) .post-list-item:hover .list-report,
+:global(.no-touch) .post-list-item :global(.charms .like.active),
+:global(.no-touch) .post-list-item :global(.charms .like.count),
+:global(.no-touch) .post-list-item :global(.charms .favorite.active)
+{
 	visibility: visible;
 }
