@@ -6,6 +6,7 @@ import {LuckyCharms} from '@nti/web-commons';
 
 import CommentCount from '../CommentCount';
 import Report from '../Report';
+import ContainerCard from '../ContainerCard';
 
 import Styles from './View.css';
 import Comments from './Comments';
@@ -25,6 +26,7 @@ export default function PostCard (props) {
 			<LuckyCharms item={item} asButton />
 			<Header {...props} />
 			<Content {...props} />
+			<ContainerCard className={cx('card-context')} {...props} />
 			<div className={cx('footer')}>
 				<CommentCount {...props} />
 				<Report className={cx('card-report')} {...props} />

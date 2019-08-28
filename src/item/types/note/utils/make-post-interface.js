@@ -1,12 +1,16 @@
 import {scoped} from '@nti/lib-locale';
 import {Events} from '@nti/web-session';
 
+import resolveContainerInfo from './resolve-container-info';
+
 const t = scoped('nti-discussions.item.types.note.utils.make-post-interface', {
+	commentedOn: 'Commented On',
 	action: {
 		hasTitle: '%(name)s commented on %(title)s',
 		noTitle: '%(name)s commented'
 	}
 });
+
 
 class NotePostInterface {
 	constructor (note) {
@@ -21,16 +25,16 @@ class NotePostInterface {
 		return this.note.getID();
 	}
 
-	async getContainerTitle () {
-		const {note} = this;
+	get contextId () { return null; }
+	get contextTitle () { return null; }
 
-		try {
-			const context = await note.getContextData();
-			
-			return context.Title || context.title;
-		} catch (e) {
-			//swallow
-		}
+	async getContainerInfo () {
+		const info = await resolveContainerInfo(this.note);
+
+		return {
+			label: t('commentedOn'),
+			...info
+		};
 	}
 
 	getActionString (name, title) {

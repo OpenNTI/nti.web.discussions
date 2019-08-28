@@ -25,7 +25,10 @@
 	align-content: center;
 	justify-content: space-between;
 }
-;
+
+.card-context {
+	margin: var(--side-padding, 0.625rem);
+}
 
 
 :global(.no-touch) .post-card :global(.charms .like),

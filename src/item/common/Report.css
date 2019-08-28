@@ -9,6 +9,6 @@
 }
 
 
-.no-touch .discussion-item-report:hover {
+:global(.no-touch) .discussion-item-report:hover {
 	color: var(--primary-blue);
 }

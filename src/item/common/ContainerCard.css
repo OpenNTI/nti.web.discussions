@@ -1,0 +1,66 @@
+.discussion-item-container-card {
+	background-color: #FAFDFF;
+	border: 1px solid #CBEAFD;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.icon {
+	position: relative;
+	flex: 0 0 auto;
+	width: 90px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.icon:global(.video)::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	width: 100%;
+	height: 100%;
+
+	background-image: url('./assets/play.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.meta {
+	padding: 14px 10px 15px;
+	flex: 1 1 auto;
+}
+
+.label {
+	display: block;
+	font-size: 0.625rem;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--primary-grey);
+	text-transform: uppercase;
+}
+
+.label.skeleton {
+	width: 30%;
+	height: 8px;
+	background-color: var(--secondary-grey);
+	margin-bottom: 4px;
+}
+
+.title {
+	display: block;
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--primary-blue);
+}
+
+.title.skeleton {
+	width: 100%;
+	height: 13px;
+	background-color: var(--tertiary-grey);
+}
