@@ -65,6 +65,7 @@ class NotePostInterface {
 		const replies = await note.getReplies();
 
 		return replies
+			.filter(r => !r.placeholder)
 			.sort((a, b) => b.getCreatedTime().getTime() - a.getCreatedTime().getTime())
 			.slice(0, max);
 
