@@ -1,5 +1,6 @@
 .action-username {
 	font-style: normal;
+	white-space: nowrap;
 }
 
 .action-username :global(a.username),
@@ -8,7 +9,7 @@
 	font-weight: 600;
 	display: inline-block;
 	vertical-align: bottom;
-	max-width: 100%;
+	max-width: 230px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }

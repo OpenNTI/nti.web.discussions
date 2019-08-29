@@ -38,8 +38,13 @@
 }
 
 .meta {
-	padding: 14px 10px 15px;
+	padding: 2px 10px;
 	flex: 1 1 auto;
+	height: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
 }
 
 .label {
