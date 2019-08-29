@@ -30,7 +30,12 @@ class ForumListView extends React.Component {
 	static propTypes = {
 		bundle: PropTypes.shape({
 			getDiscussions: PropTypes.func.isRequired,
-			getID: PropTypes.func.isRequired
+			getForumType: PropTypes.func.isRequired,
+			getID: PropTypes.func.isRequired,
+			Discussions: PropTypes.shape({
+				createForum: PropTypes.func,
+				hasLink: PropTypes.func
+			}),
 		}),
 		isSimple: PropTypes.bool,
 		items: PropTypes.object,

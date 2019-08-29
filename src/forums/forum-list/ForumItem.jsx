@@ -20,6 +20,7 @@ export default
 class ForumItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
+			displayTitle: PropTypes.string,
 			title: PropTypes.string.isRequired,
 			edit: PropTypes.func.isRequired,
 			TopicCount: PropTypes.number.isRequired,

@@ -34,6 +34,7 @@ export default function NotePreview ({note, ...props}) {
 NotePreview.propTypes = {
 	note: PropTypes.shape({
 		title: PropTypes.string,
+		placeholder: PropTypes.string,
 		body: PropTypes.array
 	}).isRequired
 };
