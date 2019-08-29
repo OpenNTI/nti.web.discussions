@@ -59,12 +59,18 @@ class NotePostInterface {
 	get canAddComment () { return this.note.canReply(); }
 	get commentCount () { return this.note.replyCount; }
 
-	async getMostRecentComments () {
+	async getMostRecentComments (max) {
 		const {note} = this;
 
-		const replies = await note.getRecentReplies(2);
+		const replies = await note.getReplies();
 
-		return replies.reverse();
+		return replies
+			.sort((a, b) => b.getCreatedTime().getTime() - a.getCreatedTime().getTime())
+			.slice(0, max);
+
+		// const replies = await note.getRecentReplies(2);
+
+		// return replies.reverse();
 	}
 
 	addCommentAddedListener (fn) {

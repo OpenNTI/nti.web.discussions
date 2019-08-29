@@ -64,7 +64,7 @@ class TopicPostInterface {
 
 	addCommentAddedListener (fn) {
 		const handler = (comment) => {
-			if (comment.ContainerId === this.getID()) {
+			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
 				fn(comment);
 			}
 		};
@@ -77,7 +77,7 @@ class TopicPostInterface {
 
 	addCommentUpdatedListener (fn) {
 		const handler = (comment) => {
-			if (comment.ContainerId === this.getID()) {
+			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
 				fn(comment);
 			}
 		};
@@ -89,7 +89,7 @@ class TopicPostInterface {
 
 	addCommentDeletedListener (fn) {
 		const handler = (comment) => {
-			if (comment.ContainerId === this.getID()) {
+			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
 				fn(comment);
 			}
 		};
