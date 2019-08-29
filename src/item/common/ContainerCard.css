@@ -2,6 +2,7 @@
 	background-color: #FAFDFF;
 	border: 1px solid #CBEAFD;
 	border-radius: 3px;
+	overflow: hidden;
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
