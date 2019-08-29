@@ -18,7 +18,7 @@ export default class DiscussionItemCommentCount extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		post: PropTypes.shape({
-			getID: PropTypes.string,
+			getID: PropTypes.func,
 			commentCount: PropTypes.number,
 			addCommentAddedListener: PropTypes.func,
 			addCommentDeletedListener: PropTypes.func
