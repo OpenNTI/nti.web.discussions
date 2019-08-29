@@ -10,6 +10,7 @@
 .post-card-header .avatar {
 	flex: 0 0 auto;
 	width: 40px;
+	height: 40px;
 	border-radius: 3px;
 	margin-right: var(--side-padding, 0.625rem);
 }
