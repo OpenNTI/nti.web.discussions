@@ -99,13 +99,11 @@ export default class PostCardComments extends React.Component {
 
 		if (post.addCommentDeletedListener) {
 			this.cleanupCommentDeletedListener = post.addCommentDeletedListener((deletedComment) => {
-				const {deleted} = this.state;
+				const deletedId = deletedComment.getID();
+				const {comments} = this.state;
 
 				this.setState({
-					deleted: {
-						...(deleted || {}),
-						[deletedComment.getID()]: true
-					}
+					comments: comments.filter(comment => comment.getID() !== deletedId)
 				});
 			});
 		}
