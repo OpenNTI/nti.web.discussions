@@ -12,4 +12,23 @@
 	max-width: 230px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	flex: 0 1 auto;
+}
+
+.action-username :global(a.username) {
+	margin-right: 0.15em;
+    flex-shrink: 0;
+    max-width: 40%;
+}
+.container-title {
+	margin-left: 0.15em;
+}
+
+.discussion-item-action-label {
+	max-width: 100%;
+	overflow: hidden;
+}
+.action-username {
+	display: flex;
+	flex-direction: row;
 }
