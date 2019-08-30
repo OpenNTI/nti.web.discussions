@@ -55,9 +55,8 @@ class TopicPostInterface {
 		const {topic} = this;
 
 		if (topic.PostCount === 0) { return null; }
-		if (topic.PostCount === 1 && topic.NewestDescendant) { return [topic.NewestDescendant];	}
 
-		const contents = await topic.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'descending', 'filter': 'TopLevel'});
+		const contents = await topic.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'descending', 'filter': ['TopLevel', 'NotDeleted'].join(',')});
 
 		return contents.Items;
 	}
