@@ -9,7 +9,6 @@
 	font-weight: 600;
 	display: inline-block;
 	vertical-align: bottom;
-	max-width: 230px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	flex: 0 1 auto;
@@ -18,7 +17,7 @@
 .action-username :global(a.username) {
 	margin-right: 0.15em;
     flex-shrink: 0;
-    max-width: 40%;
+    max-width: 50%;
 }
 .container-title {
 	margin-left: 0.15em;
