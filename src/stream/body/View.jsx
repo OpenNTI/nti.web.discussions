@@ -27,8 +27,10 @@ export default
 @Hooks.onEvent({
 	[Events.NOTE_UPDATED]: 'itemUpdated',
 	[Events.TOPIC_UPDATED]: 'itemUpdated',
+	[Events.BLOG_ENTRY_UPDATED]: 'itemUpdated',
 	[Events.NOTE_DELETED]: 'itemDeleted',
-	[Events.TOPIC_DELETED]: 'itemDeleted' 
+	[Events.TOPIC_DELETED]: 'itemDeleted',
+	[Events.BLOG_ENTRY_DELETED]: 'itemDeleted'
 })
 class DiscussionsStream extends React.Component {
 	static List = List

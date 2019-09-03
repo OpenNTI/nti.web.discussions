@@ -9,7 +9,7 @@ const components = {
 };
 
 Registry.registerItem(
-	(item) => item && item.isTopic,
+	(item) => item && item.isTopic && !item.isBlogEntry,
 	components
 );
 

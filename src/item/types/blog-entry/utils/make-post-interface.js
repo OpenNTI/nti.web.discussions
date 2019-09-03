@@ -1,4 +1,5 @@
 
+import {Events} from '@nti/web-session';
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('nti-discussions.item.types.blog-entry.utils.make-post-interface', {
@@ -59,6 +60,45 @@ class BlogEntryPostInterface {
 		const contents = await blogEntry.getContents({batchSize: 2, sortOn: 'CreatedTime', sortOrder: 'descending', 'filter': ['TopLevel', 'NotDeleted'].join(',')});
 
 		return contents.Items;
+	}
+
+
+	addCommentAddedlistener (fn) {
+		const handler = (comment) => {
+			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.BLOG_COMMENT_CREATED, handler);
+
+		return () => Events.removeListener(Events.BLOG_COMMENT_CREATED, handler);
+	}
+
+
+	addCommentUpdatedListener (fn) {
+		const handler = (comment) => {
+			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.BLOG_COMMENT_UPDATED, handler);
+
+		return () => Events.removeListener(Events.BLOG_COMMENT_UPDATED, handler);
+	}
+
+
+	addCommentDeletedListener (fn) {
+		const handler = (comment) => {
+			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
+				fn(comment);
+			}
+		};
+
+		Events.addListener(Events.BLOG_COMMENT_DELETED, handler);
+
+		return () => Events.removeListener(Events.BLOG_COMMENT_DELETED, handler);
 	}
 }
 

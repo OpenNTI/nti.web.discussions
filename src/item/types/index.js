@@ -1,4 +1,5 @@
 import Registry from './Registry';
+import BlogEntry from './blog-entry';
 import Note from './note';
 import Topic from './topic';
 

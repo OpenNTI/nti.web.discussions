@@ -5,10 +5,10 @@ import PostCard from '../../common/post-card';
 
 import {makePostInterface} from './utils';
 
-BlogEntry.propTypes = {
+BlogEntryDiscussionCard.propTypes = {
 	item: PropTypes.object
 };
-export default function BlogEntry ({item, ...otherProps}) {
+export default function BlogEntryDiscussionCard ({item, ...otherProps}) {
 	return (
 		<PostCard post={makePostInterface(item)} item={item} {...otherProps} />
 	);
