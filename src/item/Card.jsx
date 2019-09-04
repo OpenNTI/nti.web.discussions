@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getCardCmpFor} from './types';
 
+DiscussionItemCard.supportsItem = (item) => Boolean(getCardCmpFor(item));
 DiscussionItemCard.propTypes = {
 	item: PropTypes.object
 };

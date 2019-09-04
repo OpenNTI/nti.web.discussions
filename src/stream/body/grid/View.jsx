@@ -29,6 +29,8 @@ export default class DiscussionStreamBodyGrid extends React.Component {
 	renderItem = (item) => {
 		const otherProps = restProps(DiscussionStreamBodyGrid, this.props);
 
+		if (!Card.supportsItem(item)) { return null; }
+
 		return (
 			<Card item={item} {...otherProps} />
 		);

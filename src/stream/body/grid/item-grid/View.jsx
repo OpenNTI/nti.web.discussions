@@ -139,25 +139,30 @@ export default class ItemGrid extends React.Component {
 		const {tilePositions} = this.state;
 		const columnWidthGuess = getColumnPercentage(columns, this.gap.vertical);
 
-		return items.map((item) => {
-			const key = item.getID();
+		return items
+			.map((item) => {
+				const key = item.getID();
+				const itemCmp = renderItem(item);
 
-			const position = tilePositions[key];
+				if (!itemCmp) { return null; }
 
-			const listAttributes = {
-				className: cx('item-tile', {computing: !position}),
-				key,
-				[TILE_ITEM_ATTRIBUTE]: key,
-				style: !position ?
-					{width: `${columnWidthGuess}`} :
-					{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
-			};
+				const position = tilePositions[key];
 
-			return (
-				<li  key={key} {...listAttributes}>
-					{renderItem(item)}
-				</li>
-			);
-		});
+				const listAttributes = {
+					className: cx('item-tile', {computing: !position}),
+					key,
+					[TILE_ITEM_ATTRIBUTE]: key,
+					style: !position ?
+						{width: `${columnWidthGuess}`} :
+						{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
+				};
+
+				return (
+					<li  key={key} {...listAttributes}>
+						{renderItem(item)}
+					</li>
+				);
+			})
+			.filter(Boolean);
 	}
 }

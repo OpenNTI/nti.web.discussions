@@ -91,6 +91,9 @@ export default class ItemList extends React.Component {
 	renderItem (item) {
 		const {renderItem} = this.props;
 		const key = item.getID();
+		const itemCmp = renderItem(item);
+
+		if (!itemCmp) { return null; }
 
 		return (
 			<li key={key} className={cx('item-list-item')}>
@@ -106,7 +109,7 @@ export default class ItemList extends React.Component {
 
 		return (
 			<ul className={cx('nti-item-list', className)} {...otherProps}>
-				{items}
+				{items.filter(Boolean)}
 			</ul>
 		);
 	}

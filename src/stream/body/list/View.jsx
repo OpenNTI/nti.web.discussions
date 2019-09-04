@@ -29,6 +29,8 @@ export default class DiscussionStreamBodyList extends React.Component {
 	renderItem = (item) => {
 		const otherProps = restProps(DiscussionStreamBodyList, this.props);
 
+		if (!ListItem.supportsItem(item)) { return null; }
+
 		return (
 			<ListItem item={item} {...otherProps} />
 		);
