@@ -63,7 +63,7 @@ class BlogEntryPostInterface {
 	}
 
 
-	addCommentAddedlistener (fn) {
+	addCommentAddedListener (fn) {
 		const handler = (comment) => {
 			if (comment.ContainerId === this.getID() && !comment.inReplyTo) {
 				fn(comment);
