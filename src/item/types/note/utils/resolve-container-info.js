@@ -11,6 +11,7 @@ const readingResolver = (note) => {
 const ContainerResolvers = {
 	'application/vnd.nextthought.renderablecontentpackage': readingResolver,
 	'application/vnd.nextthought.contentpackage': readingResolver,
+	'application/vnd.nextthought.contentunit': readingResolver,
 
 	'application/vnd.nextthought.ntivideo': async (note) => {
 		const service = await getService();
