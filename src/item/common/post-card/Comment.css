@@ -42,8 +42,9 @@
 	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 150px;
+	max-width: 145px;
 	color: #49758E;
+	margin-right: 0.25rem;
 }
 
 .date {
