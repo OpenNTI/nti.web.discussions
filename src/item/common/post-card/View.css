@@ -51,22 +51,26 @@
 	margin: var(--side-padding, 0.625rem);
 }
 
-
-:global(.no-touch) .post-card :global(.charms .like),
-:global(.no-touch) .post-card :global(.charms .favorite),
-:global(.no-touch) .post-card .card-report
-{
-	visibility: hidden;
+.controls {
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
-:global(.no-touch) .post-card:hover :global(.charms .like),
-:global(.no-touch) .post-card:hover :global(.charms .favorite),
-:global(.no-touch) .post-card:hover .card-report,
-:global(.no-touch) .post-card :global(.charms .like.active),
-:global(.no-touch) .post-card :global(.charms .like.count),
-:global(.no-touch) .post-card :global(.charms .favorite.active)
-{
-	visibility: visible;
+:global(.no-touch) .post-card {
+	--inactive-charm-visibility: hidden;
+
+	& .list-report {
+		visibility: hidden;
+	}
+}
+
+:global(.no-touch) .post-card:hover {
+	--inactive-charm-visibility: visible;
+
+	& .list-report {
+		visibility: visible;
+	}
 }
 
 

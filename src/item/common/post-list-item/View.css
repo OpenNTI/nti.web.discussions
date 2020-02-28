@@ -68,19 +68,18 @@
     padding: 0 var(--side-padding, 0.625rem) 0.3125rem;
 }
 
-:global(.no-touch) .post-list-item :global(.charms .like),
-:global(.no-touch) .post-list-item :global(.charms .favorite),
-:global(.no-touch) .post-list-item .list-report
-{
-	visibility: hidden;
+:global(.no-touch) .post-list-item {
+	--inactive-charm-visibility: hidden;
+
+	& .list-report {
+		visibility: hidden;
+	}
 }
 
-:global(.no-touch) .post-list-item:hover :global(.charms .like),
-:global(.no-touch) .post-list-item:hover :global(.charms .favorite),
-:global(.no-touch) .post-list-item:hover .list-report,
-:global(.no-touch) .post-list-item :global(.charms .like.active),
-:global(.no-touch) .post-list-item :global(.charms .like.count),
-:global(.no-touch) .post-list-item :global(.charms .favorite.active)
-{
-	visibility: visible;
+:global(.no-touch) .post-list-item:hover {
+	--inactive-charm-visibility: visible;
+
+	& .list-report {
+		visibility: visible;
+	}
 }

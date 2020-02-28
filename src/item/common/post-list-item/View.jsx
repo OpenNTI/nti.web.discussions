@@ -4,8 +4,9 @@ import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 import {TextPreview} from '@nti/web-modeled-content';
-import {User, Text, LuckyCharms} from '@nti/web-commons';
+import {User, Text} from '@nti/web-commons';
 
+import {Controls} from '../../components';
 import Action from '../Action';
 import Report from '../Report';
 
@@ -33,7 +34,7 @@ export default function PostListItem (props) {
 
 	return (
 		<LinkTo.Object object={item} className={cx('post-list-item')}>
-			<LuckyCharms item={item} asButton />
+			<Controls className={cx('controls')} item={item} />
 			<User.Avatar className={cx('avatar')} user={post.creator} />
 			<div className={cx('meta')}>
 				<Action className={cx('list-item-action')} {...props} />

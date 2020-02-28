@@ -1,0 +1,38 @@
+.discussion-item-controls {
+	display: flex;
+	flex-direction: row;
+	padding: 0 0.25rem;
+}
+
+.like-and-favorite {
+	& :global(.like) {
+		margin: 4px 2px 0;
+		color: var(--primary-blue);
+		text-decoration: none;
+	}
+
+	& :global(.like:not(.active):not(.count)),
+	& :global(.favorite:not(.active)) {
+		visibility: var(--inactive-charm-visibility, visible);
+	}
+}
+
+
+.actions-trigger {
+	transform: rotate(90deg);
+}
+
+.discussion-item-actions {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.action {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	color: var(--primary-grey);
+	padding: 0.625rem 1rem;
+	cursor: pointer;
+}

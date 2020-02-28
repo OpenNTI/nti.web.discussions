@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {LinkTo} from '@nti/web-routing';
-import {LuckyCharms} from '@nti/web-commons';
 
+import {Controls} from '../../components';
 import Context from '../Context';
 import CommentCount from '../CommentCount';
 import Report from '../Report';
@@ -28,7 +28,7 @@ export default function PostCard (props) {
 				<Context {...props} />
 			</div>
 			<div className={cx('card')}>
-				<LuckyCharms item={item} asButton />
+				<Controls className={cx('controls')} item={item} />
 				<Header {...props} />
 				<Content {...props} />
 				<ContainerCard className={cx('card-container')} {...props} />
