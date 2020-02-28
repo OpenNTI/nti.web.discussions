@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {LinkTo} from '@nti/web-routing';
 
-import {Controls} from '../../components';
+import {Controls, PinnedIndicator} from '../../components';
 import Context from '../Context';
 import CommentCount from '../CommentCount';
 import Report from '../Report';
@@ -29,6 +29,7 @@ export default function PostCard (props) {
 			</div>
 			<div className={cx('card')}>
 				<Controls className={cx('controls')} item={item} />
+				<PinnedIndicator item={item} className={cx('pinned')}/>
 				<Header {...props} />
 				<Content {...props} />
 				<ContainerCard className={cx('card-container')} {...props} />

@@ -51,6 +51,18 @@
 	margin: var(--side-padding, 0.625rem);
 }
 
+.pinned {
+	display: block;
+	padding: 5px var(--side-padding, 0.625rem);
+	font-size: 0.87rem;
+	line-height: 1.3;
+	color: var(--secondary-grey);
+}
+
+.pinned + div {
+	padding-top: 0;
+}
+
 .controls {
 	position: absolute;
 	top: 0;
