@@ -11,8 +11,8 @@
 		text-decoration: none;
 	}
 
-	& :global(.like:not(.active):not(.count)),
-	& :global(.favorite:not(.active)) {
+	& :global(.like:not(.active):not(.count):not(:focus)),
+	& :global(.favorite:not(.active):not(:focus)) {
 		visibility: var(--inactive-charm-visibility, visible);
 	}
 }

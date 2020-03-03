@@ -19,9 +19,7 @@ const t = scoped('nti-web-discussions.item.components.controls.Pin', {
 	}
 });
 
-DiscussionItemPin.isAvailable = (item) => {
-	return item.isPinnable;
-};
+DiscussionItemPin.isAvailable = (item) => item.isPinnable;
 DiscussionItemPin.propTypes = {
 	item: PropTypes.shape({
 		isPinneable: PropTypes.bool,
@@ -48,7 +46,7 @@ export default function DiscussionItemPin ({item, doClose}) {
 	};
 
 	return (
-		<Text.Base as="a" role="button" className={cx('action', {saving})} onClick={onClick}>
+		<Text.Base as="a" role="button" className={cx('action', {busy: saving})} onClick={onClick}>
 			{item.isPinned ? t('unpin') : t('pin')}
 		</Text.Base>
 	);
