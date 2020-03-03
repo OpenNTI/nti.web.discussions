@@ -16,7 +16,7 @@ PinnedIndicator.propTypes = {
 export default function PinnedIndicator ({item, ...otherProps}) {
 	const forceUpdate = Hooks.useForceUpdate();
 
-	React.useEffect(() => item.addPinChangeListener(forceUpdate), [item]);
+	React.useEffect(() => item?.addPinChangeListener(forceUpdate), [item]);
 
 	if (!item.isPinned) { return null; }
 
