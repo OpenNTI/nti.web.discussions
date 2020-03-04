@@ -17,7 +17,7 @@ const addSessionEventListenerFor = (event, item, fn) => {
 
 	Events.addListener(event, listener);
 
-	return () => Event.removeListener(event, listener);
+	return () => Events.removeListener(event, listener);
 };
 
 PinnedIndicator.propTypes = {
