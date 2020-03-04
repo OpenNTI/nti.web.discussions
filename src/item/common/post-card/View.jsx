@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
+import {List} from '@nti/web-commons';
 
 import {Controls} from '../../components';
 import Context from '../Context';
@@ -15,6 +17,9 @@ import Content from './Content';
 import Header from './Header';
 
 const cx = classnames.bind(Styles);
+const t = scoped('nti-discussions.item.common.post-card.View', {
+	reported: 'Reported'
+});
 
 PostCard.propTypes = {
 	item: PropTypes.object
@@ -33,7 +38,10 @@ export default function PostCard (props) {
 				<Content {...props} />
 				<ContainerCard className={cx('card-container')} {...props} />
 				<div className={cx('footer')}>
-					<CommentCount {...props} />
+					<List.SeparatedInline className={cx('list-items')}>
+						<CommentCount {...props} />
+						{item.isFlagged && (<span>{t('reported')}</span>)}
+					</List.SeparatedInline>
 					<Report className={cx('card-report')} {...props} />
 				</div>
 				<Comments {...props} />

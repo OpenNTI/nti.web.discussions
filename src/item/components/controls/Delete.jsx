@@ -60,7 +60,7 @@ export default function DiscussionItemDelete ({item, doClose}) {
 	};
 
 	return (
-		<Text.Base as="a" role="button" className={cx('action', 'destructive', {busy: deleting})} onClick={onClick}>
+		<Text.Base as="a" role="button" className={cx('action', {busy: deleting})} onClick={onClick}>
 			{t('delete')}
 		</Text.Base>
 	);

@@ -57,6 +57,7 @@ class NotePostInterface {
 	get body () { return this.note.body; }
 
 	get isPinned () { return this.note.isPinned; }
+	get isFlagged () { return this.note.isFlagged; }
 
 	get canAddComment () { return this.note.canReply(); }
 	get commentCount () { return this.note.replyCount; }

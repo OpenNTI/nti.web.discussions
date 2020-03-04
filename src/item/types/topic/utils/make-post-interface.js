@@ -33,6 +33,7 @@ class TopicPostInterface {
 	get body () { return this.topic.headline && this.topic.headline.body; }
 
 	get isPinned () { return this.topic.isPinned; }
+	get isFlagged () { return this.topic.isFlagged; }
 
 	getActionString (name, contextId, makeTitle) {
 		const inContext = contextId === this.topic.ContainerId;

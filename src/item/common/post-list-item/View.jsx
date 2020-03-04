@@ -17,7 +17,8 @@ const t = scoped('nti-discussions.item.common.post-list-item.View', {
 	comments: {
 		one: '%(count)s Comment',
 		other: '%(count)s Comments'
-	}
+	},
+	reported: 'Reported'
 });
 
 PostListItem.propTypes = {
@@ -27,7 +28,8 @@ PostListItem.propTypes = {
 		title: PropTypes.string,
 		body: PropTypes.any,
 		commentCount: PropTypes.number,
-		isPinned: PropTypes.bool
+		isPinned: PropTypes.bool,
+		isFlagged: PropTypes.bool
 	})
 };
 export default function PostListItem (props) {
@@ -45,6 +47,7 @@ export default function PostListItem (props) {
 					<List.SeparatedInline className={cx('list-items')}>
 						<Text.Base className={cx('comments')}>{t('comments', {count: post.commentCount})}</Text.Base>
 						{post.isPinned && (<PinnedLabel />)}
+						{post.isFlagged && (<span>{t('reported')}</span>)}
 					</List.SeparatedInline>
 				</div>
 				<div className={cx('list-report')}>

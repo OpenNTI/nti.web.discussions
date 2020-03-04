@@ -9,7 +9,6 @@ import Styles from './Styles.css';
 const cx = classnames.bind(Styles);
 const t = scoped('nti-web-discussions.item.components.controls.Report', {
 	report: 'Report',
-	reported: 'Reported',
 	confirm: {
 		title: 'Are you sure?',
 		message: 'Reporting content as inappropriate can not be undone.'
@@ -50,8 +49,8 @@ export default function DiscussionItemReport ({item, doClose}) {
 	};
 
 	return (
-		<Text.Base as="a" role="button" className={cx('action', 'destructive', {busy: reporting})} onClick={onClick}>
-			{item.isFlagged ? t('reported') : t('report')}
+		<Text.Base as="a" role="button" className={cx('action', {busy: reporting})} onClick={onClick}>
+			{t('report')}
 		</Text.Base>
 	);
 }

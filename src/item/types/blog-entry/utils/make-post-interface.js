@@ -34,6 +34,7 @@ class BlogEntryPostInterface {
 	get body () { return this.blogEntry.headline && this.blogEntry.headline.body; }
 
 	get isPinned () { return this.blogEntry.isPinned; }
+	get isFlagged () { return this.blogEntry.isFlagged; }
 
 	getActionString (name, contextId, makeTitle) {
 		const inContext = contextId === this.blogEntry.ContainerId;
