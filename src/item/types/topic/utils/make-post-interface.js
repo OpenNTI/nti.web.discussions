@@ -32,6 +32,8 @@ class TopicPostInterface {
 	get title () { return this.topic.title;	}
 	get body () { return this.topic.headline && this.topic.headline.body; }
 
+	get isPinned () { return this.topic.isPinned; }
+
 	getActionString (name, contextId, makeTitle) {
 		const inContext = contextId === this.topic.ContainerId;
 		const title = this.topic.ContainerTitle;

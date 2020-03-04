@@ -1,0 +1,18 @@
+.icon {
+	display: inline-block;
+	vertical-align: middle;
+	width: 16px;
+	height: 16px;
+	background-image: url(./assets/Pin.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.label {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 0.625rem;
+	font-weight: bold;
+	line-height: 1.6;
+	color: var(--tertiary-grey);
+}

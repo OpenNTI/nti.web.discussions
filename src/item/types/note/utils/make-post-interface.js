@@ -56,6 +56,8 @@ class NotePostInterface {
 	get title () { return this.note.title; }
 	get body () { return this.note.body; }
 
+	get isPinned () { return this.note.isPinned; }
+
 	get canAddComment () { return this.note.canReply(); }
 	get commentCount () { return this.note.replyCount; }
 

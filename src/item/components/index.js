@@ -1,2 +1,2 @@
 export Controls from './controls';
-export PinnedIndicator from './PinnedIndicator';
+export PinnedLabel from './PinnedLabel';

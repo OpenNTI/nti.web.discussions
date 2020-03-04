@@ -33,6 +33,8 @@ class BlogEntryPostInterface {
 	get title () { return this.blogEntry.title;	}
 	get body () { return this.blogEntry.headline && this.blogEntry.headline.body; }
 
+	get isPinned () { return this.blogEntry.isPinned; }
+
 	getActionString (name, contextId, makeTitle) {
 		const inContext = contextId === this.blogEntry.ContainerId;
 		const title = this.blogEntry.ContainerTitle;

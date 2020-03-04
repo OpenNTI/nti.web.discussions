@@ -1,0 +1,21 @@
+.discussion-item-context {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-size: 0.625rem;
+	font-weight: bold;
+	line-height: 1.6;
+	color: var(--tertiary-grey);
+}
+
+.context-title {
+	flex: 1 1 auto;
+	text-transform: uppercase;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.pinned{
+	flex: 0 0 auto;
+}
