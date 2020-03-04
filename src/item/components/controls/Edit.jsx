@@ -9,7 +9,7 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-web-discussions.item.components.controls.Edit', {
-	edit: 'Edit Post'
+	edit: 'Edit'
 });
 
 DiscussionItemPin.isAvailable = (item) => item.isModifiable;

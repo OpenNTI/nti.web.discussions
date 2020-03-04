@@ -7,13 +7,15 @@ import Styles from './Styles.css';
 import Delete from './Delete';
 import Edit from './Edit';
 import Pin from './Pin';
+import Report from './Report';
 
 const cx = classnames.bind(Styles);
 
 const Actions = [
 	Pin,
 	Edit,
-	Delete
+	Delete,
+	Report
 ];
 
 ActionsFlyout.propTypes = {

@@ -9,8 +9,8 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-web-discussions.item.components.controls.Pin', {
-	pin: 'Pin to Channel',
-	unpin: 'Unpin from Channel',
+	pin: 'Pin',
+	unpin: 'Unpin',
 	failed: {
 		title: 'Error',
 		message: {

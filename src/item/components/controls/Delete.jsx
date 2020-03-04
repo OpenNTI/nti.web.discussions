@@ -9,7 +9,7 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-web-discussions.item.components.controls.delete', {
-	delete: 'Delete Post',
+	delete: 'Delete',
 	confirm: {
 		title: 'Are you sure?',
 		message: 'Deleting a post will permanently remove it.'
@@ -60,7 +60,7 @@ export default function DiscussionItemDelete ({item, doClose}) {
 	};
 
 	return (
-		<Text.Base as="a" role="button" className={cx('action', {busy: deleting})} onClick={onClick}>
+		<Text.Base as="a" role="button" className={cx('action', 'destructive', {busy: deleting})} onClick={onClick}>
 			{t('delete')}
 		</Text.Base>
 	);

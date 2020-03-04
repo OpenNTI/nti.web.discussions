@@ -36,3 +36,7 @@
 	padding: 0.625rem 1rem;
 	cursor: pointer;
 }
+
+.action.destructive {
+	color: var(--primary-red);
+}
