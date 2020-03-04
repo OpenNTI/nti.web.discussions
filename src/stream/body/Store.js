@@ -151,6 +151,45 @@ class StreamStore extends Stores.BoundStore {
 	}
 
 
+	itemPinned (item) {
+		const {context} = this;
+		const pinned = this.get('pinnedItems');
+
+		if (item.ContainerId !== context.getID()) { return; }
+
+		const {unique} = ([item, ...pinned])
+			.reduce((acc, p) => {
+				const id = p.getID();
+
+				if (!acc.seen.has(id)) {
+					acc.unique.push(p);
+					acc.seen.add(id);
+				}
+
+				return acc;
+			}, {unique: [], seen: new Set()});
+
+		if (unique.length !== pinned.length) {
+			this.setImmediate({
+				pinnedItems: unique
+			});
+		}
+	}
+
+
+	itemUnpinned (item) {
+		const itemId = item.getID();
+		const pinned = this.get('pinnedItems');
+		const filtered = pinned.filter(p => p.getID() !== itemId);
+
+		if (filtered.length !== pinned.length) {
+			this.setImmediate({
+				pinnedItems: filtered
+			});
+		}
+	}
+
+
 	onItemAdded (item) {
 		const items = this.get('items');
 

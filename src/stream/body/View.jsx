@@ -24,14 +24,16 @@ const t = scoped('nti-discussions.stream.body.View', {
 export default
 @searchable()
 @contextual(t('searchContext'))
-@Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted', 'pinnedItems', 'pinnedError'])
+@Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted', 'pinnedItems', 'pinnedError', 'itemPinned', 'itemUnpinned'])
 @Hooks.onEvent({
 	[Events.NOTE_UPDATED]: 'itemUpdated',
 	[Events.TOPIC_UPDATED]: 'itemUpdated',
 	[Events.BLOG_ENTRY_UPDATED]: 'itemUpdated',
 	[Events.NOTE_DELETED]: 'itemDeleted',
 	[Events.TOPIC_DELETED]: 'itemDeleted',
-	[Events.BLOG_ENTRY_DELETED]: 'itemDeleted'
+	[Events.BLOG_ENTRY_DELETED]: 'itemDeleted',
+	[Events.ITEM_PINNED]: 'itemPinned',
+	[Events.ITEM_UNPINNED]: 'itemUnpinned'
 })
 class DiscussionsStream extends React.Component {
 	static List = List
@@ -69,7 +71,9 @@ class DiscussionsStream extends React.Component {
 		itemUpdated: PropTypes.func,
 		itemDeleted: PropTypes.func,
 		pinnedItems: PropTypes.array,
-		pinnedError: PropTypes.any
+		pinnedError: PropTypes.any,
+		itemPinned: PropTypes.func,
+		itemUnpinned: PropTypes.func
 	}
 
 	itemUpdated (item) {
@@ -85,6 +89,23 @@ class DiscussionsStream extends React.Component {
 
 		if (itemDeleted) {
 			itemDeleted(item);
+		}
+	}
+
+	itemPinned (item) {
+		const {itemPinned} = this.props;
+
+		if (itemPinned) {
+			itemPinned(item);
+		}
+	}
+
+
+	itemUnpinned (item) {
+		const {itemUnpinned} = this.props;
+
+		if (itemUnpinned) {
+			itemUnpinned(item);
 		}
 	}
 

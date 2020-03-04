@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
+import {Events} from '@nti/web-session';
 import {Text, Prompt} from '@nti/web-commons';
 
 import Styles from './Styles.css';
@@ -37,7 +38,15 @@ export default function DiscussionItemPin ({item, doClose}) {
 		setSaving(true);
 
 		try {
+			const wasPinned = item.isPinned;
+
 			await item.togglePinned();
+
+			if (wasPinned && !item.isPinned) {
+				Events.emit(Events.ITEM_UNPINNED, item);
+			} else if (!wasPinned && item.isPinned) {
+				Events.emit(Events.ITEM_PINNED, item);
+			}
 		} catch (err) {
 			Prompt.alert(item.isPinned ? t('failed.message.pinned') : t('failed.message.unpinned'), t('failed.title'));
 		} finally {
