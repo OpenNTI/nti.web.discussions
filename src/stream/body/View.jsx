@@ -12,6 +12,7 @@ import LoadingMask from './components/LoadingMask';
 import ErrorCmp from './components/Error';
 import EmptyCmp from './components/Empty';
 import SearchInfo from './components/SearchInfo';
+import PinnedPosts from './components/pinned-posts';
 import ListCmp from './list';
 import GridCmp from './grid';
 
@@ -23,7 +24,7 @@ const t = scoped('nti-discussions.stream.body.View', {
 export default
 @searchable()
 @contextual(t('searchContext'))
-@Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted'])
+@Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted', 'pinnedItems', 'pinnedError'])
 @Hooks.onEvent({
 	[Events.NOTE_UPDATED]: 'itemUpdated',
 	[Events.TOPIC_UPDATED]: 'itemUpdated',
@@ -66,7 +67,9 @@ class DiscussionsStream extends React.Component {
 		error: PropTypes.any,
 		loadMore: PropTypes.func,
 		itemUpdated: PropTypes.func,
-		itemDeleted: PropTypes.func
+		itemDeleted: PropTypes.func,
+		pinnedItems: PropTypes.array,
+		pinnedError: PropTypes.any
 	}
 
 	itemUpdated (item) {
@@ -86,7 +89,7 @@ class DiscussionsStream extends React.Component {
 	}
 
 	render () {
-		const {context, className, items, loading, error, layout, loadMore, searchTerm} = this.props;
+		const {context, className, items, loading, error, layout, loadMore, searchTerm, pinnedItems, pinnedError} = this.props;
 		const otherProps = restProps(DiscussionsStream, this.props);
 		const initial = !items && !searchTerm;
 		const ItemCmp = layout === List ? ListCmp : GridCmp;
@@ -97,6 +100,7 @@ class DiscussionsStream extends React.Component {
 				<InfiniteScroll.Continuous className={className} loadMore={loadMore} buffer={200}>
 					{items && !items.length && this.renderEmpty()}
 					{shouldShowSearch && (<SearchInfo searchTerm={searchTerm} />)}
+					<PinnedPosts items={pinnedItems} context={context} error={pinnedError} />
 					{items && (<ItemCmp items={items} context={context} {...otherProps} />)}
 					{error && (<ErrorCmp error={error} initial={initial} />)}
 					{loading && (<LoadingMask />)}

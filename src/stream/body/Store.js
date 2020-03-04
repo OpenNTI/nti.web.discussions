@@ -30,10 +30,21 @@ class StreamStore extends Stores.BoundStore {
 	}
 
 
-	load () {
+	async load () {
 		//NOTE: even though we are defining a bindingDidUpdate, we have to check the binding again here
 		//because this has the searchable mixin which will call load
 		this.batchSize = this.binding.batchSize;
+
+		if (
+			this.binding.context !== this.context ||
+			this.searchTerm !== this.lastSearchTerm
+		) {
+			try {
+				this.loadPinned(this.binding.context, this.searchTerm);
+			} catch (e) {
+				//swallow
+			}
+		}
 
 		if (
 			this.binding.context === this.context &&
@@ -116,6 +127,27 @@ class StreamStore extends Stores.BoundStore {
 		const hasMore = this.get('hasMore');
 
 		return hasMore ? (() => this.loadNextPage()) : null;
+	}
+
+	async loadPinned (context, search) {
+		if (!context.loadPinnedContents) { return; }
+			
+		this.setImmediate({
+			pinnedItems: null,
+			pinnedError: null
+		});
+
+		try {
+			const pinned = await context.loadPinnedContents(getParams(null, null, null, search));
+
+			this.setImmediate({
+				pinnedItems: pinned.Items
+			});
+		} catch (e) {
+			this.setImmediate({
+				pinnedError: e
+			});
+		}
 	}
 
 
