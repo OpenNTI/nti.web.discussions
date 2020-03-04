@@ -46,13 +46,13 @@ export default function DiscussionItemDelete ({item, doClose}) {
 
 			await item.delete();
 
-			// if (item.isTopic) {
-			// 	Events.emit(Events.TOPIC_DELETED, item);
-			// } else if (item.isNote) {
-			// 	Events.emit(Events.NOTE_DELETED, item);
-			// } else if (item.isBlogEntry) {
-			// 	Events.emit(Events.BLOG_ENTRY_DELETED, item);
-			// }
+			if (item.isTopic) {
+				Events.emit(Events.TOPIC_DELETED, item);
+			} else if (item.isNote) {
+				Events.emit(Events.NOTE_DELETED, item);
+			} else if (item.isBlogEntry) {
+				Events.emit(Events.BLOG_ENTRY_DELETED, item);
+			}
 		} catch (err) {
 			Prompt.alert(t('failed.message'), t('failed.title'));
 			doClose();

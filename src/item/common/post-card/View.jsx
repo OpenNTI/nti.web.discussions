@@ -23,7 +23,7 @@ export default function PostCard (props) {
 	const {item} = props;
 
 	return (
-		<LinkTo.Object object={item} className={cx('post-card')}>
+		<LinkTo.Object object={item} className={cx('post-card', {deleting: Boolean(item.deleting)})}>
 			<div className={cx('card-context')}>
 				<Context {...props} />
 			</div>

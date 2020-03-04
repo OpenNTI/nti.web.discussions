@@ -223,10 +223,12 @@ class StreamStore extends Stores.BoundStore {
 	itemDeleted (deleted) {
 		try {
 			const items = this.get('items');
+			const pinned = this.get('pinnedItems');
 			const filtered = items.filter(item => item.NTIID !== deleted.NTIID);
 
 			this.set({
-				items: filtered
+				items: filtered,
+				pinnedItems: (pinned || []).filter(item => item.NTIID !== deleted.NTIID)
 			});
 		} catch (e) {
 			//swallow

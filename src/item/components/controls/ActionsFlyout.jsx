@@ -4,7 +4,7 @@ import classnames from 'classnames/bind';
 import {Flyout} from '@nti/web-commons';
 
 import Styles from './Styles.css';
-// import Delete from './Delete';
+import Delete from './Delete';
 import Edit from './Edit';
 import Pin from './Pin';
 
@@ -13,7 +13,7 @@ const cx = classnames.bind(Styles);
 const Actions = [
 	Pin,
 	Edit,
-	// Delete
+	Delete
 ];
 
 ActionsFlyout.propTypes = {
