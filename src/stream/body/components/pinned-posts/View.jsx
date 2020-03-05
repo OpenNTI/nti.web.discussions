@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Errors, Text, User} from '@nti/web-commons';
+import {Errors, Text} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
 import {Controls} from '../../../../item';
@@ -34,7 +34,7 @@ export default function PinnedPostsList ({items, error}) {
 						return (
 							<li key={item.getID()}>
 								<LinkTo.Object object={item} className={cx('pinned-item')}>
-									<User.Avatar user={item.creator} className={cx('avatar')} />
+									<span className={cx('pinned-icon')} />
 									<Text.Base className={cx('title')}>{item.title}</Text.Base>
 									<div className={cx('controls')}>
 										<Controls.ActionsFlyout item={item} />

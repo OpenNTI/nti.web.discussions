@@ -40,19 +40,27 @@
 	flex-direction: row;
 	align-items: center;
 	overflow: hidden;
+	padding: 0.5rem 0;
+	cursor: pointer;
 }
 
-.avatar {
-	flex: 0 0 auto;
-	width: 40px;
-	height: 40px;
+.pinned-icon {
+	margin: 0 0 0 0.625rem;
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-image: url(./assets/Pin.svg);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .title {
 	flex: 1 1 auto;
-	font-size: 1.25rem;
-	padding: 0 1rem;
+	font-size: 1.125rem;
 	line-height: 1.5;
+	color: var(--primary-grey);
+	padding: 0 0.625rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
