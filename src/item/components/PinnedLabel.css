@@ -6,6 +6,7 @@
 	background-image: url(./assets/Pin.svg);
 	background-position: center;
 	background-repeat: no-repeat;
+	background-size: 70%;
 }
 
 .label {
@@ -13,6 +14,7 @@
 	vertical-align: middle;
 	font-size: 0.625rem;
 	font-weight: bold;
+	text-transform: uppercase;
 	line-height: 1.6;
 	color: var(--tertiary-grey);
 }

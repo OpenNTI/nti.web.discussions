@@ -11,10 +11,7 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-web-discussions.stream.body.components.pinned-posts.View', {
-	heading: {
-		one: '%(count)s Pinned Post',
-		other: '%(count)s Pinned Posts'
-	}
+	heading: 'Pinned Items'
 });
 
 PinnedPostsList.propTypes = {
@@ -26,7 +23,12 @@ export default function PinnedPostsList ({items, error}) {
 
 	return (
 		<div className={cx('pinned-posts-list')}>
-			{!error && (<Text.Base className={cx('header')}>{t('heading', {count: items?.length ?? 0})}</Text.Base>)}
+			{!error && (
+				<div className={cx('header')}>
+					<span className={cx('pinned-icon')} />
+					<Text.Base className={cx('label')}>{t('heading')}</Text.Base>
+				</div>
+			)}
 			{error && (<Errors.Message error={error} className={cx('error')} />)}
 			{items && items.length > 0 && (
 				<ul className={cx('list')}>
@@ -34,7 +36,6 @@ export default function PinnedPostsList ({items, error}) {
 						return (
 							<li key={item.getID()}>
 								<LinkTo.Object object={item} className={cx('pinned-item')}>
-									<span className={cx('pinned-icon')} />
 									<Text.Base className={cx('title')}>{item.title}</Text.Base>
 									<div className={cx('controls')}>
 										<Controls.ActionsFlyout item={item} />

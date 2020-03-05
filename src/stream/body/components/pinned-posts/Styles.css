@@ -9,13 +9,27 @@
 
 .header {
 	background-color: var(--panel-background);
-	display: block;
-	font-size: 0.875rem;
+	padding: 0 var(--side-padding, 0.625rem);
+	box-shadow: 0 1px 0 0 var(--border-grey-light);
+}
+
+.label {
+	font-size: 0.625rem;
 	font-weight: 600;
 	line-height: 2;
-	color: var(--primary-grey);
-	padding: 0 var(--side-padding, 1rem);
-	box-shadow: 0 1px 0 0 var(--border-grey-light);
+	text-transform: uppercase;
+	color: var(--tertiary-grey);
+}
+
+.pinned-icon {
+	display: inline-block;
+	vertical-align: middle;
+	width: 16px;
+	height: 16px;
+	background-image: url(../../../../item/components/assets/Pin.svg);
+	background-size: 70%;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .error {
@@ -40,27 +54,17 @@
 	flex-direction: row;
 	align-items: center;
 	overflow: hidden;
-	padding: 0.5rem 0.25rem 0.5rem 0;
+	padding: 0.5rem var(--side-padding, 0.625rem);
 	cursor: pointer;
 }
 
-.pinned-icon {
-	margin: 0 0 0 0.625rem;
-	display: block;
-	width: 16px;
-	height: 16px;
-	background-image: url(./assets/Pin.svg);
-	background-size: contain;
-	background-position: center;
-	background-repeat: no-repeat;
-}
 
 .title {
 	flex: 1 1 auto;
-	font-size: 1.125rem;
+	font-size: 0.875rem;
+	font-weight: 600;
 	line-height: 1.5;
 	color: var(--primary-grey);
-	padding: 0 0.625rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -68,5 +72,4 @@
 
 .controls {
 	flex: 0 0 auto;
-	padding: 0 0 0 1rem;
 }
