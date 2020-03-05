@@ -155,7 +155,7 @@ class StreamStore extends Stores.BoundStore {
 		const {context} = this;
 		const pinned = this.get('pinnedItems');
 
-		if (item.ContainerId !== context.getID()) { return; }
+		if (!context.containsPost(item)) { return; }
 
 		const {unique} = ([item, ...pinned])
 			.reduce((acc, p) => {
