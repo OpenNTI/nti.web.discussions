@@ -8,6 +8,10 @@
 	padding: 1.4rem 1.4rem 1.875rem;
 }
 
+.note-sidebar-empty-state.clickable {
+	cursor: pointer;
+}
+
 .icon {
 	background-image: url('./assets/create-note.svg');
 	background-position: center center;

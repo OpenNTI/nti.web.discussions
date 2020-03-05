@@ -16,7 +16,9 @@ export default class NotesSidebar extends React.Component {
 
 		notes: PropTypes.array,
 		fillToBottom: PropTypes.bool,
-		sticky: PropTypes.bool
+		sticky: PropTypes.bool,
+
+		onNewNote: PropTypes.func
 	}
 
 	render () {
@@ -30,12 +32,12 @@ export default class NotesSidebar extends React.Component {
 	}
 
 	renderNoteList () {
-		const {notes = []} = this.props;
+		const {notes = [], onNewNote} = this.props;
 		const loading = !notes;
 		const empty = !(notes || []).length;
 
 		if (loading) { return null; }
-		if (empty) { return (<EmptyState />); }
+		if (empty) { return (<EmptyState onNewNote={onNewNote} />); }
 
 		return (
 			<ul className={cx('note-list')}>

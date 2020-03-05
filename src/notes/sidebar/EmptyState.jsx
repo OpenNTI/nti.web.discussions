@@ -1,4 +1,5 @@
 import React from 'react';
+import {PropTypes} from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 
@@ -9,9 +10,12 @@ const t = scoped('discussions.notes.sidebar.EmptyState', {
 	message: 'Be the first to start a discussion.'
 });
 
-export default function NoteSidebarEmptyState () {
+NoteSidebarEmptyState.propTypes = {
+	onNewNote: PropTypes.func
+};
+export default function NoteSidebarEmptyState ({onNewNote}) {
 	return (
-		<div className={cx('note-sidebar-empty-state')}>
+		<div className={cx('note-sidebar-empty-state', {clickable: Boolean(onNewNote)})} onClick={onNewNote} >
 			<div className={cx('icon')} />
 			<div className={cx('message')}>
 				{t('message')}
