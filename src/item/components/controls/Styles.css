@@ -19,7 +19,12 @@
 
 
 .actions-trigger {
-	transform: rotate(90deg);
+	padding: 0 3px;
+}
+
+.actions-trigger .icon {
+	display: inline-block;
+	transform: translateX(50%) rotate(90deg);
 }
 
 .discussion-item-actions {

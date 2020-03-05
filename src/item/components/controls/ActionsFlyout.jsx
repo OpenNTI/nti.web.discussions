@@ -22,7 +22,11 @@ ActionsFlyout.propTypes = {
 	item: PropTypes.object
 };
 export default function ActionsFlyout ({item}) {
-	const trigger = (<div className={cx('actions-trigger')}>...</div>);
+	const trigger = (
+		<div className={cx('actions-trigger')}>
+			<span className={cx('icon')}>...</span>
+		</div>
+	);
 	const available = Actions.filter(action => action.isAvailable(item));
 
 	if (!available.length) { return null; }
