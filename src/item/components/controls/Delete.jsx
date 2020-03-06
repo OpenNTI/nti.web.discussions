@@ -54,7 +54,9 @@ export default function DiscussionItemDelete ({item, doClose}) {
 				Events.emit(Events.BLOG_ENTRY_DELETED, item);
 			}
 		} catch (err) {
-			Prompt.alert(t('failed.message'), t('failed.title'));
+			if (err !== 'Prompt Canceled') {
+				Prompt.alert(t('failed.message'), t('failed.title'));
+			}
 			doClose();
 		}
 	};
