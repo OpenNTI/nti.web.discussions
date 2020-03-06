@@ -12,6 +12,23 @@ function getParams (batchSize, sortOn, sortOrder, searchTerm) {
 	return params;
 }
 
+
+function uniqueItems (items) {
+	const {unique} = items
+		.reduce((acc, p) => {
+			const id = p.getID();
+
+			if (!acc.seen.has(id)) {
+				acc.unique.push(p);
+				acc.seen.add(id);
+			}
+
+			return acc;
+		}, {unique: [], seen: new Set()});
+
+	return unique;
+}
+
 export default
 @mixin(Mixins.Searchable)
 class StreamStore extends Stores.BoundStore {
@@ -194,7 +211,7 @@ class StreamStore extends Stores.BoundStore {
 		const items = this.get('items');
 
 		this.set({
-			items: [item, ...items]
+			items: uniqueItems([item, ...items])
 		});
 	}
 
