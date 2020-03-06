@@ -26,6 +26,7 @@
 .discussion-item-action-label {
 	max-width: 100%;
 	overflow: hidden;
+	color: var(--primary-grey);
 }
 .action-username {
 	display: flex;

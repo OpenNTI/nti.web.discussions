@@ -25,6 +25,7 @@
 .actions-trigger .icon {
 	display: inline-block;
 	transform: translateX(50%) rotate(90deg);
+	color: var(--primary-grey);
 }
 
 .discussion-item-actions {
