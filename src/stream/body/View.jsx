@@ -23,7 +23,9 @@ const t = scoped('nti-discussions.stream.body.View', {
 
 export default
 @searchable()
-@contextual(t('searchContext'))
+@contextual(t('searchContext'), (props) => {
+	return props?.searchContext ?? props?.context?.getID();
+})
 @Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted', 'pinnedItems', 'pinnedError', 'itemPinned', 'itemUnpinned'])
 @Hooks.onEvent({
 	[Events.NOTE_UPDATED]: 'itemUpdated',
@@ -55,6 +57,7 @@ class DiscussionsStream extends React.Component {
 				loadPage: PropTypes.func
 			})
 		}),
+		searchContext: PropTypes.string,
 		layout: PropTypes.oneOf([List, Grid]),
 		sortOn: PropTypes.string,
 		sortOrder: PropTypes.string,
