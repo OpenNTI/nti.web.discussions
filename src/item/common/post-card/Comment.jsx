@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Loading, User, Text, DateTime} from '@nti/web-commons';
-import {TextPreview} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 import {LinkTo} from '@nti/web-routing';
 
 import Styles from './Comment.css';
@@ -51,7 +51,7 @@ export default function PostCardComment ({comment, deleted}) {
 							<DateTime className={cx('date')} date={comment.getCreatedTime()} format={DateFormat} />
 						</div>
 						{!deleted && (
-							<TextPreview
+							<Viewer.TextPreview
 								className={cx('content')}
 								body={comment.body}
 								limitLines={2}

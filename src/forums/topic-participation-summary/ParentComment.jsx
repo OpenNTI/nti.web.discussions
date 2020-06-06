@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Panel} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 import {DisplayName} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -71,7 +71,7 @@ export default class ParentComment extends React.Component {
 				</div>
 				<div className="body" style={bodyStyles}>
 					<div className="body-container" ref={this.setBodyRef}>
-						<Panel body={body}/>
+						<Viewer body={body}/>
 					</div>
 				</div>
 			</div>

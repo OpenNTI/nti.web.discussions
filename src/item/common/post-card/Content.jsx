@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
-import {Panel as Body} from '@nti/web-modeled-content';
+import {Viewer as Body} from '@nti/web-modeled-content';
 
 import Styles from './Content.css';
 import {getBodyOverflowInfo} from './utils';

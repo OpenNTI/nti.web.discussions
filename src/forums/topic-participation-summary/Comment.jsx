@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 import {Avatar, DisplayName, DateTime} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -41,7 +41,7 @@ export default class Comment extends React.Component {
 						<DisplayName entity={creator} />
 						<DateTime date={created} format="llll"/>
 					</div>
-					<Panel className="body-content" body={body || []} />
+					<Viewer className="body-content" body={body || []} />
 					<span className="comments">{t('comments', {count: commentCount})}</span>
 				</div>
 			</div>

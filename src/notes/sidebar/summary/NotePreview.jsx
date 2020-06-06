@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 
@@ -20,7 +20,7 @@ export default function NotePreview ({note, ...props}) {
 				<div className={cx('placeholder-content')}>{t('placeholder')}</div>
 			)}
 			{!note.placeholder && (
-				<Panel
+				<Viewer
 					className={cx('content')}
 					body={note.title ? [note.title] : note.body}
 					previewMode

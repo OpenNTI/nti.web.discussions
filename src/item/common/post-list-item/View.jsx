@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
-import {TextPreview} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 import {User, Text, List} from '@nti/web-commons';
 
 import {Controls, PinnedLabel} from '../../components';
@@ -43,7 +43,7 @@ export default function PostListItem (props) {
 				<div className={cx('meta')}>
 					<Action className={cx('list-item-action')} {...props} />
 					{post.title && (<Text.Base className={cx('title')}>{post.title}</Text.Base>)}
-					{!post.title && post.body && (<TextPreview body={post.body} className={cx('body-preview')} />)}
+					{!post.title && post.body && (<Viewer.TextPreview body={post.body} className={cx('body-preview')} />)}
 					<List.SeparatedInline className={cx('list-items')}>
 						<Text.Base className={cx('comments')}>{t('comments', {count: post.commentCount})}</Text.Base>
 						{post.isPinned && (<PinnedLabel />)}

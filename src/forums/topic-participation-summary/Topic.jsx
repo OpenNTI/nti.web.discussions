@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 import {Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -37,7 +37,7 @@ export default class Topic extends React.Component {
 						<span>{t('join')}</span>
 					</Button>
 				</div>
-				<Panel body={headline.body || []} />
+				<Viewer body={headline.body || []} />
 			</div>
 		);
 	}
