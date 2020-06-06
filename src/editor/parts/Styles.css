@@ -1,0 +1,21 @@
+.discussion-editor-container {
+	
+	&.large {
+		padding: 0.5rem;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+
+		& .identity {
+			flex: 0 0 auto;
+			width: 40px;
+
+			& :global(.avatar) {
+				width: 40px;
+				height: 40px;
+				border-radius: 4px;
+			}
+		}
+
+	}
+}
