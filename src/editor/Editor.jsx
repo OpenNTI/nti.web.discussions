@@ -6,6 +6,7 @@ import Container from './parts/Container';
 import Identity from './parts/Identity';
 import Title from './parts/Title';
 import Body from './parts/Body';
+import Controls from './parts/controls';
 
 DiscussionEditor.propTypes = {
 	className: PropTypes.string,
@@ -29,6 +30,7 @@ export default function DiscussionEditor ({className, discussion}) {
 				<Identity creator={discussion?.Creator} />
 				<Title title={title} onChange={setTitle} />
 				<Body body={body} onChange={setBody} />
+				<Controls />
 			</Container>
 		</Editor.ContextProvider>
 	);
