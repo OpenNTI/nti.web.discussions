@@ -8,7 +8,7 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.Title', {
-	placeholder: 'Title...'
+	placeholder: 'Title'
 });
 
 const toDraftState = value => Parsers.PlainText.toDraftState(value);
