@@ -12,10 +12,18 @@ const t = scoped('nti-discussions.editor.parts.Body', {
 });
 
 DiscussionEditorBody.propTypes = {
-	body: PropTypes.array,
-	onChange: PropTypes.func
+	post: PropTypes.shape({
+		body: PropTypes.array,
+		setBody: PropTypes.func
+	})
 };
-export default function DiscussionEditorBody ({body, onChange}) {
+export default function DiscussionEditorBody ({post}) {
+	const {body, setBody} = post;
+
+	const onChange = (newBody) => {
+		setBody(newBody);
+	};
+
 	return (
 		<Editor
 			className={cx('body')}

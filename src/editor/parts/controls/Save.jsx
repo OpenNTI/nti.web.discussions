@@ -13,19 +13,23 @@ const t = scoped('nti-discussions.editor.parts.controls.Save', {
 });
 
 Save.propTypes = {
-	hasChange: PropTypes.bool,
-	saving: PropTypes.bool,
-	onSave: PropTypes.func,
-	isUpdate: PropTypes.bool
+	post: PropTypes.shape({
+		hasChanged: PropTypes.bool,
+		isNew: PropTypes.bool,
+		saving: PropTypes.bool,
+		onSave: PropTypes.func
+	})
 };
-export default function Save ({hasChange, saving, onSave, isUpdate}) {
+export default function Save ({post}) {
+	const {hasChanged, isNew, saving, onSave} = post;
+
 	return (
 		<Button
 			className={cx('save')}
-			disabled={saving || !hasChange}
+			disabled={saving || !hasChanged}
 			onClick={onSave}
 		>
-			{isUpdate ? t('update') : t('save')}
+			{isNew ? t('save') : t('update')}
 		</Button>
 	);
 }

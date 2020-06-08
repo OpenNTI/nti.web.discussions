@@ -8,10 +8,10 @@ import Styles from './Styles.css';
 const cx = classnames.bind(Styles);
 
 DiscussionEditorIdentity.propTypes = {
-	creator: PropTypes.object
+	post: PropTypes.object
 };
-export default function DiscussionEditorIdentity ({creator}) {
-	const avatarProps = creator ? {user: creator} : {me: true};
+export default function DiscussionEditorIdentity ({post}) {
+	const avatarProps = post?.creator ? {user: post.creator} : {me: true};
 
 	return (
 		<div className={cx('identity')}>

@@ -22,10 +22,14 @@ const EditorPlugins = [
 ];
 
 DiscussionEditorTitle.propTypes = {
-	title: PropTypes.string,
-	onChange: PropTypes.func
+	post: PropTypes.shape({
+		title: PropTypes.string,
+		setTitle: PropTypes.func
+	})
 };
-export default function DiscussionEditorTitle ({title, onChange}) {
+export default function DiscussionEditorTitle ({post}) {
+	const {title, setTitle} = post;
+
 	const [editor, setEditor] = React.useState(null);
 	const setEditorRef = (ref) => {
 		if (ref !== editor) { setEditor(ref); }
@@ -45,7 +49,7 @@ export default function DiscussionEditorTitle ({title, onChange}) {
 		const newTitle = fromDraftState(newEditorState);
 
 		titleRef.current = newTitle;
-		onChange?.(newTitle);
+		setTitle?.(newTitle);
 	};
 
 	return (
