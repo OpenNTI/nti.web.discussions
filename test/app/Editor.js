@@ -4,6 +4,8 @@ import {Editor} from '../../src';
 
 export default function EditorTest () {
 	return (
-		<Editor />
+		<div style={{maxWidth: '700px', margin: '0 auto'}}>
+			<Editor />
+		</div>
 	);
 }
