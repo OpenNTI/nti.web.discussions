@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Icons, Button, Layouts} from '@nti/web-commons';
+import {Icons, Layouts} from '@nti/web-commons';
 import {Editor} from '@nti/web-modeled-content';
 
 import Styles from '../Styles.css';
@@ -20,9 +20,9 @@ DiscussionEditorAttachmentControls.propTypes = {
 export default function DiscussionEditorAttachmentControls ({active, setActive}) {
 	return (
 		<Responsive.ClassList classList={classList} className={cx('control-group', 'main', {active})}>
-			<Button className={cx('control-group-icon')} onClick={setActive}>
+			<Editor.Buttons.Button className={cx('control-group-icon')} onClick={setActive}>
 				<Icons.PaperClip />
-			</Button>
+			</Editor.Buttons.Button>
 			<div className={cx('control-group-items')}>
 				<Editor.Buttons.Image />
 				<Editor.Buttons.Whiteboard />
