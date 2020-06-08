@@ -1,0 +1,1 @@
+export hasContentChanged from './has-content-changed';

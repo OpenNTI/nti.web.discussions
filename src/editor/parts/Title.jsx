@@ -12,7 +12,7 @@ const t = scoped('nti-discussions.editor.parts.Title', {
 });
 
 const toDraftState = value => Parsers.PlainText.toDraftState(value);
-const fromDraftState = draftState => Parsers.PlainText.fromDraftState(draftState);
+const fromDraftState = draftState => (Parsers.PlainText.fromDraftState(draftState) ?? [])[0];
 
 const {CharacterCounter} = Plugins.Counter.components;
 const EditorPlugins = [

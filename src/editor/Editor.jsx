@@ -7,6 +7,7 @@ import Identity from './parts/Identity';
 import Title from './parts/Title';
 import Body from './parts/Body';
 import Controls from './parts/controls';
+import {hasContentChanged} from './util';
 
 DiscussionEditor.propTypes = {
 	className: PropTypes.string,
@@ -18,6 +19,7 @@ DiscussionEditor.propTypes = {
 export default function DiscussionEditor ({className, discussion}) {
 	const [title, setTitle] = React.useState(null);
 	const [body, setBody] = React.useState(null);
+	const hasChange = hasContentChanged(body, discussion?.body) || hasContentChanged(title, discussion?.title);
 
 	React.useEffect(() => {
 		setTitle(discussion?.title);
@@ -30,7 +32,10 @@ export default function DiscussionEditor ({className, discussion}) {
 				<Identity creator={discussion?.Creator} />
 				<Title title={title} onChange={setTitle} />
 				<Body body={body} onChange={setBody} />
-				<Controls />
+				<Controls
+					hasChange={hasChange}
+					isUpdate={Boolean(discussion)}
+				/>
 			</Container>
 		</Editor.ContextProvider>
 	);

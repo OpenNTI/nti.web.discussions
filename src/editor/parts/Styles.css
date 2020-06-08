@@ -158,4 +158,10 @@
 		}
 	}
 
+	& .save {
+		flex: 0 0 auto;
+		border-radius: 40px;
+		padding: 0.5rem 1.5rem;
+	}
+
 }
