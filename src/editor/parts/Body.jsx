@@ -5,11 +5,26 @@ import {scoped} from '@nti/lib-locale';
 import {Editor} from '@nti/web-modeled-content';
 
 import Styles from './Styles.css';
+import MentionSuggestions from './MentionSuggestions';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.Body', {
 	placeholder: 'Start a Discussion...'
 });
+
+const TaggingStrategies = [
+	Editor.Tagging.BuildStrategy({
+		trigger: '#',
+		type: Editor.Tagging.HashTag
+	}),
+	Editor.Tagging.BuildStrategy({
+		trigger: '@',
+		type: Editor.Tagging.Mention,
+		SuggestionsCmp: MentionSuggestions,
+		suggestedOnly: true,
+		allowWhiteSpace: true
+	})
+];
 
 DiscussionEditorBody.propTypes = {
 	post: PropTypes.shape({
@@ -29,6 +44,7 @@ export default function DiscussionEditorBody ({post}) {
 			className={cx('body')}
 			content={body}
 			onContentChange={onChange}
+			taggingStrategies={TaggingStrategies}
 			placeholder={t('placeholder')}
 		/>
 	);
