@@ -80,6 +80,7 @@
 .body {
 	padding: var(--editor-padding);
 	border-bottom: 1px solid var(--border-grey-light);
+	overflow: hidden;
 
 	& :global(.nti-draft-core-container .nti-draft-core .DraftEditor-root) {
 		padding: 0;
