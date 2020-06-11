@@ -1,0 +1,1 @@
+export resolveSuggestions from './resolve-suggestions';
