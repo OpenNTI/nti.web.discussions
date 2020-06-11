@@ -5,31 +5,17 @@ import {scoped} from '@nti/lib-locale';
 import {Editor} from '@nti/web-modeled-content';
 
 import Styles from './Styles.css';
-import MentionSuggestions from './mentions/Suggestions';
-import MentionDisplay from './mentions/Display';
+import {Strategy as MentionStrategy} from './mentions';
+import {Strategy as TagStrategy} from './tags';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.Body', {
 	placeholder: 'Start a Discussion...'
 });
 
-const HashTagStrategy = Editor.Tagging.BuildStrategy({
-	trigger: '#',
-	type: Editor.Tagging.HashTag
-});
-
-const MentionStrategy = Editor.Tagging.BuildStrategy({
-	trigger: '@',
-	type: Editor.Tagging.Mention,
-	SuggestionsCmp: MentionSuggestions,
-	suggestedOnly: true,
-	allowWhiteSpace: true,
-	getDisplayText: (mention) => mention.displayName,
-	DisplayCmp: MentionDisplay
-});
 
 const TaggingStrategies = [
-	HashTagStrategy,
+	TagStrategy,
 	MentionStrategy
 ];
 
