@@ -37,10 +37,7 @@ export default function MentionSuggestions ({search, post, applySuggestion}) {
 	const suggestions = isResolved(resolver) ? resolver : null;
 
 	const onSelectedChange = (value) => {
-		applySuggestion({
-			Username: value.getID(),
-			displayName: value.displayName
-		});
+		applySuggestion(value.getID(), value.displayName);
 	};
 
 	return (

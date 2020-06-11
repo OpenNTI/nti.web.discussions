@@ -6,11 +6,14 @@ import Display from './Display';
 export const Strategy = Editor.Tagging.BuildStrategy({
 	trigger: '@',
 	type: Editor.Tagging.Mention,
+	allowWhiteSpace: true,
+	
+	suggestionKey: 'username',
 	SuggestionsCmp: Suggestions,
 	suggestedOnly: true,
-	allowWhiteSpace: true,
-	getDisplayText: (mention) => mention.displayName,
-	DisplayCmp: Display
+	getSuggestionData: (suggestion) => ({username: suggestion}),
+
+	DisplayCmp: Display,
 });
 
 export function getData (tags) {
