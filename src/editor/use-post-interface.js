@@ -12,7 +12,12 @@ export default function usePostInterface (discussion, container) {
 	const [saving, setSaving] = React.useState(false);
 
 	const onSave = () => {
-
+		console.log('Saving Post: ', {//eslint-disable-line
+			title,
+			body,
+			mentions,
+			tags
+		});
 	};
 
 	React.useEffect(() => {

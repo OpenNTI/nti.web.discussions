@@ -5,8 +5,8 @@ import {scoped} from '@nti/lib-locale';
 import {Editor} from '@nti/web-modeled-content';
 
 import Styles from './Styles.css';
-import {Strategy as MentionStrategy} from './mentions';
-import {Strategy as TagStrategy} from './tags';
+import {Strategy as MentionStrategy, getData as getMentionData} from './mentions';
+import {Strategy as TagStrategy, getData as getTagsData} from './tags';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.Body', {
@@ -14,22 +14,35 @@ const t = scoped('nti-discussions.editor.parts.Body', {
 });
 
 
-const TaggingStrategies = [
-	TagStrategy,
-	MentionStrategy
-];
+const TaggingStrategies = {
+	Tags: TagStrategy,
+	Mentions: MentionStrategy
+};
 
 DiscussionEditorBody.propTypes = {
 	post: PropTypes.shape({
 		body: PropTypes.array,
-		setBody: PropTypes.func
+		setBody: PropTypes.func,
+		setMentions: PropTypes.func,
+		setTags: PropTypes.func
 	})
 };
 export default function DiscussionEditorBody ({post}) {
-	const {body, setBody} = post;
+	const {
+		body,
+		setBody,
 
-	const onChange = (newBody) => {
+		// mentions,
+		setMentions,
+
+		// tags,
+		setTags
+	} = post;
+
+	const onChange = (newBody, tags, editorState) => {
 		setBody(newBody);
+		setMentions(getMentionData(tags.Mentions));
+		setTags(getTagsData(tags.Tags));
 	};
 
 	return (

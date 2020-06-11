@@ -12,3 +12,11 @@ export const Strategy = Editor.Tagging.BuildStrategy({
 	getDisplayText: (mention) => mention.displayName,
 	DisplayCmp: Display
 });
+
+export function getData (tags) {
+	if (!tags) { return null; }
+
+	return tags
+		.map(t => t?.data?.suggestion?.Username)
+		.filter(Boolean);
+}
