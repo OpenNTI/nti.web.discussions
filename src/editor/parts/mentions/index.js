@@ -20,6 +20,6 @@ export function getData (tags) {
 	if (!tags) { return null; }
 
 	return tags
-		.map(t => t?.data?.suggestion?.Username)
+		.map(t => t?.data?.username)
 		.filter(Boolean);
 }
