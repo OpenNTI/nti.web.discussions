@@ -44,7 +44,13 @@ export default function MentionSuggestions ({search, post, applySuggestion}) {
 		<div className={cx('mention-suggestions', {loading})}>
 			<Loading.Placeholder loading={loading} fallback={<div className={cx('loading')}><Loading.Spinner /></div>}>
 				{error && (<Errors.Message error={error} />)}
-				<Selectable className={cx('suggestion-list')} controlledBy={global} as="div" onSelectedChange={onSelectedChange}>
+				<Selectable
+					className={cx('suggestion-list')}
+					controlledBy={global}
+					as="div"
+					onSelectedChange={onSelectedChange}
+					autoFocus
+				>
 					<SuggestionList items={suggestions?.people} label={t('people')} />
 				</Selectable>
 			</Loading.Placeholder>
