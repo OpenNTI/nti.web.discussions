@@ -14,13 +14,14 @@ const classList = [
 ];
 
 DiscussionEditorContainer.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
+	dialog: PropTypes.bool
 };
-export default function DiscussionEditorContainer ({className, ...otherProps}) {
+export default function DiscussionEditorContainer ({className, dialog, ...otherProps}) {
 	return (
 		<Responsive.ClassList
 			{...otherProps}
-			className={cx('discussion-editor-container', className)}
+			className={cx('discussion-editor-container', className, {dialog})}
 			classList={classList}
 		/>
 	);

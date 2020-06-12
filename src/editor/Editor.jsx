@@ -15,14 +15,16 @@ DiscussionEditor.propTypes = {
 	container: PropTypes.oneOfType([
 		PropTypes.object,
 		PropTypes.array
-	])
+	]),
+
+	dialog: PropTypes.bool
 };
-export default function DiscussionEditor ({className, discussion, container}) {
+export default function DiscussionEditor ({className, discussion, container, dialog}) {
 	const post = usePostInterface(discussion, container);
 
 	return (
 		<Editor.ContextProvider>
-			<Container>
+			<Container dialog={dialog}>
 				<Identity post={post} />
 				<Title post={post} />
 				<Body post={post} />

@@ -8,8 +8,8 @@ import Styles from '../Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.controls.Save', {
-	save: 'Save',
-	update: 'Update'
+	save: 'Share Post',
+	update: 'Update Post'
 });
 
 Save.propTypes = {

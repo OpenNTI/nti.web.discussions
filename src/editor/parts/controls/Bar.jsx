@@ -25,9 +25,13 @@ export default function DiscussionEditorControlBar (props) {
 
 	return (
 		<div className={cx('controls')}>
-			<Text active={active === text} setActive={() => toggleActive(text)} />
-			<Attachments active={active === attachments} setActive={() => toggleActive(attachments)} />
-			<Save {...props} />
+			<div className={cx('editor')}>
+				<Text active={active === text} setActive={() => toggleActive(text)} />
+				<Attachments active={active === attachments} setActive={() => toggleActive(attachments)} />
+			</div>
+			<div className={cx('post')}>
+				<Save {...props} />
+			</div>
 		</div>
 	);
 }
