@@ -40,6 +40,11 @@ export default function MentionSuggestions ({search, post, applySuggestion}) {
 		applySuggestion(value.getID(), value.displayName);
 	};
 
+
+	if (search === '') {
+		return null;
+	}
+
 	return (
 		<div className={cx('mention-suggestions', {loading})}>
 			<Loading.Placeholder loading={loading} fallback={<div className={cx('loading')}><Loading.Spinner /></div>}>
