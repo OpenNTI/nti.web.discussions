@@ -1,11 +1,12 @@
 import React from 'react';
+import {Prompt} from '@nti/web-commons';
 
 import {Editor} from '../../src';
 
 export default function EditorTest () {
 	return (
-		<div style={{maxWidth: '700px', margin: '0 auto'}}>
+		<Prompt.Dialog>
 			<Editor dialog />
-		</div>
+		</Prompt.Dialog>
 	);
 }

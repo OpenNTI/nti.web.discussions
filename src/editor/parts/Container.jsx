@@ -9,8 +9,8 @@ const cx = classnames.bind(Styles);
 const {Responsive} = Layouts;
 
 const classList = [
-	{query: size => size.width >= 675, className: cx('large')},
-	{query: size => size.width < 675, className: cx('small')}
+	{query: size => size.width >= 575, className: cx('large')},
+	{query: size => size.width < 575, className: cx('small')}
 ];
 
 DiscussionEditorContainer.propTypes = {

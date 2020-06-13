@@ -2,8 +2,12 @@
 	--editor-padding: 1rem;
 
 	&.dialog {
+		background: white;
 		border: 1px solid var(--border-grey-light);
 		border-radius: 10px;
+		width: 100vw;
+		max-width: 650px;
+		overflow: hidden;
 	}
 
 	&.large {
