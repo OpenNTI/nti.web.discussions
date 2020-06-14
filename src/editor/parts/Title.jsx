@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Editor, Plugins, Parsers, ContextProvider} from '@nti/web-editor';
+import {Errors} from '@nti/web-commons';
 
 import Styles from './Styles.css';
 
@@ -24,11 +25,13 @@ const EditorPlugins = [
 DiscussionEditorTitle.propTypes = {
 	post: PropTypes.shape({
 		title: PropTypes.string,
-		setTitle: PropTypes.func
+		setTitle: PropTypes.func,
+		titleError: PropTypes.any,
+		clearTitleError: PropTypes.func
 	})
 };
 export default function DiscussionEditorTitle ({post}) {
-	const {title, setTitle} = post;
+	const {title, setTitle, titleError, clearTitleError} = post;
 
 	const [editor, setEditor] = React.useState(null);
 	const setEditorRef = (ref) => {
@@ -48,9 +51,21 @@ export default function DiscussionEditorTitle ({post}) {
 	const onContentChange = (newEditorState) => {
 		const newTitle = fromDraftState(newEditorState);
 
-		titleRef.current = newTitle;
-		setTitle?.(newTitle);
+		if (newTitle !== titleRef.current) {
+			titleRef.current = newTitle;
+			setTitle?.(newTitle);
+		}
 	};
+
+	const maybeClearError = !titleError ?
+		null :
+		(newEditorState) => {
+			const newTitle = fromDraftState(newEditorState);
+
+			if (newTitle !== titleRef.current) {
+				clearTitleError();
+			}
+		};
 
 	return (
 		<div className={cx('title')}>
@@ -61,10 +76,12 @@ export default function DiscussionEditorTitle ({post}) {
 					placeholder={t('placeholder')}
 					editorState={editorState}
 					onContentChange={onContentChange}
+					onChange={maybeClearError}
 				/>
 			)}
 			<ContextProvider editor={editor}>
 				<CharacterCounter className={cx('title-limit')} showLimit/>
+				<Errors.Message error={titleError} className={cx('title-error')} />
 			</ContextProvider>
 		</div>
 	);

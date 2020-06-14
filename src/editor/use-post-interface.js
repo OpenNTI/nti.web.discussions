@@ -25,29 +25,28 @@ export default function usePostInterface ({discussion, container, afterSave}) {
 
 		setSaving(true);
 
-		// if (discussion) {
-		// 	//TODO: fill this out
-		// 	return;
-		// }
+		if (discussion) {
+			//TODO: fill this out
+			return;
+		}
 
-		// try {
-		// 	for (let parent of containers.reverse()) {
-		// 		if (parent.addDiscussion) {
-		// 			const saved = await parent.addDiscussion({title, ...content});
-		// 			afterSave?.(saved);
-		// 		}
-		// 	}
-		// } catch (e) {
-		// 	setHasChanged(true);
-		// 	setSaving(false);
-		// 	setError(e);
-		// }
+		try {
+			for (let parent of containers.reverse()) {
+				if (parent.addDiscussion) {
+					const saved = await parent.addDiscussion({title, ...content});
+					afterSave?.(saved);
+				}
+			}
+		} catch (e) {
+			setHasChanged(true);
+			setSaving(false);
+			setError(e);
+		}
 	};
 
 
-	const getUpdate = (fn) => {
+	const getUpdate = (fn, field) => {
 		return (...args) => {
-			if (error) { setError(null); }
 			if (!hasChanged) { setHasChanged(true); }
 
 			fn(...args);
@@ -60,9 +59,9 @@ export default function usePostInterface ({discussion, container, afterSave}) {
 		creator,
 
 		title,
-		setTitle: getUpdate(setTitle),
+		setTitle: getUpdate(setTitle, 'title'),
 
-		setContent: getUpdate(setContent),
+		setContent: getUpdate(setContent, 'body'),
 
 		body: content?.body,
 		mentions: content?.mentions,
@@ -72,6 +71,12 @@ export default function usePostInterface ({discussion, container, afterSave}) {
 		isNew: !discussion,
 
 		saving,
-		onSave
+		onSave,
+
+		titleError: error?.field === 'title' ? error : null,
+		clearTitleError: () => error?.field === 'title' && setError(null),
+		
+		error: error?.field !== 'title' ? error : null,
+		clearError: () => error?.field !== 'title' && setError(null)
 	};
 }
