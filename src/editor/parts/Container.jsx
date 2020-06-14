@@ -21,7 +21,6 @@ DiscussionEditorContainer.propTypes = {
 	})
 };
 export default function DiscussionEditorContainer ({className, dialog, post, ...otherProps}) {
-	debugger;
 	return (
 		<Responsive.ClassList
 			{...otherProps}
