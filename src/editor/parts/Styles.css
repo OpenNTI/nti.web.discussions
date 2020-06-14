@@ -98,6 +98,7 @@
 .body {
 	padding: var(--editor-padding);
 	overflow: hidden;
+	position: relative;
 
 	& :global(.nti-draft-core-container .nti-draft-core .DraftEditor-root) {
 		padding: 0;
@@ -107,6 +108,12 @@
 		font-size: 0.875rem;
 		font-weight: 400;
 		line-height: 1.3;
+	}
+
+	& .body-error {
+		position: absolute;
+		top: auto; bottom: 0.5rem;
+		left: var(--editor-padding);
 	}
 }
 
