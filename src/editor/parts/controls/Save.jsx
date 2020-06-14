@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Button} from '@nti/web-commons';
+import {Button, Loading} from '@nti/web-commons';
 
 import Styles from '../Styles.css';
 
@@ -25,11 +25,12 @@ export default function Save ({post}) {
 
 	return (
 		<Button
-			className={cx('save')}
+			className={cx('save', {saving})}
 			disabled={saving || !hasChanged}
 			onClick={onSave}
 		>
-			{isNew ? t('save') : t('update')}
+			{saving && (<Loading.Spinner white />)}
+			{!saving && (isNew ? t('save') : t('update'))}
 		</Button>
 	);
 }

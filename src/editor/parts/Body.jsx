@@ -22,27 +22,21 @@ const TaggingStrategies = {
 DiscussionEditorBody.propTypes = {
 	post: PropTypes.shape({
 		body: PropTypes.array,
-		setBody: PropTypes.func,
-		setMentions: PropTypes.func,
-		setTags: PropTypes.func
+		setContent: PropTypes.func
 	})
 };
 export default function DiscussionEditorBody ({post}) {
 	const {
 		body,
-		setBody,
-
-		// mentions,
-		setMentions,
-
-		// tags,
-		setTags
+		setContent
 	} = post;
 
 	const onChange = (newBody, tags, editorState) => {
-		setBody(newBody);
-		setMentions(getMentionData(tags.Mentions));
-		setTags(getTagsData(tags.Tags));
+		setContent({
+			body: newBody,
+			mentions: getMentionData(tags.Mentions),
+			tags: getTagsData(tags.Tags)
+		});
 	};
 
 	return (

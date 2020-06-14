@@ -15,13 +15,17 @@ const classList = [
 
 DiscussionEditorContainer.propTypes = {
 	className: PropTypes.string,
-	dialog: PropTypes.bool
+	dialog: PropTypes.bool,
+	post: PropTypes.shape({
+		saving: PropTypes.bool
+	})
 };
-export default function DiscussionEditorContainer ({className, dialog, ...otherProps}) {
+export default function DiscussionEditorContainer ({className, dialog, post, ...otherProps}) {
+	debugger;
 	return (
 		<Responsive.ClassList
 			{...otherProps}
-			className={cx('discussion-editor-container', className, {dialog})}
+			className={cx('discussion-editor-container', className, {dialog, saving: post?.saving})}
 			classList={classList}
 		/>
 	);

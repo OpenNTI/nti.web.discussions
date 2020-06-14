@@ -1,6 +1,16 @@
 .discussion-editor-container {
 	--editor-padding: 1rem;
 
+	&.saving {
+		pointer-events: none;
+
+		& .title,
+		& .body,
+		& .controls .button {
+			opacity: 0.5;
+		}
+	}
+
 	&.dialog {
 		background: white;
 		border: 1px solid var(--border-grey-light);
@@ -173,8 +183,12 @@
 	& .save {
 		flex: 0 0 200px;
 		border-radius: 4px;
-		padding: 0.5rem 0.5;
+		padding: 12px 0.5rem;
 		text-align: center;
+
+		&.saving {
+			padding: 7px 0.5rem 8px;
+		}
 	}
 
 }

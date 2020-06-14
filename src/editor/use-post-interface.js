@@ -1,32 +1,58 @@
 import React from 'react';
 
-import {hasContentChanged} from './utils';
-
-export default function usePostInterface (discussion, container) {
+export default function usePostInterface ({discussion, container, afterSave}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
-	const [body, setBody] = React.useState(null);
-	const [mentions, setMentions] = React.useState(null);
-	const [tags, setTags] = React.useState(null);
+	const [content, setContent] = React.useState(null);
 
+	const [hasChanged, setHasChanged] = React.useState(false);
 	const [saving, setSaving] = React.useState(false);
-
-	const onSave = () => {
-		console.log('Saving Post: ', {//eslint-disable-line
-			title,
-			body,
-			mentions,
-			tags
-		});
-	};
+	const [error, setError] = React.useState(null);
 
 	React.useEffect(() => {
 		setCreator(discussion?.Creator);
 		setTitle(discussion?.title);
-		setBody(discussion?.body);
-		setMentions(discussion?.mentions);
-		setTags(discussion?.tags);
+
+		setContent({
+			body: discussion?.body,
+			mentions: discussion?.mentions,
+			tags: discussion?.tags
+		});		
 	}, [discussion]);
+
+	const onSave = async () => {
+		const containers = Array.isArray(container) ? container.reverse() : [container];
+
+		setSaving(true);
+
+		// if (discussion) {
+		// 	//TODO: fill this out
+		// 	return;
+		// }
+
+		// try {
+		// 	for (let parent of containers.reverse()) {
+		// 		if (parent.addDiscussion) {
+		// 			const saved = await parent.addDiscussion({title, ...content});
+		// 			afterSave?.(saved);
+		// 		}
+		// 	}
+		// } catch (e) {
+		// 	setHasChanged(true);
+		// 	setSaving(false);
+		// 	setError(e);
+		// }
+	};
+
+
+	const getUpdate = (fn) => {
+		return (...args) => {
+			if (error) { setError(null); }
+			if (!hasChanged) { setHasChanged(true); }
+
+			fn(...args);
+		};
+	};
 
 	return {
 		container,
@@ -34,18 +60,15 @@ export default function usePostInterface (discussion, container) {
 		creator,
 
 		title,
-		setTitle,
+		setTitle: getUpdate(setTitle),
 
-		body,
-		setBody,
+		setContent: getUpdate(setContent),
 
-		mentions,
-		setMentions,
+		body: content?.body,
+		mentions: content?.mentions,
+		tags: content?.tags,
 
-		tags,
-		setTags,
-
-		hasChanged: hasContentChanged(body, discussion?.body) || hasContentChanged(title, discussion?.title),
+		hasChanged,
 		isNew: !discussion,
 
 		saving,
