@@ -66,6 +66,7 @@ export default function DiscussionEditorBody ({post}) {
 				onChange={maybeClearError}
 				taggingStrategies={TaggingStrategies}
 				placeholder={t('placeholder')}
+				contentChangeBuffer={100}
 			/>
 			<Errors.Message error={error} className={cx('body-error')} />
 		</div>

@@ -17,7 +17,7 @@ export const Strategy = Editor.Tagging.BuildStrategy({
 });
 
 export function getData (tags) {
-	if (!tags) { return null; }
+	if (!tags) { return []; }
 
 	return tags
 		.map(t => t?.data?.username)

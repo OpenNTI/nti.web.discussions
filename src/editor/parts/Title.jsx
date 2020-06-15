@@ -96,6 +96,7 @@ export default function DiscussionEditorTitle ({post}) {
 					placeholder={t('placeholder')}
 					editorState={editorState}
 					onContentChange={onContentChange}
+					contentChangeBuffer={100}
 					onChange={maybeClearError}
 				/>
 			)}
