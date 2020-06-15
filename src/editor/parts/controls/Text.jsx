@@ -15,7 +15,7 @@ DiscussionEditorTextControls.propTypes = {
 export default function DiscussionEditorTextControls ({active, setActive}) {
 	return (
 		<div className={cx('control-group', {active})}>
-			<Editor.Buttons.Button className={cx('control-group-icon', 'button')} onClick={setActive}>
+			<Editor.Buttons.Button className={cx('control-group-icon', 'button', 'green')} onClick={setActive}>
 				<Icons.FontType />
 			</Editor.Buttons.Button>
 			<div className={cx('control-group-items')}>

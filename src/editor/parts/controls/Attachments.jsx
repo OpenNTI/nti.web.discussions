@@ -24,10 +24,10 @@ export default function DiscussionEditorAttachmentControls ({active, setActive})
 				<Icons.PaperClip />
 			</Editor.Buttons.Button>
 			<div className={cx('control-group-items')}>
-				<Editor.Buttons.Image className={cx('button')} />
-				<Editor.Buttons.Whiteboard className={cx('button')} />
+				<Editor.Buttons.Image className={cx('button', 'red')} />
+				<Editor.Buttons.Whiteboard className={cx('button', 'purple')} />
 				<Editor.Buttons.Video className={cx('button')} />
-				<Editor.Buttons.File className={cx('button')} />
+				<Editor.Buttons.File className={cx('button', 'blue')} />
 			</div>
 		</Responsive.ClassList>
 	);

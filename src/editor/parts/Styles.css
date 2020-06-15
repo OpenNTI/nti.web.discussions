@@ -121,10 +121,10 @@
 	position: relative;
 
 	& .editor {
-		padding: 0 var(--editor-padding) 2px;
+		padding: 0 var(--editor-padding) 2px calc(var(--editor-padding) / 2);
 		display: flex;
 		flex-direction: row;
-		align-items: middle;
+		align-items: center;
 	}
 
 	& .post {
@@ -139,6 +139,9 @@
 
 	& .control-group {
 		flex: 0 0 auto;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 
 		&.main {
 			flex: 1 1 auto;
@@ -174,18 +177,6 @@
 				box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15);
 			}
 		}
-		
-		& .control-group-icon {
-			background: none;
-			font-size: 1.5rem;
-			padding: 5px;
-			color: var(--secondary-grey);
-			border-radius: 3px;
-
-			&:hover, &:focus {
-				color: var(--primary-grey);
-			}
-		}
 
 		& .control-group-items {
 			visibility: hidden;
@@ -201,6 +192,44 @@
 
 		&.saving {
 			padding: 7px 0.5rem 8px;
+		}
+	}
+
+	& .button {
+		background: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 2.5rem;
+		padding: 0.5rem;
+		font-size: 1rem;
+		vertical-align: middle;
+		cursor: pointer;
+
+		& button {
+			color: inherit;
+		}
+
+		&:hover {
+			background: #EAEDF7;
+		}
+
+		&.green {
+			color: var(--secondary-green);
+		}
+
+		&.red {
+			color: #E02020;
+		}
+
+		&.purple {
+			color: #1F3E94;
+		}
+
+		&.blue {
+			color: var(--primary-blue);
 		}
 	}
 
