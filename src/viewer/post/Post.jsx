@@ -3,10 +3,11 @@ import classnames from 'classnames/bind';
 import {Route} from '@nti/web-routing';
 
 import Styles from './Styles.css';
+import Body from './parts/Body';
 import Controls from './parts/Controls';
 import Identity from './parts/Identity';
-import Title from './parts/Title';
 import Info from './parts/Info';
+import Title from './parts/Title';
 
 const cx = classnames.bind(Styles);
 
@@ -29,6 +30,7 @@ export default function DiscussionPost (props) {
 						<Identity {...props} />
 						<Title {...props} />
 						<Info {...props} />
+						<Body {...props} />
 					</div>
 				)}
 			/>

@@ -1,0 +1,1 @@
+export getLegacyBody from './get-legacy-body';
