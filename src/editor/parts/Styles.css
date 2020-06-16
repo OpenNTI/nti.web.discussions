@@ -195,6 +195,16 @@
 		}
 	}
 
+	& .cancel {
+		flex: 0 0 auto;
+		background: none;
+		color: var(--secondary-grey);
+
+		& + .save {
+			flex: 0 0 150px;
+		}
+	}
+
 	& .button {
 		background: none;
 		display: inline-flex;

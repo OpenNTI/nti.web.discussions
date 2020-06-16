@@ -14,7 +14,7 @@ export default function usePostInterface ({discussion, container, afterSave}) {
 		setTitle(discussion?.title);
 
 		setContent({
-			body: discussion?.body,
+			body: discussion?.getBody(),
 			mentions: discussion?.mentions,
 			tags: discussion?.tags
 		});		

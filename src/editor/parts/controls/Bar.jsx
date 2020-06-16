@@ -4,6 +4,7 @@ import classnames from 'classnames/bind';
 import Styles from '../Styles.css';
 
 import Attachments from './Attachments';
+import Cancel from './Cancel';
 import Save from './Save';
 import Text from './Text';
 
@@ -30,6 +31,7 @@ export default function DiscussionEditorControlBar (props) {
 				<Attachments active={active === attachments} setActive={() => toggleActive(attachments)} />
 			</div>
 			<div className={cx('post')}>
+				<Cancel {...props} />
 				<Save {...props} />
 			</div>
 		</div>

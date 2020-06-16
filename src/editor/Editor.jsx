@@ -18,18 +18,19 @@ DiscussionEditor.propTypes = {
 	]),
 
 	dialog: PropTypes.bool,
-	afterSave: PropTypes.func
+	afterSave: PropTypes.func,
+	onCancel: PropTypes.func
 };
-export default function DiscussionEditor ({className, discussion, container, dialog, afterSave}) {
+export default function DiscussionEditor ({className, discussion, container, dialog, afterSave, onCancel}) {
 	const post = usePostInterface({discussion, container, afterSave});
 
 	return (
 		<Editor.ContextProvider>
-			<Container dialog={dialog} post={post}>
+			<Container dialog={dialog} post={post} className={className} >
 				<Identity post={post} />
 				<Title post={post} />
 				<Body post={post} />
-				<Controls post={post} />
+				<Controls post={post} onCancel={onCancel} />
 			</Container>
 		</Editor.ContextProvider>
 	);
