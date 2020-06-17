@@ -10,7 +10,7 @@
 
 
 		& .discussion-post {
-			padding: calc(2 * var(--discussion-padding)) calc(1.5 * var(--discussion-padding));
+			padding: var(--discussion-vertical-padding) var(--discussion-horizontal-padding);
 			position: relative;
 
 			display: grid;

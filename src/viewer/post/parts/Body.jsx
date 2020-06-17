@@ -1,33 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Viewer} from '@nti/web-modeled-content';
 
+import Body from '../../body';
 import Styles from '../Styles.css';
-import {getLegacyBody} from '../utils';
 
 const cx = classnames.bind(Styles);
 
-DiscussionBody.propTypes = {
-	post: PropTypes.shape({
-		getBody: PropTypes.func
-	})
-};
-export default function DiscussionBody ({post}) {
-	const [body, setBody] = React.useState();
-
-	React.useEffect(() => {
-		setBody(getLegacyBody(post));
-	}, [post]);
-
-	if (!body) {
-		return null;
-	}
-
+export default function DiscussionBody (props) {
 	return (
-		<Viewer
+		<Body
 			className={cx('body')}
-			content={body}
+			{...props}
 		/>
 	);
 }

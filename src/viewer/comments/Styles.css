@@ -1,0 +1,14 @@
+.discussion-comments {
+	border-top: 1px solid var(--border-grey-light);
+	background: var(--panel-background);
+
+	&.large {
+		padding: var(--discussion-padding) var(--discussion-horizontal-padding);
+	}
+}
+
+.comment-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
