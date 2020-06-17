@@ -29,7 +29,7 @@ export default function DiscussionComments ({post}) {
 	const [expanded, setExpanded] = React.useState({});
 
 	const commentsResolver = useResolver(async () => {
-		return post.getComments({batchSize: BatchSize, batchStart: page * BatchSize});
+		return post.getComments({batchSize: BatchSize, batchStart: page * BatchSize, sortOn: 'CreatedTime', sortOrder: 'ascending'});
 	}, [post, page]);
 
 	const loading = isPending(commentsResolver);
@@ -63,8 +63,8 @@ export default function DiscussionComments ({post}) {
 											expanded={expanded[id]}
 											expand={() => setExpanded({...expanded, [id]: true})}
 											collapse={() => {
+												debugger;
 												const clone = {...expanded};
-
 												delete clone[id];
 
 												setExpanded(clone);
