@@ -16,6 +16,15 @@ const t = scoped('nti-discussions.viewer.comments.parts.comment.Comment', {
 const {useResolver} = Hooks;
 const {isPending, isErrored, isResolved} = useResolver;
 
+const ReplySort = (a, b) => {
+	a = a.getCreatedTime();
+	b = b.getCreatedTime();
+
+	if (a === b) { return 0;}
+
+	return (a < b) ? -1 : 1;
+};
+
 DiscussionComment.propTypes = {
 	expanded: PropTypes.bool,
 	comment: PropTypes.shape({
@@ -28,7 +37,7 @@ export default function DiscussionComment ({expanded, comment, ...otherProps}) {
 
 		const replies = await comment.getReplies();
 
-		return replies;
+		return replies.sort(ReplySort);
 	}, [comment, expanded]);
 
 	const repliesLoading = isPending(repliesResolver);
