@@ -52,6 +52,8 @@ export default function DiscussionComments ({post}) {
 	};
 
 	const context = {
+		post,
+
 		isExpanded: (obj) => {
 			return obj && expanded[obj.getID()];
 		},
@@ -65,7 +67,10 @@ export default function DiscussionComments ({post}) {
 		},
 
 		isEditing: (obj) => obj && obj.getID() === editing,
-		isReplying: (obj) => obj && obj.getID() === replying
+		stopEditing: (obj) => context.isEditing(obj) && setEditing(null),
+		
+		isReplying: (obj) => obj && obj.getID() === replying,
+		stopReplying: (obj) => context.isReplying(obj) && setReplying(null)
 	};
 
 	return (
@@ -94,6 +99,7 @@ export default function DiscussionComments ({post}) {
 											<li key={id}>
 												<Comment
 													comment={comment}
+													post={post}
 												/>
 											</li>
 										);

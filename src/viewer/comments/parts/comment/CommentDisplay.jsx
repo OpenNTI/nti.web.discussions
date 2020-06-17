@@ -9,6 +9,8 @@ import Styles from '../../Styles.css';
 import Body from '../../../body';
 import {Controls} from '../../../../item';
 
+import CommentEditor from './CommentEditor';
+
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay', {
 	comments: {
@@ -30,9 +32,11 @@ CommentDisplay.propTypes = {
 
 	expanded: PropTypes.bool,
 	expand: PropTypes.func,
-	collapse: PropTypes.func
+	collapse: PropTypes.func,
+
+	editing: PropTypes.bool
 };
-export default function CommentDisplay ({comment, expanded, expand, collapse}) {
+export default function CommentDisplay ({comment, expanded, expand, collapse, editing}) {
 	const user = User.useUser(comment.creator);
 	const depth = comment.getDepth();
 	const commentCount = comment.getCommentCount();
@@ -61,7 +65,8 @@ export default function CommentDisplay ({comment, expanded, expand, collapse}) {
 				)}
 				<DateTime date={comment.getCreatedTime()} relative className={cx('created')} />
 			</div>
-			<Body className={cx('comment-body')} post={comment} />
+			{!editing && (<Body className={cx('comment-body')} post={comment} />)}
+			{editing && (<CommentEditor className={cx('comment-body')} comment={comment} />)}
 			<List.SeparatedInline className={cx('comment-replies')}>
 				{(expand || collapse) && (
 					<Text.Base

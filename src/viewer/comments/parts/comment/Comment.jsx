@@ -53,9 +53,13 @@ export default function DiscussionComment ({expanded, comment, ...otherProps}) {
 		<div className={cx('discussion-comment', {'expanded': isExpanded})} >
 			<CommentDisplay
 				comment={comment}
+
 				expanded={isExpanded}
 				expand={() => CommentList?.expand(comment)}
 				collapse={() => CommentList?.collapse(comment)}
+
+				editing={CommentList.isEditing(comment)}
+
 				{...otherProps}
 			/>
 			{isExpanded && (

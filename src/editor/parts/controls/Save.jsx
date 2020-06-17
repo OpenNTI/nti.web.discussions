@@ -18,10 +18,13 @@ Save.propTypes = {
 		isNew: PropTypes.bool,
 		saving: PropTypes.bool,
 		onSave: PropTypes.func
-	})
+	}),
+
+	saveLabel: PropTypes.string
 };
-export default function Save ({post}) {
+export default function Save ({post, saveLabel}) {
 	const {hasChanged, isNew, saving, onSave} = post;
+	const label = saveLabel || (isNew ? t('save') : t('update'));
 
 	return (
 		<Button
@@ -30,7 +33,7 @@ export default function Save ({post}) {
 			onClick={onSave}
 		>
 			{saving && (<Loading.Spinner white />)}
-			{!saving && (isNew ? t('save') : t('update'))}
+			{!saving && label}
 		</Button>
 	);
 }
