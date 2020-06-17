@@ -5,6 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import {Hooks, Loading, Errors} from '@nti/web-commons';
 
 import Styles from '../../Styles.css';
+import Context from '../../Context';
 
 import CommentDisplay from './CommentDisplay';
 
@@ -32,22 +33,32 @@ DiscussionComment.propTypes = {
 	})
 };
 export default function DiscussionComment ({expanded, comment, ...otherProps}) {
+	const CommentList = React.useContext(Context);
+	const isExpanded = expanded || CommentList.isExpanded(comment);
+
 	const repliesResolver = useResolver(async () => {
-		if (!expanded) { return null; }
+		if (!isExpanded) { return null; }
 
 		const replies = await comment.getReplies();
 
 		return replies.sort(ReplySort);
-	}, [comment, expanded]);
+	}, [comment, isExpanded]);
 
 	const repliesLoading = isPending(repliesResolver);
 	const repliesError = isErrored(repliesResolver) ? repliesResolver : null;
 	const replies = isResolved(repliesResolver) ? repliesResolver : null;
 
+
 	return (
-		<div className={cx('discussion-comment', {expanded})} >
-			<CommentDisplay comment={comment} expanded={expanded} {...otherProps} />
-			{expanded && (
+		<div className={cx('discussion-comment', {'expanded': isExpanded})} >
+			<CommentDisplay
+				comment={comment}
+				expanded={isExpanded}
+				expand={() => CommentList?.expand(comment)}
+				collapse={() => CommentList?.collapse(comment)}
+				{...otherProps}
+			/>
+			{isExpanded && (
 				<Loading.Placeholder loading={repliesLoading} fallback={<Loading.Spinner />}>
 					{repliesError && (<Errors.Message error={t('error')} />)}
 					{replies && (

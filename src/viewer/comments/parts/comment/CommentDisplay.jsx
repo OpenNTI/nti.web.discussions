@@ -63,7 +63,7 @@ export default function CommentDisplay ({comment, expanded, expand, collapse}) {
 			</div>
 			<Body className={cx('comment-body')} post={comment} />
 			<List.SeparatedInline className={cx('comment-replies')}>
-				{depth === 0 && (
+				{(expand || collapse) && (
 					<Text.Base
 						className={cx('comment-count', {'has-comments': commentCount > 0})}
 						onClick={
