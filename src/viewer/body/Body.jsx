@@ -5,6 +5,8 @@ import {Viewer} from '@nti/web-modeled-content';
 
 import Styles from './Styles.css';
 import {getLegacyBody} from './utils';
+import {renderAnchor} from './parts';
+import Context from './Context';
 
 const cx = classnames.bind(Styles);
 
@@ -22,10 +24,13 @@ export default function DiscussionBody ({className, post, ...otherProps}) {
 	}
 
 	return (
-		<Viewer
-			className={cx('body', className)}
-			content={body}
-			{...otherProps}
-		/>
+		<Context.Provider value={{post}}>
+			<Viewer
+				className={cx('body', className)}
+				content={body}
+				renderAnchor={renderAnchor}
+				{...otherProps}
+			/>
+		</Context.Provider>
 	);
 }
