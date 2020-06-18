@@ -23,6 +23,12 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 
 	const EditorCmp = comment ? Editor.Body : Editor.NoTitle;
 
+	const focusComment = (updated) => {
+		if (comment === updated) { return; }
+
+		CommentList.focusComment(updated);
+	};
+
 	const stopEdit = () => {
 		if (comment) {
 			CommentList?.stopEditing(comment);
@@ -35,9 +41,10 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 		<EditorCmp
 			className={cx('commment-editor', className, {reply: Boolean(inReplyTo)})}
 			discussion={comment}
+			extraData={inReplyTo ? {inReplyTo} : null}
 			container={([CommentList?.post, inReplyTo]).filter(Boolean)}
 			saveLabel={inReplyTo ? t('update') : t('comment')}
-			afterSave={stopEdit}
+			afterSave={(newComment) => (focusComment(newComment), stopEdit())}
 			onCancel={stopEdit}
 		/>
 	);

@@ -26,7 +26,7 @@ CommentDisplay.propTypes = {
 		creator: PropTypes.any,
 		getCreatedTime: PropTypes.func,
 		getDepth: PropTypes.func,
-		getCommentCount: PropTypes.func,
+		getDiscussionCount: PropTypes.func,
 		Deleted: PropTypes.bool
 	}),
 
@@ -34,12 +34,16 @@ CommentDisplay.propTypes = {
 	expand: PropTypes.func,
 	collapse: PropTypes.func,
 
+	focused: PropTypes.bool,
+
 	editing: PropTypes.bool
 };
-export default function CommentDisplay ({comment, expanded, expand, collapse, editing}) {
+export default function CommentDisplay ({comment, expanded, expand, collapse, focused, editing}) {
+	const afterRender = React.useRef(null);
+
 	const user = User.useUser(comment.creator);
 	const depth = comment.getDepth();
-	const commentCount = comment.getCommentCount();
+	const commentCount = comment.getDiscussionCount();
 
 	if (comment.Deleted) {
 		return (
@@ -50,6 +54,16 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, ed
 			</div>
 		);
 	}
+
+	React.useEffect(() => {
+		if (focused) {
+			afterRender.current = (body) => {
+				debugger;
+				body?.scrollIntoView?.();
+				afterRender.current = null;
+			};
+		}
+	}, [focused]);
 
 	return (
 		<div className={cx('comment-display', 'active', `depth-${depth}`)}>
@@ -65,8 +79,19 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, ed
 				)}
 				<DateTime date={comment.getCreatedTime()} relative className={cx('created')} />
 			</div>
-			{!editing && (<Body className={cx('comment-body')} post={comment} />)}
-			{editing && (<CommentEditor className={cx('comment-body')} comment={comment} />)}
+			{!editing && (
+				<Body
+					className={cx('comment-body')}
+					post={comment}
+					afterRender={(cmp) => afterRender.current?.(cmp)}
+				/>
+			)}
+			{editing && (
+				<CommentEditor
+					className={cx('comment-body')}
+					comment={comment}
+				/>
+			)}
 			<List.SeparatedInline className={cx('comment-replies')}>
 				{(expand || collapse) && (
 					<Text.Base

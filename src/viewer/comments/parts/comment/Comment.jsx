@@ -48,15 +48,16 @@ export default function DiscussionComment ({expanded, comment, ...otherProps}) {
 	const repliesError = isErrored(repliesResolver) ? repliesResolver : null;
 	const replies = isResolved(repliesResolver) ? repliesResolver : null;
 
-
 	return (
-		<div className={cx('discussion-comment', {'expanded': isExpanded})} >
+		<div className={cx('discussion-comment', {'expanded': isExpanded})}  >
 			<CommentDisplay
 				comment={comment}
 
 				expanded={isExpanded}
 				expand={() => CommentList?.expand(comment)}
 				collapse={() => CommentList?.collapse(comment)}
+
+				focused={CommentList.isFocused(comment)}
 
 				editing={CommentList.isEditing(comment)}
 
