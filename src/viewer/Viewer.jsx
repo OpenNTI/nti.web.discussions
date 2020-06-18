@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import Styles from './Viewer.css';
+import Body from './body';
 import Post from './post';
 import Comments from './comments';
 
 const cx = classnames.bind(Styles);
 
+DiscussionViewer.Body = Body;
 DiscussionViewer.propTypes = {
 	className: PropTypes.string,
 	discussion: PropTypes.object,

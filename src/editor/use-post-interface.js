@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Viewer from '../viewer';
+
 export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
@@ -14,7 +16,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		setTitle(discussion?.title);
 
 		setContent({
-			body: discussion?.getBody(),
+			body: discussion ? Viewer.Body.getLegacyBody(discussion) : null,
 			mentions: discussion?.mentions,
 			tags: discussion?.tags
 		});		

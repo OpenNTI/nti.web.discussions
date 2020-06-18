@@ -10,6 +10,7 @@ import Context from './Context';
 
 const cx = classnames.bind(Styles);
 
+DiscussionBody.getLegacyBody = getLegacyBody;
 DiscussionBody.propTypes = {
 	className: PropTypes.string,
 	post: PropTypes.shape({
