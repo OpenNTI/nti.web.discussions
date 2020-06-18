@@ -14,12 +14,8 @@ DiscussionBody.propTypes = {
 		getBody: PropTypes.func
 	})
 };
-export default function DiscussionBody ({className, post}) {
-	const [body, setBody] = React.useState();
-
-	React.useEffect(() => {
-		setBody(getLegacyBody(post));
-	}, [post]);
+export default function DiscussionBody ({className, post, ...otherProps}) {
+	const body = React.useMemo(() => getLegacyBody(post), [post]);
 
 	if (!body) {
 		return null;
@@ -29,6 +25,7 @@ export default function DiscussionBody ({className, post}) {
 		<Viewer
 			className={cx('body', className)}
 			content={body}
+			{...otherProps}
 		/>
 	);
 }
