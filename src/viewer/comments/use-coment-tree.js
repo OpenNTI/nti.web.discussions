@@ -13,9 +13,11 @@ function getFocused (router) {
 	return decodeFromURI(hash.replace(/^#/, ''));
 }
 
-function getExpandedToShowComment (comment) {
-	if (comment.getDepth() === 0) { return null; }
+function getTopLevel (comment) {
+	return comment?.references[0] ?? comment.getID();
+}
 
+function getExpandedToShowComment (comment) {
 	return comment?.references[0];
 }
 
@@ -60,7 +62,7 @@ export default function useCommentTree (post) {
 				const focused = focusedComment ? await service.getObject(focusedComment) : null;
 
 				if (focused) {
-					params.batchContaining = focusedComment;
+					params.batchContaining = getTopLevel(focused);
 				} else {
 					params.batchStart = page * BatchSize;
 				}
@@ -77,7 +79,7 @@ export default function useCommentTree (post) {
 					const toExpand = getExpandedToShowComment(focused);
 
 					if (toExpand) {
-						setExpanded({...expanded, toExpand});
+						setExpanded({...expanded, [toExpand]: true});
 					}
 				}
 

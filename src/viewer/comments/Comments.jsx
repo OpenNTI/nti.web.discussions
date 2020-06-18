@@ -94,8 +94,6 @@ export default function DiscussionComments ({post}) {
 						<CommentEditor
 							inReplyTo={post}
 							className={cx('post-reply-editor')}
-							afterSave={() => context.stopReplying(post)}
-							onCancel={() => context.stopReplying(post)}
 						/>
 					)}
 					<Loading.Placeholder loading={loading} fallback={<Loading.Spinner />}>

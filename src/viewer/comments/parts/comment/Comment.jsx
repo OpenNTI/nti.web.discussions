@@ -8,6 +8,7 @@ import Styles from '../../Styles.css';
 import Context from '../../Context';
 
 import CommentDisplay from './CommentDisplay';
+import CommentEditor from './CommentEditor';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.comments.parts.comment.Comment', {
@@ -36,6 +37,8 @@ export default function DiscussionComment ({expanded, comment, ...otherProps}) {
 	const CommentList = React.useContext(Context);
 	const isExpanded = expanded || CommentList.isExpanded(comment);
 
+	const isReplying = CommentList.isReplying(comment);
+
 	const repliesResolver = useResolver(async () => {
 		if (!isExpanded) { return null; }
 
@@ -63,6 +66,11 @@ export default function DiscussionComment ({expanded, comment, ...otherProps}) {
 
 				{...otherProps}
 			/>
+			{isReplying && (
+				<CommentEditor
+					inReplyTo={comment}
+				/>
+			)}
 			{isExpanded && (
 				<Loading.Placeholder loading={repliesLoading} fallback={<Loading.Spinner />}>
 					{repliesError && (<Errors.Message error={t('error')} />)}

@@ -42,7 +42,7 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 			className={cx('commment-editor', className, {reply: Boolean(inReplyTo)})}
 			discussion={comment}
 			extraData={inReplyTo ? {inReplyTo} : null}
-			container={([CommentList?.post, inReplyTo]).filter(Boolean)}
+			container={inReplyTo ?? CommentList.post}
 			saveLabel={inReplyTo ? t('update') : t('comment')}
 			afterSave={(newComment) => (focusComment(newComment), stopEdit())}
 			onCancel={stopEdit}

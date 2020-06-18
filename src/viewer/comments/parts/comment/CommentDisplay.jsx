@@ -27,6 +27,7 @@ CommentDisplay.propTypes = {
 		getCreatedTime: PropTypes.func,
 		getDepth: PropTypes.func,
 		getDiscussionCount: PropTypes.func,
+		canAddDiscussion: PropTypes.func,
 		Deleted: PropTypes.bool
 	}),
 
@@ -58,7 +59,6 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, fo
 	React.useEffect(() => {
 		if (focused) {
 			afterRender.current = (body) => {
-				debugger;
 				body?.scrollIntoView?.();
 				afterRender.current = null;
 			};
@@ -104,6 +104,13 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, fo
 					>
 						{t('comments', {count: commentCount})}
 					</Text.Base>
+				)}
+				{comment.canAddDiscussion() && (
+					<LinkTo.Object object={comment} context="reply">
+						<Text.Base>
+							{t('comment')}
+						</Text.Base>
+					</LinkTo.Object>
 				)}
 			</List.SeparatedInline>
 		</div>
