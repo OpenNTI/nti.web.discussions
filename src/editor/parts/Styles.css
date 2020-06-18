@@ -22,7 +22,8 @@
 		overflow: hidden;
 	}
 
-	&.large {
+	&.large,
+	&.small {
 		padding: 0;
 		display: grid;
 		grid-template-columns: calc(40px + (2 * var(--editor-padding))) 1fr;
@@ -57,14 +58,38 @@
 			grid-row: 3 / 3;
 		}
 	}
-
-	&.small {
-
-	}
 }
 
 .discussion-editor-container.body-only {
 
+}
+
+.discussion-editor-container.no-title {
+	display: grid;
+	padding: 0 var(--editor-padding);
+	grid-template-columns: 40px 1fr;
+	grid-template-rows: 40px auto auto;
+
+	& .identity {
+		grid-column: 1 / 1;
+		grid-row: 1 / 1;
+
+		& :global(.avatar) {
+			width: 100%;
+			height: auto;
+			border-radius: 40px;
+		}
+	}
+
+	& .body {
+		grid-column: 2 / 2;
+		grid-row: 1 / span 2;
+	}
+
+	& .controls {
+		grid-column: 2 / 2;
+		grid-row: 3 / 3;
+	}
 }
 
 
