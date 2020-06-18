@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Hooks, Loading, Errors} from '@nti/web-commons';
+import {Loading, Errors} from '@nti/web-commons';
 
 import Styles from '../../Styles.css';
 import Context from '../../Context';
@@ -15,9 +15,6 @@ const t = scoped('nti-discussions.viewer.comments.parts.comment.Comment', {
 	error: 'Unable to load Comments'
 });
 
-const {useResolver} = Hooks;
-const {isPending, isErrored, isResolved} = useResolver;
-
 const ReplySort = (a, b) => {
 	a = a.getCreatedTime();
 	b = b.getCreatedTime();
@@ -27,29 +24,91 @@ const ReplySort = (a, b) => {
 	return (a < b) ? -1 : 1;
 };
 
+
+function useFlatReplies (comment, expanded) {
+	const [loading, setLoading] = React.useState(false);
+	const [error, setError] = React.useState(null);
+	const [replies, setReplies] = React.useState(null);
+
+	React.useEffect(() => {
+		if (!expanded) { return; }
+	
+		let unmounted = false;
+		let flatReplies = null;
+
+		async function loadFlatReplies () {
+			setLoading(true);
+			setError(null);
+			setReplies(null);
+
+			try {
+				flatReplies = await comment.getFlatDiscussions(ReplySort);
+				
+				if (unmounted) { return; }
+
+				setLoading(false);
+				setReplies(flatReplies);
+			} catch (e) {
+				setLoading(false);
+				setError(e);
+			}
+		}
+
+		function insertReply (reply) {
+			if (reply.inReplyTo === comment.getID()) {
+				flatReplies = [...flatReplies, reply];
+				setReplies(flatReplies);
+				return;
+			}
+
+			const parentIndex = flatReplies.findIndex(r => r.getID() === reply.inReplyTo);
+			const replyDepth = reply.getDepth();
+
+			if (parentIndex < 0) { return; }
+
+			for (let i = parentIndex + 1; i < flatReplies.length; i++) {
+				const pointer = flatReplies[i];
+
+				if (pointer.getDepth() < replyDepth) {
+					flatReplies.splice(i, 0, reply);
+					flatReplies = [...flatReplies];
+					setReplies(flatReplies);
+					return;
+				}
+			}
+
+			flatReplies = [...flatReplies, reply];
+			setReplies(flatReplies);
+		}
+
+		const unsubcribe = comment.subscribeToDiscussionAdded(insertReply); 
+
+		loadFlatReplies();
+
+		return () => {
+			unmounted = true;
+			unsubcribe();
+		};
+	}, [comment, expanded]);
+
+	return {
+		loading,
+		error,
+		replies
+	};
+}
+
 DiscussionComment.propTypes = {
-	expanded: PropTypes.bool,
 	comment: PropTypes.shape({
-		getReplies: PropTypes.func
+		getFlatDiscussions: PropTypes.func,
+		subscribeToDiscussionAdded: PropTypes.func
 	})
 };
-export default function DiscussionComment ({expanded, comment, ...otherProps}) {
+export default function DiscussionComment ({comment, ...otherProps}) {
 	const CommentList = React.useContext(Context);
-	const isExpanded = expanded || CommentList.isExpanded(comment);
+	const isExpanded = CommentList.isExpanded(comment);
 
-	const isReplying = CommentList.isReplying(comment);
-
-	const repliesResolver = useResolver(async () => {
-		if (!isExpanded) { return null; }
-
-		const replies = await comment.getReplies();
-
-		return replies.sort(ReplySort);
-	}, [comment, isExpanded]);
-
-	const repliesLoading = isPending(repliesResolver);
-	const repliesError = isErrored(repliesResolver) ? repliesResolver : null;
-	const replies = isResolved(repliesResolver) ? repliesResolver : null;
+	const {loading, error, replies} = useFlatReplies(comment, isExpanded);
 
 	return (
 		<div className={cx('discussion-comment', {'expanded': isExpanded})}  >
@@ -61,24 +120,25 @@ export default function DiscussionComment ({expanded, comment, ...otherProps}) {
 				collapse={() => CommentList?.collapse(comment)}
 
 				focused={CommentList.isFocused(comment)}
-
 				editing={CommentList.isEditing(comment)}
+				replying={CommentList.isReplying(comment)}
 
 				{...otherProps}
 			/>
-			{isReplying && (
-				<CommentEditor
-					inReplyTo={comment}
-				/>
+			{CommentList.isReplying(comment) && (
+				<CommentEditor inReplyTo={comment} />
 			)}
 			{isExpanded && (
-				<Loading.Placeholder loading={repliesLoading} fallback={<Loading.Spinner />}>
-					{repliesError && (<Errors.Message error={t('error')} />)}
+				<Loading.Placeholder loading={loading} fallback={<Loading.Spinner />}>
+					{error && (<Errors.Message error={t('error')} />)}
 					{replies && (
 						<ul className={cx('comment-list')}>
 							{replies.map((reply) => (
 								<li key={reply.getID()}>
-									<DiscussionComment comment={reply} expanded {...otherProps} />
+									<CommentDisplay comment={reply} />
+									{CommentList.isReplying(reply) && (
+										<CommentEditor inReplyTo={reply} />
+									)}
 								</li>
 							))}
 						</ul>

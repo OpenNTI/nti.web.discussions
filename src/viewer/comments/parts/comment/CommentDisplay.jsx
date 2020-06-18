@@ -36,7 +36,6 @@ CommentDisplay.propTypes = {
 	collapse: PropTypes.func,
 
 	focused: PropTypes.bool,
-
 	editing: PropTypes.bool
 };
 export default function CommentDisplay ({comment, expanded, expand, collapse, focused, editing}) {

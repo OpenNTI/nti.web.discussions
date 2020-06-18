@@ -58,16 +58,27 @@ export default function useCommentTree (post) {
 
 			try {
 				const service = await getService();
-
 				const focused = focusedComment ? await service.getObject(focusedComment) : null;
+				
+				if (unmounted) { return; }
+
+				const focusedTopLevel = focused && getTopLevel(focused);
+
+				if (focusedTopLevel && comments?.some(comment => comment.getID() === focusedTopLevel)) {
+					const toExpand = getExpandedToShowComment(focused);
+
+					if (toExpand) {
+						setExpanded({...expanded, [toExpand]: true});
+					}
+
+					return;
+				}
 
 				if (focused) {
 					params.batchContaining = getTopLevel(focused);
 				} else {
 					params.batchStart = page * BatchSize;
 				}
-
-				if (unmounted) { return; }
 
 				const discussions = await post.getDiscussions(params);
 
