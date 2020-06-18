@@ -1,5 +1,71 @@
+//Creates a safe html document that we can manipulate without affecting the
+//current page document
+function getSafeBody (html) {
+	try {
+		const doc = document?.implementation?.createHTMLDocument?.('scratchpad');
+		doc.documentElement.innerHTML = html;
+
+		return doc.getElementsByTagName('body')[0];
+	} catch (e) {
+		return null;
+	}
+}
+
+function getMentionsAndTags (body) {
+	if (!Array.isArray(body)) { body = [body]; }
+
+	return body.reduce((acc, part) => {
+		if (typeof part !== 'string') { return acc; }
+
+		const frag = getSafeBody(body);
+
+		const mentions = Array.from(frag.querySelectorAll('a[data-nti-entity-type=MENTION'));
+		const tags = Array.from(frag.querySelectorAll('a[data-nti-entity-type=TAG'));
+
+		return {
+			mentions: [
+				...acc.mentions,
+				...mentions.map(a => a.getAttribute('data-nti-entity-username'))
+			],
+			tags: [
+				...acc.tags,
+				...tags.map(a => a.textContent.replace(/^#/, ''))
+			]
+		};
+	}, {mentions: [], tags: []});
+}
+
+const TagAttributes = 'data-nti-entity-id="tagging-strategy-#-TAG-Tags" data-nti-entity-mutability="MUTABLE" data-nti-entity-type="TAG"';
+
+function getLegacyTagsPart (tags) {
+	let part = '<html><body><p>';
+
+	for (let tag of tags) {
+		part += `<a ${TagAttributes}>#${tag}</a> `;
+	}
+
+	return `${part}</p></body></html>`;
+}
+
+function addLegacy (body, tags) {
+	const legacy = Array.isArray(body) ? [...body] : [body];
+
+	if (tags.length > 0) {
+		legacy.push(getLegacyTagsPart(tags));
+	}
+
+	return legacy;
+}
+
 export default function getLegacyBody (discussion) {
 	const body = discussion.getBody();
+	const tags = discussion.getTags();
+	// const mentions = discussion.getMentions();
 
-	return body;
+	const existing = getMentionsAndTags(body);
+
+	return addLegacy(
+		body,
+		tags.filter(x => existing.tags.indexOf(x) === -1)
+	);
 }

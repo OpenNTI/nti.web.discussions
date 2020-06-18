@@ -21,6 +21,7 @@ const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay'
 	deleted: 'This comment has been deleted'
 });
 
+
 CommentDisplay.propTypes = {
 	comment: PropTypes.shape({
 		creator: PropTypes.any,
@@ -28,7 +29,8 @@ CommentDisplay.propTypes = {
 		getDepth: PropTypes.func,
 		getDiscussionCount: PropTypes.func,
 		canAddDiscussion: PropTypes.func,
-		Deleted: PropTypes.bool
+		Deleted: PropTypes.bool,
+		subscribeToChange: PropTypes.func
 	}),
 
 	expanded: PropTypes.bool,
