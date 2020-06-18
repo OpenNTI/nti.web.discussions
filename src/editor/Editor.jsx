@@ -26,6 +26,7 @@ DiscussionEditor.propTypes = {
 		PropTypes.object,
 		PropTypes.array
 	]),
+	extraData: PropTypes.object,
 
 	dialog: PropTypes.bool,
 	afterSave: PropTypes.func,
@@ -35,8 +36,18 @@ DiscussionEditor.propTypes = {
 
 	style: PropTypes.oneOf([Full, BodyOnly, NoTitle])
 };
-export default function DiscussionEditor ({className, discussion, container, dialog, afterSave,	onCancel, saveLabel, style = Full}) {
-	const post = usePostInterface({discussion, container, afterSave});
+export default function DiscussionEditor ({
+	className,
+	discussion,
+	container,
+	dialog,
+	afterSave,
+	onCancel,
+	saveLabel,
+	extraData,
+	style = Full
+}) {
+	const post = usePostInterface({discussion, container, afterSave, extraData});
 
 	let content = null;
 

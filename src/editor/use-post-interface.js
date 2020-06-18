@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function usePostInterface ({discussion, container, afterSave}) {
+export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
 	const [content, setContent] = React.useState(null);
@@ -33,7 +33,7 @@ export default function usePostInterface ({discussion, container, afterSave}) {
 		try {
 			for (let parent of containers.reverse()) {
 				if (parent.addDiscussion) {
-					const saved = await parent.addDiscussion({title, ...content});
+					const saved = await parent.addDiscussion({title, ...content, ...extraData});
 					afterSave?.(saved);
 				}
 			}
