@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
-import {Viewer as Body} from '@nti/web-modeled-content';
+import {Viewer} from '@nti/web-modeled-content';
 
 import Styles from './Content.css';
 import {getBodyOverflowInfo} from './utils';
@@ -44,9 +44,9 @@ export default class PostCardContent extends React.Component {
 				{title && (<Text.Base className={cx('title')}>{title}</Text.Base>)}
 				{body && (
 					<div className={cx('body', {overflowing: isOverflowing})}>
-						<Body
+						<Viewer
 							className={cx('modeled-content')}
-							body={body}
+							content={body}
 							afterRender={this.afterContentRender}
 							style={{maxHeight: `${maxHeight}px`}}
 						/>
