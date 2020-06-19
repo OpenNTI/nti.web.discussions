@@ -35,6 +35,74 @@
 			box-shadow: none;
 		}
 	}
+
+	& .reply-tree {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		& .comment-display {
+			margin-left: calc(6 * var(--discussion-horizontal-padding));
+		}
+
+		& .comment-editor.reply {
+			margin-left: calc(7 * var(--discussion-horizontal-padding));
+		}
+
+		&.depth-4 > li {
+			& > .comment-display {
+				margin-left: calc(5 * var(--discussion-horizontal-padding));
+			}
+
+			& > .comment-editor.reply {
+				margin-left: calc(6 * var(--discussion-horizontal-padding));
+			}
+		}
+
+
+		&.depth-3 > li {
+			& > .comment-display {
+				margin-left: calc(4 * var(--discussion-horizontal-padding));
+			}
+
+			& > .comment-editor.reply {
+				margin-left: calc(5 * var(--discussion-horizontal-padding));
+			}
+		}
+
+
+		&.depth-2 > li {
+			& > .comment-display {
+				margin-left: calc(3 * var(--discussion-horizontal-padding));
+			}
+
+			& > .comment-editor.reply {
+				margin-left: calc(4 * var(--discussion-horizontal-padding));
+			}
+		}
+
+
+		&.depth-1 > li {
+			& > .comment-display {
+				margin-left: calc(2 * var(--discussion-horizontal-padding));
+			}
+
+			& > .comment-editor.reply {
+				margin-left: calc(3 * var(--discussion-horizontal-padding));
+			}
+		}
+
+
+		&.depth-0 > li {
+			& > .comment-display {
+				margin-left: var(--discussion-horizontal-padding);
+			}
+
+			& > .comment-editor.reply {
+				margin-left: calc(4 * var(--discussion-horizontal-padding));
+			}
+		}
+	}
 }
 
 :global(.no-touch) .comment-display {
@@ -55,28 +123,6 @@
 	position: relative;
 	padding: calc(0.5 * var(--discussion-padding)) var(--discussion-horizontal-padding);
 
-	margin-left: calc(5 * var(--discussion-horizontal-padding));
-	
-	&.depth-4 {
-		margin-left: calc(4 * var(--discussion-horizontal-padding));
-	}
-	
-	&.depth-3 {
-		margin-left: calc(3 * var(--discussion-horizontal-padding));
-	}
-	
-	&.depth-2 {
-		margin-left: calc(2 * var(--discussion-horizontal-padding));
-	}
-	
-	&.depth-1 {
-		margin-left: calc(1 * var(--discussion-horizontal-padding));
-	}
-	
-	&.depth-0 {
-		margin-left: 0;
-	}
-
 	&.deleted {
 		font-size: 0.875rem;
 		font-weight: 300;
@@ -86,7 +132,7 @@
 	}
 
 
-	&.active {
+	&.full {
 		display: grid;
 		grid-gap: 0 calc(0.5 * var(--discussion-padding));
 		grid-template-rows: 30px auto auto;
@@ -159,27 +205,5 @@
 
 	&.reply {
 		margin: var(--discussion-padding) var(--discussion-horizontal-padding);
-
-		margin-left: calc(6 * var(--discussion-horizontal-padding));
-	
-		&.depth-4 {
-			margin-left: calc(5 * var(--discussion-horizontal-padding));
-		}
-		
-		&.depth-3 {
-			margin-left: calc(4 * var(--discussion-horizontal-padding));
-		}
-		
-		&.depth-2 {
-			margin-left: calc(3 * var(--discussion-horizontal-padding));
-		}
-		
-		&.depth-1 {
-			margin-left: calc(2 * var(--discussion-horizontal-padding));
-		}
-		
-		&.depth-0 {
-			margin-left: var(--discussion-horizontal-padding);
-		}
 	}
 }

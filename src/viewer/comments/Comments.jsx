@@ -46,16 +46,6 @@ export default function DiscussionComments ({post}) {
 	const [editing, setEditing] = React.useState(null);
 	const [replying, setReplying] = React.useState(null);
 
-	const getRouteFor = (obj, context) => {
-		if (!obj.isComment && obj.getID() !== post.getID()) { return; }
-
-		if (context === 'edit') {
-			return () => (setEditing(obj.getID()), setReplying(null));
-		} else if (context === 'reply') {
-			return () => (setEditing(null), setReplying(obj.getID()));
-		}
-	};
-
 	const context = {
 		post,
 
@@ -77,6 +67,20 @@ export default function DiscussionComments ({post}) {
 		
 		isReplying: (obj) => obj && obj.getID() === replying,
 		stopReplying: (obj) => context.isReplying(obj) && setReplying(null)
+	};
+	
+	const getRouteFor = (obj, routeContext) => {
+		if (!obj.isComment && obj.getID() !== post.getID()) { return; }
+
+		if (routeContext === 'edit') {
+			return () => (setEditing(obj.getID()), setReplying(null));
+		} else if (routeContext === 'reply') {
+			return () => {
+				setEditing(null);
+				setReplying(obj.getID());
+				context.expand(obj);
+			};
+		}
 	};
 
 	return (

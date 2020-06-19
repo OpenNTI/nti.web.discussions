@@ -38,10 +38,8 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 		}
 	};
 
-	const depth = inReplyTo && inReplyTo !== CommentList.post ? inReplyTo.getDepth() + 1 : 0;
-
 	return (
-		<StandardUI.Card className={cx('comment-editor', className, `depth-${depth}`, {reply: Boolean(inReplyTo)})} rounded>
+		<StandardUI.Card className={cx('comment-editor', className, {reply: Boolean(inReplyTo)})} rounded>
 			<EditorCmp
 				discussion={comment}
 				container={inReplyTo ?? CommentList.post}

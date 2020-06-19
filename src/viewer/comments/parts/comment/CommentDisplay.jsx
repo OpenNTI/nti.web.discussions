@@ -24,12 +24,11 @@ const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay'
 
 CommentDisplay.propTypes = {
 	comment: PropTypes.shape({
+		Deleted: PropTypes.bool,
 		creator: PropTypes.any,
 		getCreatedTime: PropTypes.func,
-		getDepth: PropTypes.func,
 		getDiscussionCount: PropTypes.func,
 		canAddDiscussion: PropTypes.func,
-		Deleted: PropTypes.bool,
 		subscribeToChange: PropTypes.func
 	}),
 
@@ -44,12 +43,11 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, fo
 	const afterRender = React.useRef(null);
 
 	const user = User.useUser(comment.creator);
-	const depth = comment.getDepth();
 	const commentCount = comment.getDiscussionCount();
 
 	if (comment.Deleted) {
 		return (
-			<div className={cx('comment-display', 'deleted', `depth-${depth}`)}>
+			<div className={cx('comment-display', 'deleted')}>
 				<Text.Base>
 					{t('deleted')}
 				</Text.Base>
@@ -67,7 +65,7 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, fo
 	}, [focused]);
 
 	return (
-		<div className={cx('comment-display', 'active', `depth-${depth}`)}>
+		<div className={cx('comment-display', 'full')}>
 			<Controls item={comment} className={cx('controls')} />
 			<div className={cx('identity')}>
 				<User.Avatar user={comment.creator} />
