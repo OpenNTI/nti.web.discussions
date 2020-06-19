@@ -25,7 +25,8 @@
 
 
 .discussion-comment {
-	padding: ;
+	padding: calc(0.5 * var(--discussion-padding)) 0;
+	border-bottom: 1px solid var(--border-grey-light);
 
 	&.expanded {
 		box-shadow: inset 3px 0 0 var(--primary-blue);
