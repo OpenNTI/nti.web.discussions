@@ -28,22 +28,14 @@ DiscussionEditorTitle.propTypes = {
 		setTitle: PropTypes.func,
 		titleError: PropTypes.any,
 		clearTitleError: PropTypes.func
-	})
+	}),
+	autoFocus: PropTypes.bool
 };
-export default function DiscussionEditorTitle ({post}) {
+export default function DiscussionEditorTitle ({post, autoFocus}) {
 	const {title, setTitle, titleError, clearTitleError} = post;
-
-	const editorRef = React.useRef();
-	const editorRefCallback = React.useRef();
 
 	const [editor, setEditor] = React.useState(null);
 	const setEditorRef = (ref) => {
-		editorRef.current = ref;
-		
-		if (ref) {
-			editorRefCallback.current?.(ref);
-		}
-
 		if (ref !== editor) { setEditor(ref); }
 	};
 
@@ -55,18 +47,6 @@ export default function DiscussionEditorTitle ({post}) {
 			setEditorState(toDraftState(title));
 		}
 	}, [title]);
-
-	React.useEffect(() => {
-		if (editorRef.current) {
-			editorRef.current.focus();
-		} else {
-			editorRefCallback.current = (cmp) => {
-				cmp.focus();
-				editorRefCallback.current = null;
-			};
-		}
-	}, []);
-
 
 	const onContentChange = (newEditorState) => {
 		const newTitle = fromDraftState(newEditorState);
@@ -98,6 +78,7 @@ export default function DiscussionEditorTitle ({post}) {
 					onContentChange={onContentChange}
 					contentChangeBuffer={100}
 					onChange={maybeClearError}
+					autoFocus={autoFocus}
 				/>
 			)}
 			<ContextProvider editor={editor}>

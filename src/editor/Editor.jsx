@@ -71,7 +71,7 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.Full post={post} className={className} >
 				<Identity post={post} />
-				<Title post={post} />
+				<Title post={post} autoFocus />
 				<Body post={post} />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.Full>
