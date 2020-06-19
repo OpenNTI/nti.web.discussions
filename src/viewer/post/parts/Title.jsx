@@ -9,13 +9,13 @@ const cx = classnames.bind(Styles);
 
 PostTitle.propTypes = {
 	post: PropTypes.shape({
-		title: PropTypes.string
+		getTitle: PropTypes.func
 	})
 };
 export default function PostTitle ({post}) {
 	return (
 		<Text.Base as="h1" className={cx('title')}>
-			{post.title}
+			{post.getTitle()}
 		</Text.Base>
 	);
 }

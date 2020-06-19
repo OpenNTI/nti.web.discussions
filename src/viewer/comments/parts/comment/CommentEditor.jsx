@@ -44,7 +44,6 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 		<StandardUI.Card className={cx('comment-editor', className, `depth-${depth}`, {reply: Boolean(inReplyTo)})} rounded>
 			<EditorCmp
 				discussion={comment}
-				extraData={inReplyTo ? {inReplyTo} : null}
 				container={inReplyTo ?? CommentList.post}
 				saveLabel={comment ? t('update') : t('comment')}
 				afterSave={(newComment) => (focusComment(newComment), stopEdit())}

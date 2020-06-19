@@ -157,7 +157,7 @@
 	--editor-avatar-size: 30px;
 
 	&.reply {
-		margin: var(--discussion-horizontal-padding);
+		margin: var(--discussion-padding) var(--discussion-horizontal-padding);
 
 		margin-left: calc(6 * var(--discussion-horizontal-padding));
 	

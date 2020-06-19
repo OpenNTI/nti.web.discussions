@@ -13,7 +13,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 
 	React.useEffect(() => {
 		setCreator(discussion?.creator);
-		setTitle(discussion?.title);
+		setTitle(discussion?.getTitle());
 
 		setContent({
 			body: discussion ? Viewer.Body.getLegacyBody(discussion) : null,
@@ -24,18 +24,27 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 
 	const onSave = async () => {
 		const containers = Array.isArray(container) ? container.reverse() : [container];
+		const payload = {title, ...content, ...extraData};
 
 		setSaving(true);
 
 		if (discussion) {
-			//TODO: fill this out
+			try {
+				await discussion.updatePost(payload);
+				afterSave?.(discussion);
+			} catch (e) {
+				setHasChanged(true);
+				setSaving(false);
+				setError(e);
+			}
+
 			return;
 		}
 
 		try {
 			for (let parent of containers.reverse()) {
 				if (parent.addDiscussion) {
-					const saved = await parent.addDiscussion({title, ...content, ...extraData});
+					const saved = await parent.addDiscussion(payload);
 					afterSave?.(saved);
 				}
 			}
