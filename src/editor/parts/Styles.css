@@ -14,14 +14,6 @@
 }
 
 .discussion-editor-container.full {
-	&.dialog {
-		border: 1px solid var(--border-grey-light);
-		border-radius: 10px;
-		width: 100vw;
-		max-width: 780px;
-		overflow: hidden;
-	}
-
 	&.large,
 	&.small {
 		padding: 0;

@@ -28,7 +28,6 @@ DiscussionEditor.propTypes = {
 	]),
 	extraData: PropTypes.object,
 
-	dialog: PropTypes.bool,
 	afterSave: PropTypes.func,
 	onCancel: PropTypes.func,
 
@@ -40,11 +39,12 @@ export default function DiscussionEditor ({
 	className,
 	discussion,
 	container,
-	dialog,
+	extraData,
+
 	afterSave,
 	onCancel,
+
 	saveLabel,
-	extraData,
 	style = Full
 }) {
 	const post = usePostInterface({discussion, container, afterSave, extraData});
@@ -54,14 +54,14 @@ export default function DiscussionEditor ({
 	
 	if (style === BodyOnly) {
 		content = (
-			<Container.Body dialog={dialog} post={post} className={className}>
+			<Container.Body post={post} className={className}>
 				<Body post={post} />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.Body>
 		);
 	} else if (style === NoTitle) {
 		content = (
-			<Container.NoTitle dialog={dialog} post={post} className={className}>
+			<Container.NoTitle post={post} className={className}>
 				<Identity post={post} />
 				<Body post={post} />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
@@ -69,7 +69,7 @@ export default function DiscussionEditor ({
 		);
 	} else {
 		content = (
-			<Container.Full dialog={dialog} post={post} className={className} >
+			<Container.Full post={post} className={className} >
 				<Identity post={post} />
 				<Title post={post} />
 				<Body post={post} />
@@ -78,8 +78,6 @@ export default function DiscussionEditor ({
 
 		);
 	}
-
-
 
 	return (
 		<Editor.ContextProvider>

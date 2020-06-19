@@ -23,18 +23,17 @@ DiscussionEditorContainer.Body = Variant(DiscussionEditorContainer, {style: Body
 DiscussionEditorContainer.NoTitle = Variant(DiscussionEditorContainer, {style: NoTitle});
 DiscussionEditorContainer.propTypes = {
 	className: PropTypes.string,
-	dialog: PropTypes.bool,
 	post: PropTypes.shape({
 		saving: PropTypes.bool
 	}),
 
 	style: PropTypes.oneOf([Full, Body, NoTitle])
 };
-export default function DiscussionEditorContainer ({className, dialog, post, style = Full, ...otherProps}) {
+export default function DiscussionEditorContainer ({className, post, style = Full, ...otherProps}) {
 	return (
 		<Responsive.ClassList
 			{...otherProps}
-			className={cx('discussion-editor-container', className, style, {dialog, saving: post?.saving})}
+			className={cx('discussion-editor-container', className, style, {saving: post?.saving})}
 			classList={classList}
 		/>
 	);
