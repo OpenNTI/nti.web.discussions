@@ -12,7 +12,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 	const [error, setError] = React.useState(null);
 
 	React.useEffect(() => {
-		setCreator(discussion?.Creator);
+		setCreator(discussion?.creator);
 		setTitle(discussion?.title);
 
 		setContent({

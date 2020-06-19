@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
+import {StandardUI} from '@nti/web-commons';
 
 import Editor from '../../../../editor';
 import Styles from '../../Styles.css';
@@ -37,15 +38,18 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 		}
 	};
 
+	const depth = inReplyTo && inReplyTo !== CommentList.post ? inReplyTo.getDepth() + 1 : 0;
+
 	return (
-		<EditorCmp
-			className={cx('commment-editor', className, {reply: Boolean(inReplyTo)})}
-			discussion={comment}
-			extraData={inReplyTo ? {inReplyTo} : null}
-			container={inReplyTo ?? CommentList.post}
-			saveLabel={inReplyTo ? t('update') : t('comment')}
-			afterSave={(newComment) => (focusComment(newComment), stopEdit())}
-			onCancel={stopEdit}
-		/>
+		<StandardUI.Card className={cx('comment-editor', className, `depth-${depth}`, {reply: Boolean(inReplyTo)})} rounded>
+			<EditorCmp
+				discussion={comment}
+				extraData={inReplyTo ? {inReplyTo} : null}
+				container={inReplyTo ?? CommentList.post}
+				saveLabel={comment ? t('update') : t('comment')}
+				afterSave={(newComment) => (focusComment(newComment), stopEdit())}
+				onCancel={stopEdit}
+			/>
+		</StandardUI.Card>
 	);
 }

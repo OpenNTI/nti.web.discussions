@@ -30,7 +30,7 @@ export default function DiscussionPost (props) {
 				matches="#edit"
 				render={() => (
 					<div className={cx('discussion-post-editor-container')}>
-						<StandardUI.Card className={cx('editor-inner')} >
+						<StandardUI.Card className={cx('editor-inner')} rounded >
 							<Editor
 								className={cx('discussion-post-editor')}
 								{...props}

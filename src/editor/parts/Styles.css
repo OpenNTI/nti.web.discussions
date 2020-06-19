@@ -1,5 +1,4 @@
 .discussion-editor-container {
-	--editor-padding: 1rem;
 	background: white;
 	
 	&.saving {
@@ -18,18 +17,18 @@
 	&.small {
 		padding: 0;
 		display: grid;
-		grid-template-columns: calc(40px + (2 * var(--editor-padding))) 1fr;
+		grid-template-columns: calc(var(--editor-avatar-size, 40px) + (2 * var(--editor-padding, 1rem))) 1fr;
 		grid-template-rows: auto auto auto;
 
 		& .identity {
 			grid-column: 1 / 1;
 			grid-row: 1 / 1;
-			padding: var(--editor-padding);
+			padding: var(--editor-padding, 1rem);
 
 			& :global(.avatar) {
-				width: 40px;
-				height: 40px;
-				border-radius: 40px;
+				width: var(--editor-avatar-size, 40px);
+				height: var(--editor-avatar-size, 40px);
+				border-radius: var(--editor-avatar-size, 40px);
 			}
 		}
 
@@ -58,9 +57,9 @@
 
 .discussion-editor-container.no-title {
 	display: grid;
-	padding: 0 var(--editor-padding);
-	grid-template-columns: 40px 1fr;
-	grid-template-rows: 40px auto auto;
+	padding: var(--editor-padding, 1rem) var(--editor-padding, 1rem) 0;
+	grid-template-columns: var(--editor-avatar-size, 40px) 1fr;
+	grid-template-rows: var(--editor-avatar-size, 40px) auto auto;
 
 	& .identity {
 		grid-column: 1 / 1;
@@ -69,16 +68,18 @@
 		& :global(.avatar) {
 			width: 100%;
 			height: auto;
-			border-radius: 40px;
+			border-radius: var(--editor-avatar-size, 40px);
 		}
 	}
 
 	& .body {
+		padding-top: calc(var(--editor-avatar-size, 40px) / 4);
 		grid-column: 2 / 2;
 		grid-row: 1 / span 2;
 	}
 
 	& .control-bar {
+		padding-right: 0;
 		grid-column: 2 / 2;
 		grid-row: 3 / 3;
 	}
@@ -86,7 +87,7 @@
 
 
 .title {
-	padding: var(--editor-padding);
+	padding: var(--editor-padding, 1rem);
 	position: relative;
 
 	& :global(.nti-draft-core-container .nti-draft-core .DraftEditor-root) {
@@ -108,7 +109,7 @@
 	& .title-limit {
 		position: absolute;
 		top: auto; bottom: 0;
-		left: auto; right: var(--editor-padding);
+		left: auto; right: var(--editor-padding, 1rem);
 		background: white;
 		display: none;
 
@@ -119,7 +120,7 @@
 }
 
 .body {
-	padding: var(--editor-padding);
+	padding: var(--editor-padding, 1rem);
 	overflow: hidden;
 	position: relative;
 
@@ -136,12 +137,12 @@
 	& .body-error {
 		position: absolute;
 		top: auto; bottom: 0.5rem;
-		left: var(--editor-padding);
+		left: var(--editor-padding, 1rem);
 	}
 }
 
 .control-bar {
-	padding: 0 var(--editor-padding) calc(var(--editor-padding) / 2);
+	padding: 0 var(--editor-padding, 1rem) var(--editor-padding, 1rem) calc(var(--editor-padding, 1rem) - 0.5rem);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -227,7 +228,7 @@
 		justify-content: flex-end;
 
 		& .save {
-			flex: 0 0 200px;
+			flex: 0 0 100px;
 			border-radius: 4px;
 			padding: 12px 0.5rem;
 			text-align: center;

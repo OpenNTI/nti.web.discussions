@@ -2,10 +2,6 @@
 	&.large {
 		& .discussion-post-editor-container {
 			padding: var(--discussion-padding);
-
-			& .editor-inner {
-				border-radius: 10px;
-			}
 		}
 
 

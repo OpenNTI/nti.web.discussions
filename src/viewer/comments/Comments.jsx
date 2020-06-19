@@ -90,16 +90,16 @@ export default function DiscussionComments ({post}) {
 						totalPages={totalPages}
 						setPage={setPage}
 					/>
-					{context.isReplying(post) && (
-						<CommentEditor
-							inReplyTo={post}
-							className={cx('post-reply-editor')}
-						/>
-					)}
-					<Loading.Placeholder loading={loading} fallback={<Loading.Spinner />}>
-						{error && (<Errors.Message className={cx('error')} error={t('error')} />)}
-						{comments && (
-							<div className={cx('comments-container')}>
+					<div className={cx('comments-container')}>
+						{context.isReplying(post) && (
+							<CommentEditor
+								inReplyTo={post}
+								className={cx('post-reply-editor')}
+							/>
+						)}
+						<Loading.Placeholder loading={loading} fallback={<Loading.Spinner />}>
+							{error && (<Errors.Message className={cx('error')} error={t('error')} />)}
+							{comments && (
 								<ul className={cx('comment-list')}>
 									{comments.map((comment) => {
 										const id = comment.getID();
@@ -114,9 +114,9 @@ export default function DiscussionComments ({post}) {
 										);
 									})}
 								</ul>
-							</div>
-						)}
-					</Loading.Placeholder>
+							)}
+						</Loading.Placeholder>
+					</div>
 				</div>
 			</Router.RouteForProvider>
 		</Context.Provider>
