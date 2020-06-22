@@ -43,7 +43,7 @@ export default function DiscussionEditorTitle ({post, autoFocus}) {
 	const [editorState, setEditorState] = React.useState(null);
 
 	React.useEffect(() => {
-		if (!titleRef.current || title !== titleRef.current) {
+		if (title !== titleRef.current) {
 			setEditorState(toDraftState(title));
 		}
 	}, [title]);
