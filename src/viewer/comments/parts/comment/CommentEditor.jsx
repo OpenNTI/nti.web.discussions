@@ -44,7 +44,7 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 				discussion={comment}
 				container={inReplyTo ?? CommentList.post}
 				saveLabel={comment ? t('update') : t('comment')}
-				afterSave={(newComment) => (focusComment(newComment), stopEdit())}
+				afterSave={(newComment) => (stopEdit(), focusComment(newComment))}
 				onCancel={stopEdit}
 			/>
 		</StandardUI.Card>

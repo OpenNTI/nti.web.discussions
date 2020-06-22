@@ -5,10 +5,12 @@ import {Router} from '@nti/web-routing';
 
 const BatchSize = 20;
 
-function getFocused (router) {
-	const hash = router?.route?.location?.hash;
+const getHash = router => router?.route?.location?.hash;
 
-	if (!hash || hash === '#edit') { return; }
+function getFocused (router) {
+	const hash = getHash(router);
+
+	if (!hash || hash === '#edit' || hash === '#new-comment') { return; }
 
 	return decodeFromURI(hash.replace(/^#/, ''));
 }
@@ -35,7 +37,24 @@ export default function useCommentTree (post) {
 
 	const [expanded, setExpanded] = React.useState({});
 
-	const focusedComment = getFocused(router);
+	const [editing, setEditing] = React.useState(null);
+	const [replying, setReplying] = React.useState(null);
+
+	const hash = getHash(router);
+	const focusedComment = getFocused(router, post);
+	const clearFocused = () => {
+		if (getHash(router)) {
+			router.routeTo.path({replace: true, href: '.'});
+		}
+	};
+
+	React.useEffect(() => {
+		if (hash === '#new-comment') {
+			if (replying !== post.getID()) {
+				setReplying(post.getID());
+			}
+		}
+	}, [hash]);
 
 	React.useEffect(() => {
 		let unmounted = false;
@@ -128,9 +147,14 @@ export default function useCommentTree (post) {
 		},
 
 		expanded,
-		setExpanded,
+		setExpanded: e => (setExpanded(e), clearFocused()),
+
+		editing,
+		setEditing: e => (setEditing(e), clearFocused()),
+		replying,
+		setReplying: r => (setReplying(r), clearFocused()),
 
 		focusedComment,
-		focusComment: (obj) => router.routeTo.path(`#${encodeForURI(obj.getID())}`)
+		focusComment: (obj) => router.routeTo.path({replace: true, href: `#${encodeForURI(obj.getID())}`})
 	};
 }

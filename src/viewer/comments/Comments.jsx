@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
+import {encodeForURI} from '@nti/lib-ntiids';
 import {Router} from '@nti/web-routing';
 import {Loading, Errors} from '@nti/web-commons';
 
@@ -39,12 +40,14 @@ export default function DiscussionComments ({post}) {
 		expanded,
 		setExpanded,
 
+		editing,
+		setEditing,
+		replying,
+		setReplying,
+
 		focusedComment,
 		focusComment
 	} = useCommentTree(post);
-
-	const [editing, setEditing] = React.useState(null);
-	const [replying, setReplying] = React.useState(null);
 
 	const context = {
 		post,
@@ -75,6 +78,13 @@ export default function DiscussionComments ({post}) {
 		if (routeContext === 'edit') {
 			return () => (setEditing(obj.getID()), setReplying(null));
 		} else if (routeContext === 'reply') {
+			if (obj === post) {
+				return {
+					replace: true,
+					href: `${encodeForURI(obj.getID())}/#new-comment`
+				};
+			}
+
 			return () => {
 				setEditing(null);
 				setReplying(obj.getID());
