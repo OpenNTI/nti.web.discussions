@@ -18,7 +18,8 @@ const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay'
 		other: '%(count)s Comments'
 	},
 	comment: 'Reply',
-	deleted: 'This comment has been deleted'
+	deleted: 'This comment has been deleted',
+	repliedTo: 'Replied to %(name)s'
 });
 
 
@@ -32,6 +33,9 @@ CommentDisplay.propTypes = {
 		subscribeToChange: PropTypes.func
 	}),
 
+	inReplyTo: PropTypes.object,
+	tooDeep: PropTypes.bool,
+
 	expanded: PropTypes.bool,
 	expand: PropTypes.func,
 	collapse: PropTypes.func,
@@ -39,7 +43,7 @@ CommentDisplay.propTypes = {
 	focused: PropTypes.bool,
 	editing: PropTypes.bool
 };
-export default function CommentDisplay ({comment, expanded, expand, collapse, focused, editing}) {
+export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing}) {
 	const afterRender = React.useRef(null);
 
 	const user = User.useUser(comment.creator);
@@ -76,7 +80,12 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, fo
 						<User.DisplayName user={user} />
 					</LinkTo.Object>
 				)}
-				<DateTime date={comment.getCreatedTime()} relative className={cx('created')} />
+				{!tooDeep && (<DateTime date={comment.getCreatedTime()} relative className={cx('created')} />)}
+				{tooDeep && (
+					<LinkTo.Object object={inReplyTo} className={cx('in-reply-to')}>
+						<User.DisplayName user={inReplyTo?.creator} localeKey={d => t('repliedTo', d)} />
+					</LinkTo.Object>
+				)}
 			</div>
 			{!editing && (
 				<Body
@@ -105,7 +114,7 @@ export default function CommentDisplay ({comment, expanded, expand, collapse, fo
 					</Text.Base>
 				)}
 				{comment.canAddDiscussion() && (
-					<LinkTo.Object object={comment} context="reply">
+					<LinkTo.Object object={comment} context="reply" className={cx('reply')}>
 						<Text.Base>
 							{t('comment')}
 						</Text.Base>

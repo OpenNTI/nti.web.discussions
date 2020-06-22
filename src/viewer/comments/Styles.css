@@ -111,10 +111,18 @@
 		opacity: 0;
 	}
 
+	& .comment-replies .reply {
+		color: var(--tertiary-grey);
+	}
+
 	&:hover {
 		& .controls,
 		& .comment-info .created {
 			opacity: 1;
+		}
+
+		& .comment-replies .reply {
+			color: var(--primary-blue);
 		}
 	}
 }
@@ -170,10 +178,27 @@
 		color: var(--tertiary-grey);
 
 		& .display-name {
+			flex: 0 0 auto;
+			display: inline-block;
 			color: var(--primary-blue);
 			margin-right: 0.3rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
+
+		& .in-reply-to {
+			flex: 0 0 auto;
+			display: inline-block;
+
+			& address {
+				font-style: normal;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
 	}
 
 	& .comment-body {
@@ -194,8 +219,11 @@
 		& .comment-count.has-comments {
 			color: var(--primary-blue);
 			cursor: pointer;
+		}
 
-
+		& .reply {
+			color: var(--primary-blue);
+			cursor: pointer;
 		}
 	}
 }

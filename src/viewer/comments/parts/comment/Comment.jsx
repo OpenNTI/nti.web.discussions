@@ -18,6 +18,8 @@ const t = scoped('nti-discussions.viewer.comments.parts.comment.Comment', {
 const {useResolver, useForceUpdate} = Hooks;
 const {isPending, isResolved, isErrored} = useResolver;
 
+const MaxDepth = 5;
+
 const ReplySort = (a, b) => {
 	a = a.getCreatedTime();
 	b = b.getCreatedTime();
@@ -58,9 +60,10 @@ SubTree.propTypes = {
 	tree: PropTypes.shape({
 		children: PropTypes.array,
 		depth: PropTypes.number
-	})
+	}),
+	inReplyTo: PropTypes.object
 };
-function SubTree ({tree}) {
+function SubTree ({tree, inReplyTo}) {
 	const CommentList = React.useContext(Context);
 	const children = tree?.children ?? [];
 
@@ -73,11 +76,11 @@ function SubTree ({tree}) {
 
 				return (
 					<li key={node.getID()}>
-						<CommentDisplay comment={node} />
+						<CommentDisplay comment={node} inReplyTo={inReplyTo} tooDeep={tree.depth > MaxDepth} />
 						{CommentList.isReplying(node) && (
 							<CommentEditor inReplyTo={node} />
 						)}
-						<SubTree tree={child} />
+						<SubTree tree={child} inReplyTo={node} />
 					</li>
 				);
 			})}

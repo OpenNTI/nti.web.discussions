@@ -9,7 +9,7 @@ const cx = classnames.bind(Styles);
 
 PostIdentity.propTypes = {
 	post: PropTypes.shape({
-		creator: PropTypes.object
+		creator: PropTypes.any
 	})
 };
 export default function PostIdentity ({post}) {
