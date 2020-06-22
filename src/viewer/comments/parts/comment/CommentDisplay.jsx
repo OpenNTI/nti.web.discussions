@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
-import {User, DateTime, Text, List} from '@nti/web-commons';
+import {User, DateTime, Text, List, Hooks} from '@nti/web-commons';
 
 import Styles from '../../Styles.css';
 import Body from '../../../body';
@@ -44,10 +44,21 @@ CommentDisplay.propTypes = {
 	editing: PropTypes.bool
 };
 export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing}) {
-	const afterRender = React.useRef(null);
-
+	const forceUpdate = Hooks.useForceUpdate();
 	const user = User.useUser(comment.creator);
 	const commentCount = comment.getDiscussionCount();
+	const afterRender = React.useRef(null);
+
+	React.useEffect(() => comment.subscribeToChange(forceUpdate), [comment]);
+
+	React.useEffect(() => {
+		if (focused) {
+			afterRender.current = (body) => {
+				body?.scrollIntoView?.();
+				afterRender.current = null;
+			};
+		}
+	}, [focused]);
 
 	if (comment.Deleted) {
 		return (
@@ -59,14 +70,6 @@ export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, 
 		);
 	}
 
-	React.useEffect(() => {
-		if (focused) {
-			afterRender.current = (body) => {
-				body?.scrollIntoView?.();
-				afterRender.current = null;
-			};
-		}
-	}, [focused]);
 
 	return (
 		<div className={cx('comment-display', 'full')}>
