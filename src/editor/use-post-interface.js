@@ -15,25 +15,58 @@ async function getDefaultSharing (container) {
 	return null;
 }
 
+function getContent (discussion) {
+	return {
+		body: Viewer.Body.getLegacyBody(discussion),
+		mentions: discussion.getMentions(),
+		tags: discussion.getTags(),
+		lockedMentions: discussion.getLockedMentions()
+	};
+}
+
+async function getEmptyContent (container) {
+	const defaultSharing = await getDefaultSharing(container);
+	const {scopes, lockedScopes} = defaultSharing ?? {};
+
+	return {
+		body: Viewer.Body.getLegacyBody({
+			getBody: () => [],
+			getMentions: () => scopes.map(scope => ({CanAccessContent: true, Entity: scope})),
+			getTags: () => []
+		}),
+		mentions: [],
+		tags: [],
+		lockedMentions: lockedScopes
+	};
+}
+
 export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
 	const [content, setContent] = React.useState(null);
-	const [sharing, setSharing] = React.useState(null);
 
 	const [hasChanged, setHasChanged] = React.useState(false);
 	const [saving, setSaving] = React.useState(false);
 	const [error, setError] = React.useState(null);
 
 	React.useEffect(() => {
-		setCreator(discussion?.creator);
-		setTitle(discussion?.getTitle());
+		let unmounted = false;
 
-		setContent({
-			body: discussion ? Viewer.Body.getLegacyBody(discussion) : null,
-			mentions: discussion?.mentions,
-			tags: discussion?.tags
-		});		
+		const setupDiscussion = async () => {
+			setCreator(discussion?.creator);
+			setTitle(discussion?.getTitle());
+
+			const newContent = discussion ? 
+				getContent(discussion) : 
+				await getEmptyContent(container);
+
+			if (unmounted) { return; }
+
+			setContent(newContent);		
+		};
+
+		setupDiscussion();
+		return () => unmounted = true;
 	}, [discussion]);
 
 	const onSave = async () => {
@@ -91,14 +124,6 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		body: content?.body,
 		mentions: content?.mentions,
 		tags: content?.tags,
-
-		getSharing: async () => {
-			if (sharing) { return sharing; }
-			if (discussion?.getSharing) { return discussion?.getSharing(); }
-
-			return getDefaultSharing(container);
-		},
-		setSharing,
 
 		hasChanged,
 		isNew: !discussion,

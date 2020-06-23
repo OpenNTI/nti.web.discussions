@@ -9,7 +9,6 @@ import Identity from './parts/Identity';
 import Title from './parts/Title';
 import Body from './parts/Body';
 import Controls from './parts/controls';
-import Sharing from './parts/Sharing';
 
 const {Variant} = HOC;
 
@@ -71,7 +70,6 @@ export default function DiscussionEditor ({
 	} else {
 		content = (
 			<Container.Full post={post} className={className} >
-				<Sharing post={post} container={container} />
 				<Identity post={post} />
 				<Title post={post} autoFocus />
 				<Body post={post} />
