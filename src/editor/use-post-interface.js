@@ -2,10 +2,24 @@ import React from 'react';
 
 import Viewer from '../viewer';
 
+async function getDefaultSharing (container) {
+	const containers = Array.isArray(container) ? container.reverse() : [container];
+
+	for (let parent of containers) {
+		if (parent.getDefaultSharing) {
+			const sharing = await parent.getDefaultSharing();
+			return sharing;
+		}
+	}
+
+	return null;
+}
+
 export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
 	const [content, setContent] = React.useState(null);
+	const [sharing, setSharing] = React.useState(null);
 
 	const [hasChanged, setHasChanged] = React.useState(false);
 	const [saving, setSaving] = React.useState(false);
@@ -77,6 +91,14 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		body: content?.body,
 		mentions: content?.mentions,
 		tags: content?.tags,
+
+		getSharing: async () => {
+			if (sharing) { return sharing; }
+			if (discussion?.getSharing) { return discussion?.getSharing(); }
+
+			return getDefaultSharing(container);
+		},
+		setSharing,
 
 		hasChanged,
 		isNew: !discussion,

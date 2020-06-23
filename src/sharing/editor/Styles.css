@@ -1,0 +1,20 @@
+.discussion-sharing-editor {
+	padding: var(--editor-padding, 1rem);
+
+	& .description {
+		& .title {
+			display: block;
+			font-size: 1.5rem;
+			font-weight: 400;
+			color: var(--primary-grey);
+		}
+
+		& .description {
+			display: block;
+			font-size: 0.875rem;
+			font-weight: 400;
+			font-style: normal;
+			color: var(--secondary-grey);
+		}
+	}
+}

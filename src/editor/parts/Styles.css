@@ -13,17 +13,25 @@
 }
 
 .discussion-editor-container.full {
+	position: relative;
+
 	&.large,
 	&.small {
 		padding: 0;
 		display: grid;
 		grid-template-columns: calc(var(--editor-avatar-size, 40px) + (2 * var(--editor-padding, 1rem))) 1fr;
-		grid-template-rows: auto auto auto;
+		grid-template-rows: auto auto auto auto;
+
+		& .sharing {
+			grid-column: 1 / span 2;
+			grid-row: 1 / 1;
+			padding: var(--editor-padding, 1rem) var(--editor-padding, 1rem) calc(var(--editor-padding, 1rem) / 2);
+		}
 
 		& .identity {
 			grid-column: 1 / 1;
-			grid-row: 1 / 1;
-			padding: var(--editor-padding, 1rem);
+			grid-row: 2 / 2;
+			padding: 0 var(--editor-padding, 1rem);
 
 			& :global(.avatar) {
 				width: var(--editor-avatar-size, 40px);
@@ -34,20 +42,30 @@
 
 		& .title {
 			grid-column: 2 / 2;
-			grid-row: 1 / 1;
+			grid-row: 2 / 2;
 			padding-left: 0;
+			padding-top: 0;
 		}
 
 		& .body {
 			grid-column: 1 / span 2;
-			grid-row: 2 / 2;
+			grid-row: 3 / 3;
 			padding-top: 0;
 		}
 
 		& .control-bar {
 			grid-column: 1 / span 2;
-			grid-row: 3 / 3;
+			grid-row: 4 / 4;
 		}
+	}
+
+	& .sharing-editor {
+		position: absolute;
+		top: 0; bottom: 0;
+		left: 0; right: 0;
+		width: 100%;
+		height: 100%;
+		background: var(--panel-background);
 	}
 }
 
@@ -248,4 +266,17 @@
 			}
 		}
 	}
+}
+
+.sharing {
+	& .trigger {
+		display: inline-flex;
+		flex-direction: row;
+		align-items: center;
+
+		& .icon {
+			margin-right: 0.5rem;
+		}
+	}
+
 }
