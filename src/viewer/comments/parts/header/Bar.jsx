@@ -16,7 +16,7 @@ const t = scoped('nti-discussions.viewer.comments.parts.header.Bar', {
 
 CommentsHeader.propTypes = {
 	post: PropTypes.shape({
-		canAddComment: PropTypes.func
+		canAddDiscussion: PropTypes.func
 	})
 };
 export default function CommentsHeader (props) {
@@ -26,7 +26,7 @@ export default function CommentsHeader (props) {
 		<div className={cx('comments-header')}>
 			<List.SeparatedInline>
 				<Count {...props} />
-				{post?.canAddComment() && (
+				{post?.canAddDiscussion() && (
 					<LinkTo.Object object={post} context="reply" className={cx('add-comment')}>
 						<Text.Base>
 							{t('addComment')}
