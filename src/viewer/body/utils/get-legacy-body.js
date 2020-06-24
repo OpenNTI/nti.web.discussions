@@ -80,8 +80,8 @@ function addLegacy (body, tags, mentions) {
 
 export default function getLegacyBody (discussion) {
 	const body = discussion.getBody();
-	const tags = discussion.getTags();
-	const mentions = discussion.getMentions();
+	const tags = discussion.getTags() ?? [];
+	const mentions = discussion.getMentions() ?? [];
 
 	const existing = getMentionsAndTags(body);
 
