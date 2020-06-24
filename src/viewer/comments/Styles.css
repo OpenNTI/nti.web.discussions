@@ -132,11 +132,15 @@
 	padding: calc(0.5 * var(--discussion-padding)) var(--discussion-horizontal-padding);
 
 	&.deleted {
-		font-size: 0.875rem;
-		font-weight: 300;
-		font-style: italic;
-		line-height: 1.5;
-		color: var(--primary-grey);
+		padding-left: calc(var(--discussion-horizontal-padding) + 30px);		
+
+		& .deleted-info {
+			font-size: 0.875rem;
+			font-weight: 300;
+			font-style: italic;
+			line-height: 1.5;
+			color: var(--primary-grey);
+		}
 	}
 
 

@@ -25,7 +25,7 @@ const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay'
 
 CommentDisplay.propTypes = {
 	comment: PropTypes.shape({
-		Deleted: PropTypes.bool,
+		isDeleted: PropTypes.bool,
 		creator: PropTypes.any,
 		getCreatedTime: PropTypes.func,
 		getDiscussionCount: PropTypes.func,
@@ -60,12 +60,32 @@ export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, 
 		}
 	}, [focused]);
 
-	if (comment.Deleted) {
+	const commentCountCmp = (expand || collapse) && (
+		<Text.Base
+			className={cx('comment-count', {'has-comments': commentCount > 0})}
+			onClick={
+				commentCount <= 0 ?
+					null :
+					(expanded ? collapse : expand)
+			}
+		>
+			{t('comments', {count: commentCount})}
+		</Text.Base>
+	);
+
+	if (comment.isDeleted()) {
 		return (
 			<div className={cx('comment-display', 'deleted')}>
-				<Text.Base>
-					{t('deleted')}
-				</Text.Base>
+				<div className={cx('deleted-info')}>
+					<Text.Base>
+						{t('deleted')}
+					</Text.Base>
+				</div>
+				{commentCount > 0 && (
+					<List.SeparatedInline className={cx('comment-replies')}>
+						{commentCountCmp}
+					</List.SeparatedInline>
+				)}
 			</div>
 		);
 	}
@@ -104,18 +124,7 @@ export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, 
 				/>
 			)}
 			<List.SeparatedInline className={cx('comment-replies')}>
-				{(expand || collapse) && (
-					<Text.Base
-						className={cx('comment-count', {'has-comments': commentCount > 0})}
-						onClick={
-							commentCount <= 0 ?
-								null :
-								(expanded ? collapse : expand)
-						}
-					>
-						{t('comments', {count: commentCount})}
-					</Text.Base>
-				)}
+				{commentCountCmp}
 				{comment.canAddDiscussion() && (
 					<LinkTo.Object object={comment} context="reply" className={cx('reply')}>
 						<Text.Base>

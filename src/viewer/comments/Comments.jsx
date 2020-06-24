@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {encodeForURI} from '@nti/lib-ntiids';
 import {Router} from '@nti/web-routing';
 import {Loading, Errors} from '@nti/web-commons';
 
@@ -73,7 +72,7 @@ export default function DiscussionComments ({post}) {
 	};
 	
 	const getRouteFor = (obj, routeContext) => {
-		if (!obj.isComment && obj.getID() !== post.getID()) { return; }
+		if (!obj.isDiscussion && obj.getID() !== post.getID()) { return; }
 
 		if (routeContext === 'edit') {
 			return () => (setEditing(obj.getID()), setReplying(null));
@@ -81,7 +80,7 @@ export default function DiscussionComments ({post}) {
 			if (obj === post) {
 				return {
 					replace: true,
-					href: `./#new-comment`
+					href: './#new-comment'
 				};
 			}
 
