@@ -8,6 +8,7 @@ import Editor from '../../editor';
 
 import Styles from './Styles.css';
 import Body from './parts/Body';
+import Context from './parts/Context';
 import Controls from './parts/Controls';
 import Identity from './parts/Identity';
 import Info from './parts/Info';
@@ -50,6 +51,7 @@ export default function DiscussionPost (props) {
 						<Identity {...props} />
 						<Title {...props} />
 						<Info {...props} />
+						<Context {...props} />
 						<Body {...props} />
 					</div>
 				)}
