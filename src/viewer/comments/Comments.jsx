@@ -81,7 +81,7 @@ export default function DiscussionComments ({post}) {
 			if (obj === post) {
 				return {
 					replace: true,
-					href: `${encodeForURI(obj.getID())}/#new-comment`
+					href: `./#new-comment`
 				};
 			}
 
