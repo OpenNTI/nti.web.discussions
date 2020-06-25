@@ -1,0 +1,9 @@
+.discussion-creation-container {
+	background: white;
+	overflow: hidden;
+
+	&.dialog {
+		width: 100vw;
+		max-width: 780px;
+	}
+}
