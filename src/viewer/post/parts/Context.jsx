@@ -7,6 +7,9 @@ import Context from '../../../context';
 
 const cx = classnames.bind(Styles);
 
+let ContextOverride = null;
+
+DiscussionPostContext.setContextOverride = (override) => ContextOverride = override;
 DiscussionPostContext.propTypes = {
 	post: PropTypes.shape({
 		getContextData: PropTypes.func
@@ -14,11 +17,12 @@ DiscussionPostContext.propTypes = {
 };
 export default function DiscussionPostContext ({post}) {
 	const empty = !post.getContextData;
+	const Cmp = ContextOverride ?? Context;
 
 	return (
 		<div className={cx('context', {empty})}>
 			{!empty && (
-				<Context item={post} />
+				<Cmp item={post} />
 			)}
 		</div>
 	);
