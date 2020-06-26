@@ -8,6 +8,7 @@ async function getDefaultSharing (container) {
 	for (let parent of containers) {
 		if (parent.getDefaultSharing) {
 			const sharing = await parent.getDefaultSharing();
+
 			return sharing;
 		}
 	}
@@ -26,17 +27,17 @@ function getContent (discussion) {
 
 async function getEmptyContent (container) {
 	const defaultSharing = await getDefaultSharing(container);
-	const {scopes, lockedScopes} = defaultSharing ?? {};
+	const {scopes, forcedScopes} = defaultSharing ?? {};
 
 	return {
 		body: Viewer.Body.getLegacyBody({
 			getBody: () => [],
-			getMentions: () => scopes.map(scope => ({CanAccessContent: true, Entity: scope})),
+			getMentions: () => (scopes || []).map(scope => ({CanAccessContent: true, Entity: scope})),
 			getTags: () => []
 		}),
 		mentions: [],
 		tags: [],
-		lockedMentions: lockedScopes
+		lockedMentions: forcedScopes
 	};
 }
 
@@ -121,9 +122,14 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 
 		setContent: getUpdate(setContent, 'body'),
 
+		setup: !!content,
+
 		body: content?.body,
-		mentions: content?.mentions,
 		tags: content?.tags,
+
+		mentions: content?.mentions,
+		lockedMentions: content?.lockedMentions,
+
 
 		hasChanged,
 		isNew: !discussion,

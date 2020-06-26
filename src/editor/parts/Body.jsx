@@ -6,6 +6,7 @@ import {Editor} from '@nti/web-modeled-content';
 import {Errors} from '@nti/web-commons';
 
 import {hasContentChanged} from '../utils';
+import Viewer from '../../viewer';
 
 import Styles from './Styles.css';
 import {Strategy as MentionStrategy, getData as getMentionData} from './mentions';
@@ -24,8 +25,13 @@ const TaggingStrategies = {
 
 DiscussionEditorBody.propTypes = {
 	post: PropTypes.shape({
+		setup: PropTypes.bool,
+
 		body: PropTypes.array,
 		setContent: PropTypes.func,
+
+		mentions: PropTypes.array,
+		lockedMentions: PropTypes.array,
 
 		error: PropTypes.any,
 		clearError: PropTypes.func
@@ -33,8 +39,13 @@ DiscussionEditorBody.propTypes = {
 };
 export default function DiscussionEditorBody ({post}) {
 	const {
+		setup,
+
 		body,
 		setContent,
+
+		mentions,
+		lockedMentions,
 
 		error,
 		clearError
@@ -44,7 +55,8 @@ export default function DiscussionEditorBody ({post}) {
 		setContent({
 			body: newBody,
 			mentions: getMentionData(tags.Mentions),
-			tags: getTagsData(tags.Tags)
+			tags: getTagsData(tags.Tags),
+			lockedMentions
 		});
 	};
 
@@ -60,6 +72,7 @@ export default function DiscussionEditorBody ({post}) {
 
 	return (
 		<div className={cx('body')}>
+			{setup && (<Viewer.Mentions.Pills mentions={mentions} lockedMentions={lockedMentions} />)}
 			<Editor
 				content={body}
 				onContentChange={onChange}
