@@ -8,5 +8,6 @@
 	&.dialog {
 		width: 100vw;
 		max-width: 780px;
+		overflow: hidden;
 	}
 }
