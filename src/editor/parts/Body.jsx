@@ -72,7 +72,13 @@ export default function DiscussionEditorBody ({post}) {
 
 	return (
 		<div className={cx('body')}>
-			{setup && (<Viewer.Mentions.Pills mentions={mentions} lockedMentions={lockedMentions} />)}
+			{setup && (
+				<Viewer.Mentions.Pills
+					className={cx('pills')}
+					mentions={mentions}
+					lockedMentions={lockedMentions}
+				/>
+			)}
 			<Editor
 				content={body}
 				onContentChange={onChange}

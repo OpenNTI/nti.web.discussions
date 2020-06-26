@@ -16,26 +16,27 @@ async function getDefaultSharing (container) {
 	return null;
 }
 
-function getContent (discussion) {
+function getContent (discussion, container) {
 	return {
 		body: Viewer.Body.getLegacyBody(discussion),
 		mentions: discussion.getMentions(),
 		tags: discussion.getTags(),
-		lockedMentions: discussion.getLockedMentions()
+		lockedMentions: discussion.getLockedMentions(container)
 	};
 }
 
 async function getEmptyContent (container) {
 	const defaultSharing = await getDefaultSharing(container);
 	const {scopes, forcedScopes} = defaultSharing ?? {};
+	const mentions = (scopes || []).map(scope => ({CanAccessContent: true, Entity: scope}));
 
 	return {
 		body: Viewer.Body.getLegacyBody({
-			getBody: () => [],
-			getMentions: () => (scopes || []).map(scope => ({CanAccessContent: true, Entity: scope})),
+			getBody: () => (scopes ? ['<p></p>'] : []),
+			getMentions: () => mentions,
 			getTags: () => []
 		}),
-		mentions: [],
+		mentions,
 		tags: [],
 		lockedMentions: forcedScopes
 	};
@@ -58,7 +59,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 			setTitle(discussion?.getTitle());
 
 			const newContent = discussion ? 
-				getContent(discussion) : 
+				getContent(discussion, container) : 
 				await getEmptyContent(container);
 
 			if (unmounted) { return; }

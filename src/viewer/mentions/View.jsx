@@ -9,18 +9,19 @@ const {isResolved} = useResolver;
 
 MentionPills.Pills = Pills;
 MentionPills.propTypes = {
-	discussion: PropTypes.shape({
+	post: PropTypes.shape({
 		getMentions: PropTypes.func,
 		getLockedMentions: PropTypes.func
-	})
+	}),
+	container: PropTypes.any
 };
-export default function MentionPills ({discussion, ...otherProps}) {
+export default function MentionPills ({post, container, ...otherProps}) {
 	const resolver = useResolver(async () => {
-		const mentions = await discussion.getMentions();
-		const locked = await discussion.getLockedMentions();
+		const mentions = await post.getMentions();
+		const locked = await post.getLockedMentions(container);
 
 		return {mentions, locked};
-	},[discussion]);
+	},[post]);
 
 	const {mentions = [], locked = []} = isResolved(resolver) ? resolver : {};
 

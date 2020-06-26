@@ -59,7 +59,9 @@
 		grid-gap: 0 calc(var(--editor-padding, 1rem) / 2);
 
 		& .body {
-			margin-top: calc(var(--editor-padding, 1rem) / 2);
+			& .pills {
+				margin: 0.5rem 0 ;
+			}
 
 			& :global(.nti-draft-core-container .nti-draft-core .DraftEditor-root) {
 				min-height: 3rem;

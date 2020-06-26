@@ -45,7 +45,6 @@
 			}
 
 			& .body {
-				padding-top: var(--discussion-padding);
 				grid-column: 1 / span 2;
 				grid-row: 4 / 4;
 			}

@@ -27,6 +27,10 @@
 		background: #c9eacd;
 	}
 
+	&.only-me {
+		background: #fccfcf;
+	}
+
 	& .icon {
 		font-size: 1rem;
 		margin-right: 0.25rem;

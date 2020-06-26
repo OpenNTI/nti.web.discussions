@@ -9,10 +9,21 @@ import {isGroup} from './Types';
 const cx = classnames.bind(Styles);
 
 MentionPills.propTypes = {
+	className: PropTypes.string,
 	mentions: PropTypes.array,
 	lockedMentions: PropTypes.array
 };
-export default function MentionPills ({mentions, lockedMentions}) {
+export default function MentionPills ({className, mentions, lockedMentions}) {
+	if (!mentions?.length && !lockedMentions?.length) {
+		return (
+			<ul className={cx('mention-pills', className)}>
+				<li>
+					<Pill onlyMe />
+				</li>
+			</ul>
+		);
+	}
+
 	const {groups, users} = (mentions || []).reduce((acc, mention) => {
 		if (isGroup(mention)) {
 			acc.groups.push(mention);
@@ -24,7 +35,7 @@ export default function MentionPills ({mentions, lockedMentions}) {
 	}, {groups: [], users: []});
 
 	return (
-		<ul className={cx('mention-pills')}>
+		<ul className={cx('mention-pills', className)}>
 			{(lockedMentions || []).map((locked, key) => {
 				return (
 					<li key={`locked-${key}`}>
