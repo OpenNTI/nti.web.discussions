@@ -5,6 +5,12 @@ const User = 'user';
 
 const getTypeForID = id => isNTIID(id) ? Group : User; 
 
+export function getIdForEntity (entity) {
+	if (typeof entity === 'string') { return entity; }
+
+	return entity.isUser ? entity.getID() : entity.NTIID;
+}
+
 export function getEntity (mention) {
 	return mention?.User ?? mention?.Entity ?? mention;
 }

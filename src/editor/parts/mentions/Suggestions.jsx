@@ -11,6 +11,8 @@ import {
 	Text
 } from '@nti/web-commons';
 
+import Viewer from '../../../viewer';
+
 import Styles from './Suggestions.css';
 import {resolveSuggestions} from './utils';
 
@@ -37,7 +39,10 @@ export default function MentionSuggestions ({search, post, applySuggestion}) {
 	const suggestions = isResolved(resolver) ? resolver : null;
 
 	const onSelectedChange = (value) => {
-		applySuggestion(value.getID(), value.displayName);
+		applySuggestion(
+			Viewer.Mentions.Types.getIdForEntity(value),
+			value.displayName
+		);
 	};
 
 

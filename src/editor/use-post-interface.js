@@ -36,7 +36,7 @@ async function getEmptyContent (container) {
 			getMentions: () => mentions,
 			getTags: () => []
 		}),
-		mentions,
+		mentions: (scopes || []).map(x => Viewer.Mentions.Types.getIdForEntity(x)),
 		tags: [],
 		lockedMentions: forcedScopes
 	};
