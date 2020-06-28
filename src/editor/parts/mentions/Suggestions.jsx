@@ -40,7 +40,7 @@ export default function MentionSuggestions ({search, post, applySuggestion}) {
 
 	const onSelectedChange = (value) => {
 		applySuggestion(
-			Viewer.Mentions.Types.getIdForEntity(value),
+			Viewer.Sharing.Types.getIdForEntity(value),
 			value.displayName
 		);
 	};

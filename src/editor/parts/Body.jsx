@@ -6,7 +6,6 @@ import {Editor} from '@nti/web-modeled-content';
 import {Errors} from '@nti/web-commons';
 
 import {hasContentChanged} from '../utils';
-import Viewer from '../../viewer';
 
 import Styles from './Styles.css';
 import {Strategy as MentionStrategy, getData as getMentionData} from './mentions';

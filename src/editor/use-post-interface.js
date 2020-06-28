@@ -17,7 +17,7 @@ async function getSharing (discussion, container) {
 			const sharing = await parent.getDefaultSharing();
 
 			return {
-				sharedWith: sharing.scopes,
+				sharedWith: (sharing.scopes ?? []).map(x => Viewer.Sharing.Types.getIdForEntity(x)),
 				canEditSharing: !sharing.locked
 			};
 		}
@@ -66,7 +66,12 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 
 	const onSave = async () => {
 		const containers = Array.isArray(container) ? container.reverse() : [container];
-		const payload = {title, ...content, ...extraData};
+		const payload = {
+			title,
+			...content,
+			sharedWith: sharing.sharedWith,
+			...extraData
+		};
 
 		setSaving(true);
 

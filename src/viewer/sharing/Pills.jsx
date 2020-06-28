@@ -10,9 +10,10 @@ const cx = classnames.bind(Styles);
 
 MentionPills.propTypes = {
 	className: PropTypes.string,
-	sharedWith: PropTypes.array
+	sharedWith: PropTypes.array,
+	onRemove: PropTypes.func
 };
-export default function MentionPills ({className, sharedWith}) {
+export default function MentionPills ({className, sharedWith, onRemove}) {
 	if (!sharedWith?.length) {
 		return (
 			<ul className={cx('sharing-pills', className)}>
@@ -38,13 +39,13 @@ export default function MentionPills ({className, sharedWith}) {
 			{(groups || []).map((entity, key) => {
 				return (
 					<li key={`sharedWith-${key}`}>
-						<Pill sharedWith={entity} />
+						<Pill sharedWith={entity} onRemove={onRemove}/>
 					</li>
 				);
 			})}
 			{(users.length > 0) && (
 				<li>
-					<Pill sharedWith={users} />
+					<Pill sharedWith={users} onRemove={onRemove} />
 				</li>
 			)}
 		</ul>

@@ -40,4 +40,28 @@
 		font-size: 1rem;
 		margin-right: 0.25rem;
 	}
+
+	& .remove {
+		font-size: 1rem;
+		cursor: pointer;
+	}
+}
+
+.nested-pills {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	& .sharing-pill {
+		display: flex;
+		background: none;
+
+		& :global(.username) {
+			flex: 1 1 auto;
+		}
+
+		& .icon {
+			display: none;
+		}
+	}
 }

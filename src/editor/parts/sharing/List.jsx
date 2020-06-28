@@ -1,5 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
+import Viewer from '../../../viewer';
+import Styles from '../Styles.css';
+
+const cx = classnames.bind(Styles);
+
+function getMentionsToAdd (prevMentions, mentions) {
+	if (prevMentions.length === 0 && mentions.length === 0) { return []; }
+
+	return mentions
+		.filter(m => prevMentions.indexOf(m) === -1);
+}
 
 SharingList.propTypes = {
 	post: PropTypes.shape({
@@ -15,19 +28,32 @@ SharingList.propTypes = {
 export default function SharingList ({post}) {
 	const {setup, mentions, sharedWith, setSharedWith, canEditSharing} = post;
 
-	const activeMentions = React.useRef([]);
+	const activeMentions = React.useRef(null);
 
 	React.useEffect(() => {
-		//TODO append new mentions
+		const prevMentions = activeMentions.current;
+		activeMentions.current = mentions;
+
+		if (!canEditSharing || !prevMentions) { return; }
+
+		const toAdd = getMentionsToAdd(prevMentions, mentions);
+
+		if (toAdd.length > 0) {
+			setSharedWith(Array.from(new Set([...sharedWith, ...toAdd])));
+		}
 	}, [mentions]);
 
 	if (!setup) { return null; }
 
-	debugger;
+	const onRemove = (sharedTo) => {
+		setSharedWith(sharedWith.filter(s => s !== sharedTo));
+	};
 
 	return (
-		<div>
-			Sharing List
-		</div>
+		<Viewer.Sharing.Pills
+			className={cx('sharing')}
+			sharedWith={sharedWith}
+			onRemove={onRemove}
+		/>
 	);
 }
