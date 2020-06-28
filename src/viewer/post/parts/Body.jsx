@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames/bind';
 
 import Body from '../../body';
-import Mentions from '../../mentions';
+import Sharing from '../../sharing';
 import Styles from '../Styles.css';
 
 const cx = classnames.bind(Styles);
@@ -10,7 +10,7 @@ const cx = classnames.bind(Styles);
 export default function DiscussionBody (props) {
 	return (
 		<div className={cx('body')}>
-			<Mentions {...props} />
+			<Sharing {...props} />
 			<Body {...props} />
 		</div>
 	);

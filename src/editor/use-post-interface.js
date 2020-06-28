@@ -2,50 +2,38 @@ import React from 'react';
 
 import Viewer from '../viewer';
 
-async function getDefaultSharing (container) {
+async function getSharing (discussion, container) {
+	if (discussion) {
+		return {
+			shared: discussion.getSharedWith(),
+			canEditSharing: discussion.canEditSharing()
+		};
+	}
+
 	const containers = Array.isArray(container) ? container.reverse() : [container];
 
 	for (let parent of containers) {
 		if (parent.getDefaultSharing) {
 			const sharing = await parent.getDefaultSharing();
 
-			return sharing;
+			return {
+				sharedWith: sharing.scopes,
+				canEditSharing: !sharing.locked
+			};
 		}
 	}
 
 	return null;
 }
 
-function getContent (discussion, container) {
-	return {
-		body: Viewer.Body.getLegacyBody(discussion),
-		mentions: discussion.getMentions(),
-		tags: discussion.getTags(),
-		lockedMentions: discussion.getLockedMentions(container)
-	};
-}
 
-async function getEmptyContent (container) {
-	const defaultSharing = await getDefaultSharing(container);
-	const {scopes, forcedScopes} = defaultSharing ?? {};
-	const mentions = (scopes || []).map(scope => ({CanAccessContent: true, Entity: scope}));
-
-	return {
-		body: Viewer.Body.getLegacyBody({
-			getBody: () => (scopes ? ['<p></p>'] : []),
-			getMentions: () => mentions,
-			getTags: () => []
-		}),
-		mentions: (scopes || []).map(x => Viewer.Mentions.Types.getIdForEntity(x)),
-		tags: [],
-		lockedMentions: forcedScopes
-	};
-}
 
 export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
 	const [content, setContent] = React.useState(null);
+
+	const [sharing, setSharing] = React.useState(null);
 
 	const [hasChanged, setHasChanged] = React.useState(false);
 	const [saving, setSaving] = React.useState(false);
@@ -54,20 +42,25 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 	React.useEffect(() => {
 		let unmounted = false;
 
-		const setupDiscussion = async () => {
-			setCreator(discussion?.creator);
-			setTitle(discussion?.getTitle());
-
-			const newContent = discussion ? 
-				getContent(discussion, container) : 
-				await getEmptyContent(container);
+		const setupDiscusion = async () => {
+			const disucssionSharing = await getSharing(discussion, container);
 
 			if (unmounted) { return; }
 
-			setContent(newContent);		
+			setCreator(discussion?.creator);
+			setTitle(discussion?.getTitle());
+			
+			setContent({
+				body: discussion ? Viewer.Body.getLegacyBody(discussion) : [],
+				mentions: discussion?.getMentions(),
+				tags: discussion?.getTags()
+			});
+
+			setSharing(disucssionSharing);
 		};
 
-		setupDiscussion();
+		setupDiscusion();
+
 		return () => unmounted = true;
 	}, [discussion]);
 
@@ -119,9 +112,9 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		creator,
 
 		title,
-		setTitle: getUpdate(setTitle, 'title'),
+		setTitle: getUpdate(setTitle),
 
-		setContent: getUpdate(setContent, 'body'),
+		setContent: getUpdate(setContent),
 
 		setup: !!content,
 
@@ -129,8 +122,11 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		tags: content?.tags,
 
 		mentions: content?.mentions,
-		lockedMentions: content?.lockedMentions,
 
+		sharedWith: sharing?.sharedWith,
+		canEditSharing: sharing?.canEditSharing,
+
+		setSharedWith: getUpdate((sharedWith) => setSharing({...sharing, sharedWith})),
 
 		hasChanged,
 		isNew: !discussion,

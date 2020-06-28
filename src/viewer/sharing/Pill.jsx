@@ -19,11 +19,11 @@ const t = scoped('nti-discussions.viewer.mentions.Pill', {
 });
 
 Pill.propTypes = {
-	mention: PropTypes.any,
+	sharedWith: PropTypes.any,
 	locked: PropTypes.bool,
 	onlyMe: PropTypes.bool
 };
-export default function Pill ({mention, onlyMe, locked}) {
+export default function Pill ({sharedWith, onlyMe, locked}) {
 	let typeClass = null;
 	let label = null;
 	let icon = null;
@@ -32,13 +32,13 @@ export default function Pill ({mention, onlyMe, locked}) {
 		typeClass = cx('only-me');
 		label = (<Text.Base>{t('onlyMe')}</Text.Base>);
 		icon = (<Icons.Eye.Slash className={cx('icon')} />);
-	} else if (Array.isArray(mention)) {
+	} else if (Array.isArray(sharedWith)) {
 		typeClass = cx('multiple');
-		label = (<Text.Base>{t('multiple.users', {count: mention.length})}</Text.Base>);
+		label = (<Text.Base>{t('multiple.users', {count: sharedWith.length})}</Text.Base>);
 		icon = (<Icons.Person className={cx('icon')} />);
-	} else if (isGroup(mention)) {
+	} else if (isGroup(sharedWith)) {
 		typeClass = cx('group');
-		label = (<DisplayName entity={getEntity(mention)} />);
+		label = (<DisplayName entity={getEntity(sharedWith)} />);
 	}
 
 	if (locked) {
@@ -46,7 +46,7 @@ export default function Pill ({mention, onlyMe, locked}) {
 	}
 
 	return (
-		<div className={cx('mention-pill', typeClass, {locked})}>
+		<div className={cx('sharing-pill', typeClass, {locked})}>
 			{icon}
 			{label}
 		</div>

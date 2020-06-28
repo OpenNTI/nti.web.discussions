@@ -1,4 +1,4 @@
-.mention-pills {
+.sharing-pills {
 	list-style: none;
 	padding: 0;
 	margin: 1rem 0;
@@ -10,7 +10,7 @@
 	}
 }
 
-.mention-pill {
+.sharing-pill {
 	display: inline-flex;
 	flex-direction: row;
 	align-items: center;
@@ -29,6 +29,11 @@
 
 	&.only-me {
 		background: #fccfcf;
+	}
+
+	&.locked {
+		background: #e6e6e6;
+		color: var(--primary-grey);
 	}
 
 	& .icon {

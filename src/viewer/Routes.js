@@ -2,7 +2,7 @@ import {Router, Route} from '@nti/web-routing';
 
 import Viewer from './Viewer';
 import Body from './body';
-import Mentions from './mentions';
+import Sharing from './sharing';
 import Context from './post/parts/Context';
 
 const DiscussionViewerRouter = Router.for([
@@ -10,7 +10,7 @@ const DiscussionViewerRouter = Router.for([
 ]);
 
 DiscussionViewerRouter.Body = Body;
-DiscussionViewerRouter.Mentions = Mentions;
+DiscussionViewerRouter.Sharing = Sharing;
 DiscussionViewerRouter.setContextOverride = Context.setContextOverride;
 
 export default DiscussionViewerRouter;

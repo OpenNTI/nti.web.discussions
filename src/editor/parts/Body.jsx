@@ -11,6 +11,7 @@ import Viewer from '../../viewer';
 import Styles from './Styles.css';
 import {Strategy as MentionStrategy, getData as getMentionData} from './mentions';
 import {Strategy as TagStrategy, getData as getTagsData} from './tags';
+import Sharing from './sharing/List';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.Body', {
@@ -44,9 +45,6 @@ export default function DiscussionEditorBody ({post}) {
 		body,
 		setContent,
 
-		mentions,
-		lockedMentions,
-
 		error,
 		clearError
 	} = post;
@@ -55,8 +53,7 @@ export default function DiscussionEditorBody ({post}) {
 		setContent({
 			body: newBody,
 			mentions: getMentionData(tags.Mentions),
-			tags: getTagsData(tags.Tags),
-			lockedMentions
+			tags: getTagsData(tags.Tags)
 		});
 	};
 
@@ -72,13 +69,7 @@ export default function DiscussionEditorBody ({post}) {
 
 	return (
 		<div className={cx('body')}>
-			{setup && (
-				<Viewer.Mentions.Pills
-					className={cx('pills')}
-					mentions={mentions}
-					lockedMentions={lockedMentions}
-				/>
-			)}
+			{setup && (<Sharing post={post} />)}
 			<Editor
 				content={body}
 				onContentChange={onChange}
