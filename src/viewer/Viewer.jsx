@@ -54,7 +54,7 @@ export default function DiscussionViewer ({className, discussion, container, dia
 		<Router.RouteForProvider getRouteFor={getRouteFor}>
 			<Cmp
 				{...(dialog ? ({as: 'article', rounded: true}) : ({}))}
-				className={cx('discussion-viewer', className, {dialog})}
+				className={cx('discussion-viewer', 'x-selectable', className, {dialog})}
 			>
 				{dialog && (
 					<StandardUI.Window.TitleBar
