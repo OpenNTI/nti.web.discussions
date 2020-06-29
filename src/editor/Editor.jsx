@@ -59,7 +59,7 @@ export default function DiscussionEditor ({
 	if (style === BodyOnly) {
 		content = (
 			<Container.Body post={post} className={className}>
-				<Body post={post} noSharing={noSharing} />
+				<Body post={post} noSharing={noSharing} autoFocus />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.Body>
 		);
@@ -67,7 +67,7 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.NoTitle post={post} className={className}>
 				<Identity post={post} />
-				<Body post={post} noSharing={noSharing} />
+				<Body post={post} noSharing={noSharing} autoFocus />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.NoTitle>
 		);

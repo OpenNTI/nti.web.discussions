@@ -37,9 +37,10 @@ DiscussionEditorBody.propTypes = {
 		clearError: PropTypes.func
 	}),
 
-	noSharing: PropTypes.bool
+	noSharing: PropTypes.bool,
+	autoFocus: PropTypes.bool
 };
-export default function DiscussionEditorBody ({post, noSharing}) {
+export default function DiscussionEditorBody ({post, noSharing, autoFocus}) {
 	const {
 		setup,
 
@@ -78,6 +79,7 @@ export default function DiscussionEditorBody ({post, noSharing}) {
 				taggingStrategies={TaggingStrategies}
 				placeholder={t('placeholder')}
 				contentChangeBuffer={100}
+				autoFocus={autoFocus}
 			/>
 			<Errors.Message error={error} className={cx('body-error')} />
 		</div>
