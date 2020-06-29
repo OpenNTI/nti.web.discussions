@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {StandardUI} from '@nti/web-commons';
+import {Router} from '@nti/web-routing';
 
 import Styles from './Viewer.css';
 import Body from './body';
@@ -40,19 +41,30 @@ DiscussionViewer.propTypes = {
 export default function DiscussionViewer ({className, discussion, container, dialog, onClose}) {
 	const Cmp = dialog ? StandardUI.Card : 'article';
 
+	const getRouteFor = (obj, context) => {
+		if (obj === discussion && context === 'edit') {
+			return {
+				replace: true,
+				href: './#edit'
+			};
+		}
+	};
+
 	return (
-		<Cmp
-			{...(dialog ? ({as: 'article', rounded: true}) : ({}))}
-			className={cx('discussion-viewer', className, {dialog})}
-		>
-			{dialog && (
-				<StandardUI.Window.TitleBar
-					onClose={onClose}
-					title={getDialogTitle(discussion)}
-				/>
-			)}
-			<Post post={discussion} container={container} />
-			<Comments post={discussion} container={container} />
-		</Cmp>
+		<Router.RouteForProvider getRouteFor={getRouteFor}>
+			<Cmp
+				{...(dialog ? ({as: 'article', rounded: true}) : ({}))}
+				className={cx('discussion-viewer', className, {dialog})}
+			>
+				{dialog && (
+					<StandardUI.Window.TitleBar
+						onClose={onClose}
+						title={getDialogTitle(discussion)}
+					/>
+				)}
+				<Post post={discussion} container={container} />
+				<Comments post={discussion} container={container} />
+			</Cmp>
+		</Router.RouteForProvider>
 	);
 }
