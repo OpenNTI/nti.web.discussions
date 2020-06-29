@@ -49,7 +49,7 @@ export default function DiscussionEditorTitle ({post, autoFocus}) {
 	}, [title]);
 
 	const onContentChange = (newEditorState) => {
-		const newTitle = fromDraftState(newEditorState);
+		const newTitle = fromDraftState(newEditorState) ?? null;
 
 		if (newTitle !== titleRef.current) {
 			titleRef.current = newTitle;
