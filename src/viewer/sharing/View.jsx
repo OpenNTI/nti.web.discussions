@@ -12,22 +12,16 @@ MentionPills.Types = Types;
 MentionPills.Pills = Pills;
 MentionPills.propTypes = {
 	post: PropTypes.shape({
-		getMentions: PropTypes.func,
-		getLockedMentions: PropTypes.func
+		getSharedWith: PropTypes.func
 	}),
 	container: PropTypes.any
 };
 export default function MentionPills ({post, container, ...otherProps}) {
-	const resolver = useResolver(async () => {
-		const mentions = await post.getMentions();
-		const locked = await post.getLockedMentions(container);
+	const resolver = useResolver(() => post.getSharedWith(container), [post]);
 
-		return {mentions, locked};
-	},[post]);
-
-	const {mentions = [], locked = []} = isResolved(resolver) ? resolver : {};
+	const sharedWith = isResolved(resolver) ? resolver : {};
 
 	return (
-		<Pills mentions={mentions} lockedMentions={locked} />
+		<Pills sharedWith={sharedWith} />
 	);
 }
