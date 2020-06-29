@@ -16,19 +16,21 @@
 	align-items: center;
 	padding: 0.25rem 0.5rem;
 
-	background: #caeafc;
+	background: #d1Edfd;
 	font-size: 0.875rem;
 	font-weight: 700;
 	line-height: 1.3;
-	color: rgba(0, 0, 0, 0.5);
+	color: #19587c;
 	border-radius: 4px;
 
 	&.group {
-		background: #c9eacd;
+		background: #d0ecd4;
+		color: #1c7f2a;
 	}
 
 	&.only-me {
-		background: #fccfcf;
+		background: #fcd5d5;
+		color: #d53333;
 	}
 
 	&.locked {
@@ -55,6 +57,7 @@
 	& .sharing-pill {
 		display: flex;
 		background: none;
+		color: var(--secondary-grey);
 
 		& :global(.username) {
 			flex: 1 1 auto;

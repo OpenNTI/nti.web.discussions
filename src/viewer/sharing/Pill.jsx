@@ -41,6 +41,7 @@ export default function Pill ({sharedWith, onlyMe, onRemove}) {
 	} else if (isGroup(sharedWith)) {
 		typeClass = cx('group');
 		label = (<DisplayName entity={getEntity(sharedWith)} />);
+		icon = (<Icons.Globe className={cx('icon')} />);
 	} else {
 		typeClass = cx('user');
 		label = (<DisplayName entity={getEntity(sharedWith)} />);
