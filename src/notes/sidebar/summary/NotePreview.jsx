@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Viewer} from '@nti/web-modeled-content';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
+
+import Viewer from '../../../viewer';
 
 import styles from './NotePreview.css';
 
@@ -14,15 +15,24 @@ const t = scoped('discussions.notes.sidebar.summary.NotePreview', {
 
 export default function NotePreview ({note, ...props}) {
 	if (!note) { return null;}
+
+	const post = note.title ?
+		({
+			getBody: () => [note.title],
+			getMentions: () => [],
+			getTags: () => []
+		}) :
+		note;
+
 	return (
 		<div className={cx('note-preview')}>
 			{note.placeholder && (
 				<div className={cx('placeholder-content')}>{t('placeholder')}</div>
 			)}
 			{!note.placeholder && (
-				<Viewer
+				<Viewer.Body
 					className={cx('content')}
-					body={note.title ? [note.title] : note.body}
+					post={post}
 					previewMode
 					previewLength={80}
 				/>
