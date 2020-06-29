@@ -76,7 +76,15 @@ function SubTree ({tree, inReplyTo}) {
 
 				return (
 					<li key={node.getID()}>
-						<CommentDisplay comment={node} inReplyTo={inReplyTo} tooDeep={tree.depth > MaxDepth} />
+						<CommentDisplay
+							comment={node}
+							inReplyTo={inReplyTo}
+							tooDeep={tree.depth > MaxDepth}
+
+							focused={CommentList.isFocused(node)}
+							editing={CommentList.isEditing(node)}
+							replying={CommentList.isReplying(node)}
+						/>
 						{CommentList.isReplying(node) && (
 							<CommentEditor inReplyTo={node} />
 						)}
