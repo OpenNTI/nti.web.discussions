@@ -28,6 +28,13 @@ async function getSharing (discussion, container) {
 	return null;
 }
 
+function fixError (e) {
+	if (e.field === 'description' && e.declared === 'ITitledDescribedContent') {
+		e.field = 'title';
+	}
+
+	return e;
+}
 
 
 export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
@@ -100,7 +107,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		} catch (e) {
 			setHasChanged(true);
 			setSaving(false);
-			setError(e);
+			setError(fixError(e));
 		}
 	};
 

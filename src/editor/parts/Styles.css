@@ -45,6 +45,10 @@
 			grid-column: 1 / span 2;
 			grid-row: 2 / 2;
 			padding: 0;
+
+			& .body-error {
+				left: 0;
+			}
 		}
 
 		& .control-bar {
@@ -131,7 +135,7 @@
 
 	& .title-error {
 		position: absolute;
-		top: 45px;
+		top: 30px;
 		left: 0;
 	}
 
