@@ -10,7 +10,7 @@ const getHash = router => router?.route?.location?.hash;
 function getFocused (router) {
 	const hash = getHash(router);
 
-	if (!hash || hash === '#edit' || hash === '#new-comment') { return; }
+	if (!hash || hash === '#edit' || hash === '#comment') { return; }
 
 	return decodeFromURI(hash.replace(/^#/, ''));
 }
@@ -49,7 +49,7 @@ export default function useCommentTree (post) {
 	};
 
 	React.useEffect(() => {
-		if (hash === '#new-comment') {
+		if (hash === '#comment') {
 			if (replying !== post.getID()) {
 				setReplying(post.getID());
 			}
