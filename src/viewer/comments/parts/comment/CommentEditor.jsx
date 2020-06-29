@@ -43,6 +43,7 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 			<EditorCmp
 				discussion={comment}
 				container={inReplyTo ?? CommentList.post}
+				noSharing
 				saveLabel={comment ? t('update') : t('comment')}
 				afterSave={(newComment) => (stopEdit(), focusComment(newComment))}
 				onCancel={stopEdit}

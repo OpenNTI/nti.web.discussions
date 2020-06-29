@@ -4,8 +4,10 @@ import Viewer from '../viewer';
 
 async function getSharing (discussion, container) {
 	if (discussion) {
+		const sharedWith = await discussion.getSharedWith(container);
+
 		return {
-			shared: discussion.getSharedWith(),
+			sharedWith,
 			canEditSharing: discussion.canEditSharing()
 		};
 	}
@@ -69,7 +71,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 		const payload = {
 			title,
 			...content,
-			sharedWith: sharing.sharedWith,
+			sharedWith: sharing?.sharedWith,
 			...extraData
 		};
 

@@ -35,9 +35,11 @@ DiscussionEditorBody.propTypes = {
 
 		error: PropTypes.any,
 		clearError: PropTypes.func
-	})
+	}),
+
+	noSharing: PropTypes.bool
 };
-export default function DiscussionEditorBody ({post}) {
+export default function DiscussionEditorBody ({post, noSharing}) {
 	const {
 		setup,
 
@@ -68,7 +70,7 @@ export default function DiscussionEditorBody ({post}) {
 
 	return (
 		<div className={cx('body')}>
-			{setup && (<Sharing post={post} />)}
+			{setup && !noSharing && (<Sharing post={post} />)}
 			<Editor
 				content={body}
 				onContentChange={onChange}

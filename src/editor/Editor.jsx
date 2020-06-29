@@ -28,6 +28,8 @@ DiscussionEditor.propTypes = {
 	]),
 	extraData: PropTypes.object,
 
+	noSharing: PropTypes.bool,
+
 	afterSave: PropTypes.func,
 	onCancel: PropTypes.func,
 
@@ -40,6 +42,8 @@ export default function DiscussionEditor ({
 	discussion,
 	container,
 	extraData,
+
+	noSharing,
 
 	afterSave,
 	onCancel,
@@ -55,7 +59,7 @@ export default function DiscussionEditor ({
 	if (style === BodyOnly) {
 		content = (
 			<Container.Body post={post} className={className}>
-				<Body post={post} />
+				<Body post={post} noSharing={noSharing} />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.Body>
 		);
@@ -63,7 +67,7 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.NoTitle post={post} className={className}>
 				<Identity post={post} />
-				<Body post={post} />
+				<Body post={post} noSharing={noSharing} />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.NoTitle>
 		);
@@ -72,7 +76,7 @@ export default function DiscussionEditor ({
 			<Container.Full post={post} className={className} >
 				<Identity post={post} />
 				<Title post={post} autoFocus />
-				<Body post={post} />
+				<Body post={post} noSharing={noSharing} />
 				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
 			</Container.Full>
 

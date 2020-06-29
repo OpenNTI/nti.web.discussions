@@ -53,7 +53,7 @@ export default function SharingList ({post}) {
 		<Viewer.Sharing.Pills
 			className={cx('sharing')}
 			sharedWith={sharedWith}
-			onRemove={onRemove}
+			onRemove={canEditSharing ? onRemove : null}
 		/>
 	);
 }
