@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {HOC} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
+import {HOC, Prompt} from '@nti/web-commons';
 import {Editor} from '@nti/web-modeled-content';
+import {Prompt as RouterPrompt} from '@nti/web-routing';
 
 import usePostInterface from './use-post-interface';
 import Container from './parts/Container';
@@ -16,6 +18,14 @@ const Full = Symbol('Full');
 const BodyOnly = Symbol('Body');
 const NoTitle = Symbol('No Title');
 
+const t = scoped('nti-discussions.editor.Editor', {
+	navWarning: {
+		title: 'Are you sure?',
+		message: 'You currently have unsaved changes. Would you like to leave without saving?',
+		confirm: 'Leave',
+		cancel: 'Stay'
+	}
+});
 
 DiscussionEditor.NoTitle = Variant(DiscussionEditor, {style: NoTitle});
 DiscussionEditor.Body = Variant(DiscussionEditor, {style: BodyOnly});
@@ -86,6 +96,19 @@ export default function DiscussionEditor ({
 	return (
 		<Editor.ContextProvider>
 			{content}
+			<RouterPrompt
+				when={post.hasChanged}
+				onRoute={(cont, stop) => (
+					Prompt.areYouSure(
+						t('navWarning.message'),
+						t('navWarning.title'),
+						{
+							confirmButtonLabel: t('navWarning.confirm'),
+							cancelButtonLabel: t('navWarning.cancel')
+						}
+					).then(cont, stop)
+				)}
+			/>
 		</Editor.ContextProvider>
 	);
 }
