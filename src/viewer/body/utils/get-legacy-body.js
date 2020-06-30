@@ -25,8 +25,8 @@ function getMentionsAndTags (body) {
 
 		const frag = getSafeBody(body);
 
-		const mentions = Array.from(frag.querySelectorAll('a[data-nti-entity-type=MENTION'));
-		const tags = Array.from(frag.querySelectorAll('a[data-nti-entity-type=TAG'));
+		const mentions = Array.from(frag.querySelectorAll('a[data-nti-entity-type=MENTION]'));
+		const tags = Array.from(frag.querySelectorAll('a[data-nti-entity-type=TAG]'));
 
 		return {
 			mentions: [
