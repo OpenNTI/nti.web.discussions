@@ -27,6 +27,17 @@ const t = scoped('nti-discussions.editor.Editor', {
 	}
 });
 
+const navDialog = (cont, stop) => (
+	Prompt.areYouSure(
+		t('navWarning.message'),
+		t('navWarning.title'),
+		{
+			confirmButtonLabel: t('navWarning.confirm'),
+			cancelButtonLabel: t('navWarning.cancel')
+		}
+	).then(cont, stop)
+);
+
 DiscussionEditor.NoTitle = Variant(DiscussionEditor, {style: NoTitle});
 DiscussionEditor.Body = Variant(DiscussionEditor, {style: BodyOnly});
 DiscussionEditor.propTypes = {
@@ -97,17 +108,8 @@ export default function DiscussionEditor ({
 		<Editor.ContextProvider>
 			{content}
 			<RouterPrompt
-				when={post.hasChanged}
-				onRoute={(cont, stop) => (
-					Prompt.areYouSure(
-						t('navWarning.message'),
-						t('navWarning.title'),
-						{
-							confirmButtonLabel: t('navWarning.confirm'),
-							cancelButtonLabel: t('navWarning.cancel')
-						}
-					).then(cont, stop)
-				)}
+				when={post.hasChanged && !post.saving}
+				onRoute={navDialog}
 			/>
 		</Editor.ContextProvider>
 	);
