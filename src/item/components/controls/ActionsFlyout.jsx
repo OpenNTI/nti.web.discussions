@@ -19,9 +19,10 @@ const Actions = [
 ];
 
 ActionsFlyout.propTypes = {
-	item: PropTypes.object
+	item: PropTypes.object,
+	afterDelete: PropTypes.func
 };
-export default function ActionsFlyout ({item}) {
+export default function ActionsFlyout ({item, afterDelete}) {
 	const trigger = (
 		<div className={cx('actions-trigger')}>
 			<span className={cx('icon')}>...</span>
@@ -49,7 +50,7 @@ export default function ActionsFlyout ({item}) {
 				{available.map((Cmp, key) => {
 					return (
 						<li key={key}>
-							<Cmp item={item} doClose={doClose}/>
+							<Cmp item={item} doClose={doClose} afterDelete={afterDelete}/>
 						</li>
 					);
 				})}

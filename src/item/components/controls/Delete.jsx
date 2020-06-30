@@ -29,9 +29,10 @@ DiscussionItemDelete.propTypes = {
 		isNote: PropTypes.bool,
 		isBlogEntry: PropTypes.bool
 	}),
-	doClose: PropTypes.func
+	doClose: PropTypes.func,
+	afterDelete: PropTypes.func
 };
-export default function DiscussionItemDelete ({item, doClose}) {
+export default function DiscussionItemDelete ({item, doClose, afterDelete}) {
 	const [deleting, setDeleting] = React.useState(false);
 	const onClick = async (e) => {
 		e.preventDefault();
@@ -46,6 +47,8 @@ export default function DiscussionItemDelete ({item, doClose}) {
 
 			await item.delete();
 
+			afterDelete?.();
+
 			if (item.isTopic) {
 				Events.emit(Events.TOPIC_DELETED, item);
 			} else if (item.isNote) {
@@ -53,6 +56,7 @@ export default function DiscussionItemDelete ({item, doClose}) {
 			} else if (item.isBlogEntry) {
 				Events.emit(Events.BLOG_ENTRY_DELETED, item);
 			}
+
 		} catch (err) {
 			if (err !== 'Prompt Canceled') {
 				Prompt.alert(t('failed.message'), t('failed.title'));

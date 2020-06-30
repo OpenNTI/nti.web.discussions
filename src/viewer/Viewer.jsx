@@ -62,7 +62,7 @@ export default function DiscussionViewer ({className, discussion, container, dia
 						title={getDialogTitle(discussion)}
 					/>
 				)}
-				<Post post={discussion} container={container} />
+				<Post post={discussion} container={container} afterDelete={onClose}/>
 				<Comments post={discussion} container={container} />
 			</Cmp>
 		</Router.RouteForProvider>
