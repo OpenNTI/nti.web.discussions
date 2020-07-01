@@ -1,3 +1,7 @@
+.deleted-discussion {
+	padding: var(--discussion-vertical-padding) var(--discussion-horizontal-padding);
+}
+
 .discussion-post-container {
 	&.large {
 		& .discussion-post-editor-container {
