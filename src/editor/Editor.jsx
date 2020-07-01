@@ -27,16 +27,23 @@ const t = scoped('nti-discussions.editor.Editor', {
 	}
 });
 
-const navDialog = (cont, stop) => (
-	Prompt.areYouSure(
-		t('navWarning.message'),
-		t('navWarning.title'),
-		{
-			confirmButtonLabel: t('navWarning.confirm'),
-			cancelButtonLabel: t('navWarning.cancel')
+function generateNavPrompt (explicitCancelRef) {
+	return (cont, stop) => {
+		if (explicitCancelRef.current) {
+			cont();
+			return;
 		}
-	).then(cont, stop)
-);
+
+		Prompt.areYouSure(
+			t('navWarning.message'),
+			t('navWarning.title'),
+			{
+				confirmButtonLabel: t('navWarning.confirm'),
+				cancelButtonLabel: t('navWarning.cancel')
+			}
+		).then(cont, stop);
+	};
+}
 
 DiscussionEditor.NoTitle = Variant(DiscussionEditor, {style: NoTitle});
 DiscussionEditor.Body = Variant(DiscussionEditor, {style: BodyOnly});
@@ -72,6 +79,37 @@ export default function DiscussionEditor ({
 	saveLabel,
 	style = Full
 }) {
+	const explicitCancelRef = React.useRef(false);
+
+	const navPrompt = React.useCallback((cont, stop) => {
+		if (explicitCancelRef.current) {
+			cont();
+			return;
+		}
+
+		Prompt.areYouSure(
+			t('navWarning.message'),
+			t('navWarning.title'),
+			{
+				confirmButtonLabel: t('navWarning.confirm'),
+				cancelButtonLabel: t('navWarning.cancel')
+			}
+		).then(cont, stop);
+	}, []);
+
+	const cancel = onCancel ?
+		((...args) => {
+			explicitCancelRef.current = true;
+			onCancel(...args);
+
+			//Give onCancel a chance to run
+			setTimeout(() => {
+				explicitCancelRef.current = false;
+			}, 100);
+
+		}) :
+		null;
+
 	const post = usePostInterface({discussion, container, afterSave, extraData});
 
 	let content = null;
@@ -81,7 +119,7 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.Body post={post} className={className}>
 				<Body post={post} noSharing={noSharing} autoFocus />
-				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
+				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Body>
 		);
 	} else if (style === NoTitle) {
@@ -89,7 +127,7 @@ export default function DiscussionEditor ({
 			<Container.NoTitle post={post} className={className}>
 				<Identity post={post} />
 				<Body post={post} noSharing={noSharing} autoFocus />
-				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
+				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.NoTitle>
 		);
 	} else {
@@ -98,7 +136,7 @@ export default function DiscussionEditor ({
 				<Identity post={post} />
 				<Title post={post} autoFocus />
 				<Body post={post} noSharing={noSharing} />
-				<Controls post={post} onCancel={onCancel} saveLabel={saveLabel} />
+				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Full>
 
 		);
@@ -109,7 +147,7 @@ export default function DiscussionEditor ({
 			{content}
 			<RouterPrompt
 				when={post.hasChanged && !post.saving}
-				onRoute={navDialog}
+				onRoute={navPrompt}
 			/>
 		</Editor.ContextProvider>
 	);
