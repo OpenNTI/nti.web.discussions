@@ -12,7 +12,7 @@ async function getSharing (discussion, container) {
 		};
 	}
 
-	const containers = Array.isArray(container) ? container.reverse() : [container];
+	const containers = Array.isArray(container) ? ([...container]).reverse() : [container];
 
 	for (let parent of containers) {
 		if (parent.getDefaultSharing) {
