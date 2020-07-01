@@ -17,25 +17,25 @@
 
 	&.large,
 	&.small {
-		padding: var(--editor-padding, 1rem);
+		padding: var(--editor-padding, 1rem) 0 var(--editor-padding, 1rem);
 		display: grid;
 		grid-gap: 0 var(--editor-padding, 1rem);
-		grid-template-columns: var(--editor-avatar-size, 40px) 1fr;
+		grid-template-columns: calc(var(--editor-avatar-size, 40px) + var(--editor-padding, 1rem)) 1fr;
 		grid-template-rows: auto auto auto;
 
 		& .identity {
 			grid-column: 1 / 1;
 			grid-row: 1 / 1;
-			padding: 0;
+			padding: 0 0 0 var(--editor-padding, 1rem);
 
 			& :global(.avatar) {
-				width: 100%;
+				width: var(--editor-avatar-size, 40px);
 				border-radius: var(--editor-avatar-size, 40px);
 			}
 		}
 
 		& .title {
-			padding: 0;
+			padding: 0 var(--editor-padding, 1rem) 0 0;
 			grid-column: 2 / 2;
 			grid-row: 1 / 1;
 			align-self: center;
@@ -46,13 +46,21 @@
 			grid-row: 2 / 2;
 			padding: 0;
 
+			& .sharing {
+				margin: 1rem var(--editor-padding, 1rem);
+			}
+
+			& :global(.nti-draft-core-container .nti-draft-core .DraftEditor-root) {
+				padding: 0 var(--editor-padding, 1rem);
+			}
+
 			& .body-error {
-				left: 0;
+				left: var(--editor-padding, 1rem);
 			}
 		}
 
 		& .control-bar {
-			padding: 0;
+			padding: 0 var(--editor-padding, 1rem);
 			grid-column: 1 / span 2;
 			grid-row: 3 / 3;
 		}
@@ -64,12 +72,15 @@
 
 		& .body {
 			& .sharing {
-				margin: 0.5rem 0 ;
+				margin: 0.5rem var(--editor-padding, 1rem);
 			}
 
 			& :global(.nti-draft-core-container .nti-draft-core .DraftEditor-root) {
 				min-height: 3rem;
+				max-height: 10rem;
 				padding-bottom: 1rem;
+				overflow-y: auto;
+				overflow-x: hidden;
 			}
 		}
 	}
