@@ -53,7 +53,7 @@ export default function PostCardComment ({comment, deleted}) {
 						{!deleted && (
 							<Viewer.TextPreview
 								className={cx('content')}
-								body={comment.body}
+								content={comment.body}
 								limitLines={2}
 								overflow={Text.Overflow.Ellipsis}
 							/>
