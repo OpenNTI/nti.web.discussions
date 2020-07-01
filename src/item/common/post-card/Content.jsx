@@ -28,7 +28,6 @@ export default class PostCardContent extends React.Component {
 	state = {maxHeight: DesiredMaxHeight}
 
 	afterContentRender = (body) => {
-		debugger;
 		const {isOverflowing, maxHeight} = getBodyOverflowInfo(body, DesiredMaxHeight);
 
 		this.setState({
