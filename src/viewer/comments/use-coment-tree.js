@@ -1,7 +1,7 @@
 import React from 'react';
 import {encodeForURI, decodeFromURI} from '@nti/lib-ntiids';
 import {getService} from '@nti/web-client';
-import {Router} from '@nti/web-routing';
+import {Router, getHistory} from '@nti/web-routing';
 
 const BatchSize = 20;
 
@@ -147,12 +147,22 @@ export default function useCommentTree (post) {
 		},
 
 		expanded,
-		setExpanded: e => (setExpanded(e), clearFocused()),
+		setExpanded: e => setExpanded(e),
 
 		editing,
-		setEditing: e => (setEditing(e), clearFocused()),
 		replying,
-		setReplying: r => (setReplying(r), clearFocused()),
+
+		setEditorState: async ({editing:newEditing, replying:newReplying}) => {
+			try {
+				await getHistory().awaitUserConfirmation();
+				setEditing(newEditing);
+				setReplying(newReplying);
+				clearFocused();
+			} catch (err) {
+				//swallow
+			}
+		},
+
 
 		focusedComment,
 		focusComment: (obj) => router.routeTo.path({replace: true, href: `#${encodeForURI(obj.getID())}`})

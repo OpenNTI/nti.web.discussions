@@ -40,9 +40,9 @@ export default function DiscussionComments ({post}) {
 		setExpanded,
 
 		editing,
-		setEditing,
 		replying,
-		setReplying,
+		setEditorState,
+
 
 		focusedComment,
 		focusComment
@@ -65,17 +65,17 @@ export default function DiscussionComments ({post}) {
 		setExpanded: (obj) => setExpanded(obj),
 
 		isEditing: (obj) => obj && obj.getID() === editing,
-		stopEditing: (obj) => context.isEditing(obj) && setEditing(null),
+		stopEditing: (obj) => context.isEditing(obj) && setEditorState({editing: null, replying}),
 		
 		isReplying: (obj) => obj && obj.getID() === replying,
-		stopReplying: (obj) => context.isReplying(obj) && setReplying(null)
+		stopReplying: (obj) => context.isReplying(obj) && setEditorState({editing, replying: null})
 	};
 	
 	const getRouteFor = (obj, routeContext) => {
 		if (!obj.isDiscussion && obj.getID() !== post.getID()) { return; }
 
 		if (routeContext === 'edit') {
-			return () => (setEditing(obj.getID()), setReplying(null));
+			return () => (setEditorState({editing: obj.getID(), replying: null}));
 		} else if (routeContext === 'reply') {
 			if (obj === post) {
 				return {
@@ -85,8 +85,7 @@ export default function DiscussionComments ({post}) {
 			}
 
 			return () => {
-				setEditing(null);
-				setReplying(obj.getID());
+				setEditorState({editing: null, replying: obj.getID()});
 				context.expand(obj);
 			};
 		}
