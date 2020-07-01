@@ -61,7 +61,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 			
 			setContent({
 				body: discussion ? Viewer.Body.getLegacyBody(discussion) : [],
-				mentions: discussion?.getMentions(),
+				mentions: (discussion?.getMentions() ?? []).map(mention => Viewer.Sharing.Types.getIdForEntity(mention.User)),
 				tags: discussion?.getTags()
 			});
 
