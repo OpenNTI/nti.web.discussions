@@ -1,6 +1,6 @@
 
 .comments-header {
-	padding: 0 var(--discussion-horizontal-padding) var(--discussion-horizontal-padding);
+	padding: 0 var(--side-padding, 1rem) var(--side-padding, 1rem);
 
 	font-size: 0.875rem;
 	font-weight: 400;
@@ -25,7 +25,7 @@
 
 
 .discussion-comment {
-	padding: calc(0.5 * var(--discussion-padding)) 0;
+	padding: calc(0.5 * var(--side-padding, 1rem)) 0;
 	border-bottom: 1px solid var(--border-grey-light);
 
 	&.expanded {
@@ -42,64 +42,64 @@
 		padding: 0;
 
 		& .comment-display {
-			margin-left: calc(6 * var(--discussion-horizontal-padding));
+			margin-left: calc(6 * var(--side-padding, 1rem));
 		}
 
 		& .comment-editor.reply {
-			margin-left: calc(7 * var(--discussion-horizontal-padding));
+			margin-left: calc(7 * var(--side-padding, 1rem));
 		}
 
 		&.depth-4 > li {
 			& > .comment-display {
-				margin-left: calc(5 * var(--discussion-horizontal-padding));
+				margin-left: calc(5 * var(--side-padding, 1rem));
 			}
 
 			& > .comment-editor.reply {
-				margin-left: calc(6 * var(--discussion-horizontal-padding));
+				margin-left: calc(6 * var(--side-padding, 1rem));
 			}
 		}
 
 
 		&.depth-3 > li {
 			& > .comment-display {
-				margin-left: calc(4 * var(--discussion-horizontal-padding));
+				margin-left: calc(4 * var(--side-padding, 1rem));
 			}
 
 			& > .comment-editor.reply {
-				margin-left: calc(5 * var(--discussion-horizontal-padding));
+				margin-left: calc(5 * var(--side-padding, 1rem));
 			}
 		}
 
 
 		&.depth-2 > li {
 			& > .comment-display {
-				margin-left: calc(3 * var(--discussion-horizontal-padding));
+				margin-left: calc(3 * var(--side-padding, 1rem));
 			}
 
 			& > .comment-editor.reply {
-				margin-left: calc(4 * var(--discussion-horizontal-padding));
+				margin-left: calc(4 * var(--side-padding, 1rem));
 			}
 		}
 
 
 		&.depth-1 > li {
 			& > .comment-display {
-				margin-left: calc(2 * var(--discussion-horizontal-padding));
+				margin-left: calc(2 * var(--side-padding, 1rem));
 			}
 
 			& > .comment-editor.reply {
-				margin-left: calc(3 * var(--discussion-horizontal-padding));
+				margin-left: calc(3 * var(--side-padding, 1rem));
 			}
 		}
 
 
 		&.depth-0 > li {
 			& > .comment-display {
-				margin-left: var(--discussion-horizontal-padding);
+				margin-left: var(--side-padding, 1rem);
 			}
 
 			& > .comment-editor.reply {
-				margin-left: calc(4 * var(--discussion-horizontal-padding));
+				margin-left: calc(4 * var(--side-padding, 1rem));
 			}
 		}
 	}
@@ -129,10 +129,10 @@
 
 .comment-display {
 	position: relative;
-	padding: calc(0.5 * var(--discussion-padding)) var(--discussion-horizontal-padding);
+	padding: calc(0.5 * var(--side-padding, 1rem)) var(--side-padding, 1rem);
 
 	&.deleted {
-		padding-left: calc(var(--discussion-horizontal-padding) + 30px);		
+		padding-left: calc(var(--side-padding, 1rem) + 30px);		
 
 		& .deleted-info {
 			font-size: 0.875rem;
@@ -146,7 +146,7 @@
 
 	&.full {
 		display: grid;
-		grid-gap: 0 calc(0.5 * var(--discussion-padding));
+		grid-gap: 0 calc(0.5 * var(--side-padding, 1rem));
 		grid-template-rows: 30px auto auto;
 		grid-template-columns: 30px 1fr;
 	}
@@ -211,7 +211,7 @@
 	}
 
 	& .comment-replies {
-		padding-top: calc(0.5 * var(--discussion-padding));
+		padding-top: calc(0.5 * var(--side-padding, 1rem));
 		grid-row: 3 / 3;
 		grid-column: 2 / 2;
 
@@ -237,6 +237,6 @@
 	overflow-x: hidden;
 
 	&.reply {
-		margin: var(--discussion-padding) var(--discussion-horizontal-padding);
+		margin: var(--side-padding, 1rem) var(--side-padding, 1rem);
 	}
 }

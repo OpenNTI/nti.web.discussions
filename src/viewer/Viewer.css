@@ -1,9 +1,8 @@
 .discussion-viewer {
 	background: white;
 
-	--discussion-padding: 1rem;
-	--discussion-horizontal-padding: calc(1.5 * var(--discussion-padding));
-	--discussion-vertical-padding: calc(2 * var(--discussion-padding));
+	--discussion-horizontal-padding: var(--side-padding, 1rem);
+	--discussion-vertical-padding: calc(2 * var(--side-padding, 1rem));
 
 	&.dialog {
 		width: 100vw;

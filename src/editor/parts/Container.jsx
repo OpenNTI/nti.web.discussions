@@ -10,6 +10,7 @@ const {Responsive} = Layouts;
 const {Variant} = HOC;
 
 const classList = [
+	{query: size => size.width < 400, className: cx('extra-small')},
 	{query: size => size.width >= 575, className: cx('large')},
 	{query: size => size.width < 575, className: cx('small')}
 ];

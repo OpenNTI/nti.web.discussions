@@ -1,20 +1,20 @@
 .deleted-discussion {
-	padding: var(--discussion-vertical-padding) var(--discussion-horizontal-padding);
+	padding: var(--discussion-vertical-padding) var(--side-padding, 1rem);
 }
 
 .discussion-post-container {
 	&.large {
 		& .discussion-post-editor-container {
-			padding: var(--discussion-padding);
+			padding: var(--side-padding, 1rem);
 		}
 
 
 		& .discussion-post {
-			padding: var(--discussion-vertical-padding) var(--discussion-horizontal-padding);
+			padding: var(--discussion-vertical-padding) var(--side-padding, 1rem);
 			position: relative;
 
 			display: grid;
-			grid-gap: 0 var(--discussion-padding);
+			grid-gap: 0 var(--side-padding, 1rem);
 			grid-template-columns: 50px 1fr;
 			grid-template-rows: auto auto auto auto;
 
