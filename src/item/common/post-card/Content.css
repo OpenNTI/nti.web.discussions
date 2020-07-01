@@ -64,6 +64,7 @@
 	border: 0px solid var(--border-grey-light);
 	border-top-width: 1px;
 	border-bottom-width: 1px;
+	width: auto;
 }
 
 .body :global(.body-divider.file .file-icon) {

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {Text} from '@nti/web-commons';
-import {Viewer} from '@nti/web-modeled-content';
+
+import Viewer from '../../../viewer';
 
 import Styles from './Content.css';
 import {getBodyOverflowInfo} from './utils';
@@ -20,12 +21,14 @@ export default class PostCardContent extends React.Component {
 		post: PropTypes.shape({
 			title: PropTypes.string,
 			body: PropTypes.any
-		})
+		}),
+		item: PropTypes.object
 	}
 
 	state = {maxHeight: DesiredMaxHeight}
 
 	afterContentRender = (body) => {
+		debugger;
 		const {isOverflowing, maxHeight} = getBodyOverflowInfo(body, DesiredMaxHeight);
 
 		this.setState({
@@ -35,7 +38,7 @@ export default class PostCardContent extends React.Component {
 	}
 
 	render () {
-		const {post} = this.props;
+		const {post, item} = this.props;
 		const {title, body} = post;
 		const {isOverflowing, maxHeight} = this.state;
 
@@ -44,9 +47,9 @@ export default class PostCardContent extends React.Component {
 				{title && (<Text.Base className={cx('title')}>{title}</Text.Base>)}
 				{body && (
 					<div className={cx('body', {overflowing: isOverflowing})}>
-						<Viewer
+						<Viewer.Body
 							className={cx('modeled-content')}
-							content={body}
+							post={item}
 							afterRender={this.afterContentRender}
 							style={{maxHeight: `${maxHeight}px`}}
 						/>
