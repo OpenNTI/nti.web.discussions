@@ -201,6 +201,12 @@
 	}
 }
 
+:global(.no-touch) .control-bar {
+	& .controls .button:hover {
+		background: #EAEDF7;
+	}
+}
+
 .control-bar {
 	padding: var(--side-padding, 1rem);
 	display: flex;
@@ -251,7 +257,8 @@
 				color: inherit;
 			}
 
-			&:hover {
+			&:focus,
+			&:focus-within {
 				background: #EAEDF7;
 			}
 
