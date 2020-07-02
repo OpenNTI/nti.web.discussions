@@ -13,16 +13,17 @@ DiscussionPostContext.setContextOverride = (override) => ContextOverride = overr
 DiscussionPostContext.propTypes = {
 	post: PropTypes.shape({
 		getContextData: PropTypes.func
-	})
+	}),
+	container: PropTypes.any
 };
-export default function DiscussionPostContext ({post}) {
+export default function DiscussionPostContext ({post, container}) {
 	const empty = !post.getContextData;
 	const Cmp = ContextOverride ?? Context;
 
 	return (
 		<div className={cx('context', {empty})}>
 			{!empty && (
-				<Cmp item={post} />
+				<Cmp item={post} container={container} />
 			)}
 		</div>
 	);
