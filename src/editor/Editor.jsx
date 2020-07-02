@@ -20,30 +20,12 @@ const NoTitle = Symbol('No Title');
 
 const t = scoped('nti-discussions.editor.Editor', {
 	navWarning: {
-		title: 'Are you sure?',
-		message: 'You currently have unsaved changes. Would you like to leave without saving?',
+		title: 'Cancel Post?',
+		message: 'You haven\'t finished you post.<br />Are you sure you want to leave?',
 		confirm: 'Leave',
-		cancel: 'Stay'
+		cancel: 'Keep Editing'
 	}
 });
-
-function generateNavPrompt (explicitCancelRef) {
-	return (cont, stop) => {
-		if (explicitCancelRef.current) {
-			cont();
-			return;
-		}
-
-		Prompt.areYouSure(
-			t('navWarning.message'),
-			t('navWarning.title'),
-			{
-				confirmButtonLabel: t('navWarning.confirm'),
-				cancelButtonLabel: t('navWarning.cancel')
-			}
-		).then(cont, stop);
-	};
-}
 
 DiscussionEditor.NoTitle = Variant(DiscussionEditor, {style: NoTitle});
 DiscussionEditor.Body = Variant(DiscussionEditor, {style: BodyOnly});
