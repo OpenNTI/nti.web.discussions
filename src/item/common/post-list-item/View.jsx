@@ -9,6 +9,7 @@ import {User, Text, List} from '@nti/web-commons';
 import {Controls, PinnedLabel} from '../../components';
 import Action from '../Action';
 import Report from '../Report';
+import DiscussionViewer from '../../../viewer';
 
 import Styles from './View.css';
 
@@ -42,7 +43,7 @@ export default function PostListItem (props) {
 				<User.Avatar className={cx('avatar')} user={post.creator} />
 				<div className={cx('meta')}>
 					<Action className={cx('list-item-action')} {...props} />
-					{post.title && (<Text.Base className={cx('title')}>{post.title}</Text.Base>)}
+					{post.title && (<DiscussionViewer.Title as="span" post={item} className={cx('title')} />)}
 					{!post.title && post.body && (<Viewer.TextPreview body={post.body} className={cx('body-preview')} />)}
 					<List.SeparatedInline className={cx('list-items')}>
 						<Text.Base className={cx('comments')}>{t('comments', {count: post.commentCount})}</Text.Base>

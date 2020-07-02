@@ -43,7 +43,7 @@ export default class PostCardContent extends React.Component {
 
 		return (
 			<div className={cx('post-card-content')} >
-				{title && (<Text.Base className={cx('title')}>{title}</Text.Base>)}
+				{title && (<Viewer.Title as="span" className={cx('title')} post={item} />)}
 				{body && (
 					<div className={cx('body', {overflowing: isOverflowing})}>
 						<Viewer.Body
