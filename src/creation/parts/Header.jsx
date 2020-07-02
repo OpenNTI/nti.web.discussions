@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {StandardUI} from '@nti/web-commons';
 
+import Styles from './Styles.css';
+
+const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.creation.parts.Header', {
 	small: 'New Discussion',
 	containerTitle: 'Posting in %(title)s'
@@ -38,6 +42,7 @@ export default function DiscussionCreationHeader ({small, onClose, container, se
 
 	return (
 		<StandardUI.Window.TitleBar
+			className={cx('title-bar')}
 			onClose={onClose}
 			title={title}
 		/>

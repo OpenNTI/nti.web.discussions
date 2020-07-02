@@ -58,12 +58,15 @@ export default function DiscussionViewer ({className, discussion, container, dia
 			>
 				{dialog && (
 					<StandardUI.Window.TitleBar
+						className={cx('title-bar')}
 						onClose={onClose}
 						title={getDialogTitle(discussion)}
 					/>
 				)}
-				<Post post={discussion} container={container} afterDelete={onClose}/>
-				<Comments post={discussion} container={container} />
+				<div className={cx('body')}>
+					<Post post={discussion} container={container} afterDelete={onClose}/>
+					<Comments post={discussion} container={container} />
+				</div>
 			</Cmp>
 		</Router.RouteForProvider>
 	);

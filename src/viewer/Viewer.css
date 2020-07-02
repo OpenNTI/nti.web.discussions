@@ -7,6 +7,17 @@
 	&.dialog {
 		width: 100vw;
 		max-width: 780px;
-		overflow: hidden;
+
+		& .title-bar {
+			position: sticky;
+			top: var(--prompt-paging-window-header-sticky-top, 0);
+			z-index: 50;
+			border-radius: 4px 4px 0 0;
+		}
+
+		& .body {
+			border-radius: 0 0 4px 4px;
+			overflow: hidden;
+		}
 	}
 }
