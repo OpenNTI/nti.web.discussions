@@ -21,7 +21,7 @@ const NoTitle = Symbol('No Title');
 const t = scoped('nti-discussions.editor.Editor', {
 	navWarning: {
 		title: 'Cancel Post?',
-		message: 'You haven\'t finished you post.<br />Are you sure you want to leave?',
+		message: 'You haven\'t finished your post.<br />Are you sure you want to leave?',
 		confirm: 'Leave',
 		cancel: 'Keep Editing'
 	}
