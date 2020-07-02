@@ -29,9 +29,10 @@ DiscussionEditorTitle.propTypes = {
 		titleError: PropTypes.any,
 		clearTitleError: PropTypes.func
 	}),
-	autoFocus: PropTypes.bool
+	autoFocus: PropTypes.bool,
+	placeholder: PropTypes.string
 };
-export default function DiscussionEditorTitle ({post, autoFocus}) {
+export default function DiscussionEditorTitle ({post, autoFocus, placeholder}) {
 	const {title, setTitle, titleError, clearTitleError} = post;
 
 	const [editor, setEditor] = React.useState(null);
@@ -73,7 +74,7 @@ export default function DiscussionEditorTitle ({post, autoFocus}) {
 				<Editor
 					ref={setEditorRef}
 					plugins={EditorPlugins}
-					placeholder={t('placeholder')}
+					placeholder={placeholder ?? t('placeholder')}
 					editorState={editorState}
 					onContentChange={onContentChange}
 					contentChangeBuffer={100}

@@ -43,6 +43,8 @@ DiscussionEditor.propTypes = {
 	afterSave: PropTypes.func,
 	onCancel: PropTypes.func,
 
+	bodyPlaceholder: PropTypes.string,
+	titlePlaceholder: PropTypes.string,
 	saveLabel: PropTypes.string,
 
 	style: PropTypes.oneOf([Full, BodyOnly, NoTitle])
@@ -58,7 +60,10 @@ export default function DiscussionEditor ({
 	afterSave,
 	onCancel,
 
+	bodyPlaceholder,
+	titlePlaceholder,
 	saveLabel,
+
 	style = Full
 }) {
 	const explicitCancelRef = React.useRef(false);
@@ -100,7 +105,7 @@ export default function DiscussionEditor ({
 	if (style === BodyOnly) {
 		content = (
 			<Container.Body post={post} className={className}>
-				<Body post={post} noSharing={noSharing} autoFocus />
+				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} autoFocus />
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Body>
 		);
@@ -108,7 +113,7 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.NoTitle post={post} className={className}>
 				<Identity post={post} />
-				<Body post={post} noSharing={noSharing} autoFocus />
+				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} autoFocus />
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.NoTitle>
 		);
@@ -116,8 +121,8 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.Full post={post} className={className} >
 				<Identity post={post} />
-				<Title post={post} autoFocus />
-				<Body post={post} noSharing={noSharing} />
+				<Title post={post} placeholder={titlePlaceholder} autoFocus />
+				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} />
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Full>
 

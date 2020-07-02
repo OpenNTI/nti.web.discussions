@@ -38,9 +38,10 @@ DiscussionEditorBody.propTypes = {
 	}),
 
 	noSharing: PropTypes.bool,
-	autoFocus: PropTypes.bool
+	autoFocus: PropTypes.bool,
+	placeholder: PropTypes.string
 };
-export default function DiscussionEditorBody ({post, noSharing, autoFocus}) {
+export default function DiscussionEditorBody ({post, noSharing, autoFocus, placeholder}) {
 	const {
 		setup,
 
@@ -77,7 +78,7 @@ export default function DiscussionEditorBody ({post, noSharing, autoFocus}) {
 				onContentChange={onChange}
 				onChange={maybeClearError}
 				taggingStrategies={TaggingStrategies}
-				placeholder={t('placeholder')}
+				placeholder={placeholder ?? t('placeholder')}
 				contentChangeBuffer={100}
 				autoFocus={autoFocus}
 			/>

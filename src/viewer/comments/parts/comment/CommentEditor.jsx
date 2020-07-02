@@ -11,7 +11,8 @@ import Context from '../../Context';
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.comments.parts.comment.CommentEditor', {
 	comment: 'Comment',
-	update: 'Update'
+	update: 'Update',
+	placeholder: 'Share your thoughts...'
 });
 
 DiscussionCommentEditor.propTypes = {
@@ -47,6 +48,7 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 				saveLabel={comment ? t('update') : t('comment')}
 				afterSave={(newComment) => (stopEdit(), focusComment(newComment))}
 				onCancel={stopEdit}
+				bodyPlaceholder={t('placeholder')}
 			/>
 		</StandardUI.Card>
 	);
