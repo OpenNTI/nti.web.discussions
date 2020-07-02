@@ -1,6 +1,11 @@
+.mentions-flyout {
+	& :global(.flyout-inner) {
+		max-height: 200px;
+	}
+}
+
 .mention-suggestions {
 	width: 300px;
-	max-height: 350px;
 	overflow: auto;
 
 	& .loading {

@@ -26,6 +26,7 @@ const t = scoped('nti-discussions.editor.parts.mentions.Suggestions', {
 	people: 'People'
 });
 
+MentionSuggestions.getFlyoutProps = () => ({className: cx('mentions-flyout'), constrain: true});
 MentionSuggestions.propTypes = {
 	search: PropTypes.string,
 	post: PropTypes.object,
