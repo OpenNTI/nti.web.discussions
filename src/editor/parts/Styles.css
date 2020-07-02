@@ -202,8 +202,12 @@
 }
 
 :global(.no-touch) .control-bar {
-	& .controls .button:hover {
-		background: #EAEDF7;
+	& .controls .button {
+		&:hover,
+		&:focus,
+		&:focus-within {
+			background: #EAEDF7;
+		}
 	}
 }
 
@@ -255,11 +259,6 @@
 
 			& button {
 				color: inherit;
-			}
-
-			&:focus,
-			&:focus-within {
-				background: #EAEDF7;
 			}
 
 			&.grey {
