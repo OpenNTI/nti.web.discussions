@@ -22,6 +22,6 @@ export default function MentionPills ({post, container, ...otherProps}) {
 	const sharedWith = isResolved(resolver) ? resolver : {};
 
 	return (
-		<Pills sharedWith={sharedWith} />
+		<Pills sharedWith={sharedWith} {...otherProps} />
 	);
 }
