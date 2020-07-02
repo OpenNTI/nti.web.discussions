@@ -14,10 +14,10 @@ DiscussionEditorAttachmentControls.propTypes = {
 export default function DiscussionEditorAttachmentControls ({active, setActive}) {
 	return (
 		<div className={cx('control-group', 'attachments')}>
-			<Editor.Buttons.Image className={cx('button', 'red')} />
-			<Editor.Buttons.Whiteboard className={cx('button', 'purple')} />
-			<Editor.Buttons.Video className={cx('button')} />
-			<Editor.Buttons.File className={cx('button', 'blue')} />
+			<Editor.Buttons.Image className={cx('button', 'blue')} />
+			<Editor.Buttons.Video className={cx('button', 'red')} />
+			<Editor.Buttons.File className={cx('button', 'purple')} />
+			<Editor.Buttons.Whiteboard className={cx('button', 'pink')} />
 		</div>
 	);
 }

@@ -275,15 +275,19 @@
 			}
 
 			&.red {
-				color: #E02020;
+				color: #DB0000;
 			}
 
 			&.purple {
-				color: #1F3E94;
+				color: #664AD5;
 			}
 
 			&.blue {
-				color: var(--primary-blue);
+				color: #09A1FF;
+			}
+
+			&.pink {
+				color: #e5107a
 			}
 		}
 	}
