@@ -20,7 +20,9 @@ export default function NotePreview ({note, ...props}) {
 		({
 			getBody: () => [note.title],
 			getMentions: () => [],
-			getTags: () => []
+			getTags: () => [],
+			getPostHash: () => note.title,
+			subscribeToPostChange: (...args) => note.subscribeToPostChange(...args)
 		}) :
 		note;
 
