@@ -257,7 +257,8 @@
 				cursor: pointer;
 			}
 
-			& button {
+			& button,
+			& a[role="button"] {
 				color: inherit;
 			}
 
