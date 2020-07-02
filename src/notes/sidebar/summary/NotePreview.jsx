@@ -47,6 +47,7 @@ NotePreview.propTypes = {
 	note: PropTypes.shape({
 		title: PropTypes.string,
 		placeholder: PropTypes.string,
-		body: PropTypes.array
+		body: PropTypes.array,
+		subscribeToPostChange: PropTypes.func
 	}).isRequired
 };
