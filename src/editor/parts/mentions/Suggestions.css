@@ -8,6 +8,14 @@
 	}
 }
 
+:global(.no-touch) .suggestion-list {
+	& .suggestion-item {
+		&:not(.focused):hover {
+			background-color: var(--quad-grey);
+		}
+	}
+}
+
 .suggestion-list {
 	& .heading {
 		display: block;
@@ -25,9 +33,9 @@
 		align-items: center;
 		padding: 0.25rem 1rem;
 
-		&.focused,
-		&:hover {
-			background-color: var(--quad-grey);
+		&.focused {
+			background-color: var(--primary-blue);
+			color: white;
 		}
 
 		& :global(.avatar) {
