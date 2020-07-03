@@ -10,12 +10,13 @@ import Styles from './Mention.css';
 
 const cx = classnames.bind(Styles);
 
-function getAccess (post, username) {
-	const mention = post?.getMentionFor(username);
-	const sharedWith = post?.getSharedWithFor(username);
-
+function getAccess (post, user) {
+	const mention = post?.getMentionFor(user);
 	if (mention) { return mention; }
-	if (sharedWith) { return {User: sharedWith, CanAccessContent: true}; }
+
+	const sharedWith = post?.isSharedWith(user);
+
+	if (sharedWith) { return {User: user, CanAccessContent: true}; }
 
 	return null;
 }
@@ -27,9 +28,10 @@ Mention.propTypes = {
 };
 export default function Mention (props) {
 	const {post} = React.useContext(Context) ?? {};
-
 	const username = props['data-nti-entity-username'];
-	const access = getAccess(post, username);
+	const user = User.useUser(username);
+
+	const access = user && getAccess(post, user);
 
 	if (!access) {
 		return (

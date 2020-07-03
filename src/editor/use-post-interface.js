@@ -1,13 +1,26 @@
 import React from 'react';
+import {getService} from '@nti/web-client';
 
 import Viewer from '../viewer';
 
+async function resolveSharingIds (sharing = []) {
+	const service = await getService();
+	const resolve = await Promise.all(
+		sharing.map(s => (
+			typeof s === 'string' ? service.resolveEntity(s) : s
+		))
+	);
+
+	return resolve.map(x => Viewer.Sharing.Types.getIdForEntity(x));
+}
+
 async function getSharing (discussion, container) {
 	if (discussion) {
-		const sharedWith = await discussion.getSharedWith(container);
+		const sharedWith = discussion.getSharedWith(container);
+		const resolved = await resolveSharingIds(sharedWith);
 
 		return {
-			sharedWith: (sharedWith ?? []).map(x => Viewer.Sharing.Types.getIdForEntity(x)),
+			sharedWith: resolved,
 			canEditSharing: discussion.canEditSharing()
 		};
 	}
@@ -17,9 +30,10 @@ async function getSharing (discussion, container) {
 	for (let parent of containers) {
 		if (parent.getDefaultSharing) {
 			const sharing = await parent.getDefaultSharing();
+			const resolved = await resolveSharingIds(sharing.scopes ?? []);
 
 			return {
-				sharedWith: (sharing.scopes ?? []).map(x => Viewer.Sharing.Types.getIdForEntity(x)),
+				sharedWith: resolved,
 				canEditSharing: !sharing.locked
 			};
 		}
