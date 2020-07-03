@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {StandardUI} from '@nti/web-commons';
+import {StandardUI, Layouts} from '@nti/web-commons';
 import {Router} from '@nti/web-routing';
 
 import Styles from './Viewer.css';
 import Body from './body';
 import Post from './post';
 import Comments from './comments';
+
+const {Responsive} = Layouts;
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.Viewer', {
@@ -23,6 +25,10 @@ const getDialogTitle = (discussion) => {
 
 	return t('dialog.title', {title: discussion.ContainerTitle});
 };
+
+const classList = [
+	{query: size => size.width < 780, className: cx('small')}
+];
 
 DiscussionViewer.Body = Body;
 DiscussionViewer.propTypes = {
@@ -56,17 +62,19 @@ export default function DiscussionViewer ({className, discussion, container, dia
 				{...(dialog ? ({as: 'article', rounded: true}) : ({}))}
 				className={cx('discussion-viewer', 'x-selectable', className, {dialog})}
 			>
-				{dialog && (
-					<StandardUI.Window.TitleBar
-						className={cx('title-bar')}
-						onClose={onClose}
-						title={getDialogTitle(discussion)}
-					/>
-				)}
-				<div className={cx('body')}>
-					<Post post={discussion} container={container} afterDelete={onClose}/>
-					<Comments post={discussion} container={container} />
-				</div>
+				<Responsive.ClassList classList={classList}>
+					{dialog && (
+						<StandardUI.Window.TitleBar
+							className={cx('title-bar')}
+							onClose={onClose}
+							title={getDialogTitle(discussion)}
+						/>
+					)}
+					<div className={cx('body')}>
+						<Post post={discussion} container={container} afterDelete={onClose}/>
+						<Comments post={discussion} container={container} />
+					</div>
+				</Responsive.ClassList>
 			</Cmp>
 		</Router.RouteForProvider>
 	);

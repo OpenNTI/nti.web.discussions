@@ -4,6 +4,10 @@
 	--discussion-horizontal-padding: var(--side-padding, 1rem);
 	--discussion-vertical-padding: calc(2 * var(--side-padding, 1rem));
 
+	& .small {
+		--side-padding: 0.5rem;
+	}
+
 	&.dialog {
 		width: 100vw;
 		max-width: 780px;

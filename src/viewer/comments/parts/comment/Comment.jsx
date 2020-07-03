@@ -18,7 +18,7 @@ const t = scoped('nti-discussions.viewer.comments.parts.comment.Comment', {
 const {useResolver, useForceUpdate} = Hooks;
 const {isPending, isResolved, isErrored} = useResolver;
 
-const MaxDepth = 5;
+const MaxDepth = 3;
 
 const ReplySort = (a, b) => {
 	a = a.getCreatedTime();
@@ -70,7 +70,7 @@ function SubTree ({tree, inReplyTo}) {
 	if (children.length === 0) { return null; }
 
 	return (
-		<ul className={cx('reply-tree', `depth-${tree.depth}`)}>
+		<ul className={cx('reply-tree', `depth-${Math.min(MaxDepth, tree.depth)}`)}>
 			{children.map((child) => {
 				const {node} = child;
 
