@@ -22,13 +22,13 @@ export default function MentionPills ({post, container, ...otherProps}) {
 		const service = await getService();
 		const sharing = post.getSharedWith(container);
 
-		const entities = Promise.all(
+		const entities = await Promise.all(
 			sharing.map(s => (
-				typeof s === 'string' ? service.resolveEntity(s) : s
+				typeof s === 'string' ? service.resolveEntity(s).catch(() => null) : s
 			))
 		);
 
-		return entities;
+		return entities.filter(Boolean);
 	}, [post]);
 
 	const sharedWith = isResolved(resolver) ? resolver : [];

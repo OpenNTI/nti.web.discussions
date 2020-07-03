@@ -7,11 +7,11 @@ async function resolveSharingIds (sharing = []) {
 	const service = await getService();
 	const resolve = await Promise.all(
 		sharing.map(s => (
-			typeof s === 'string' ? service.resolveEntity(s) : s
+			typeof s === 'string' ? service.resolveEntity(s).catch(() => null) : s
 		))
 	);
 
-	return resolve.map(x => Viewer.Sharing.Types.getIdForEntity(x));
+	return resolve.filter(Boolean).map(x => Viewer.Sharing.Types.getIdForEntity(x));
 }
 
 async function getSharing (discussion, container) {
