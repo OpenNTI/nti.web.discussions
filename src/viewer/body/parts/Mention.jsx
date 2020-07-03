@@ -10,6 +10,16 @@ import Styles from './Mention.css';
 
 const cx = classnames.bind(Styles);
 
+function getAccess (post, username) {
+	const mention = post?.getMentionFor(username);
+	const sharedWith = post?.getSharedWithFor(username);
+
+	if (mention) { return mention; }
+	if (sharedWith) { return {User: sharedWith, CanAccessContent: true}; }
+
+	return null;
+}
+
 Mention.handles = (attributes) => attributes['data-nti-entity-type'] === 'MENTION';
 Mention.propTypes = {
 	'data-nti-entity-username': PropTypes.string,
@@ -19,19 +29,19 @@ export default function Mention (props) {
 	const {post} = React.useContext(Context) ?? {};
 
 	const username = props['data-nti-entity-username'];
-	const mention = post?.getMentionFor(username);
+	const access = getAccess(post, username);
 
-	if (!mention) {
+	if (!access) {
 		return (
 			<span className={cx('broken-mention')}>{props.children}</span>
 		);
 	}
 
-	return !mention.CanAccessContent ?
-		(<User.DisplayName user={mention.User} />) :
+	return !access.CanAccessContent ?
+		(<User.DisplayName user={access.User} />) :
 		(
-			<LinkTo.Object object={mention.User} className={cx('mention')}>
-				<User.DisplayName user={mention.User} />
+			<LinkTo.Object object={access.User} className={cx('mention')}>
+				<User.DisplayName user={access.User} />
 			</LinkTo.Object>
 		);
 }

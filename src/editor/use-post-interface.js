@@ -7,7 +7,7 @@ async function getSharing (discussion, container) {
 		const sharedWith = await discussion.getSharedWith(container);
 
 		return {
-			sharedWith,
+			sharedWith: (sharedWith ?? []).map(x => Viewer.Sharing.Types.getIdForEntity(x)),
 			canEditSharing: discussion.canEditSharing()
 		};
 	}
