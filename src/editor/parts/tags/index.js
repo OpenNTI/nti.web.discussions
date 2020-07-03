@@ -13,5 +13,7 @@ export const Strategy = Editor.Tagging.BuildStrategy({
 export function getData (tags) {
 	if (!tags) { return []; }
 
-	return tags.map(t => trimTrigger(t.text));
+	return tags
+		.map(t => trimTrigger(t.text))
+		.filter(Boolean);
 }
