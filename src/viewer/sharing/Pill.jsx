@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
 import {DisplayName, Icons, Text, Flyout} from '@nti/web-commons';
+import {LinkTo} from '@nti/web-routing';
 
 import Styles from './Styles.css';
 import {Types} from './utils';
@@ -57,7 +58,7 @@ export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
 		icon = (<Icons.Person className={cx('icon')} />);
 	}
 
-	const pill = (
+	let pill = (
 		<div className={cx('sharing-pill', typeClass)}>
 			{icon}
 			{label}
@@ -66,6 +67,15 @@ export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
 			)}
 		</div>
 	);
+
+	if (!multiple && !onRemove) {
+		pill = (
+			<LinkTo.Object object={sharedWith}>
+				{pill}
+			</LinkTo.Object>
+		);
+	}
+
 
 	if (multiple) {
 		return (
