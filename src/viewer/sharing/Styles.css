@@ -7,6 +7,12 @@
 		display: inline-block;
 		vertical-align: middle;
 		margin-right: 0.3rem;
+
+		&.loading {
+			width: 150px;
+			height: 1rem;
+			background-color: var(--tertiary-grey);
+		}
 	}
 }
 
@@ -26,6 +32,11 @@
 	&.group {
 		background: #d0ecd4;
 		color: #1c7f2a;
+	}
+
+	&.unknown {
+		background: #e6e6e6;
+		color: var(--primary-grey);
 	}
 
 	&.only-me {

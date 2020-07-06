@@ -5,7 +5,9 @@ import {scoped} from '@nti/lib-locale';
 import {DisplayName, Icons, Text, Flyout} from '@nti/web-commons';
 
 import Styles from './Styles.css';
-import {isGroup, getEntity} from './Types';
+import {Types} from './utils';
+
+const {isGroup, getEntity} = Types;
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.mentions.Pill', {
@@ -13,6 +15,10 @@ const t = scoped('nti-discussions.viewer.mentions.Pill', {
 		users: {
 			one: '%(count)s Mention',
 			other: '%(count)s Mentions'
+		},
+		other: {
+			one: '%(count)s Other',
+			other: '%(count)s Others'
 		}
 	},
 	onlyMe: 'Only Me'
@@ -21,9 +27,10 @@ const t = scoped('nti-discussions.viewer.mentions.Pill', {
 Pill.propTypes = {
 	sharedWith: PropTypes.any,
 	onlyMe: PropTypes.bool,
+	unknown: PropTypes.bool,
 	onRemove: PropTypes.func
 };
-export default function Pill ({sharedWith, onlyMe, onRemove}) {
+export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
 	const multiple = Array.isArray(sharedWith);
 
 	let typeClass = null;
@@ -35,9 +42,11 @@ export default function Pill ({sharedWith, onlyMe, onRemove}) {
 		label = (<Text.Base>{t('onlyMe')}</Text.Base>);
 		icon = (<Icons.Eye.Slash className={cx('icon')} />);
 	} else if (multiple) {
-		typeClass = cx('multiple');
-		label = (<Text.Base>{t('multiple.users', {count: sharedWith.length})}</Text.Base>);
+		typeClass = cx('multiple', {unknown});
 		icon = (<Icons.Person className={cx('icon')} />);
+		label = unknown ?
+			(<Text.Base>{t('multiple.other', {count: sharedWith.length})}</Text.Base>) :
+			(<Text.Base>{t('multiple.users', {count: sharedWith.length})}</Text.Base>);
 	} else if (isGroup(sharedWith)) {
 		typeClass = cx('group');
 		label = (<DisplayName entity={getEntity(sharedWith)} />);

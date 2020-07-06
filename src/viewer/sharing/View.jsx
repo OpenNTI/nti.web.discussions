@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Hooks} from '@nti/web-commons';
-import {getService} from '@nti/web-client';
 
 import Pills from './Pills';
-import * as Types from './Types';
+import {resolveEntities, Types} from './utils';
 
 const {useResolver} = Hooks;
-const {isResolved} = useResolver;
+const {isResolved, isPending} = useResolver;
 
+MentionPills.resolveEntities = resolveEntities;
 MentionPills.Types = Types;
 MentionPills.Pills = Pills;
 MentionPills.propTypes = {
@@ -19,21 +19,16 @@ MentionPills.propTypes = {
 };
 export default function MentionPills ({post, container, ...otherProps}) {
 	const resolver = useResolver(async () => {
-		const service = await getService();
 		const sharing = post.getSharedWith(container);
+		const resolved = await resolveEntities(sharing);
 
-		const entities = await Promise.all(
-			sharing.map(s => (
-				typeof s === 'string' ? service.resolveEntity(s).catch(() => null) : s
-			))
-		);
-
-		return entities.filter(Boolean);
+		return resolved;
 	}, [post]);
 
+	const loading = isPending(resolver);
 	const sharedWith = isResolved(resolver) ? resolver : [];
 
 	return (
-		<Pills sharedWith={sharedWith} {...otherProps} />
+		<Pills sharedWith={sharedWith} loading={loading} {...otherProps} />
 	);
 }

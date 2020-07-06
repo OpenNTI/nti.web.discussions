@@ -1,15 +1,9 @@
 import React from 'react';
-import {getService} from '@nti/web-client';
 
 import Viewer from '../viewer';
 
 async function resolveSharingIds (sharing = []) {
-	const service = await getService();
-	const resolve = await Promise.all(
-		sharing.map(s => (
-			typeof s === 'string' ? service.resolveEntity(s).catch(() => null) : s
-		))
-	);
+	const resolve = await Viewer.Sharing.resolveEntities(sharing);
 
 	return resolve.filter(Boolean).map(x => Viewer.Sharing.Types.getIdForEntity(x));
 }
