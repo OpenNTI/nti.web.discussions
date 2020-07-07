@@ -68,7 +68,7 @@ export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
 		</div>
 	);
 
-	if (!multiple && !onRemove) {
+	if (!multiple && !onRemove && sharedWith) {
 		pill = (
 			<LinkTo.Object object={sharedWith}>
 				{pill}
