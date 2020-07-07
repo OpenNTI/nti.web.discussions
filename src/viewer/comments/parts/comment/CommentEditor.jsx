@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
+import {Events} from '@nti/web-session';
 import {StandardUI} from '@nti/web-commons';
 
 import Editor from '../../../../editor';
@@ -15,6 +16,22 @@ const t = scoped('nti-discussions.viewer.comments.parts.comment.CommentEditor', 
 	placeholder: 'Share your thoughts...'
 });
 
+function getSessionNotifier (comment) {
+	return (newComment) => {
+		let event = null;
+
+		if (newComment.isNote) {
+			event = comment ? Events.NOTE_UPDATED : Events.NOTE_CREATED;
+		} else if (newComment.isComment) {
+			event = comment ? Events.TOPIC_COMMENT_UPDATED : Events.TOPIC_COMMENT_CREATED;
+		}
+
+		if (event) {
+			Events.emit(event, newComment);
+		}
+	};
+}
+
 DiscussionCommentEditor.propTypes = {
 	className: PropTypes.string,
 	comment: PropTypes.object,
@@ -24,6 +41,8 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 	const CommentList = React.useContext(Context);
 
 	const EditorCmp = comment ? Editor.Body : Editor.NoTitle;
+
+	const sessionNotify = getSessionNotifier(comment);
 
 	const focusComment = (updated) => {
 		if (comment === updated) { return; }
@@ -46,7 +65,7 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 				container={inReplyTo ?? CommentList.post}
 				noSharing
 				saveLabel={comment ? t('update') : t('comment')}
-				afterSave={(newComment) => (stopEdit(), focusComment(newComment))}
+				afterSave={(newComment) => (stopEdit(), focusComment(newComment), sessionNotify(newComment))}
 				onCancel={stopEdit}
 				bodyPlaceholder={t('placeholder')}
 			/>
