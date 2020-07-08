@@ -121,8 +121,8 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.Full post={post} className={className} >
 				<Identity post={post} />
-				<Title post={post} placeholder={titlePlaceholder} autoFocus />
-				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} />
+				<Title post={post} placeholder={titlePlaceholder} autoFocus={post.isNew} />
+				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} autoFocus={!post.isNew} />
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Full>
 
