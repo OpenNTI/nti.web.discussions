@@ -39,11 +39,12 @@ CommentDisplay.propTypes = {
 	expanded: PropTypes.bool,
 	expand: PropTypes.func,
 	collapse: PropTypes.func,
+	afterDelete: PropTypes.func,
 
 	focused: PropTypes.bool,
 	editing: PropTypes.bool
 };
-export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing}) {
+export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing, afterDelete}) {
 	const forceUpdate = Hooks.useForceUpdate();
 	const user = User.useUser(comment.creator);
 	const commentCount = comment.getDiscussionCount();
@@ -93,7 +94,7 @@ export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, 
 
 	return (
 		<div className={cx('comment-display', 'full')}>
-			<Controls item={comment} className={cx('controls')} />
+			<Controls item={comment} className={cx('controls')} afterDelete={afterDelete} />
 			<div className={cx('identity')}>
 				<User.Avatar user={comment.creator} />
 			</div>

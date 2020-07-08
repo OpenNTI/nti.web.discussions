@@ -45,7 +45,8 @@ export default function DiscussionComments ({post}) {
 
 
 		focusedComment,
-		focusComment
+		focusComment,
+		clearFocused
 	} = useCommentTree(post);
 
 	const context = {
@@ -53,6 +54,7 @@ export default function DiscussionComments ({post}) {
 
 		isFocused: (obj) => obj && obj.getID() === focusedComment,
 		focusComment,
+		clearFocused,
 
 		isExpanded: (obj) => obj && expanded[obj.getID()],
 		expand: (obj) => setExpanded({...expanded, [obj.getID()]: true}),

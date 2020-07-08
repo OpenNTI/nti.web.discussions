@@ -84,6 +84,8 @@ function SubTree ({tree, inReplyTo}) {
 							focused={CommentList.isFocused(node)}
 							editing={CommentList.isEditing(node)}
 							replying={CommentList.isReplying(node)}
+
+							afterDelete={CommentList.clearFocused}
 						/>
 						{CommentList.isReplying(node) && (
 							<CommentEditor inReplyTo={node} />
@@ -121,6 +123,8 @@ export default function DiscussionComment ({comment, ...otherProps}) {
 				focused={CommentList.isFocused(comment)}
 				editing={CommentList.isEditing(comment)}
 				replying={CommentList.isReplying(comment)}
+
+				afterDelete={CommentList.clearFocused}
 
 				{...otherProps}
 			/>

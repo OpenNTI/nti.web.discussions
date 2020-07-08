@@ -136,6 +136,8 @@ export default function useCommentTree (post) {
 		loading: !comments && loading,
 		mask: comments && loading,
 
+		clearFocused,
+
 		error,
 		comments,
 

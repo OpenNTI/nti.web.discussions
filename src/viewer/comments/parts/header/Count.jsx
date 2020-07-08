@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {Text} from '@nti/web-commons';
+import {Text, Hooks} from '@nti/web-commons';
 
 import Styles from '../../Styles.css';
 
@@ -16,10 +16,15 @@ const t = scoped('nti-discussions.viewer.comments.parts.header.Count', {
 
 DiscussionCommentCount.propTypes = {
 	post: PropTypes.shape({
-		getDiscussionCount: PropTypes.func
+		getDiscussionCount: PropTypes.func,
+		subscribeToChange: PropTypes.func
 	})
 };
 export default function DiscussionCommentCount ({post}) {
+	const forceUpdate = Hooks.useForceUpdate();
+
+	React.useEffect(() => post.subscribeToChange(forceUpdate), [post]);
+
 	if (!post) {
 		return null;
 	}
