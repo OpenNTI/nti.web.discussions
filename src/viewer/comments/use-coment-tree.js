@@ -144,7 +144,7 @@ export default function useCommentTree (post) {
 		currentPage: page,
 		totalPages: totalPages,
 		setPage: (newPage) => {
-			//clear focused comment
+			clearFocused();
 			setPage(newPage);
 		},
 
