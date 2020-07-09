@@ -8,6 +8,7 @@ import {List, Text} from '@nti/web-commons';
 import Styles from '../../Styles.css';
 
 import Count from './Count';
+import Pager from './Pager';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.comments.parts.header.Bar', {
@@ -34,6 +35,7 @@ export default function CommentsHeader (props) {
 					</LinkTo.Object>
 				)}
 			</List.SeparatedInline>
+			<Pager />
 		</div>
 	);
 }

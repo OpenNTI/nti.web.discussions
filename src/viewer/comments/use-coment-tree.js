@@ -156,10 +156,10 @@ export default function useCommentTree (post) {
 
 		setEditorState: async ({editing:newEditing, replying:newReplying}) => {
 			try {
+				clearFocused();
 				await getHistory().awaitUserConfirmation();
 				setEditing(newEditing);
 				setReplying(newReplying);
-				clearFocused();
 			} catch (err) {
 				//swallow
 			}

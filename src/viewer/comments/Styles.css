@@ -1,5 +1,11 @@
 
 .comments-header {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+
 	padding: 0 var(--side-padding, 1rem) var(--side-padding, 1rem);
 
 	font-size: 0.875rem;
@@ -9,6 +15,26 @@
 
 	& .add-comment {
 		color: var(--primary-blue);
+	}
+}
+
+.comments-pager {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+
+	& li {
+		color: var(--primary-blue);
+		padding: 0 0.625rem;
+		cursor: pointer;
+
+		&.current {
+			font-weight: 700;
+			text-decoration: underline;
+		}
 	}
 }
 

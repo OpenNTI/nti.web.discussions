@@ -52,6 +52,10 @@ export default function DiscussionComments ({post}) {
 	const context = {
 		post,
 
+		currentPage,
+		totalPages,
+		setPage,
+
 		isFocused: (obj) => obj && obj.getID() === focusedComment,
 		focusComment,
 		clearFocused,
