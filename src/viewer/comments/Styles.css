@@ -35,6 +35,14 @@
 			font-weight: 700;
 			text-decoration: underline;
 		}
+
+		&:first-of-type {
+			padding-left: 0;
+		}
+
+		&:last-of-type {
+			padding-right: 0;
+		}
 	}
 }
 
