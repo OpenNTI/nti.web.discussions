@@ -54,6 +54,7 @@ export default function SharingList ({post}) {
 			className={cx('sharing')}
 			sharedWith={sharedWith}
 			onRemove={canEditSharing ? onRemove : null}
+			noLink
 		/>
 	);
 }

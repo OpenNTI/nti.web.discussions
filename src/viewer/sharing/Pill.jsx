@@ -29,9 +29,10 @@ Pill.propTypes = {
 	sharedWith: PropTypes.any,
 	onlyMe: PropTypes.bool,
 	unknown: PropTypes.bool,
-	onRemove: PropTypes.func
+	onRemove: PropTypes.func,
+	noLink: PropTypes.bool
 };
-export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
+export default function Pill ({sharedWith, onlyMe, unknown, onRemove, noLink}) {
 	const multiple = Array.isArray(sharedWith);
 
 	let typeClass = null;
@@ -68,7 +69,7 @@ export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
 		</div>
 	);
 
-	if (!multiple && !onRemove && sharedWith) {
+	if (!multiple && !onRemove && sharedWith && !noLink) {
 		pill = (
 			<LinkTo.Object object={sharedWith}>
 				{pill}
@@ -87,7 +88,7 @@ export default function Pill ({sharedWith, onlyMe, unknown, onRemove}) {
 				<ul className={cx('nested-pills')}>
 					{sharedWith.map((shared, key) => (
 						<li key={key}>
-							<Pill sharedWith={shared} onRemove={onRemove} />
+							<Pill sharedWith={shared} onRemove={onRemove} noLink={noLink} />
 						</li>
 					))}
 				</ul>
