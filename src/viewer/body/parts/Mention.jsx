@@ -31,7 +31,7 @@ export default function Mention (props) {
 	const username = props['data-nti-entity-username'];
 	const user = User.useUser(username);
 
-	const access = getAccess(post, user ?? username);
+	const access = user && getAccess(post, user);
 
 	if (!access) {
 		return (
