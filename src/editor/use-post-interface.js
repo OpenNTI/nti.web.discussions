@@ -45,7 +45,7 @@ function fixError (e) {
 }
 
 
-export default function usePostInterface ({discussion, container, afterSave, extraData = {}}) {
+export default function usePostInterface ({discussion, initialContent = [], container, afterSave, extraData = {}}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
 	const [content, setContent] = React.useState(null);
@@ -68,7 +68,7 @@ export default function usePostInterface ({discussion, container, afterSave, ext
 			setTitle(discussion?.getTitle());
 			
 			setContent({
-				body: discussion ? Viewer.Body.getLegacyBody(discussion) : [],
+				body: discussion ? Viewer.Body.getLegacyBody(discussion) : initialContent,
 				mentions: (discussion?.getMentions() ?? []).map(mention => Viewer.Sharing.Types.getIdForEntity(mention.User)),
 				tags: discussion?.getTags()
 			});
