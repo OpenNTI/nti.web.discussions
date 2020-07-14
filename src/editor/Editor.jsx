@@ -38,6 +38,8 @@ DiscussionEditor.propTypes = {
 	]),
 	extraData: PropTypes.object,
 
+	initialContent: PropTypes.object,
+
 	noSharing: PropTypes.bool,
 
 	afterSave: PropTypes.func,
@@ -54,6 +56,8 @@ export default function DiscussionEditor ({
 	discussion,
 	container,
 	extraData,
+
+	initialContent,
 
 	noSharing,
 
@@ -97,7 +101,7 @@ export default function DiscussionEditor ({
 		}) :
 		null;
 
-	const post = usePostInterface({discussion, container, afterSave, extraData});
+	const post = usePostInterface({discussion, initialContent, container, afterSave, extraData});
 
 	let content = null;
 
