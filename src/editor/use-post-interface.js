@@ -52,7 +52,7 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 
 	const [sharing, setSharing] = React.useState(null);
 
-	const [hasChanged, setHasChanged] = React.useState(false);
+	const [hasChanged, setHasChanged] = React.useState(initialContent.length > 0);
 	const [saving, setSaving] = React.useState(false);
 	const [error, setError] = React.useState(null);
 
