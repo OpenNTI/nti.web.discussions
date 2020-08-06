@@ -61,9 +61,10 @@ SubTree.propTypes = {
 		children: PropTypes.array,
 		depth: PropTypes.number
 	}),
-	inReplyTo: PropTypes.object
+	inReplyTo: PropTypes.object,
+	post: PropTypes.any
 };
-function SubTree ({tree, inReplyTo}) {
+function SubTree ({tree, inReplyTo, post}) {
 	const CommentList = React.useContext(Context);
 	const children = tree?.children ?? [];
 
@@ -78,6 +79,8 @@ function SubTree ({tree, inReplyTo}) {
 					<li key={node.getID()}>
 						<CommentDisplay
 							comment={node}
+							post={post}
+
 							inReplyTo={inReplyTo}
 							tooDeep={tree.depth > MaxDepth}
 
@@ -90,7 +93,7 @@ function SubTree ({tree, inReplyTo}) {
 						{CommentList.isReplying(node) && (
 							<CommentEditor inReplyTo={node} />
 						)}
-						<SubTree tree={child} inReplyTo={node} />
+						<SubTree tree={child} inReplyTo={node} post={post} />
 					</li>
 				);
 			})}
@@ -103,9 +106,11 @@ DiscussionComment.propTypes = {
 	comment: PropTypes.shape({
 		getFlatDiscussions: PropTypes.func,
 		subscribeToDiscussionAdded: PropTypes.func
-	})
+	}),
+
+	post: PropTypes.any
 };
-export default function DiscussionComment ({comment, ...otherProps}) {
+export default function DiscussionComment ({comment, post, ...otherProps}) {
 	const CommentList = React.useContext(Context);
 	const isExpanded = CommentList.isExpanded(comment);
 
@@ -115,6 +120,8 @@ export default function DiscussionComment ({comment, ...otherProps}) {
 		<div className={cx('discussion-comment', {'expanded': isExpanded})}  >
 			<CommentDisplay
 				comment={comment}
+
+				post={post}
 
 				expanded={isExpanded}
 				expand={() => CommentList?.expand(comment)}
@@ -134,7 +141,7 @@ export default function DiscussionComment ({comment, ...otherProps}) {
 			{isExpanded && (
 				<Loading.Placeholder loading={loading} fallback={<Loading.Spinner />}>
 					{error && (<Errors.Message error={t('error')} />)}
-					<SubTree tree={tree} />
+					<SubTree tree={tree} post={post} />
 				</Loading.Placeholder>
 			)}
 		</div>

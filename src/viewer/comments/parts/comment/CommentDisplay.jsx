@@ -33,6 +33,10 @@ CommentDisplay.propTypes = {
 		subscribeToChange: PropTypes.func
 	}),
 
+	post: PropTypes.shape({
+		getID: PropTypes.func
+	}),
+
 	inReplyTo: PropTypes.object,
 	tooDeep: PropTypes.bool,
 
@@ -44,7 +48,7 @@ CommentDisplay.propTypes = {
 	focused: PropTypes.bool,
 	editing: PropTypes.bool
 };
-export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing, afterDelete}) {
+export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing, afterDelete}) {
 	const forceUpdate = Hooks.useForceUpdate();
 	const user = User.useUser(comment.creator);
 	const commentCount = comment.getDiscussionCount();
@@ -116,6 +120,7 @@ export default function CommentDisplay ({comment, inReplyTo, tooDeep, expanded, 
 					className={cx('comment-body')}
 					post={comment}
 					afterRender={(cmp) => afterRender.current?.(cmp)}
+					highlightContainer={post.getID()}
 				/>
 			)}
 			{editing && (

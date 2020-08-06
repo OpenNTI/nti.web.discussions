@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {StandardUI, Layouts} from '@nti/web-commons';
+import {StandardUI, Layouts, ContentHighlighting} from '@nti/web-commons';
 import {Router} from '@nti/web-routing';
 
 import Styles from './Viewer.css';
@@ -34,6 +34,7 @@ DiscussionViewer.Body = Body;
 DiscussionViewer.propTypes = {
 	className: PropTypes.string,
 	discussion: PropTypes.shape({
+		getID: PropTypes.func,
 		ContainerTitle: PropTypes.string
 	}),
 	container: PropTypes.oneOfType([
@@ -55,6 +56,10 @@ export default function DiscussionViewer ({className, discussion, container, dia
 			};
 		}
 	};
+
+	React.useEffect(() => {
+		return () => ContentHighlighting.Strategies.SearchHitStore.clearHitForContainer(discussion.getID());
+	}, [discussion]);
 
 	return (
 		<Router.RouteForProvider getRouteFor={getRouteFor}>

@@ -51,6 +51,7 @@ export default class PostCardContent extends React.Component {
 							post={item}
 							afterRender={this.afterContentRender}
 							style={{maxHeight: `${maxHeight}px`}}
+							noHighlight
 						/>
 						{isOverflowing && (
 							<div className={cx('overflow')}>
