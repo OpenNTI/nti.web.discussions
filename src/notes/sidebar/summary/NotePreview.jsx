@@ -35,6 +35,7 @@ export default function NotePreview ({note, ...props}) {
 				<Viewer.Body
 					className={cx('content')}
 					post={post}
+					noHighlight
 					previewMode
 					previewLength={80}
 				/>
