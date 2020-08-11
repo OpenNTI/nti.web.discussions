@@ -52,7 +52,7 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 
 	const [sharing, setSharing] = React.useState(null);
 
-	const [hasChanged, setHasChanged] = React.useState(initialContent.length > 0);
+	const [hasChanged, setHasChanged] = React.useState((initialContent || []).length > 0);
 	const [saving, setSaving] = React.useState(false);
 	const [error, setError] = React.useState(null);
 
@@ -66,7 +66,7 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 
 			setCreator(discussion?.creator);
 			setTitle(discussion?.getTitle());
-			
+
 			setContent({
 				body: discussion ? Viewer.Body.getLegacyBody(discussion) : initialContent,
 				mentions: (discussion?.getMentions() ?? []).map(mention => Viewer.Sharing.Types.getIdForEntity(mention.User)),
@@ -158,7 +158,7 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 
 		titleError: error?.field === 'title' ? error : null,
 		clearTitleError: () => error?.field === 'title' && setError(null),
-		
+
 		error: error?.field !== 'title' ? error : null,
 		clearError: () => error?.field !== 'title' && setError(null)
 	};
