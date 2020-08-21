@@ -1,3 +1,4 @@
+import './DiscussionSelectionEditor.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Search} from '@nti/web-commons';
