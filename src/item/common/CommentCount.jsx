@@ -26,7 +26,7 @@ export default function DiscussionItemCommentCount ({className, item}) {
 
 	React.useEffect(() => item.subscribeToChange(() => {
 		forceUpdate();
-	}), item);
+	}), [item]);
 
 	return (
 		<Text.Base className={cx('discussion-item-comment-count', className)}>
