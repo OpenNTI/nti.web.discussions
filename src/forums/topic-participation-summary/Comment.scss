@@ -28,7 +28,7 @@
 		.meta {
 			//the line height centers this row of text with the avatar
 			font: normal 400 0.875rem/1.875rem $body-font-family;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 
 			.username {
 				margin: 0 0.5rem 0 0;
@@ -42,7 +42,7 @@
 
 		.comments {
 			font: normal 400 0.875rem/1.75rem $body-font-family;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 
