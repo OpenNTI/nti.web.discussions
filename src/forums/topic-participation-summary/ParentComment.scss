@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .topic-participation-summary-parent-comment {
-	border-bottom: 1px solid $border-grey-light;
+	border-bottom: 1px solid var(--border-grey)-light;
 	color: var(--secondary-grey);
 
 	&.expanded {
@@ -39,7 +39,7 @@
 
 		.body-container {
 			padding-left: 0.5rem;
-			border-left: 1px solid $border-grey;
+			border-left: 1px solid var(--border-grey);
 		}
 	}
 }

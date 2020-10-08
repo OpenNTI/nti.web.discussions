@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 .discussuion-context-markupframe {
-	border: 1px solid $border-grey;
+	border: 1px solid var(--border-grey);
 	overflow: hidden;
 
 	&.bare {
@@ -13,7 +13,7 @@
 	}
 
 	.bar {
-		border-top: 1px solid $border-grey;
+		border-top: 1px solid var(--border-grey);
 		padding: 10px;
 		background: $panel-background;
 
@@ -34,7 +34,7 @@
 		// .bar-cell {}
 
 		a.bar-cell {
-			border-left: 1px solid $border-grey;
+			border-left: 1px solid var(--border-grey);
 		}
 	}
 
