@@ -5,7 +5,7 @@
 
 	.participation-header {
 		font: normal 400 0.875rem/1rem $body-font-family;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		padding: 0.75rem 1.5rem;
 		display: inline-block;
 	}
@@ -38,7 +38,7 @@
 				font-size: 0.625rem;
 				font-weight: 600;
 				text-transform: uppercase;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 
 			}
 		}

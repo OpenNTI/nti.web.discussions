@@ -2,7 +2,7 @@
 
 .topic-participation-summary-parent-comment {
 	border-bottom: 1px solid $border-grey-light;
-	color: $secondary-grey;
+	color: var(--secondary-grey);
 
 	&.expanded {
 		.body {

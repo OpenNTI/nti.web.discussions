@@ -14,7 +14,7 @@
 		font: normal 500 0.9em/3em "Open Sans", sans-serif;
 		box-shadow: inset 0 -1px 0 0 #eaeaea;
 		z-index: 2;
-		color: #757474;
+		color: var(--secondary-grey);
 
 		&:after {
 			content: '';
