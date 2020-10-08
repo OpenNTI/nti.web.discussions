@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .topic-participation-summary-topic {
-	color: $primary-grey;
+	color: var(--primary-grey);
 	padding: 1.5rem;
 	border-bottom: 1px solid $border-grey-light;
 

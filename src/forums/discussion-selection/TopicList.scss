@@ -8,7 +8,7 @@
 		margin-bottom: 10px;
 		font-size: 18px;
 		font-weight: 600;
-		color: #494949;
+		color: var(--primary-grey);
 	}
 
 	.no-results {
@@ -33,7 +33,7 @@
 	}
 
 	.discussion-selection-topic-title {
-		color: #494949;
+		color: var(--primary-grey);
 		font: normal 300 26px "Open Sans Condensed", sans-serif;
 		font-stretch: condensed;
 		padding: 4px;

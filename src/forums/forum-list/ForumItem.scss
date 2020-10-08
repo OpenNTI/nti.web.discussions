@@ -42,7 +42,7 @@
 			.title {
 				display: block;
 				font-size: rem-calc(14px);
-				color: $primary-grey;
+				color: var(--primary-grey);
 				font-family: "Open Sans Condensed";
 				font-weight: 600;
 				overflow: hidden;
