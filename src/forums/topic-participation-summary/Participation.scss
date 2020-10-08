@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .topic-participation-summary-participation {
-	background-color: $panel-background;
+	background-color: var(--panel-background);
 
 	.participation-header {
 		font: normal 400 0.875rem/1rem $body-font-family;

@@ -15,7 +15,7 @@
 	.bar {
 		border-top: 1px solid var(--border-grey);
 		padding: 10px;
-		background: $panel-background;
+		background: var(--panel-background);
 
 		.image-caption,
 		.image-title {
