@@ -29,7 +29,7 @@
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
 
 	&.selected {
-		outline: solid 2px #3fb3f6 !important;
+		outline: solid 2px var(--primary-blue) !important;
 	}
 
 	.discussion-selection-topic-title {
