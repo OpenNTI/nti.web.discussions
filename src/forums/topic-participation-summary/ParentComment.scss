@@ -1,8 +1,8 @@
 @import "~@nti/style-common";
 
 .topic-participation-summary-parent-comment {
-	border-bottom: 1px solid $border-grey-light;
-	color: $secondary-grey;
+	border-bottom: 1px solid var(--border-grey-light);
+	color: var(--secondary-grey);
 
 	&.expanded {
 		.body {
@@ -21,7 +21,7 @@
 
 	.username {
 		display: inline-block;
-		font: normal 400 0.875rem/1.5 $body-font-family;
+		font: normal 400 0.875rem/1.5 var(--body-font-family);
 		margin-right: 0.125rem;
 	}
 
@@ -39,7 +39,7 @@
 
 		.body-container {
 			padding-left: 0.5rem;
-			border-left: 1px solid $border-grey;
+			border-left: 1px solid var(--border-grey);
 		}
 	}
 }

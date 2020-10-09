@@ -8,7 +8,7 @@
 		margin-bottom: 10px;
 		font-size: 18px;
 		font-weight: 600;
-		color: #494949;
+		color: var(--primary-grey);
 	}
 
 	.no-results {
@@ -29,12 +29,12 @@
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
 
 	&.selected {
-		outline: solid 2px #3fb3f6 !important;
+		outline: solid 2px var(--primary-blue) !important;
 	}
 
 	.discussion-selection-topic-title {
-		color: #494949;
-		font: normal 300 26px "Open Sans Condensed", sans-serif;
+		color: var(--primary-grey);
+		font: normal 300 26px var(--header-font-family);
 		font-stretch: condensed;
 		padding: 4px;
 		padding-top: 3px;

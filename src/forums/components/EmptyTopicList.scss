@@ -2,8 +2,8 @@
     background: #fafafa;
 	height: 400px;
 	width: 764px;
-	font: normal 300 30px "Open Sans", sans-serif;
-    color: #b8b8b8;
+	font: normal 300 30px var(--body-font-family);
+    color: var(--tertiary-grey);
     text-align: center;
     line-height: 400px;
 }

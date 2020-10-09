@@ -1,9 +1,9 @@
 @import "~@nti/style-common";
 
 .topic-participation-summary-topic {
-	color: $primary-grey;
+	color: var(--primary-grey);
 	padding: 1.5rem;
-	border-bottom: 1px solid $border-grey-light;
+	border-bottom: 1px solid var(--border-grey-light);
 
 	.basic-button {
 		cursor: pointer;
@@ -15,7 +15,7 @@
 
 		h3 {
 			flex: 1 1 auto;
-			font: normal 300 1.75rem/2.2rem $body-font-family;
+			font: normal 300 1.75rem/2.2rem var(--body-font-family);
 			margin: 0 0.5rem 1.5rem 0;
 		}
 

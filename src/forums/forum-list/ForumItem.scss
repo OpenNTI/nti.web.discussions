@@ -12,7 +12,7 @@
 		}
 
 		&.active {
-			background: #3fb3f6;
+			background: var(--primary-blue);
 			box-shadow: inset 3px 0 0 0 #107eed;
 			.item-container {
 				.item-main {
@@ -42,8 +42,8 @@
 			.title {
 				display: block;
 				font-size: rem-calc(14px);
-				color: $primary-grey;
-				font-family: "Open Sans Condensed";
+				color: var(--primary-grey);
+				font-family: var(--header-font-family);
 				font-weight: 600;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -58,8 +58,8 @@
 			.meta {
 				font-size: .75rem;
 				display: block;
-				color: $tertiary-grey;
-				font-family: 'Open Sans';
+				color: var(--tertiary-grey);
+				font-family: var(--body-font-family);
 				font-weight: 600;
 
 				@include responsive-range(mobile) {

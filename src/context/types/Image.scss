@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 .discussuion-context-markupframe {
-	border: 1px solid $border-grey;
+	border: 1px solid var(--border-grey);
 	overflow: hidden;
 
 	&.bare {
@@ -13,28 +13,28 @@
 	}
 
 	.bar {
-		border-top: 1px solid $border-grey;
+		border-top: 1px solid var(--border-grey);
 		padding: 10px;
-		background: $panel-background;
+		background: var(--panel-background);
 
 		.image-caption,
 		.image-title {
 			line-height: 1.3;
 			font-size: 1em;
 			font-weight: 600;
-			color: $primary-grey;
+			color: var(--primary-grey);
 		}
 
 		.image-caption {
 			font-size: 0.875em;
 			font-weight: normal;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 		}
 
 		// .bar-cell {}
 
 		a.bar-cell {
-			border-left: 1px solid $border-grey;
+			border-left: 1px solid var(--border-grey);
 		}
 	}
 

@@ -27,8 +27,8 @@
 
 		.meta {
 			//the line height centers this row of text with the avatar
-			font: normal 400 0.875rem/1.875rem $body-font-family;
-			color: $tertiary-grey;
+			font: normal 400 0.875rem/1.875rem var(--body-font-family);
+			color: var(--tertiary-grey);
 
 			.username {
 				margin: 0 0.5rem 0 0;
@@ -36,13 +36,13 @@
 		}
 
 		.modeled-content {
-			font: normal 400 0.875rem/1.75rem $body-font-family;
-			color: $primary-grey;
+			font: normal 400 0.875rem/1.75rem var(--body-font-family);
+			color: var(--primary-grey);
 		}
 
 		.comments {
-			font: normal 400 0.875rem/1.75rem $body-font-family;
-			color: $tertiary-grey;
+			font: normal 400 0.875rem/1.75rem var(--body-font-family);
+			color: var(--tertiary-grey);
 		}
 	}
 
@@ -51,7 +51,7 @@
 		position: relative;
 		text-align: center;
 		width: 1rem;
-		color: $primary-blue;
+		color: var(--primary-blue);
 
 		i {
 			position: absolute;
