@@ -34,7 +34,7 @@
 
 	.discussion-selection-topic-title {
 		color: var(--primary-grey);
-		font: normal 300 26px "Open Sans Condensed", sans-serif;
+		font: normal 300 26px var(--header-font-family);
 		font-stretch: condensed;
 		padding: 4px;
 		padding-top: 3px;

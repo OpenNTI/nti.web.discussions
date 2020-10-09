@@ -43,7 +43,7 @@
 				display: block;
 				font-size: rem-calc(14px);
 				color: var(--primary-grey);
-				font-family: "Open Sans Condensed";
+				font-family: var(--header-font-family);
 				font-weight: 600;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -59,7 +59,7 @@
 				font-size: .75rem;
 				display: block;
 				color: var(--tertiary-grey);
-				font-family: 'Open Sans';
+				font-family: var(--body-font-family);
 				font-weight: 600;
 
 				@include responsive-range(mobile) {

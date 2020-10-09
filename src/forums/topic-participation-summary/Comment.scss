@@ -27,7 +27,7 @@
 
 		.meta {
 			//the line height centers this row of text with the avatar
-			font: normal 400 0.875rem/1.875rem $body-font-family;
+			font: normal 400 0.875rem/1.875rem var(--body-font-family);
 			color: var(--tertiary-grey);
 
 			.username {
@@ -36,12 +36,12 @@
 		}
 
 		.modeled-content {
-			font: normal 400 0.875rem/1.75rem $body-font-family;
+			font: normal 400 0.875rem/1.75rem var(--body-font-family);
 			color: var(--primary-grey);
 		}
 
 		.comments {
-			font: normal 400 0.875rem/1.75rem $body-font-family;
+			font: normal 400 0.875rem/1.75rem var(--body-font-family);
 			color: var(--tertiary-grey);
 		}
 	}

@@ -21,7 +21,7 @@
 
 	.username {
 		display: inline-block;
-		font: normal 400 0.875rem/1.5 $body-font-family;
+		font: normal 400 0.875rem/1.5 var(--body-font-family);
 		margin-right: 0.125rem;
 	}
 
