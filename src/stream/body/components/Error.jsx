@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {Error as ErrorCmp} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import Styles from './Error.css';
-
-const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.stream.components.Error', {
 	unableToLoadMore: 'Unable to Load More'
 });

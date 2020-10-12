@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {Hooks, ContentHighlighting} from '@nti/web-commons';
 import {Viewer} from '@nti/web-modeled-content';
 
-import Styles from './Styles.css';
 import {getLegacyBody} from './utils';
 import {renderAnchor} from './parts';
 import Context from './Context';
 
 const {SearchStrategy} = ContentHighlighting.Strategies;
-
-const cx = classnames.bind(Styles);
-
 
 DiscussionBody.getLegacyBody = getLegacyBody;
 DiscussionBody.propTypes = {
