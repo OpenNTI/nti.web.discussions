@@ -4,16 +4,17 @@
 	border-bottom: 1px dotted #d8d8d8;
 
 	.forum-link {
-		padding: .2rem 0 .2rem 0.9375rem;
+		padding: 0.2rem 0 0.2rem 0.9375rem;
 		display: block;
 
 		@include responsive-range(mobile) {
-			padding: .625rem 0 .625rem 0.9375rem;
+			padding: 0.625rem 0 0.625rem 0.9375rem;
 		}
 
 		&.active {
 			background: var(--primary-blue);
-			box-shadow: inset 3px 0 0 0 #107eed;
+			box-shadow: inset 3px 0 0 0 rgba(var(--accent-color-overlay), 0.2);
+
 			.item-container {
 				.item-main {
 					.title {
@@ -56,14 +57,14 @@
 			}
 
 			.meta {
-				font-size: .75rem;
+				font-size: 0.75rem;
 				display: block;
 				color: var(--tertiary-grey);
 				font-family: var(--body-font-family);
 				font-weight: 600;
 
 				@include responsive-range(mobile) {
-					padding: .5rem 0;
+					padding: 0.5rem 0;
 				}
 			}
 		}
