@@ -12,7 +12,7 @@
 
 .note-sidebar.sticky {
 	position: sticky;
-	top: var(--note-sidebar-sticky-top, 0px);
+	top: var(--note-sidebar-sticky-top, 0);
 }
 
 .note-list {

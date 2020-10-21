@@ -5,7 +5,7 @@
 
 .action-username :global(a.username),
 .container-title {
-	color: #49758E;
+	color: #49758e;
 	font-weight: 600;
 	display: inline-block;
 	vertical-align: bottom;
@@ -16,9 +16,10 @@
 
 .action-username :global(a.username) {
 	margin-right: 0.15em;
-    flex-shrink: 0;
-    max-width: 50%;
+	flex-shrink: 0;
+	max-width: 50%;
 }
+
 .container-title {
 	margin-left: 0.15em;
 }
@@ -28,6 +29,7 @@
 	overflow: hidden;
 	color: var(--primary-grey);
 }
+
 .action-username {
 	display: flex;
 	flex-direction: row;

@@ -5,9 +5,7 @@
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-
 	padding: 0 var(--side-padding, 1rem) var(--side-padding, 1rem);
-
 	font-size: 0.875rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -57,7 +55,6 @@
 	margin: 0;
 }
 
-
 .discussion-comment {
 	padding: calc(0.5 * var(--side-padding, 1rem)) 0;
 	border-bottom: 1px solid var(--border-grey-light);
@@ -93,7 +90,6 @@
 			}
 		}
 
-
 		&.depth-3 > li {
 			& > .comment-display {
 				margin-left: calc(4 * var(--side-padding, 1rem));
@@ -103,7 +99,6 @@
 				margin-left: calc(5 * var(--side-padding, 1rem));
 			}
 		}
-
 
 		&.depth-2 > li {
 			& > .comment-display {
@@ -115,7 +110,6 @@
 			}
 		}
 
-
 		&.depth-1 > li {
 			& > .comment-display {
 				margin-left: calc(2 * var(--side-padding, 1rem));
@@ -125,7 +119,6 @@
 				margin-left: calc(3 * var(--side-padding, 1rem));
 			}
 		}
-
 
 		&.depth-0 > li {
 			& > .comment-display {
@@ -166,7 +159,7 @@
 	padding: calc(0.5 * var(--side-padding, 1rem)) var(--side-padding, 1rem);
 
 	&.deleted {
-		padding-left: calc(var(--side-padding, 1rem) + 30px);		
+		padding-left: calc(var(--side-padding, 1rem) + 30px);
 
 		& .deleted-info {
 			font-size: 0.875rem;
@@ -177,14 +170,13 @@
 		}
 	}
 
-
 	&.full {
 		display: grid;
 		grid-gap: 0 calc(0.5 * var(--side-padding, 1rem));
 		grid-template-rows: auto auto auto;
 		grid-template-columns: 30px 1fr;
 	}
-	
+
 
 	& .controls {
 		position: absolute;
@@ -206,7 +198,6 @@
 	& .comment-info {
 		grid-row: 1 / 1;
 		grid-column: 2 / 2;
-
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -225,7 +216,6 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-
 
 		& .in-reply-to {
 			flex: 0 0 auto;
@@ -249,7 +239,6 @@
 		padding-top: calc(0.5 * var(--side-padding, 1rem));
 		grid-row: 3 / 3;
 		grid-column: 2 / 2;
-
 		font-size: 0.875rem;
 		font-weight: 400;
 		line-height: 1.5;
@@ -269,6 +258,7 @@
 
 .comment-editor {
 	--editor-avatar-size: 30px;
+
 	overflow-x: hidden;
 
 	&.reply {

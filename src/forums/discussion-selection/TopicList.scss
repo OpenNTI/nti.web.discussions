@@ -44,6 +44,7 @@
 		background-color: white;
 		width: 246px;
 		height: 80px;
+
 		@include limit-lines($lines: 2, $line-height: 1.54);
 	}
 

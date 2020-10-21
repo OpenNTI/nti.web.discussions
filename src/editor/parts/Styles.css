@@ -1,6 +1,6 @@
 .discussion-editor-container {
 	background: white;
-	
+
 	&.saving {
 		pointer-events: none;
 
@@ -70,6 +70,7 @@
 	&.small,
 	&.extra-small {
 		--editor-avatar-size: 30px;
+
 		grid-gap: 0 calc(var(--side-padding, 1rem) / 2);
 
 		& .body {
@@ -87,11 +88,12 @@
 		}
 	}
 
-
 	& .sharing-editor {
 		position: absolute;
-		top: 0; bottom: 0;
-		left: 0; right: 0;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
 		width: 100%;
 		height: 100%;
 		background: var(--panel-background);
@@ -139,7 +141,6 @@
 	}
 }
 
-
 .title {
 	padding: var(--side-padding, 1rem);
 	position: relative;
@@ -162,8 +163,10 @@
 
 	& .title-limit {
 		position: absolute;
-		top: auto; bottom: 0;
-		left: auto; right: var(--side-padding, 1rem);
+		top: auto;
+		bottom: 0;
+		left: auto;
+		right: var(--side-padding, 1rem);
 		background: white;
 		display: none;
 
@@ -175,8 +178,8 @@
 
 .identity {
 	display: inline-flex;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 }
 
 .body {
@@ -196,7 +199,8 @@
 
 	& .body-error {
 		position: absolute;
-		top: auto; bottom: 0.5rem;
+		top: auto;
+		bottom: 0.5rem;
 		left: var(--side-padding, 1rem);
 	}
 }
@@ -206,7 +210,7 @@
 		&:hover,
 		&:focus,
 		&:focus-within {
-			background: #EAEDF7;
+			background: #eaedf7;
 		}
 	}
 }
@@ -238,7 +242,7 @@
 
 	& .controls {
 		flex: 0 0 auto;
-	
+
 		& .button {
 			background: none;
 			display: inline-flex;
@@ -275,19 +279,19 @@
 			}
 
 			&.red {
-				color: #DB0000;
+				color: #db0000;
 			}
 
 			&.purple {
-				color: #664AD5;
+				color: #664ad5;
 			}
 
 			&.blue {
-				color: #09A1FF;
+				color: #09a1ff;
 			}
 
 			&.pink {
-				color: #e5107a
+				color: #e5107a;
 			}
 		}
 	}
@@ -328,5 +332,4 @@
 			margin-right: 0.5rem;
 		}
 	}
-
 }

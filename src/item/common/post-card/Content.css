@@ -34,9 +34,11 @@
 	position: absolute;
 	display: block;
 	height: 60px;
-	top: auto; bottom: 0;
-	left: 0; right: 0;
-	background-image: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1));;
+	top: auto;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-image: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1));
 }
 
 .body :global(br + br) {
@@ -61,7 +63,7 @@
 .body :global(.whiteboard),
 .body :global(.nti-video) {
 	margin: 0.5rem calc(-1 * var(--side-padding, 0.625rem));
-	border: 0px solid var(--border-grey-light);
+	border: 0 solid var(--border-grey-light);
 	border-top-width: 1px;
 	border-bottom-width: 1px;
 	width: auto;

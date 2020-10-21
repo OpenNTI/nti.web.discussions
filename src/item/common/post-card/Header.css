@@ -23,7 +23,7 @@
 }
 
 .post-card-header .meta .user-name {
-	color: #49758E;
+	color: #49758e;
 	font-weight: 600;
 	display: inline-block;
 	white-space: nowrap;
@@ -31,7 +31,6 @@
 	text-overflow: ellipsis;
 	max-width: 100%;
 }
-
 
 .post-card-header .meta .date {
 	display: block;

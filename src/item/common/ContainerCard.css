@@ -1,6 +1,6 @@
 .discussion-item-container-card {
-	background-color: #FAFDFF;
-	border: 1px solid #CBEAFD;
+	background-color: #fafdff;
+	border: 1px solid #cbeafd;
 	border-radius: 3px;
 	overflow: hidden;
 	display: flex;
@@ -27,10 +27,9 @@
 	height: 32px;
 	margin-top: -16px;
 	margin-left: -16px;
-	background-color: rgba(0,0,0,0.4);
+	background-color: rgba(0, 0, 0, 0.4);
 	border-radius: 32px;
 	border: 2px solid white;
-
 	background-image: url('./assets/play.svg');
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
