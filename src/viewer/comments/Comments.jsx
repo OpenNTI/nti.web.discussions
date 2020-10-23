@@ -10,7 +10,7 @@ import Header from './parts/header';
 import Comment from './parts/comment';
 import CommentEditor from './parts/comment/CommentEditor';
 import Context from './Context';
-import useCommentTree from './use-coment-tree';
+import useCommentTree from './use-comment-tree';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.comments.Comments', {
@@ -72,11 +72,11 @@ export default function DiscussionComments ({post}) {
 
 		isEditing: (obj) => obj && obj.getID() === editing,
 		stopEditing: (obj) => context.isEditing(obj) && setEditorState({editing: null, replying}),
-		
+
 		isReplying: (obj) => obj && obj.getID() === replying,
 		stopReplying: (obj) => context.isReplying(obj) && setEditorState({editing, replying: null})
 	};
-	
+
 	const getRouteFor = (obj, routeContext) => {
 		if (!obj.isDiscussion && obj.getID() !== post.getID()) { return; }
 

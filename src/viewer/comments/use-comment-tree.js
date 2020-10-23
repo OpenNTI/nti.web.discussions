@@ -1,15 +1,11 @@
 import React from 'react';
 import {encodeForURI, decodeFromURI} from '@nti/lib-ntiids';
 import {getService} from '@nti/web-client';
-import {Router, getHistory} from '@nti/web-routing';
+import {Router, getHistory, useLocation} from '@nti/web-routing';
 
 const BatchSize = 20;
 
-const getHash = router => router?.route?.location?.hash;
-
-function getFocused (router) {
-	const hash = getHash(router);
-
+function getFocused (hash) {
 	if (!hash || hash === '#edit' || hash === '#comment') { return; }
 
 	return decodeFromURI(hash.replace(/^#/, ''));
@@ -27,6 +23,7 @@ function getExpandedToShowComment (comment) {
 
 export default function useCommentTree (post) {
 	const router = Router.useRouter();
+	const location = useLocation();
 
 	const [page, setPage] = React.useState(0);
 	const [totalPages, setTotalPages] = React.useState(1);
@@ -40,10 +37,10 @@ export default function useCommentTree (post) {
 	const [editing, setEditing] = React.useState(null);
 	const [replying, setReplying] = React.useState(null);
 
-	const hash = getHash(router);
-	const focusedComment = getFocused(router, post);
+	const {hash} = location;
+	const focusedComment = getFocused(hash, post);
 	const clearFocused = () => {
-		if (getHash(router)) {
+		if (hash) {
 			router.routeTo.path({replace: true, href: '.'});
 		}
 	};
@@ -78,7 +75,7 @@ export default function useCommentTree (post) {
 			try {
 				const service = await getService();
 				const focused = focusedComment ? await service.getObject(focusedComment) : null;
-				
+
 				if (unmounted) { return; }
 
 				const focusedTopLevel = focused && getTopLevel(focused);
@@ -105,7 +102,7 @@ export default function useCommentTree (post) {
 
 				if (focused) {
 					setPage(discussions.BatchPage - 1);
-						
+
 					const toExpand = getExpandedToShowComment(focused);
 
 					if (toExpand) {
