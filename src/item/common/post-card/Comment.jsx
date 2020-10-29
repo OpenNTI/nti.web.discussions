@@ -21,7 +21,7 @@ PostCardComment.propTypes = {
 	comment: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.shape({
-			creator: PropTypes.object,
+			creator: PropTypes.string,
 			body: PropTypes.any,
 			getCreatedTime: PropTypes.func
 		})

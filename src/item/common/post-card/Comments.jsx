@@ -46,6 +46,8 @@ export default class PostCardComments extends React.Component {
 
 	componentWillUnmount () {
 		this.cleanupListeners();
+		// since we cannot cancel the fetch, just no-op the update
+		this.setState = () => {};
 	}
 
 
