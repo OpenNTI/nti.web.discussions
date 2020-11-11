@@ -28,7 +28,8 @@ async function getSharing (discussion, container) {
 
 			return {
 				sharedWith: resolved,
-				canEditSharing: !sharing.locked
+				canEditSharing: !sharing.locked,
+				displayNames: sharing.displayNames
 			};
 		}
 	}
@@ -147,6 +148,7 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 
 		sharedWith: sharing?.sharedWith,
 		canEditSharing: sharing?.canEditSharing,
+		sharingDisplayNames: sharing?.displayNames,
 
 		setSharedWith: getUpdate((sharedWith) => setSharing({...sharing, sharedWith})),
 

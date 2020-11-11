@@ -27,12 +27,14 @@ const t = scoped('nti-discussions.viewer.mentions.Pill', {
 
 Pill.propTypes = {
 	sharedWith: PropTypes.any,
+	displayName: PropTypes.any,
+
 	onlyMe: PropTypes.bool,
 	unknown: PropTypes.bool,
 	onRemove: PropTypes.func,
 	noLink: PropTypes.bool
 };
-export default function Pill ({sharedWith, onlyMe, unknown, onRemove, noLink}) {
+export default function Pill ({sharedWith, displayName, onlyMe, unknown, onRemove, noLink}) {
 	const multiple = Array.isArray(sharedWith);
 
 	let typeClass = null;
@@ -51,7 +53,9 @@ export default function Pill ({sharedWith, onlyMe, unknown, onRemove, noLink}) {
 			(<Text.Base>{t('multiple.users', {count: sharedWith.length})}</Text.Base>);
 	} else if (isGroup(sharedWith)) {
 		typeClass = cx('group');
-		label = (<DisplayName entity={getEntity(sharedWith)} />);
+		label = displayName ?
+			(<Text.Base>{displayName}</Text.Base>) :
+			(<DisplayName entity={getEntity(sharedWith)} />);
 		icon = (<Icons.Globe className={cx('icon')} />);
 	} else {
 		typeClass = cx('user');

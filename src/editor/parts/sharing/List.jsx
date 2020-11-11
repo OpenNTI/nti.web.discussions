@@ -21,12 +21,21 @@ SharingList.propTypes = {
 		mentions: PropTypes.array,
 
 		sharedWith: PropTypes.array,
+		sharingDisplayNames: PropTypes.array,
+
 		setSharedWith: PropTypes.func,
 		canEditSharing: PropTypes.bool
 	})
 };
 export default function SharingList ({post}) {
-	const {setup, mentions, sharedWith, setSharedWith, canEditSharing} = post;
+	const {
+		setup,
+		mentions,
+		sharedWith,
+		sharingDisplayNames,
+		setSharedWith,
+		canEditSharing
+	} = post;
 
 	const activeMentions = React.useRef(null);
 
@@ -53,6 +62,7 @@ export default function SharingList ({post}) {
 		<Viewer.Sharing.Pills
 			className={cx('sharing')}
 			sharedWith={sharedWith}
+			displayNames={sharingDisplayNames}
 			onRemove={canEditSharing ? onRemove : null}
 			noLink
 		/>

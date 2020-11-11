@@ -13,11 +13,21 @@ const cx = classnames.bind(Styles);
 MentionPills.propTypes = {
 	className: PropTypes.string,
 	sharedWith: PropTypes.array,
+	displayNames: PropTypes.array,
 	onRemove: PropTypes.func,
 	noLink: PropTypes.bool,
 	loading: PropTypes.bool
 };
-export default function MentionPills ({className, sharedWith, loading, onRemove, noLink}) {
+export default function MentionPills ({
+	className,
+
+	sharedWith,
+	displayNames,
+
+	loading,
+	onRemove,
+	noLink
+}) {
 	if (loading) {
 		return (
 			<ul className={cx('sharing-pills', className)}>
@@ -48,12 +58,13 @@ export default function MentionPills ({className, sharedWith, loading, onRemove,
 		return acc;
 	}, {groups: [], users: [], anonymous: []});
 
+	//NOTE: We are making a lot of simplifying assumptions about displayNames here....
 	return (
 		<ul className={cx('sharing-pills', className)}>
 			{(groups || []).map((entity, key) => {
 				return (
 					<li key={`sharedWith-${key}`}>
-						<Pill sharedWith={entity} onRemove={onRemove} noLink={noLink}/>
+						<Pill sharedWith={entity} displayName={displayNames?.[key]} onRemove={onRemove} noLink={noLink}/>
 					</li>
 				);
 			})}
@@ -64,7 +75,7 @@ export default function MentionPills ({className, sharedWith, loading, onRemove,
 			)}
 			{(anonymous.length > 0) && (
 				<li>
-					<Pill sharedWith={anonymous} onRemove={onRemove} unknown noLink={noLink} />
+					<Pill sharedWith={anonymous} onRemove={onRemove} unknown noLink={noLink}/>
 				</li>
 			)}
 		</ul>
