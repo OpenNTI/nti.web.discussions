@@ -25,7 +25,7 @@ const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay'
 
 CommentDisplay.propTypes = {
 	comment: PropTypes.shape({
-		isDeleted: PropTypes.bool,
+		isDeleted: PropTypes.func,
 		creator: PropTypes.any,
 		getCreatedTime: PropTypes.func,
 		getDiscussionCount: PropTypes.func,
