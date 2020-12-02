@@ -24,7 +24,7 @@ exports[`Forum Bin Snapshot 1`] = `
         >
           <div
             className="nti-link-to-path forum-link"
-            to="/object/unknown-OID-0x0551b0%3A5573657273%3AZkMpTMuJZhf"
+            to="/id/unknown-OID-0x0551b0%3A5573657273%3AZkMpTMuJZhf"
           >
             <div
               className="item-container"
@@ -53,7 +53,7 @@ exports[`Forum Bin Snapshot 1`] = `
         >
           <div
             className="nti-link-to-path forum-link"
-            to="/object/unknown-OID-0x0551b8%3A5573657273%3AZkMpTMuJZhe"
+            to="/id/unknown-OID-0x0551b8%3A5573657273%3AZkMpTMuJZhe"
           >
             <div
               className="item-container"
@@ -95,7 +95,7 @@ exports[`Forum Bin Snapshot 1`] = `
         >
           <div
             className="nti-link-to-path forum-link"
-            to="/object/unknown-OID-0x05513f%3A5573657273%3AZkMpTMuJZj8"
+            to="/id/unknown-OID-0x05513f%3A5573657273%3AZkMpTMuJZj8"
           >
             <div
               className="item-container"
@@ -124,7 +124,7 @@ exports[`Forum Bin Snapshot 1`] = `
         >
           <div
             className="nti-link-to-path forum-link"
-            to="/object/unknown-OID-0x055199%3A5573657273%3AZkMpTMuJZhn"
+            to="/id/unknown-OID-0x055199%3A5573657273%3AZkMpTMuJZhn"
           >
             <div
               className="item-container"
