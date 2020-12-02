@@ -83,8 +83,10 @@ export default function DiscussionEditorTitle ({post, autoFocus, placeholder}) {
 				/>
 			)}
 			<ContextProvider editor={editor}>
-				<CharacterCounter className={cx('title-limit')} showLimit/>
-				<Errors.Message error={titleError} className={cx('title-error')} />
+				<>
+					<CharacterCounter className={cx('title-limit')} showLimit/>
+					<Errors.Message error={titleError} className={cx('title-error')} />
+				</>
 			</ContextProvider>
 		</div>
 	);
