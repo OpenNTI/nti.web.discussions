@@ -71,8 +71,8 @@ export default class DiscussionItemContainerCard extends React.Component {
 					<div className={cx('icon', container.iconClass)} style={{backgroundImage: `url(${container.icon})`}} />
 				)}
 				<div className={cx('meta')}>
-					<Text.Base className={cx('label', {skeleton})}>{(container && container.label) || ''}</Text.Base>
-					<Text.Base overflow={Text.Overflow.Ellipsis} limitLines={2} className={cx('title', {skeleton})}>{(container && container.title) || ''}</Text.Base>
+					<Text.Base className={cx('label', {skeleton})}>{(container?.label) || ''}</Text.Base>
+					<Text.Base overflow={Text.Overflow.Ellipsis} limitLines={2} className={cx('title', {skeleton})}>{(container?.title) || ''}</Text.Base>
 				</div>
 			</div>
 		);
