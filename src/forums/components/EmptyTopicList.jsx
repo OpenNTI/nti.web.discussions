@@ -10,12 +10,13 @@ const DEAFULT_TEXT = {
 
 const t = scoped('nti.web.disscussions.forums.emptytopiclist', DEAFULT_TEXT);
 
-const EmptyTopicList = ({isEditor}) => (
-	<div className="empty-topic-list">
+const EmptyTopicList = React.forwardRef(({isEditor}, ref) => (
+	<div className="empty-topic-list" ref={ref}>
 		{isEditor ? t('editorText') : t('nonEditorText')}
 	</div>
-);
+));
 
+EmptyTopicList.displayName = 'EmptyTopicList';
 EmptyTopicList.propTypes = {
 	isEditor: PropTypes.bool
 };
