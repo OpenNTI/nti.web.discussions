@@ -1,10 +1,8 @@
 /* eslint-env jest */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import TopicList from '../TopicList';
-
-const sleep = x => new Promise(a => setTimeout(a, x));
 
 describe('Topic list test', () => {
 	test('Simple list', async () => {
@@ -26,13 +24,12 @@ describe('Topic list test', () => {
 
 		const onTopicSelect = jest.fn();
 
-		const topicListCmp = mount(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
-		expect(topicListCmp.find('.discussion-selection-topic').length).toBe(3);
+		const {container} = render(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
+		expect(container.querySelectorAll('.discussion-selection-topic').length).toBe(3);
 
-		topicListCmp.find('.discussion-selection-topic').first().simulate('click');
+		fireEvent.click(container.querySelector('.discussion-selection-topic'));
 
-		await sleep(500);
-
-		expect(onTopicSelect).toHaveBeenCalled();
+		await waitFor(() =>
+			expect(onTopicSelect).toHaveBeenCalled());
 	});
 });

@@ -1,14 +1,13 @@
 /* eslint-env jest */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { TestUtils } from '@nti/web-client';
+import { wait } from '@nti/lib-commons';
 
 import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 
-const sleep = (n) => new Promise(a => setTimeout(a, n));
-
 describe('Discussion selection editor', () => {
-	test('Test skip ahead', () => {
+	test('Test skip ahead', async () => {
 		const forums = [
 			{ title: 'Forum 1', children:
 				[
@@ -41,18 +40,24 @@ describe('Discussion selection editor', () => {
 
 		function onDiscussionTopicSelect (topic) {}
 
-		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
+		let editor;
+		const result = render(<DiscussionSelectionEditor ref={x=>editor = x} bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
 
-		editor.setState({ step: 1, forums: forums });
+		await wait();
+
+		editor.setState({ step: 1, forums });
+
+		await wait();
 
 		// click Forum 1
-		editor.find('.discussion-selection-item').first().simulate('click');
-		editor = editor.update();
+		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
 
-		// should have skipped to step 3 since there was only one section in step 2
-		expect(editor.state().step).toBe(3);
-		expect(editor.text()).toMatch(/Board 1/);
-		expect(editor.text()).toMatch(/Board 2/);
+		await waitFor(async () => {
+			// should have skipped to step 3 since there was only one section in step 2
+			expect(editor.state.step).toBe(3);
+			await result.findByText(/Board 1/);
+			await result.findByText(/Board 2/);
+		});
 	});
 
 	test('Test editor steps', async () => {
@@ -113,44 +118,47 @@ describe('Discussion selection editor', () => {
 
 		const onDiscussionTopicSelect = jest.fn();
 
-		let editor = mount(<DiscussionSelectionEditor bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
+		let editor;
+		const result = render(<DiscussionSelectionEditor ref={x => editor = x} bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
 
 		editor.setState({ step: 1, forums: forums });
 
+		await wait();
+
 		// verify forum list
-		expect(editor.text()).toMatch(/Forum 1/);
-		expect(editor.text()).toMatch(/Forum 2/);
+		await result.findByText(/Forum 1/);
+		await result.findByText(/Forum 2/);
 
 		// click Forum 1 and verify Section listing
-		editor.find('.discussion-selection-item').first().simulate('click');
-		editor = editor.update();
+		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
 
-		expect(editor.state().step).toBe(2);
-		expect(editor.text()).toMatch(/Section 1/);
-		expect(editor.text()).toMatch(/Section 2/);
+		await wait();
+
+		expect(editor.state.step).toBe(2);
+		await result.findByText(/Section 1/);
+		await result.findByText(/Section 2/);
 
 		// click Section 1 and verify Board listing
-		editor.find('.discussion-selection-item').first().simulate('click');
-		editor = editor.update();
+		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
 
-		expect(editor.state().step).toBe(3);
-		expect(editor.text()).toMatch(/Board 1/);
-		expect(editor.text()).toMatch(/Board 2/);
+		await wait();
+
+		expect(editor.state.step).toBe(3);
+		await result.findByText(/Board 1/);
+		await result.findByText(/Board 2/);
 
 		// click Board 1 and verify Topic listing
-		editor.find('.discussion-selection-item').first().simulate('click');
-		editor = editor.update();
+		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
 
-		await sleep(500);
-		editor.update();
-		expect(editor.state().step).toBe(4);
+		await wait();
 
-		editor.find('.discussion-selection-topic').first().simulate('click');
+		expect(editor.state.step).toBe(4);
 
-		await sleep(500);
+		fireEvent.click(result.container.querySelector('.discussion-selection-topic'));
 
-		// verify that the component's provided callback is called
-		// when a topic is selected
-		expect(onDiscussionTopicSelect).toHaveBeenCalled();
+		await waitFor(() =>
+			// verify that the component's provided callback is called
+			// when a topic is selected
+			expect(onDiscussionTopicSelect).toHaveBeenCalled());
 	});
 });

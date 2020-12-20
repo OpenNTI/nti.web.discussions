@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import ItemList from '../ItemList';
 import ForumItem from '../ForumItem';
@@ -14,8 +14,8 @@ describe('Item list test', () => {
 			{ title: 'item 3' }
 		];
 
-		const itemListCmp = mount(<ItemList items={items} searchTerm="item"/>);
-		expect(itemListCmp.find('.discussion-selection-item').length).toBe(3);
+		const {container} = render(<ItemList items={items} searchTerm="item"/>);
+		expect(container.querySelectorAll('.discussion-selection-item').length).toBe(3);
 
 		const tree = renderer.create(<ItemList items={items} searchTerm="item" />).toJSON();
 		expect(tree).toMatchSnapshot();
@@ -28,8 +28,8 @@ describe('Item list test', () => {
 			{ title: 'item 3' }
 		];
 
-		const itemListCmp = mount(<ItemList items={items} searchTerm="2"/>);
-		expect(itemListCmp.find('.discussion-selection-item').length).toBe(1);
+		const {container} = render(<ItemList items={items} searchTerm="2"/>);
+		expect(container.querySelectorAll('.discussion-selection-item').length).toBe(1);
 
 		const tree = renderer.create(<ItemList items={items} searchTerm="2" />).toJSON();
 		expect(tree).toMatchSnapshot();

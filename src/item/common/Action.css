@@ -1,4 +1,6 @@
 .action-username {
+	display: flex;
+	flex-direction: row;
 	font-style: normal;
 	white-space: nowrap;
 }
@@ -28,9 +30,4 @@
 	max-width: 100%;
 	overflow: hidden;
 	color: var(--primary-grey);
-}
-
-.action-username {
-	display: flex;
-	flex-direction: row;
 }

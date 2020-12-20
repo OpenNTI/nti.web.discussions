@@ -1,25 +1,27 @@
 /* eslint-env jest */
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import HighlightedContent from '../HighlightedContent';
 
 describe('Highlighted content', () => {
 	test('Single hit', () => {
-		const highlighted = shallow(<HighlightedContent content="abcdefg" term="cd"/>).find('.discussion-selection-highlight');
+		const {container} = render(<HighlightedContent content="abcdefg" term="cd"/>);
 
-		expect(highlighted.text())
+		expect(container.querySelector('.discussion-selection-highlight').textContent)
 			.toBe('cd');
 	});
 
 
 	test('Multiple hits', () => {
-		const highlighted = shallow(<HighlightedContent content="abcdefcdg" term="cd"/>).find('.discussion-selection-highlight');
+		const {container} = render(<HighlightedContent content="abcdefcdg" term="cd"/>);
+
+		const highlighted = container.querySelectorAll('.discussion-selection-highlight');
 
 		expect(highlighted.length).toBe(2);
 
-		highlighted.map((x) => {
-			expect(x.text()).toBe('cd');
-		});
+		for (const x of highlighted) {
+			expect(x.textContent).toBe('cd');
+		}
 	});
 });

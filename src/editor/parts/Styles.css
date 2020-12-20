@@ -100,9 +100,7 @@
 	}
 }
 
-.discussion-editor-container.body-only {
-
-}
+.discussion-editor-container.body-only { /* x */ }
 
 .discussion-editor-container.no-title {
 	display: grid;
