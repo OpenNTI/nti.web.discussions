@@ -8,7 +8,7 @@ const cx = classnames.bind(Styles);
 
 MentionDisplay.propTypes = {
 	children: PropTypes.any,
-	suggestion: PropTypes.object
+	suggestion: PropTypes.any
 };
 export default function MentionDisplay ({children, suggestion}) {
 	return (
