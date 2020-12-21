@@ -6,8 +6,8 @@ import Display from './Display';
 export const Strategy = Editor.Tagging.BuildStrategy({
 	trigger: '@',
 	type: Editor.Tagging.Mention,
-	allowWhiteSpace: true,
-	
+	allowWhiteSpace: false,
+
 	suggestionKey: 'username',
 	SuggestionsCmp: Suggestions,
 	suggestedOnly: true,

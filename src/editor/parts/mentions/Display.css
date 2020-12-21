@@ -1,4 +1,7 @@
 .mention-display {
-	color: var(--primary-blue);
 	display: inline-block;
+
+	&.has-suggestion {
+		color: var(--primary-blue);
+	}
 }
