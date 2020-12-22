@@ -8,7 +8,12 @@ const BatchSize = 20;
 function getFocused (hash) {
 	if (!hash || hash === '#edit' || hash === '#comment') { return; }
 
-	return decodeFromURI(hash.replace(/^#/, ''));
+	const [possibleNtiid, action] = hash.replace(/^#/, '').split('#');
+	if (action === 'edit') {
+		return;
+	}
+
+	return decodeFromURI(possibleNtiid);
 }
 
 function getTopLevel (comment) {
@@ -115,7 +120,7 @@ export default function useCommentTree (post) {
 				setLoading(false);
 			} catch (e) {
 				if (unmounted) { return; }
-
+				console.log(e.stack || e.message || e);
 				setError(e);
 				setLoading(false);
 			}
