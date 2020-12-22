@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {LinkTo} from '@nti/web-routing';
 import {User} from '@nti/web-commons';
 
 import Context from '../Context';
 
-import Styles from './Mention.css';
-
-const cx = classnames.bind(Styles);
+import styles from './Mention.css';
 
 function getAccess (post, user) {
 	const mention = post?.getMentionFor(user);
@@ -35,14 +33,14 @@ export default function Mention (props) {
 
 	if (!access) {
 		return (
-			<span className={cx('broken-mention')}>{props.children}</span>
+			<span className="broken-mention">{props.children}</span>
 		);
 	}
 
 	return !access.CanAccessContent ?
 		(<User.DisplayName user={access.User} />) :
 		(
-			<LinkTo.Object object={access.User} className={cx('mention')}>
+			<LinkTo.Object object={access.User} className={cx(styles.mention)}>
 				<User.DisplayName user={access.User} />
 			</LinkTo.Object>
 		);
