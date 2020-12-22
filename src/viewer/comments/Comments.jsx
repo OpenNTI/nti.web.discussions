@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {Router} from '@nti/web-routing';
 import {Loading, Errors} from '@nti/web-commons';
 
-import Styles from './Styles.css';
+import styles from './Styles.css';
 import Header from './parts/header';
 import Comment from './parts/comment';
 import CommentEditor from './parts/comment/CommentEditor';
 import Context from './Context';
 import useCommentTree from './use-comment-tree';
 
-const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.comments.Comments', {
 	error: 'Unable to load Comments'
 });
@@ -108,17 +107,17 @@ export default function DiscussionComments ({post}) {
 						totalPages={totalPages}
 						setPage={setPage}
 					/>
-					<div className={cx('comments-container')}>
+					<div className={cx(styles.commentsContainer)}>
 						{context.isReplying(post) && (
 							<CommentEditor
 								inReplyTo={post}
-								className={cx('post-reply-editor')}
+								className="post-reply-editor"
 							/>
 						)}
 						<Loading.Placeholder loading={loading} fallback={<Loading.Spinner />}>
-							{error && (<Errors.Message className={cx('error')} error={t('error')} />)}
+							{error && (<Errors.Message className="error" error={t('error')} />)}
 							{comments && (
-								<ul className={cx('comment-list')}>
+								<ul className={cx(styles.commentList)}>
 									{comments.map((comment) => {
 										const id = comment.getID();
 
