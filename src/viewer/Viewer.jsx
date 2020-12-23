@@ -57,6 +57,14 @@ export default function DiscussionViewer ({className, discussion, container, dia
 		}
 	};
 
+	React.useEffect(()=> {
+		const cls = 'discussion-detail-open';
+		if (dialog) {
+			document.body.classList.add(cls);
+			return () => document.body.classList.remove(cls);
+		}
+	}, [dialog]);
+
 	React.useEffect(() => {
 		return () => ContentHighlighting.Strategies.SearchHitStore.clearHitForContainer(discussion.getID());
 	}, [discussion]);
