@@ -120,6 +120,7 @@ export default function useCommentTree (post) {
 				setLoading(false);
 			} catch (e) {
 				if (unmounted) { return; }
+				// eslint-disable-next-line no-console
 				console.log(e.stack || e.message || e);
 				setError(e);
 				setLoading(false);
