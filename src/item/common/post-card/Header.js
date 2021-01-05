@@ -7,7 +7,7 @@ import Styles from './Header.css';
 
 const cx = classnames.bind(Styles);
 
-const DateFormat = 'MMMM D [at] h:mm a';
+const DateFormat = DateTime.MONTH_NAME_DAY_AT_TIME;
 
 PostCardHeader.propTypes = {
 	post: PropTypes.shape({

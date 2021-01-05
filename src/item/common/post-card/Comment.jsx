@@ -14,7 +14,7 @@ const t = scoped('nti-discussions.item.common.post-card.Comment', {
 });
 
 const Placeholder = 'placeholder';
-const DateFormat = 'MMM D [at] h:mm a';
+const DateFormat = DateTime.MONTH_ABBR_DAY_YEAR_AT_TIME;
 
 PostCardComment.Placeholder = Placeholder;
 PostCardComment.propTypes = {

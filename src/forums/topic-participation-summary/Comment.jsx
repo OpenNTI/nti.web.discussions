@@ -40,7 +40,7 @@ export default class Comment extends React.Component {
 				<div className="wrap">
 					<div className="meta">
 						<DisplayName entity={creator} />
-						<DateTime date={created} format="llll"/>
+						<DateTime date={created} format={DateTime.WEEKDAY_ABBR_MONTH_ABBR_DAY_YEAR_TIME}/>
 					</div>
 					<Viewer className="body-content" body={body || []} />
 					<span className="comments">{t('comments', {count: commentCount})}</span>
