@@ -8,7 +8,7 @@ describe('Highlighted content', () => {
 	test('Single hit', () => {
 		const {container} = render(<HighlightedContent content="abcdefg" term="cd"/>);
 
-		expect(container.querySelector('.discussion-selection-highlight').textContent)
+		expect(container.querySelector('.highlight').textContent)
 			.toBe('cd');
 	});
 
@@ -16,7 +16,7 @@ describe('Highlighted content', () => {
 	test('Multiple hits', () => {
 		const {container} = render(<HighlightedContent content="abcdefcdg" term="cd"/>);
 
-		const highlighted = container.querySelectorAll('.discussion-selection-highlight');
+		const highlighted = container.querySelectorAll('.highlight');
 
 		expect(highlighted.length).toBe(2);
 

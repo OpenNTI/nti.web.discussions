@@ -50,7 +50,7 @@ describe('Discussion selection editor', () => {
 		await wait();
 
 		// click Forum 1
-		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
+		fireEvent.click(await result.findByText(/Forum 1/));
 
 		await waitFor(async () => {
 			// should have skipped to step 3 since there was only one section in step 2
@@ -130,7 +130,7 @@ describe('Discussion selection editor', () => {
 		await result.findByText(/Forum 2/);
 
 		// click Forum 1 and verify Section listing
-		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
+		fireEvent.click(await result.findByText(/Forum 1/));
 
 		await wait();
 
@@ -139,7 +139,7 @@ describe('Discussion selection editor', () => {
 		await result.findByText(/Section 2/);
 
 		// click Section 1 and verify Board listing
-		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
+		fireEvent.click(await result.findByText(/Section 1/));
 
 		await wait();
 
@@ -148,13 +148,13 @@ describe('Discussion selection editor', () => {
 		await result.findByText(/Board 2/);
 
 		// click Board 1 and verify Topic listing
-		fireEvent.click(result.container.querySelector('.discussion-selection-item'));
+		fireEvent.click(await result.findByText(/Board 1/));
 
 		await wait();
 
 		expect(editor.state.step).toBe(4);
 
-		fireEvent.click(result.container.querySelector('.discussion-selection-topic'));
+		fireEvent.click(await result.findByText(/Board 1/));
 
 		await waitFor(() =>
 			// verify that the component's provided callback is called

@@ -7,29 +7,29 @@ import ItemList from '../ItemList';
 import ForumItem from '../ForumItem';
 
 describe('Item list test', () => {
-	test('Simple list', () => {
+	test('Simple list', async () => {
 		const items = [
 			{ title: 'item 1' },
 			{ title: 'item 2' },
 			{ title: 'item 3' }
 		];
 
-		const {container} = render(<ItemList items={items} searchTerm="item"/>);
-		expect(container.querySelectorAll('.discussion-selection-item').length).toBe(3);
+		const {getAllByTestId} = render(<ItemList items={items} searchTerm="item"/>);
+		expect(getAllByTestId('discussion-selection-item').length).toBe(3);
 
 		const tree = renderer.create(<ItemList items={items} searchTerm="item" />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
-	test('Filtered', () => {
+	test('Filtered', async () => {
 		const items = [
 			{ title: 'item 1' },
 			{ title: 'item 2' },
 			{ title: 'item 3' }
 		];
 
-		const {container} = render(<ItemList items={items} searchTerm="2"/>);
-		expect(container.querySelectorAll('.discussion-selection-item').length).toBe(1);
+		const {getAllByTestId} = render(<ItemList items={items} searchTerm="2"/>);
+		expect(getAllByTestId('discussion-selection-item').length).toBe(1);
 
 		const tree = renderer.create(<ItemList items={items} searchTerm="2" />).toJSON();
 		expect(tree).toMatchSnapshot();

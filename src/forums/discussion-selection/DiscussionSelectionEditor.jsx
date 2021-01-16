@@ -1,4 +1,3 @@
-import './DiscussionSelectionEditor.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Search} from '@nti/web-commons';
@@ -17,6 +16,19 @@ const STEPS = {
 };
 const OTHER = 'Other Discussions';
 
+const SearchBox = styled.div`
+	float: right;
+	width: 350px;
+`;
+
+const TopControls = styled.div`
+	padding-bottom: 50px;
+`;
+
+const PaddedTopicList = styled(TopicList)`
+	padding-top: 50px;
+`;
+
 //FIXME: Spit this appart into multiple small components.
 //FIXME: This is expecting the extjs course instance modal.
 export default class DiscussionSelectionEditor extends React.Component {
@@ -31,9 +43,8 @@ export default class DiscussionSelectionEditor extends React.Component {
 		Promise.all([
 			this.props.bundle.getDiscussionAssets(),
 			this.props.bundle.getForumList()
-		]).then((result) => {
-			this.onForumsLoaded(result[0], result[1]);
-		});
+		]).then(([topics, forums]) =>
+			this.onForumsLoaded(topics, forums));
 
 		this.state = {
 			step: STEPS.FORUM_LIST,
@@ -203,7 +214,11 @@ export default class DiscussionSelectionEditor extends React.Component {
 	}
 
 	renderTopControls () {
-		return (<div className="discussion-selection-topcontrols">{this.renderSearchBar()}</div>);
+		return (
+			<TopControls data-testid="discussion-selection-topcontrols">
+				{this.renderSearchBar()}
+			</TopControls>
+		);
 	}
 
 	onSearchBarChange = (value) => {
@@ -215,9 +230,9 @@ export default class DiscussionSelectionEditor extends React.Component {
 
 
 		return (
-			<div className="discussion-selection-search">
+			<SearchBox data-testid="discussion-selection-search">
 				<Search value={this.state.searchTerm} buffered={buffered} onChange={this.onSearchBarChange}/>
-			</div>
+			</SearchBox>
 		);
 	}
 
@@ -230,18 +245,18 @@ export default class DiscussionSelectionEditor extends React.Component {
 			const filteredDiscussionTopics = filterItemsBySearchTerm(this.state.courseDiscussionTopics, this.state.searchTerm);
 
 			return (
-				<div>
+				<>
 					<ItemList items={this.state.forums} headerText="Your Discussions" onSelect={this.onForumSelect} searchTerm={this.state.searchTerm}/>
-					<div className="discussion-selection-course-discussions">
-						<TopicList
-							topics={filteredDiscussionTopics}
-							headerText="Choose a Discussion"
-							onTopicSelect={this.onTopicSelect}
-							searchTerm={this.state.searchTerm}
-							selectedTopics={this.state.selectedTopics}
-						/>
-					</div>
-				</div>
+					<PaddedTopicList
+						data-testid="discussion-selection-course-discussions"
+						topics={filteredDiscussionTopics}
+						headerText="Choose a Discussion"
+						onTopicSelect={this.onTopicSelect}
+						searchTerm={this.state.searchTerm}
+						selectedTopics={this.state.selectedTopics}
+					/>
+
+				</>
 			);
 		}
 	}

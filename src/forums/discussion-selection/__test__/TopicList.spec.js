@@ -24,10 +24,10 @@ describe('Topic list test', () => {
 
 		const onTopicSelect = jest.fn();
 
-		const {container} = render(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
-		expect(container.querySelectorAll('.discussion-selection-topic').length).toBe(3);
+		const results = render(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
+		expect(results.getAllByText(/item \d/).length).toBe(3);
 
-		fireEvent.click(container.querySelector('.discussion-selection-topic'));
+		fireEvent.click(await results.queryByText(/item 1/));
 
 		await waitFor(() =>
 			expect(onTopicSelect).toHaveBeenCalled());

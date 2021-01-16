@@ -1,33 +1,29 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 
-import HighlightedContent from './HighlightedContent';
+import {ItemBox, ItemContent, Chevron} from './parts';
 
+ForumItem.propTypes = {
+	item: PropTypes.shape({
+		title: PropTypes.string,
+		get: PropTypes.func.isRequired
+	}).isRequired,
+	searchTerm: PropTypes.string,
+	onClick: PropTypes.func,
+};
 
-export default class ForumItem extends React.Component {
-	static propTypes = {
-		item: PropTypes.shape({
-			title: PropTypes.string,
-			get: PropTypes.func.isRequired
-		}).isRequired,
-		searchTerm: PropTypes.string,
-		onClick: PropTypes.func,
-	}
+export default function ForumItem ({ item, onClick, searchTerm }) {
+	const { title } = item;
+	const handleClick = useCallback(() => onClick(item), [onClick, item]);
 
-	onClick = () => this.props.onClick(this.props.item);
+	return (
+		<ItemBox data-testid="discussion-selection-item" onClick={handleClick}>
+			<ItemContent data-testid="content"
+				content={item.get('displayTitle') || title}
+				term={searchTerm}
+			/>
+			<Chevron/>
+		</ItemBox>
+	);
 
-	render () {
-		const { item, searchTerm } = this.props;
-
-		return (
-			<div className="discussion-selection-item" onClick={this.onClick}>
-				<div className="content">
-					<HighlightedContent content={item.get('displayTitle') || item.title} term={searchTerm} />
-				</div>
-				<div className="arrow-icon">
-					<i className="icon-chevron-right" />
-				</div>
-			</div>
-		);
-	}
 }

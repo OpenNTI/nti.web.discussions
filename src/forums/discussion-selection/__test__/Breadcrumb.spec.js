@@ -15,7 +15,7 @@ describe('Breadcrumb test', () => {
 		const clickHandler = jest.fn();
 
 		const result = render(<Breadcrumb breadcrumb={breadcrumb} onClick={clickHandler}/>);
-		const allBCs = result.container.querySelectorAll('.discussion-selection-breadcrumb');
+		const allBCs = result.getAllByTestId('discussion-selection-breadcrumb');
 
 		expect(allBCs.length).toBe(3);
 
@@ -24,7 +24,7 @@ describe('Breadcrumb test', () => {
 		expect(inactive.length).toBe(1);
 		expect(inactive[0].textContent).toBe('Last');
 
-		fireEvent.click(result.container.querySelector('.discussion-selection-breadcrumb'));
+		fireEvent.click(result.getByText(/First/));
 
 		await waitFor(() => expect(clickHandler).toHaveBeenCalled());
 	});
@@ -37,7 +37,7 @@ describe('Breadcrumb test', () => {
 		];
 
 		const result = render(<Breadcrumb breadcrumb={breadcrumb}/>);
-		const allBCs = result.container.querySelectorAll('.discussion-selection-breadcrumb');
+		const allBCs = result.getAllByTestId('discussion-selection-breadcrumb');
 
 		// only two items, since 'Second' was hidden, it should not be rendered
 		expect(allBCs.length).toBe(2);

@@ -2,29 +2,22 @@
 
 exports[`Item list test Filtered 1`] = `
 <div
-  className="discussion-selection-item-container"
+  data-testid="discussion-selection-item-container"
 >
+  <div />
   <div
-    className="discussion-selection-item"
+    data-testid="discussion-selection-item"
     onClick={[Function]}
   >
     <div
-      className="content"
-    >
-      <div>
-        <span>
-          item 
-        </span>
-        <span
-          className="discussion-selection-highlight"
-        >
-          2
-        </span>
-      </div>
-    </div>
-    <div
-      className="arrow-icon"
-    >
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<span>item </span><span class=\\"highlight\\">2</span>",
+        }
+      }
+      data-testid="content"
+    />
+    <div>
       <i
         className="icon-chevron-right"
       />
@@ -35,41 +28,34 @@ exports[`Item list test Filtered 1`] = `
 
 exports[`Item list test NTI-6655: Open Bin Forums 1`] = `
 <div
-  className="discussion-selection-item-container"
+  data-testid="discussion-selection-item-container"
 >
+  <div />
   <div
-    className="discussion-selection-item"
+    data-testid="discussion-selection-item"
     onClick={[Function]}
   >
     <div
-      className="content"
+      data-testid="content"
     >
-      <div>
-        Annoucments
-      </div>
+      Annoucments
     </div>
-    <div
-      className="arrow-icon"
-    >
+    <div>
       <i
         className="icon-chevron-right"
       />
     </div>
   </div>
   <div
-    className="discussion-selection-item"
+    data-testid="discussion-selection-item"
     onClick={[Function]}
   >
     <div
-      className="content"
+      data-testid="content"
     >
-      <div>
-        Discussions
-      </div>
+      Discussions
     </div>
-    <div
-      className="arrow-icon"
-    >
+    <div>
       <i
         className="icon-chevron-right"
       />
@@ -80,81 +66,58 @@ exports[`Item list test NTI-6655: Open Bin Forums 1`] = `
 
 exports[`Item list test Simple list 1`] = `
 <div
-  className="discussion-selection-item-container"
+  data-testid="discussion-selection-item-container"
 >
+  <div />
   <div
-    className="discussion-selection-item"
+    data-testid="discussion-selection-item"
     onClick={[Function]}
   >
     <div
-      className="content"
-    >
-      <div>
-        <span
-          className="discussion-selection-highlight"
-        >
-          item
-        </span>
-        <span>
-           1
-        </span>
-      </div>
-    </div>
-    <div
-      className="arrow-icon"
-    >
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<span class=\\"highlight\\">item</span><span> 1</span>",
+        }
+      }
+      data-testid="content"
+    />
+    <div>
       <i
         className="icon-chevron-right"
       />
     </div>
   </div>
   <div
-    className="discussion-selection-item"
+    data-testid="discussion-selection-item"
     onClick={[Function]}
   >
     <div
-      className="content"
-    >
-      <div>
-        <span
-          className="discussion-selection-highlight"
-        >
-          item
-        </span>
-        <span>
-           2
-        </span>
-      </div>
-    </div>
-    <div
-      className="arrow-icon"
-    >
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<span class=\\"highlight\\">item</span><span> 2</span>",
+        }
+      }
+      data-testid="content"
+    />
+    <div>
       <i
         className="icon-chevron-right"
       />
     </div>
   </div>
   <div
-    className="discussion-selection-item"
+    data-testid="discussion-selection-item"
     onClick={[Function]}
   >
     <div
-      className="content"
-    >
-      <div>
-        <span
-          className="discussion-selection-highlight"
-        >
-          item
-        </span>
-        <span>
-           3
-        </span>
-      </div>
-    </div>
-    <div
-      className="arrow-icon"
-    >
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<span class=\\"highlight\\">item</span><span> 3</span>",
+        }
+      }
+      data-testid="content"
+    />
+    <div>
       <i
         className="icon-chevron-right"
       />
