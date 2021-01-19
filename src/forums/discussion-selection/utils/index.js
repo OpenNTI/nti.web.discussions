@@ -1,21 +1,14 @@
 import { getService } from '@nti/web-client';
 
-function safeValue (value) {
-	if(!value) {
-		return '';
-	}
-
-	return value;
-}
+const empty = x => !x || x === '';
+const safe = (x) => !x ? '' : x.toLowerCase();
+const contains = (x, y) => Boolean(~safe(x).indexOf(safe(y)));
 
 export function filterItemsBySearchTerm (items, searchTerm) {
-	const filteredItems = !searchTerm || searchTerm === ''
-		? items
-		: items.filter((item) => {
-			return safeValue(item.title).toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
-		});
-
-	return filteredItems;
+	const search = searchTerm?.toLowerCase();
+	return items.filter((item) => {
+		return item && (empty(searchTerm) || contains(item.title, search) >= 0);
+	});
 }
 
 export function loadTopicsFromService (baseUrl, callback) {

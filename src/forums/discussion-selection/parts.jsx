@@ -2,18 +2,30 @@ import React from 'react';
 
 import HighlightedContent from './HighlightedContent';
 
+export const ContainerBase = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: flex-start;
+	align-content: flex-start;
+
+	& > * {
+		flex: 0 0 auto;
+	}
+`;
 
 export const Empty = styled.div`
 	position: relative;
 	margin-bottom: 1em;
+	flex: 0 0 100%;
 `;
 
 export const Header = styled.div`
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin: 10px 0 0;
 	font-size: 18px;
 	font-weight: 600;
 	color: var(--primary-grey);
+	flex: 0 0 100%;
 
 	&:empty {
 		display: none;
@@ -27,18 +39,9 @@ export const ItemBox = styled.div`
 
 	/* height: 50px; */
 	background: white;
-	margin: 0 10px 10px 0;
-	padding: 12px;
 	position: relative;
 	float: left;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
-	display: flex;
-
-	& > * { flex: 0 0 auto; }
-
-	& > :first-child {
-		flex: 1 1 auto;
-	}
 `;
 
 export const ItemContent = styled(HighlightedContent)`

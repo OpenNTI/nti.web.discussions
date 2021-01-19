@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { filterItemsBySearchTerm } from './utils';
-import { Empty, Header } from './parts';
+import { ContainerBase, Empty, Header } from './parts';
 import Item from './Item';
 
-const Container = styled.div`
+const Container = styled(ContainerBase)`
 	margin-top: 30px;
 `;
+
 
 List.propTypes =
 ItemList.propTypes = {

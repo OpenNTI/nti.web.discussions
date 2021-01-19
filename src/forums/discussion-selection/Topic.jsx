@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import HighlightedContent from './HighlightedContent';
+import { ItemBox } from './parts';
 
 export const Avatar = styled('div').attrs(({src, style, ...props}) => ({
 	'data-testid': 'discussion-selection-avatar',
@@ -38,16 +39,8 @@ export const Title = styled(HighlightedContent).attrs({'data-testid':'discussion
 	}
 `;
 
-export const Container = styled.div`
-	cursor: pointer;
-	width: 246px;
+export const Container = styled(ItemBox)`
 	height: 200px;
-	background: white;
-	margin: 0 10px 10px 0;
-	position: relative;
-	float: left;
-	-webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
 
 	&.selected {
 		outline: solid 2px var(--primary-blue) !important;

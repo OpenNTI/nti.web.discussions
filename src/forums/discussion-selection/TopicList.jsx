@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 import { filterItemsBySearchTerm } from './utils';
 import Topic from './Topic';
-import {Header, Empty} from './parts';
+import NewTopic from './NewTopic';
+import {Header, Empty, ContainerBase} from './parts';
 
-const Container = styled.div`
+const empty = x => !x || x === '';
+
+const Container = styled(ContainerBase)`
 	min-height: 300px;
 `;
 
@@ -35,9 +38,13 @@ function List ({ topics, onTopicSelect, searchTerm, ...props }) {
 
 	return (
 		<>
-			{ !filteredTopics?.length ? (
+			{ !filteredTopics?.length && (
 				<Empty data-testid="no-results">No discussions found</Empty>
-			) : filteredTopics.map(topic => (
+			)}
+
+			{empty(searchTerm) && <NewTopic /> }
+
+			{filteredTopics?.map(topic => (
 				<Topic key={topic.Creator + '--' + topic.title}
 					topic={topic}
 					onClick={onTopicSelect}
