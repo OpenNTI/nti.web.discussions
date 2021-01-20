@@ -61,42 +61,6 @@ describe('Discussion selection editor', () => {
 	});
 
 	test('Test editor steps', async () => {
-		const forums = [
-			{ title: 'Forum 1', children:
-				[
-					{ title: 'Section 1', store: {
-						getRange: () => {
-							return [
-								{ title: 'Board 1',
-									get: (prop) => { return 'Board 1'; },
-									getLink: (prop) => { return 'mockLink'; } },
-								{ title: 'Board 2',
-									get: (prop) => { return 'Board 2'; },
-									getLink: (prop) => { return 'mockLink'; } }
-							];
-						}
-					}
-					},
-					{ title: 'Section 2', store: {
-						getRange: () => {
-							return [];
-						}
-					}
-					}
-				]
-			},
-			{ title: 'Forum 2', children: [] }
-		];
-
-		const bundle = {
-			getForumList: () => {
-				return Promise.resolve(forums);
-			},
-			getDiscussionAssets: () => {
-				return Promise.resolve([]);
-			}
-		};
-
 		const topicsResp = {
 			Items: [
 				{ title: 'item 1', Creator: 'student' },
@@ -106,14 +70,60 @@ describe('Discussion selection editor', () => {
 			FilteredTotalItemCount: 3
 		};
 
-		TestUtils.setupTestClient({
-			getObjectAtURL: () => {
-				return Promise.resolve(topicsResp);
+		// @nti/lib-interfaces does not have a parallel to this structure...
+		const forums = [
+			{
+				title: 'Forum 1',
+				children: [
+					{
+						title: 'Section 1',
+						store: {
+							getRange: () => {
+								return [
+									{
+										title: 'Board 1',
+										get: (prop) => 'Board 1',
+										fetchLink: (prop) => topicsResp
+									},
+									{
+										title: 'Board 2',
+										get: (prop) => 'Board 2',
+										fetchLink: (prop) => topicsResp
+									}
+								];
+							}
+						}
+					},
+					{
+						title: 'Section 2',
+						store: {
+							getRange: () => []
+						}
+					}
+				]
 			},
+			{
+				title: 'Forum 2',
+				children: []
+			}
+		];
+
+		const bundle = {
+			//FIXME: We need to implement this structure for @nti/lib-interfaces
+			getForumList: async () => forums,
+			getDiscussionAssets: async () => [],
+
+			// @nti/lib-interfaces version of bundle has these:
+			getDiscussions: async () => [{ Items: [] }],
+			getCourseDiscussions: async () => ({ Items: [] })
+		};
+
+
+
+		TestUtils.setupTestClient({
 			resolveEntity: (entity) => {
 				return Promise.resolve({ alias: entity });
 			}
-
 		});
 
 		const onDiscussionTopicSelect = jest.fn();

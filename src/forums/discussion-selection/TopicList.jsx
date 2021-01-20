@@ -18,7 +18,8 @@ TopicList.propTypes = {
 	searchTerm: PropTypes.string,
 	headerText: PropTypes.string,
 	onTopicSelect: PropTypes.func,
-	selectedTopics: PropTypes.object
+	selectedTopics: PropTypes.object,
+	emptyMessage: PropTypes.string
 };
 
 export default function TopicList ({headerText: heading, ...props}) {
@@ -32,20 +33,20 @@ export default function TopicList ({headerText: heading, ...props}) {
 }
 
 
-function List ({ topics, onTopicSelect, searchTerm, ...props }) {
+function List ({ topics, onTopicSelect, searchTerm, emptyMessage, ...props }) {
 
 	const filteredTopics = filterItemsBySearchTerm(topics, searchTerm);
 
 	return (
 		<>
 			{ !filteredTopics?.length && (
-				<Empty data-testid="no-results">No discussions found</Empty>
+				<Empty data-testid="no-results">{emptyMessage}</Empty>
 			)}
 
 			{empty(searchTerm) && <NewTopic /> }
 
-			{filteredTopics?.map(topic => (
-				<Topic key={topic.Creator + '--' + topic.title}
+			{filteredTopics?.map((topic, i) => (
+				<Topic key={i}
 					topic={topic}
 					onClick={onTopicSelect}
 					searchTerm={searchTerm}

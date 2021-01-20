@@ -6,7 +6,7 @@ import TopicList from './TopicList';
 import ItemList from './ItemList';
 import Breadcrumb from './Breadcrumb';
 import ForumItem from './ForumItem';
-import { loadTopicsFromService, filterItemsBySearchTerm } from './utils';
+import { filterItemsBySearchTerm } from './utils';
 
 const STEPS = {
 	FORUM_LIST: 1,
@@ -14,7 +14,6 @@ const STEPS = {
 	BOARD_LIST: 3,
 	TOPIC_LIST: 4
 };
-const OTHER = 'Other Discussions';
 
 const SearchBox = styled.div`
 	float: right;
@@ -29,164 +28,166 @@ const PaddedTopicList = styled(TopicList)`
 	padding-top: 50px;
 `;
 
-//FIXME: Spit this appart into multiple small components.
-//FIXME: This is expecting the extjs course instance modal.
+const push = (x, y) => [...(x || []), y];
+
 export default class DiscussionSelectionEditor extends React.Component {
 	static propTypes = {
 		bundle: PropTypes.object,
 		onDiscussionTopicSelect: PropTypes.func
 	}
 
-	constructor (props) {
-		super(props);
-
-		Promise.all([
-			this.props.bundle.getDiscussionAssets(),
-			this.props.bundle.getForumList()
-		]).then(([topics, forums]) =>
-			this.onForumsLoaded(topics, forums));
-
-		this.state = {
-			step: STEPS.FORUM_LIST,
-			searchTerm: '',
-			selectedTopics: new Set()
-		};
+	state = {
+		step: STEPS.FORUM_LIST,
+		searchTerm: '',
+		selectedTopics: new Set()
 	}
 
-	loadTopics (board, searchTerm) {
-		const me = this;
+	async componentDidMount () {
 
-		const callback = (topics) => {
-			me.setState( { selectedBoard: board, searchTerm: searchTerm, step: STEPS.TOPIC_LIST, topics : topics }, () => {
-				me.updateTopicSelection(new Set());
-			});
-		};
+		const [topics, forums] = await Promise.all([
 
-		loadTopicsFromService(board.getLink('contents'), callback);
+			this.props.bundle.getDiscussionAssets(),
+			// this.props.bundle.getCourseDiscussions()
+			// 	.then(x => x.Items || x),
+
+			this.props.bundle.getForumList(),
+			// this.props.bundle.getDiscussions()
+			// 	.then(x => x.filter(Boolean).reduce((a, _) => [...a, ...(_?.Items || [])], []))
+		]);
+
+		this.onForumsLoaded(topics, forums);
+	}
+
+	async loadTopics (board, searchTerm) {
+
+		const topics = (await board.fetchLink('contents'))?.Items || [];
+
+		this.setState( {
+			selectedBoard: board,
+			searchTerm: searchTerm,
+			step: STEPS.TOPIC_LIST,
+			topics
+		}, () => {
+			this.updateTopicSelection(new Set());
+		});
+
 	}
 
 	onForumsLoaded (courseDiscussionTopics, forums) {
 		// initialize breadcrumb for forums list
-		const isSimple = courseDiscussionTopics.length === 0 && forums.length === 1 && forums[0].title === OTHER;
+		const isSimple = courseDiscussionTopics.length === 0 && forums.length === 1 && forums[0].title === 'Other Discussions';
 
-		let newState = { breadcrumb: [{
-			title: 'Forums',
+		this.setState({
+			breadcrumb: push(null, {
+				title: 'Forums',
+				step: STEPS.FORUM_LIST,
+				// isHidden: isSimple,
+				activate: () =>
+					this.onForumsLoaded(this.state.courseDiscussionTopics, this.state.forums)
+			}),
 			step: STEPS.FORUM_LIST,
-			onClick: () => { return this.onForumsLoaded(this.state.courseDiscussionTopics, this.state.forums); }
-		}]};
-
-		const modifiedCourseDiscussionTopics = courseDiscussionTopics.map((t) => {
-			t.title = t.get('title');
-			return t;
+			forums,
+			courseDiscussionTopics
+		}, () => {
+			if (isSimple) {
+				this.onForumSelect(forums[0], true);
+			}
 		});
-
-		let stateCallback = () => { };
-
-		if (isSimple) {
-			stateCallback = () => { this.onForumSelect(forums[0], true); };
-		}
-
-		newState = { ...newState, step: STEPS.FORUM_LIST, forums: forums, courseDiscussionTopics: modifiedCourseDiscussionTopics };
-
-		this.setState(newState, stateCallback);
 	}
 
 	onForumSelect = (forum, isHidden) => {
-		let breadcrumb = this.state.breadcrumb ? [...this.state.breadcrumb] : [];
-
-		breadcrumb.push({
+		const breadcrumb = push(this.state.breadcrumb, {
 			title: forum.title,
 			step: STEPS.SECTION_LIST,
-			isHidden: isHidden,
-			onClick: () => { this.onForumSelect(forum, isHidden); } });
+			isHidden,
+			activate: () => this.onForumSelect(forum, isHidden)
+		});
 
-		let newState = { breadcrumb: breadcrumb };
-		let stateCallback = () => { };
-
+		//FIXME: This is a ExtJS legacy property...
 		const sections = forum.children;
 
 		// in case anything was selected from course discussions, clear it out now
 		this.updateTopicSelection(new Set());
 
 		// if only one section to choose from, skip ahead to the next step automatically
-		if(sections && sections.length === 1) {
-			newState.selectedForum = forum;
-			stateCallback = () => { this.onSectionSelect(sections[0], true); };
+		if(sections?.length <= 1) {
+			this.setState({breadcrumb, selectedForum: forum}, () => { this.onSectionSelect(sections?.[0], true); });
 		}
 		else {
-			newState = { ...newState, step: STEPS.SECTION_LIST, selectedForum: forum, sections: sections, searchTerm: '' };
+			this.setState({
+				breadcrumb,
+				step: STEPS.SECTION_LIST,
+				selectedForum: forum,
+				sections,
+				searchTerm: ''
+			});
 		}
-
-		this.setState(newState, stateCallback);
 	}
 
 	onSectionSelect = (section, isHidden) => {
-		let breadcrumb = this.state.breadcrumb ? [...this.state.breadcrumb] : [];
-
-		breadcrumb.push({
+		let breadcrumb = push(this.state.breadcrumb, {
 			title: section.title,
 			step: STEPS.BOARD_LIST,
 			isHidden: isHidden,
-			onClick: () => { this.onSectionSelect(section, isHidden); } });
-
-		let newState = { breadcrumb: breadcrumb };
-		let stateCallback = () => { };
-
-		const boards = section.store.getRange().map((board) => {
-			board.title = board.get('title');
-			return board;
+			activate: () => this.onSectionSelect(section, isHidden)
 		});
 
+		//FIXME: This is using ExtJS objects...
+		const boards = section.store.getRange();
+
 		// if only one board to choose from, skip ahead to the next step automatically
-		if(boards && boards.length === 1) {
-			newState.selectedSection = section;
-			stateCallback = () => this.onBoardSelect(boards[0], true);
-		}
-		else {
-			newState = { ...newState, step: STEPS.BOARD_LIST, selectedSection: section, boards: boards, searchTerm: '' };
+		if(boards?.length === 1) {
+			return this.setState({
+				breadcrumb,
+				selectedSection: section
+			}, () =>
+				this.onBoardSelect(boards[0], true)
+			);
 		}
 
-		this.setState(newState, stateCallback);
+		this.setState({
+			breadcrumb,
+			step: STEPS.BOARD_LIST,
+			selectedSection: section,
+			boards,
+			searchTerm: ''
+		});
 	}
 
 	onBoardSelect = (board, isHidden) => {
-		let breadcrumb = this.state.breadcrumb ? [...this.state.breadcrumb] : [];
-
-		breadcrumb.push({
-			title: (board.get && board.get('displayTitle')) || board.title,
-			isHidden: isHidden,
-			onClick: () => { this.onBoardSelect(board, isHidden); } });
-
-		this.setState( { breadcrumb: breadcrumb }, () => { this.loadTopics(board, ''); });
+		this.setState({
+			breadcrumb: push(this.state.breadcrumb, {
+				title: board.title,
+				isHidden,
+				activate: () => this.onBoardSelect(board, isHidden)
+			})
+		}, () =>
+			this.loadTopics(board, '')
+		);
 	}
 
 	onTopicSelect = (topic) => {
-		let selectedTopics = this.state.selectedTopics;
+		const selected = new Set(this.state.selectedTopics);
+		const hadTopic = selected.has(topic);
 
 		// leaving this as set operations so that multi-selection is easily
 		// implementable.  if using multi-select, instead of clearing the
 		// existing list, just remove the individual topic with delete()
-		if(selectedTopics.has(topic)) {
-			selectedTopics.clear();
-		}
-		else {
-			selectedTopics.clear();
-			selectedTopics.add(topic);
+
+		//selected.delete(topic);
+		selected.clear();
+
+		if (!hadTopic) {
+			selected.add(topic);
 		}
 
-		this.updateTopicSelection(selectedTopics);
+		this.updateTopicSelection(selected);
 	}
 
-	// always call this to topic selection state, otherwise the container's
-	// provided onDiscussionTopicSelect function won't be called
-	updateTopicSelection (selectedTopics) {
-		this.setState({ selectedTopics: selectedTopics });
-
-		this.props.onDiscussionTopicSelect([...selectedTopics]);
-	}
 
 	onBreadcrumbClick = (bc) => {
-		if(this.state.step === bc.step) {
+		const {step, breadcrumb} = this.state;
+		if(step === bc.step) {
 			// no need to do anything if we aren't navigating elsewhere
 			return;
 		}
@@ -194,128 +195,136 @@ export default class DiscussionSelectionEditor extends React.Component {
 		// clear selected topics when moving back to a previous step
 		this.updateTopicSelection(new Set());
 
-		// need to trim the breadcrumb down to the selection, minus one
-		// minus one because the breadcrumb click handler will push
-		// the appropriate current breadcrumb
-		this.setState( { searchTerm: '', breadcrumb : this.state.breadcrumb.slice(0, bc.step - 1) },
-			() => {
-				bc.onClick();
-			});
-	}
-
-	renderBreadcrumb () {
-		if(this.state.step === 1) {
-			return;
-		}
-
-		return (
-			<Breadcrumb breadcrumb={this.state.breadcrumb} onClick={this.onBreadcrumbClick}/>
-		);
-	}
-
-	renderTopControls () {
-		return (
-			<TopControls data-testid="discussion-selection-topcontrols">
-				{this.renderSearchBar()}
-			</TopControls>
-		);
-	}
-
-	onSearchBarChange = (value) => {
-		this.setState({ searchTerm: value });
-	}
-
-	renderSearchBar () {
-		const buffered = false;
-
-
-		return (
-			<SearchBox data-testid="discussion-selection-search">
-				<Search value={this.state.searchTerm} buffered={buffered} onChange={this.onSearchBarChange}/>
-			</SearchBox>
-		);
-	}
-
-	topicSelect = (topic) => {
-		this.onTopicSelect(topic);
-	};
-
-	renderForums () {
-		if(this.state.forums) {
-			const filteredDiscussionTopics = filterItemsBySearchTerm(this.state.courseDiscussionTopics, this.state.searchTerm);
-
-			return (
-				<>
-					<ItemList items={this.state.forums} headerText="Your Discussions" onSelect={this.onForumSelect} searchTerm={this.state.searchTerm}/>
-					<PaddedTopicList
-						data-testid="discussion-selection-course-discussions"
-						topics={filteredDiscussionTopics}
-						headerText="Choose a Discussion"
-						onTopicSelect={this.onTopicSelect}
-						searchTerm={this.state.searchTerm}
-						selectedTopics={this.state.selectedTopics}
-					/>
-
-				</>
-			);
-		}
-	}
-
-	renderSections () {
-		if(this.state.selectedForum) {
-			return (<ItemList items={this.state.sections} headerText="Choose a Section" onSelect={this.onSectionSelect} searchTerm={this.state.searchTerm}/>);
-		}
-	}
-
-	renderBoards () {
-		const { selectedSection, boards, searchTerm } = this.state;
-		if(selectedSection) {
-			return (<ItemList items={boards} headerText="Choose a Forum" ItemCmp={ForumItem} onSelect={this.onBoardSelect} searchTerm={searchTerm}/>);
-		}
+		this.setState( {
+			searchTerm: '',
+			// need to trim the breadcrumb down to the selection, minus one
+			// minus one because the breadcrumb click handler will push
+			// the appropriate current breadcrumb
+			breadcrumb: breadcrumb.slice(0, bc.step - 1)
+		}, bc.activate);
 	}
 
 
-	renderTopics () {
-		if(!this.state.topics) {
-			return null;
-		}
+	// always call this to topic selection state, otherwise the container's
+	// provided onDiscussionTopicSelect function won't be called
+	updateTopicSelection (selectedTopics) {
+		this.setState({ selectedTopics });
 
-		return (
-			<TopicList
-				topics={this.state.topics}
-				headerText="Choose a Discussion"
-				onTopicSelect={this.onTopicSelect}
-				selectedTopics={this.state.selectedTopics}
-				searchTerm={this.state.searchTerm}
-			/>
-		);
+		this.props.onDiscussionTopicSelect([...selectedTopics]);
 	}
 
-	renderBody () {
-		const { step } = this.state;
 
-		if(step === STEPS.FORUM_LIST) {
-			return this.renderForums();
-		}
-		else if(step === STEPS.SECTION_LIST) {
-			return this.renderSections();
-		}
-		else if(step === STEPS.BOARD_LIST) {
-			return this.renderBoards();
-		}
-		else if(step === STEPS.TOPIC_LIST) {
-			return this.renderTopics();
-		}
-	}
+	onSearchBarChange = (searchTerm) => this.setState({ searchTerm })
+
 
 	render () {
+		const { step, searchTerm, breadcrumb } = this.state;
+
 		return(
 			<div>
-				{this.renderTopControls()}
-				{this.renderBreadcrumb()}
+				<TopControls data-testid="discussion-selection-topcontrols">
+					<SearchBox data-testid="discussion-selection-search">
+						<Search value={searchTerm} buffered={false} onChange={this.onSearchBarChange}/>
+					</SearchBox>
+				</TopControls>
 
-				{this.renderBody()}
+				{step !== 1 && (
+					<Breadcrumb breadcrumb={breadcrumb} onClick={this.onBreadcrumbClick}/>
+				)}
+
+				{step === STEPS.FORUM_LIST && <Forums {...this.state} onForumSelect={this.onForumSelect} onSelect={this.onTopicSelect} /> }
+
+				{step === STEPS.SECTION_LIST && <Sections {...this.state} onSelect={this.onSectionSelect} /> }
+
+				{step === STEPS.BOARD_LIST && <Boards {...this.state} onSelect={this.onBoardSelect} /> }
+
+				{step === STEPS.TOPIC_LIST && <Topics {...this.state} onSelect={this.onTopicSelect} /> }
 			</div>
 		);
 	}
+}
+
+
+function Forums ({courseDiscussionTopics, forums, onForumSelect, onSelect, selectedTopics, searchTerm}) {
+	if(!forums) {
+		return null;
+	}
+
+	const filteredDiscussionTopics = filterItemsBySearchTerm(courseDiscussionTopics, searchTerm);
+
+	return (
+		<>
+			<ItemList
+				headerText="Your Discussions"
+				emptyMessage="No discussions found"
+				items={forums}
+				onSelect={onForumSelect}
+				searchTerm={searchTerm}
+			/>
+
+			<PaddedTopicList
+				data-testid="discussion-selection-course-discussions"
+				topics={filteredDiscussionTopics}
+				headerText="Choose a Discussion"
+				onTopicSelect={onSelect}
+				searchTerm={searchTerm}
+				selectedTopics={selectedTopics}
+			/>
+
+		</>
+	);
+}
+
+
+function Sections ({onSelect, selectedForum, sections, searchTerm}) {
+	if(!selectedForum) {
+		return null;
+	}
+
+	return (
+		<ItemList
+			headerText="Choose a Section"
+			emptyMessage="No sections found"
+			items={sections}
+			onSelect={onSelect}
+			searchTerm={searchTerm}
+		/>
+	);
+}
+
+
+function Boards ({ boards, onSelect, selectedSection, searchTerm }) {
+	if(!selectedSection) {
+		return null;
+	}
+
+	return (
+		<ItemList
+			headerText="Choose a Forum"
+			emptyMessage="No forums found"
+			items={boards}
+			ItemCmp={ForumItem}
+			onSelect={onSelect}
+			searchTerm={searchTerm}
+		/>
+	);
+
+}
+
+
+function Topics ({onSelect, topics, selectedTopics, searchTerm}) {
+	if(!topics) {
+		return null;
+	}
+
+	return (
+		<TopicList
+			topics={topics}
+			headerText="Choose a Discussion"
+			emptyMessage="No discussions found"
+			onTopicSelect={onSelect}
+			selectedTopics={selectedTopics}
+			searchTerm={searchTerm}
+		/>
+	);
 }

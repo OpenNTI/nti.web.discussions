@@ -41,9 +41,9 @@ function List ({ items, onSelect, searchTerm, ItemCmp }) {
 		return <Empty>No discussions found</Empty>;
 	}
 
-	return filteredItems.map(item => (
+	return filteredItems.map((item, i) => (
 		<ItemCmp
-			key={item.title}
+			key={i}
 			item={item}
 			onClick={onSelect}
 			searchTerm={searchTerm}

@@ -59,7 +59,7 @@ export default function Topic ({onClick, topic, selectedTopics, searchTerm}) {
 
 	return (
 		<Container selected={selectedTopics.has(topic)} onClick={handleClick}>
-			<Avatar src={topic?.get?.('icon')}/>
+			<Avatar src={topic.icon}/>
 			<Title
 				content={topic.title}
 				term={searchTerm}

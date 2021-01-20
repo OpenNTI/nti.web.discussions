@@ -1,4 +1,3 @@
-import { getService } from '@nti/web-client';
 
 const empty = x => !x || x === '';
 const safe = (x) => !x ? '' : x.toLowerCase();
@@ -9,15 +8,4 @@ export function filterItemsBySearchTerm (items, searchTerm) {
 	return items?.filter(item =>
 		item && (empty(searchTerm) || contains(item.title, search))
 	);
-}
-
-export function loadTopicsFromService (baseUrl, callback) {
-	getService().then((service) => {
-		service.getObjectAtURL(baseUrl)
-			.then((resp) => {
-				const topics = resp.Items || [];
-
-				callback(topics);
-			});
-	});
 }
