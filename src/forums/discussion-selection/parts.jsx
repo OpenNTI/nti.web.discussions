@@ -40,7 +40,6 @@ export const ItemBox = styled.div`
 	/* height: 50px; */
 	background: white;
 	position: relative;
-	float: left;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.28);
 `;
 

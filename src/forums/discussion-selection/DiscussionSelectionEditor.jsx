@@ -5,7 +5,6 @@ import {Search} from '@nti/web-commons';
 import TopicList from './TopicList';
 import ItemList from './ItemList';
 import Breadcrumb from './Breadcrumb';
-import ForumItem from './ForumItem';
 import { filterItemsBySearchTerm } from './utils';
 
 const STEPS = {
@@ -303,7 +302,6 @@ function Boards ({ boards, onSelect, selectedSection, searchTerm }) {
 			headerText="Choose a Forum"
 			emptyMessage="No forums found"
 			items={boards}
-			ItemCmp={ForumItem}
 			onSelect={onSelect}
 			searchTerm={searchTerm}
 		/>
