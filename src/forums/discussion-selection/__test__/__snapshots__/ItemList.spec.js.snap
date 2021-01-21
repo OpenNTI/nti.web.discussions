@@ -38,7 +38,7 @@ exports[`Item list test NTI-6655: Open Bin Forums 1`] = `
     <div
       data-testid="content"
     >
-      Annoucments
+      Open Announcements
     </div>
     <div>
       <i
@@ -53,7 +53,7 @@ exports[`Item list test NTI-6655: Open Bin Forums 1`] = `
     <div
       data-testid="content"
     >
-      Discussions
+      Open Discussions
     </div>
     <div>
       <i

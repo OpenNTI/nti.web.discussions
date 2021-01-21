@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import { render } from '@testing-library/react';
 
 import ItemList from '../ItemList';
-import ForumItem from '../ForumItem';
 
 describe('Item list test', () => {
 	test('Simple list', async () => {
@@ -54,7 +53,7 @@ describe('Item list test', () => {
 				get: function (property) { return this[property]; }
 			}
 		];
-		const tree = renderer.create(<ItemList items={items} ItemCmp={ForumItem} onSelect={() => {}} searchTerm="" />).toJSON();
+		const tree = renderer.create(<ItemList items={items} onSelect={() => {}} searchTerm="" />).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 });
