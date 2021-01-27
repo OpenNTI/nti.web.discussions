@@ -29,6 +29,9 @@ const PaddedTopicList = styled(TopicList)`
 
 const push = (x, y) => [...(x || []), y];
 
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default class DiscussionSelectionEditor extends React.Component {
 	static propTypes = {
 		bundle: PropTypes.object,
@@ -221,7 +224,7 @@ export default class DiscussionSelectionEditor extends React.Component {
 
 		return(
 			<div>
-				<TopControls data-testid="discussion-selection-topcontrols">
+				<TopControls data-testid="discussion-selection-top-controls">
 					<SearchBox data-testid="discussion-selection-search">
 						<Search value={searchTerm} buffered={false} onChange={this.onSearchBarChange}/>
 					</SearchBox>

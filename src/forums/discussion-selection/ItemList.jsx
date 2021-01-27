@@ -23,6 +23,9 @@ ItemList.defaultProps = {
 	ItemCmp: Item
 };
 
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default function ItemList ({headerText: heading, ...props}) {
 
 	return (

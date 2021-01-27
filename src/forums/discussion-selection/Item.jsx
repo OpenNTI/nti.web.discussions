@@ -1,3 +1,4 @@
+
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 
@@ -21,6 +22,9 @@ Item.propTypes = {
 	searchTerm: PropTypes.string,
 	onClick: PropTypes.func,
 };
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default function Item ({onClick, item, searchTerm}) {
 	const { title } = item;
 	const handleClick = useCallback(() => onClick(item), [onClick, item]);

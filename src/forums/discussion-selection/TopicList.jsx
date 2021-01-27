@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 
 import { filterItemsBySearchTerm } from './utils';
 import Topic from './Topic';
-import NewTopic from './NewTopic';
 import {Header, Empty, ContainerBase} from './parts';
 
-const empty = x => !x || x === '';
 
 const Container = styled(ContainerBase)`
 	min-height: 300px;
@@ -22,6 +20,9 @@ TopicList.propTypes = {
 	emptyMessage: PropTypes.string
 };
 
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default function TopicList ({headerText: heading, ...props}) {
 
 	return (
@@ -42,8 +43,6 @@ function List ({ topics, onTopicSelect, searchTerm, emptyMessage, ...props }) {
 			{ !filteredTopics?.length && (
 				<Empty data-testid="no-results">{emptyMessage}</Empty>
 			)}
-
-			{empty(searchTerm) && <NewTopic /> }
 
 			{filteredTopics?.map((topic, i) => (
 				<Topic key={i}

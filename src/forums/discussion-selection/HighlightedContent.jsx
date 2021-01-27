@@ -13,6 +13,9 @@ HighlightedContent.propTypes = {
 	term: PropTypes.string
 };
 
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default function HighlightedContent ({ children, content, term, ...props }) {
 	if (!content || typeof children === 'string') {
 		content = children;

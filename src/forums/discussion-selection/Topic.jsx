@@ -54,6 +54,9 @@ Topic.propTypes = {
 	topic: PropTypes.object.isRequired,
 };
 
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default function Topic ({onClick, topic, selectedTopics, searchTerm}) {
 	const handleClick = useCallback(() => onClick(topic), [onClick, topic]);
 

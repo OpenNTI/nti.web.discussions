@@ -49,6 +49,9 @@ Breadcrumbs.propTypes = {
 	onClick: PropTypes.func
 };
 
+/**
+ * @deprecated This code is retained for legacy content-backed discussions.
+ */
 export default function Breadcrumbs ({breadcrumb, onClick}) {
 
 	if(!breadcrumb?.length) {
