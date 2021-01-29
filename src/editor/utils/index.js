@@ -1,1 +1,1 @@
-export hasContentChanged from './has-content-changed';
+export { default as hasContentChanged } from './has-content-changed';

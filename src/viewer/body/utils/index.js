@@ -1,1 +1,1 @@
-export getLegacyBody from './get-legacy-body';
+export { default as getLegacyBody } from './get-legacy-body';

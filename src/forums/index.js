@@ -1,6 +1,6 @@
-export TopicParticipationSummary from './topic-participation-summary';
-export DiscussionSelectionEditor from './discussion-selection';
-export EmptyTopicList from './components/EmptyTopicList';
-export EmailNotificationBar from './components/EmailNotificationBar';
+export { default as TopicParticipationSummary } from './topic-participation-summary';
+export { default as DiscussionSelectionEditor } from './discussion-selection';
+export { default as EmptyTopicList } from './components/EmptyTopicList';
+export { default as EmailNotificationBar } from './components/EmailNotificationBar';
 export * from './forum-list';
-export Editor from './forum-editor';
+export { default as Editor } from './forum-editor';

@@ -1,1 +1,1 @@
-export getBodyOverflowInfo from './get-body-overflow-info';
+export { default as getBodyOverflowInfo } from './get-body-overflow-info';

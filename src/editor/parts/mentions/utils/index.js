@@ -1,1 +1,1 @@
-export resolveSuggestions from './resolve-suggestions';
+export { default as resolveSuggestions } from './resolve-suggestions';

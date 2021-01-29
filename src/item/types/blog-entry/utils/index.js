@@ -1,1 +1,1 @@
-export makePostInterface from './make-post-interface';
+export { default as makePostInterface } from './make-post-interface';
