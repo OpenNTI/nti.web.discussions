@@ -21,9 +21,7 @@ const getBlock = x => x && x.nodeType === 3 ? x.parentNode : x;
 
 const logger = Logger.get('lib:components:discussions:context:Page');
 
-export default
-@Registry.register('application/vnd.nextthought.pageinfo')
-class PageInfo extends React.Component {
+export default class PageInfo extends React.Component {
 	static propTypes = {
 		item: PropTypes.instanceOf(Models.content.PageInfo),
 		for: PropTypes.shape({
@@ -129,3 +127,5 @@ class PageInfo extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.pageinfo')(PageInfo);

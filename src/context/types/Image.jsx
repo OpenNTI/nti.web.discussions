@@ -10,10 +10,7 @@ import Registry from './Registry';
 const PRESENTATION_CARD = 'presentation-card';
 const stop = e => (e.preventDefault(), e.stopPropagation());
 
-export default
-@Registry.register('nti-data-markupenabled')
-@Registry.register('nti-data-markupdisabled')
-class Image extends React.PureComponent {
+export default class Image extends React.PureComponent {
 	static propTypes = {
 		item: PropTypes.object
 	}
@@ -72,3 +69,6 @@ class Image extends React.PureComponent {
 		);
 	}
 }
+
+Registry.register('nti-data-markupenabled')(Image);
+Registry.register('nti-data-markupdisabled')(Image);

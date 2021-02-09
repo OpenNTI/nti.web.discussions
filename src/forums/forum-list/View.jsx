@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { decorate } from '@nti/lib-commons';
 import { Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { encodeForURI } from '@nti/lib-ntiids';
@@ -21,8 +22,6 @@ const DEFAULT_TEXT = {
 
 const t = scoped('forums.groups.sections', DEFAULT_TEXT);
 
-export default
-@Store.connect(['items', 'loading', 'loaded', 'error', 'isSimple', 'hasForums'])
 class ForumListView extends React.Component {
 	static deriveBindingFromProps (props) {
 		return props.bundle;
@@ -139,3 +138,7 @@ class ForumListView extends React.Component {
 		);
 	}
 }
+
+export default decorate(ForumListView, [
+	Store.connect(['items', 'loading', 'loaded', 'error', 'isSimple', 'hasForums'])
+]);

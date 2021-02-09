@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {DisplayName} from '@nti/web-commons';
 import {Hooks, Events} from '@nti/web-session';
 import classnames from 'classnames/bind';
@@ -10,8 +11,6 @@ import styles from './View.css';
 
 const cx = classnames.bind(styles);
 
-export default
-@Hooks.onEvent(Events.NOTE_UPDATED, 'noteUpdated')
 class NoteSummary extends React.Component {
 	static propTypes = {
 		note: PropTypes.object.isRequired
@@ -42,3 +41,7 @@ class NoteSummary extends React.Component {
 		);
 	}
 }
+
+export default decorate(NoteSummary, [
+	Hooks.onEvent(Events.NOTE_UPDATED, 'noteUpdated')
+]);

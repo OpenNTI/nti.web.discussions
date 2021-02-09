@@ -1,3 +1,4 @@
+import {decorate} from '@nti/lib-commons';
 import {Stores, Mixins} from '@nti/lib-store';
 import {mixin} from '@nti/lib-decorators';
 
@@ -29,8 +30,6 @@ function uniqueItems (items) {
 	return unique;
 }
 
-export default
-@mixin(Mixins.Searchable)
 class StreamStore extends Stores.BoundStore {
 	cleanup () {
 		if (this.cleanupListeners) {
@@ -66,7 +65,7 @@ class StreamStore extends Stores.BoundStore {
 		if (
 			this.binding.context === this.context &&
 			this.binding.sortOn === this.sortOn &&
-			this.binding.sortOrder === this.sortOrder && 
+			this.binding.sortOrder === this.sortOrder &&
 			this.searchTerm === this.lastSearchTerm
 		) { return; }
 
@@ -86,7 +85,7 @@ class StreamStore extends Stores.BoundStore {
 			this.context.removeListener('item-added', onItemAdded);
 			delete this.cleanupListeners;
 		};
-		
+
 		this.setImmediate({
 			loading: false,
 			items: null,
@@ -148,7 +147,7 @@ class StreamStore extends Stores.BoundStore {
 
 	async loadPinned (context, search) {
 		if (!context.loadPinnedContents) { return; }
-			
+
 		this.setImmediate({
 			pinnedItems: null,
 			pinnedError: null
@@ -252,3 +251,7 @@ class StreamStore extends Stores.BoundStore {
 		}
 	}
 }
+
+export default decorate(StreamStore, [
+	mixin(Mixins.Searchable)
+]);

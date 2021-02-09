@@ -1,6 +1,7 @@
 import './ForumItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import { LinkTo } from '@nti/web-routing';
 import { HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
@@ -16,8 +17,6 @@ const DEFAULT_TEXT = {
 
 const t = scoped('forums.topic', DEFAULT_TEXT);
 
-export default
-@HOC.ItemChanges.compose
 class ForumItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.shape({
@@ -69,3 +68,8 @@ class ForumItem extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ForumItem, [
+	HOC.ItemChanges.compose
+]);

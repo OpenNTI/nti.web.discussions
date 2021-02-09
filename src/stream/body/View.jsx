@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {restProps} from '@nti/lib-commons';
+import {decorate, restProps} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Events, Hooks} from '@nti/web-session';
 import {Loading, Layouts} from '@nti/web-commons';
@@ -21,22 +21,6 @@ const t = scoped('nti-discussions.stream.body.View', {
 	searchContext: 'Channel'
 });
 
-export default
-@searchable()
-@contextual(t('searchContext'), (props) => {
-	return props?.searchContext ?? props?.context?.getID();
-})
-@Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted', 'pinnedItems', 'pinnedError', 'itemPinned', 'itemUnpinned'])
-@Hooks.onEvent({
-	[Events.NOTE_UPDATED]: 'itemUpdated',
-	[Events.TOPIC_UPDATED]: 'itemUpdated',
-	[Events.BLOG_ENTRY_UPDATED]: 'itemUpdated',
-	[Events.NOTE_DELETED]: 'itemDeleted',
-	[Events.TOPIC_DELETED]: 'itemDeleted',
-	[Events.BLOG_ENTRY_DELETED]: 'itemDeleted',
-	[Events.ITEM_PINNED]: 'itemPinned',
-	[Events.ITEM_UNPINNED]: 'itemUnpinned'
-})
 class DiscussionsStream extends React.Component {
 	static List = List
 	static Grid = Grid
@@ -142,3 +126,22 @@ class DiscussionsStream extends React.Component {
 		return (<EmptyCmp searchTerm={searchTerm} />);
 	}
 }
+
+
+export default decorate(DiscussionsStream, [
+	searchable(),
+	contextual(t('searchContext'), (props) => {
+		return props?.searchContext ?? props?.context?.getID();
+	}),
+	Store.connect(['items', 'loading', 'error', 'loadMore', 'itemUpdated', 'itemDeleted', 'pinnedItems', 'pinnedError', 'itemPinned', 'itemUnpinned']),
+	Hooks.onEvent({
+		[Events.NOTE_UPDATED]: 'itemUpdated',
+		[Events.TOPIC_UPDATED]: 'itemUpdated',
+		[Events.BLOG_ENTRY_UPDATED]: 'itemUpdated',
+		[Events.NOTE_DELETED]: 'itemDeleted',
+		[Events.TOPIC_DELETED]: 'itemDeleted',
+		[Events.BLOG_ENTRY_DELETED]: 'itemDeleted',
+		[Events.ITEM_PINNED]: 'itemPinned',
+		[Events.ITEM_UNPINNED]: 'itemUnpinned'
+	})
+]);
