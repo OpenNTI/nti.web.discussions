@@ -7,7 +7,7 @@ export default async function resolveSuggestions(search, post) {
 
 	const service = await getService();
 	const searchUrl = service.getUserSearchURL(search);
-	const batch = await service.getBatch(searchUrl);
+	const batch = await service.getBatch(searchUrl, { batchSize: 10 });
 
 	return {
 		people: batch.Items,

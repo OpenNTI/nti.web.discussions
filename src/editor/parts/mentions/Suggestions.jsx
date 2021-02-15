@@ -31,8 +31,8 @@ MentionSuggestions.propTypes = {
 export default function MentionSuggestions({ search, post, applySuggestion }) {
 	const resolver = useResolver(
 		() => resolveSuggestions(search, post),
-		[search],
-		{ buffer: 300 }
+		[search, post],
+		{ buffer: 500 }
 	);
 
 	const loading = isPending(resolver);
