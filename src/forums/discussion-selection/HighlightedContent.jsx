@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {rawContent} from '@nti/lib-commons';
+import { rawContent } from '@nti/lib-commons';
 
-const styles = css`
+const styles = stylesheet`
 	.highlight {
 		background-color: #eaeaaa;
 	}
@@ -10,18 +10,23 @@ const styles = css`
 
 HighlightedContent.propTypes = {
 	content: PropTypes.string,
-	term: PropTypes.string
+	term: PropTypes.string,
 };
 
 /**
  * @deprecated This code is retained for legacy content-backed discussions.
  */
-export default function HighlightedContent ({ children, content, term, ...props }) {
+export default function HighlightedContent({
+	children,
+	content,
+	term,
+	...props
+}) {
 	if (!content || typeof children === 'string') {
 		content = children;
 	}
-	if(!content || !term || term === '') {
-		return (<div {...props}>{content}</div>);
+	if (!content || !term || term === '') {
+		return <div {...props}>{content}</div>;
 	}
 
 	let startIndex = 0;
@@ -30,30 +35,36 @@ export default function HighlightedContent ({ children, content, term, ...props 
 
 	content = toHTML(content);
 
-	while(startIndex < content.length) {
-		if(content.substring(startIndex, startIndex + term.length).toLowerCase() === term.toLowerCase()) {
-			if(nonHighlightedText.length > 0) {
+	while (startIndex < content.length) {
+		if (
+			content
+				.substring(startIndex, startIndex + term.length)
+				.toLowerCase() === term.toLowerCase()
+		) {
+			if (nonHighlightedText.length > 0) {
 				results.push('<span>', nonHighlightedText, '</span>');
 				nonHighlightedText = '';
 			}
-			results.push(`<span class="${styles.highlight}">`, content.substring(startIndex, startIndex + term.length), '</span>');
+			results.push(
+				`<span class="${styles.highlight}">`,
+				content.substring(startIndex, startIndex + term.length),
+				'</span>'
+			);
 			startIndex += term.length;
-		}
-		else {
+		} else {
 			nonHighlightedText += content.charAt(startIndex);
 			startIndex++;
 		}
 	}
 
-	if(nonHighlightedText.length > 0) {
+	if (nonHighlightedText.length > 0) {
 		results.push('<span>', nonHighlightedText, '</span>');
 	}
 
-	return (<div {...props} {...rawContent(results.join(''))}/>);
+	return <div {...props} {...rawContent(results.join(''))} />;
 }
 
-
-function toHTML (str) {
+function toHTML(str) {
 	const span = document.createElement('span');
 	const textNode = document.createTextNode(str);
 	span.appendChild(textNode);
