@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
-import {Text} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
+import { Text } from '@nti/web-commons';
 
 import Styles from './Comments.css';
 import Comment from './Comment';
@@ -12,7 +12,7 @@ const MaxShowCount = 2;
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.item.common.post-card.Comments', {
-	addComment: 'Add a comment...'
+	addComment: 'Add a comment...',
 });
 
 export default class PostCardComments extends React.Component {
@@ -24,34 +24,35 @@ export default class PostCardComments extends React.Component {
 			getMostRecentComments: PropTypes.func,
 			addCommentAddedListener: PropTypes.func,
 			addCommentUpdatedListener: PropTypes.func,
-			addCommentDeletedListener: PropTypes.func
+			addCommentDeletedListener: PropTypes.func,
 		}),
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-	state = {loading: true, comments: null}
+	state = { loading: true, comments: null };
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup(this.props);
 	}
 
-	componentDidUpdate (prevProps) {
-		const {post} = this.props;
-		const {post:prevPost} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { post } = this.props;
+		const { post: prevPost } = prevProps;
 
 		if (post.getID() !== prevPost.getID()) {
-			this.setState({loading: true, comments: null}, () => this.setup(this.props));
+			this.setState({ loading: true, comments: null }, () =>
+				this.setup(this.props)
+			);
 		}
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.cleanupListeners();
 		// since we cannot cancel the fetch, just no-op the update
 		this.setState = () => {};
 	}
 
-
-	cleanupListeners () {
+	cleanupListeners() {
 		if (this.cleanupCommentAddedListener) {
 			this.cleanupCommentAddedListener();
 			delete this.cleanupCommentAddedListener;
@@ -68,51 +69,63 @@ export default class PostCardComments extends React.Component {
 		}
 	}
 
-	addListeners () {
-		const {post} = this.props;
+	addListeners() {
+		const { post } = this.props;
 
 		this.cleanupListeners();
 
 		if (post.addCommentAddedListener) {
-			this.cleanupCommentAddedListener = post.addCommentAddedListener((newComment) => {
-				const {comments} = this.state;
+			this.cleanupCommentAddedListener = post.addCommentAddedListener(
+				newComment => {
+					const { comments } = this.state;
 
-				this.setState({
-					comments: [newComment, ...(comments || [])]
-				});
-			});
+					this.setState({
+						comments: [newComment, ...(comments || [])],
+					});
+				}
+			);
 		}
 
 		if (post.addCommentUpdatedListener) {
-			this.cleanupCommentUpdatedListener = post.addCommentUpdatedListener((updatedComment) => {
-				const updatedId = updatedComment.getID();
-				const {comments} = this.state;
+			this.cleanupCommentUpdatedListener = post.addCommentUpdatedListener(
+				updatedComment => {
+					const updatedId = updatedComment.getID();
+					const { comments } = this.state;
 
-				if (!comments) { return; }
+					if (!comments) {
+						return;
+					}
 
-				this.setState({
-					comments: comments.map((comment) => {
-						if (comment.getID() === updatedId) { return updatedComment; }
-						return comment;
-					})
-				});
-			});
+					this.setState({
+						comments: comments.map(comment => {
+							if (comment.getID() === updatedId) {
+								return updatedComment;
+							}
+							return comment;
+						}),
+					});
+				}
+			);
 		}
 
 		if (post.addCommentDeletedListener) {
-			this.cleanupCommentDeletedListener = post.addCommentDeletedListener((deletedComment) => {
-				const deletedId = deletedComment.getID();
-				const {comments} = this.state;
+			this.cleanupCommentDeletedListener = post.addCommentDeletedListener(
+				deletedComment => {
+					const deletedId = deletedComment.getID();
+					const { comments } = this.state;
 
-				this.setState({
-					comments: comments.filter(comment => comment.getID() !== deletedId)
-				});
-			});
+					this.setState({
+						comments: comments.filter(
+							comment => comment.getID() !== deletedId
+						),
+					});
+				}
+			);
 		}
 	}
 
-	async setup (props) {
-		const {post} = props;
+	async setup(props) {
+		const { post } = props;
 
 		this.addListeners();
 
@@ -120,27 +133,31 @@ export default class PostCardComments extends React.Component {
 			const comments = await post.getMostRecentComments(MaxShowCount);
 			//if there are existing, it should only be because a comment
 			//was created before we finished loading
-			const {comments: existing} = this.state;
+			const { comments: existing } = this.state;
 
 			this.setState({
 				loading: false,
-				comments: [...(existing || []), ...(comments || [])]
+				comments: [...(existing || []), ...(comments || [])],
 			});
 		} catch (e) {
 			this.setState({
-				loading: false
+				loading: false,
 			});
 		}
 	}
 
-	render () {
-		const {post, item} = this.props;
+	render() {
+		const { post, item } = this.props;
 
 		return (
 			<div className={cx('post-card-comments')}>
 				{this.renderComments()}
 				{post.canAddComment && (
-					<LinkTo.Object object={item} context="comment" className={cx('add-comment')}>
+					<LinkTo.Object
+						object={item}
+						context="comment"
+						className={cx('add-comment')}
+					>
 						<Text.Base className={cx('add-comment-label')}>
 							{t('addComment')}
 						</Text.Base>
@@ -150,24 +167,28 @@ export default class PostCardComments extends React.Component {
 		);
 	}
 
-
-	renderComments () {
-		const {post} = this.props;
-		const {comments, deleted, loading} = this.state;
+	renderComments() {
+		const { post } = this.props;
+		const { comments, deleted, loading } = this.state;
 		const count = comments ? comments.length : post.commentCount;
 
-		if (count === 0) { return null; }
+		if (count === 0) {
+			return null;
+		}
 
-		const toRender = Array.from({length: Math.min(count, MaxShowCount)})
-			.map((_, i) => comments ? comments[i] : Comment.Placeholder)
+		const toRender = Array.from({ length: Math.min(count, MaxShowCount) })
+			.map((_, i) => (comments ? comments[i] : Comment.Placeholder))
 			.filter(Boolean);
 
 		return (
-			<ul className={cx('comment-list', {loading})}>
+			<ul className={cx('comment-list', { loading })}>
 				{toRender.map((comment, key) => {
 					return (
 						<li key={key}>
-							<Comment comment={comment} deleted={deleted && deleted[comment.getID()]} />
+							<Comment
+								comment={comment}
+								deleted={deleted && deleted[comment.getID()]}
+							/>
 						</li>
 					);
 				})}

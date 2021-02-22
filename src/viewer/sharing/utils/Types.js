@@ -1,26 +1,32 @@
-import {isNTIID} from '@nti/lib-ntiids';
+import { isNTIID } from '@nti/lib-ntiids';
 
 const Group = 'group';
 const User = 'user';
 const Anonymous = 'anonymous';
 
-const getTypeForID = id => isNTIID(id) ? Group : User; 
+const getTypeForID = id => (isNTIID(id) ? Group : User);
 
-export function getIdForEntity (entity) {
-	if (typeof entity === 'string') { return entity; }
+export function getIdForEntity(entity) {
+	if (typeof entity === 'string') {
+		return entity;
+	}
 
 	return entity.isUser ? entity.getID() : entity.NTIID;
 }
 
-export function getEntity (mention) {
+export function getEntity(mention) {
 	return mention?.User ?? mention?.Entity ?? mention;
 }
 
-export function getType (mention) {
+export function getType(mention) {
 	const user = getEntity(mention);
-	
-	if (typeof user === 'string') { return getTypeForID(mention); }
-	if (user.anonymous) { return Anonymous; }
+
+	if (typeof user === 'string') {
+		return getTypeForID(mention);
+	}
+	if (user.anonymous) {
+		return Anonymous;
+	}
 
 	return user.isUser ? User : Group;
 }

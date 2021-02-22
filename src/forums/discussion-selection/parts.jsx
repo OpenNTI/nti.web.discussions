@@ -32,7 +32,6 @@ export const Header = styled.div`
 	}
 `;
 
-
 export const ItemBox = styled.div`
 	cursor: pointer;
 	width: 246px;
@@ -53,8 +52,7 @@ export const ItemContent = styled(HighlightedContent)`
 
 export const Chevron = styled('div').attrs(props => ({
 	...props,
-	children: <i className="icon-chevron-right" />
+	children: <i className="icon-chevron-right" />,
 }))`
 	position: relative;
 `;
-

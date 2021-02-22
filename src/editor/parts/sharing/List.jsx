@@ -7,11 +7,12 @@ import Styles from '../Styles.css';
 
 const cx = classnames.bind(Styles);
 
-function getMentionsToAdd (prevMentions, mentions) {
-	if (prevMentions.length === 0 && mentions.length === 0) { return []; }
+function getMentionsToAdd(prevMentions, mentions) {
+	if (prevMentions.length === 0 && mentions.length === 0) {
+		return [];
+	}
 
-	return mentions
-		.filter(m => prevMentions.indexOf(m) === -1);
+	return mentions.filter(m => prevMentions.indexOf(m) === -1);
 }
 
 SharingList.propTypes = {
@@ -24,17 +25,17 @@ SharingList.propTypes = {
 		sharingDisplayNames: PropTypes.array,
 
 		setSharedWith: PropTypes.func,
-		canEditSharing: PropTypes.bool
-	})
+		canEditSharing: PropTypes.bool,
+	}),
 };
-export default function SharingList ({post}) {
+export default function SharingList({ post }) {
 	const {
 		setup,
 		mentions,
 		sharedWith,
 		sharingDisplayNames,
 		setSharedWith,
-		canEditSharing
+		canEditSharing,
 	} = post;
 
 	const activeMentions = React.useRef(null);
@@ -43,7 +44,9 @@ export default function SharingList ({post}) {
 		const prevMentions = activeMentions.current;
 		activeMentions.current = mentions;
 
-		if (!canEditSharing || !prevMentions) { return; }
+		if (!canEditSharing || !prevMentions) {
+			return;
+		}
 
 		const toAdd = getMentionsToAdd(prevMentions, mentions);
 
@@ -52,9 +55,11 @@ export default function SharingList ({post}) {
 		}
 	}, [mentions]);
 
-	if (!setup) { return null; }
+	if (!setup) {
+		return null;
+	}
 
-	const onRemove = (sharedTo) => {
+	const onRemove = sharedTo => {
 		setSharedWith(sharedWith.filter(s => s !== sharedTo));
 	};
 

@@ -5,11 +5,11 @@ import ListItem from './ListItem';
 
 const components = {
 	Card,
-	ListItem
+	ListItem,
 };
 
 Registry.registerItem(
-	(item) => item && item.isTopic && !item.isBlogEntry,
+	item => item && item.isTopic && !item.isBlogEntry,
 	components
 );
 

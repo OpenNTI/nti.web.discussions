@@ -9,24 +9,39 @@ import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
 describe('Discussion selection editor', () => {
 	test('Test skip ahead', async () => {
 		const forums = [
-			{ title: 'Forum 1', children:
-				[
-					{ title: 'Section 1', store: {
-						getRange: () => {
-							return [
-								{ title: 'Board 1',
-									get: (prop) => { return 'Board 1'; },
-									getLink: (prop) => { return 'mockLink'; } },
-								{ title: 'Board 2',
-									get: (prop) => { return 'Board 2'; },
-									getLink: (prop) => { return 'mockLink'; } }
-							];
-						}
-					}
-					}
-				]
+			{
+				title: 'Forum 1',
+				children: [
+					{
+						title: 'Section 1',
+						store: {
+							getRange: () => {
+								return [
+									{
+										title: 'Board 1',
+										get: prop => {
+											return 'Board 1';
+										},
+										getLink: prop => {
+											return 'mockLink';
+										},
+									},
+									{
+										title: 'Board 2',
+										get: prop => {
+											return 'Board 2';
+										},
+										getLink: prop => {
+											return 'mockLink';
+										},
+									},
+								];
+							},
+						},
+					},
+				],
 			},
-			{ title: 'Forum 2' }
+			{ title: 'Forum 2' },
 		];
 
 		const bundle = {
@@ -35,13 +50,19 @@ describe('Discussion selection editor', () => {
 			},
 			getDiscussionAssets: () => {
 				return Promise.resolve([]);
-			}
+			},
 		};
 
-		function onDiscussionTopicSelect (topic) {}
+		function onDiscussionTopicSelect(topic) {}
 
 		let editor;
-		const result = render(<DiscussionSelectionEditor ref={x=>editor = x} bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
+		const result = render(
+			<DiscussionSelectionEditor
+				ref={x => (editor = x)}
+				bundle={bundle}
+				onDiscussionTopicSelect={onDiscussionTopicSelect}
+			/>
+		);
 
 		await wait();
 
@@ -64,10 +85,10 @@ describe('Discussion selection editor', () => {
 		const topicsResp = {
 			Items: [
 				{ title: 'item 1', Creator: 'student' },
-				{ title: 'item 2', Creator: 'student'  },
-				{ title: 'item 3', Creator: 'instructor' }
+				{ title: 'item 2', Creator: 'student' },
+				{ title: 'item 3', Creator: 'instructor' },
 			],
-			FilteredTotalItemCount: 3
+			FilteredTotalItemCount: 3,
 		};
 
 		// @nti/lib-interfaces does not have a parallel to this structure...
@@ -82,30 +103,30 @@ describe('Discussion selection editor', () => {
 								return [
 									{
 										title: 'Board 1',
-										get: (prop) => 'Board 1',
-										fetchLink: (prop) => topicsResp
+										get: prop => 'Board 1',
+										fetchLink: prop => topicsResp,
 									},
 									{
 										title: 'Board 2',
-										get: (prop) => 'Board 2',
-										fetchLink: (prop) => topicsResp
-									}
+										get: prop => 'Board 2',
+										fetchLink: prop => topicsResp,
+									},
 								];
-							}
-						}
+							},
+						},
 					},
 					{
 						title: 'Section 2',
 						store: {
-							getRange: () => []
-						}
-					}
-				]
+							getRange: () => [],
+						},
+					},
+				],
 			},
 			{
 				title: 'Forum 2',
-				children: []
-			}
+				children: [],
+			},
 		];
 
 		const bundle = {
@@ -115,21 +136,25 @@ describe('Discussion selection editor', () => {
 
 			// @nti/lib-interfaces version of bundle has these:
 			getDiscussions: async () => [{ Items: [] }],
-			getCourseDiscussions: async () => ({ Items: [] })
+			getCourseDiscussions: async () => ({ Items: [] }),
 		};
 
-
-
 		TestUtils.setupTestClient({
-			resolveEntity: (entity) => {
+			resolveEntity: entity => {
 				return Promise.resolve({ alias: entity });
-			}
+			},
 		});
 
 		const onDiscussionTopicSelect = jest.fn();
 
 		let editor;
-		const result = render(<DiscussionSelectionEditor ref={x => editor = x} bundle={ bundle } onDiscussionTopicSelect={ onDiscussionTopicSelect }/>);
+		const result = render(
+			<DiscussionSelectionEditor
+				ref={x => (editor = x)}
+				bundle={bundle}
+				onDiscussionTopicSelect={onDiscussionTopicSelect}
+			/>
+		);
 
 		editor.setState({ step: 1, forums: forums });
 
@@ -169,6 +194,7 @@ describe('Discussion selection editor', () => {
 		await waitFor(() =>
 			// verify that the component's provided callback is called
 			// when a topic is selected
-			expect(onDiscussionTopicSelect).toHaveBeenCalled());
+			expect(onDiscussionTopicSelect).toHaveBeenCalled()
+		);
 	});
 });

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {Text, Prompt} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Text, Prompt } from '@nti/web-commons';
 
 import Styles from './Styles.css';
 
@@ -11,26 +11,26 @@ const t = scoped('nti-web-discussions.item.components.controls.Report', {
 	report: 'Report',
 	confirm: {
 		title: 'Are you sure?',
-		message: 'Reporting content as inappropriate can not be undone.'
+		message: 'Reporting content as inappropriate can not be undone.',
 	},
 	failed: {
 		title: 'Error',
-		message: 'Unable to report post.'
-	}
+		message: 'Unable to report post.',
+	},
 });
 
-DiscussionItemReport.isAvailable = (item) => item.isFlaggable;
+DiscussionItemReport.isAvailable = item => item.isFlaggable;
 DiscussionItemReport.propTypes = {
 	item: PropTypes.shape({
 		isFlaggable: PropTypes.bool,
 		isFlagged: PropTypes.bool,
-		flag: PropTypes.func
+		flag: PropTypes.func,
 	}),
-	doClose: PropTypes.func
+	doClose: PropTypes.func,
 };
-export default function DiscussionItemReport ({item, doClose}) {
+export default function DiscussionItemReport({ item, doClose }) {
 	const [reporting, setReporting] = React.useState(false);
-	const onClick = async (e) => {
+	const onClick = async e => {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -52,7 +52,12 @@ export default function DiscussionItemReport ({item, doClose}) {
 	};
 
 	return (
-		<Text.Base as="a" role="button" className={cx('action', {busy: reporting})} onClick={onClick}>
+		<Text.Base
+			as="a"
+			role="button"
+			className={cx('action', { busy: reporting })}
+			onClick={onClick}
+		>
 			{t('report')}
 		</Text.Base>
 	);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {User, Text} from '@nti/web-commons';
+import { User, Text } from '@nti/web-commons';
 
 import Styles from './Creator.css';
 
@@ -12,53 +12,63 @@ export default class PostCardCreator extends React.Component {
 		post: PropTypes.shape({
 			getID: PropTypes.func,
 			creator: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			getContainerTitle: PropTypes.func
-		})
-	}
+			getContainerTitle: PropTypes.func,
+		}),
+	};
 
-	state = {loading: true, containerTitle: null}
+	state = { loading: true, containerTitle: null };
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup();
 	}
 
-	componentDidUpdate (prevProps) {
-		const {post} = this.props;
-		const {post:prevPost} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { post } = this.props;
+		const { post: prevPost } = prevProps;
 
 		if (post.getID() !== prevPost.getID()) {
-			this.setState({loading: true, container: null}, () => this.setup());
+			this.setState({ loading: true, container: null }, () =>
+				this.setup()
+			);
 		}
 	}
 
-	async setup () {
-		const {post} = this.props;
+	async setup() {
+		const { post } = this.props;
 
 		try {
 			const containerTitle = await post.getContainerTitle();
 
 			this.setState({
 				loading: false,
-				containerTitle
+				containerTitle,
 			});
 		} catch (e) {
 			this.setState({
 				loading: false,
-				containerTitle: null
+				containerTitle: null,
 			});
 		}
 	}
 
-	render () {
-		const {post} = this.props;
-		const {loading, containerTitle} = this.state;
+	render() {
+		const { post } = this.props;
+		const { loading, containerTitle } = this.state;
 
 		//TODO: if there is a container title display it
 
 		return (
-			<div className={cx('post-list-item-creator', {'has-container': !!containerTitle})}>
+			<div
+				className={cx('post-list-item-creator', {
+					'has-container': !!containerTitle,
+				})}
+			>
 				{!loading && (
-					<User.DisplayName className={cx('name')} user={post.creator} tag={Text.Base} />
+					<User.DisplayName
+						className={cx('name')}
+						user={post.creator}
+						tag={Text.Base}
+					/>
 				)}
 			</div>
 		);

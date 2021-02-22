@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {StandardUI} from '@nti/web-commons';
-import {Route, Router} from '@nti/web-routing';
+import { StandardUI } from '@nti/web-commons';
+import { Route, Router } from '@nti/web-routing';
 
 import Editor from '../../editor';
 
@@ -18,10 +18,10 @@ import Title from './parts/Title';
 const cx = classnames.bind(Styles);
 
 DiscussionPost.propTypes = {
-	post: PropTypes.object
+	post: PropTypes.object,
 };
-export default function DiscussionPost (props) {
-	const {post} = props;
+export default function DiscussionPost(props) {
+	const { post } = props;
 
 	const router = Router.useRouter();
 	const closeEdit = () => router.routeTo.path('./');
@@ -40,7 +40,7 @@ export default function DiscussionPost (props) {
 				matches="#edit"
 				render={() => (
 					<div className={cx('discussion-post-editor-container')}>
-						<StandardUI.Card className={cx('editor-inner')} rounded >
+						<StandardUI.Card className={cx('editor-inner')} rounded>
 							<Editor
 								className={cx('discussion-post-editor')}
 								{...props}
@@ -53,7 +53,7 @@ export default function DiscussionPost (props) {
 				)}
 			/>
 			<Route.Hash
-				matches={(hash) => hash !== '#edit'}
+				matches={hash => hash !== '#edit'}
 				render={() => (
 					<div className={cx('discussion-post')}>
 						<Controls {...props} />

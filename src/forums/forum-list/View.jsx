@@ -17,13 +17,13 @@ const DEFAULT_TEXT = {
 	open: 'Open Discussions',
 	other: 'Other Discussions',
 	create: 'Create a forum',
-	empty: 'There are no forums to display.'
+	empty: 'There are no forums to display.',
 };
 
 const t = scoped('forums.groups.sections', DEFAULT_TEXT);
 
 class ForumListView extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return props.bundle;
 	}
 
@@ -34,7 +34,7 @@ class ForumListView extends React.Component {
 			getID: PropTypes.func.isRequired,
 			Discussions: PropTypes.shape({
 				createForum: PropTypes.func,
-				hasLink: PropTypes.func
+				hasLink: PropTypes.func,
 			}),
 		}),
 		isSimple: PropTypes.bool,
@@ -43,19 +43,19 @@ class ForumListView extends React.Component {
 		loaded: PropTypes.bool,
 		hasForums: PropTypes.bool,
 		setFirstForum: PropTypes.func,
-		activeForumId: PropTypes.string
-	}
+		activeForumId: PropTypes.string,
+	};
 
 	static contextTypes = {
-		router: PropTypes.object
-	}
+		router: PropTypes.object,
+	};
 
 	state = {
-		showCreate: false
-	}
+		showCreate: false,
+	};
 
-	async componentDidMount () {
-		const {bundle} = this.props;
+	async componentDidMount() {
+		const { bundle } = this.props;
 
 		this.setFirstForum();
 
@@ -64,24 +64,41 @@ class ForumListView extends React.Component {
 		this.forceUpdate();
 	}
 
-	componentDidUpdate (prevProps) {
-		if (prevProps.items !== this.props.items && prevProps.loaded === false && this.props.loaded === true) {
+	componentDidUpdate(prevProps) {
+		if (
+			prevProps.items !== this.props.items &&
+			prevProps.loaded === false &&
+			this.props.loaded === true
+		) {
 			this.setFirstForum();
 		}
 	}
 
-	createForum = async (newForum) => {
+	createForum = async newForum => {
 		const { bundle } = this.props;
 		const { router } = this.context;
-		const forum = await bundle.Discussions.createForum({ ...newForum, MimeType: bundle.getForumType() });
+		const forum = await bundle.Discussions.createForum({
+			...newForum,
+			MimeType: bundle.getForumType(),
+		});
 		this.setState({ showCreate: false });
-		router.history.push(`${router.baseroute}/${encodeForURI(forum.getID())}`);
-	}
+		router.history.push(
+			`${router.baseroute}/${encodeForURI(forum.getID())}`
+		);
+	};
 
-	setFirstForum () {
-		const { items, hasForums, setFirstForum, activeForumId, loading } = this.props;
+	setFirstForum() {
+		const {
+			items,
+			hasForums,
+			setFirstForum,
+			activeForumId,
+			loading,
+		} = this.props;
 
-		if (!setFirstForum || activeForumId || loading) { return; }
+		if (!setFirstForum || activeForumId || loading) {
+			return;
+		}
 
 		if (items && hasForums) {
 			setFirstForum(getFirstForum(items));
@@ -93,20 +110,25 @@ class ForumListView extends React.Component {
 	toggleCreateForum = () => {
 		const { showCreate } = this.state;
 		this.setState({ showCreate: !showCreate });
-	}
+	};
 
-	renderCreate () {
+	renderCreate() {
 		const { isSimple, bundle } = this.props;
-		const canCreateForum = bundle && bundle.Discussions && bundle.Discussions.hasLink('add');
+		const canCreateForum =
+			bundle && bundle.Discussions && bundle.Discussions.hasLink('add');
 
 		if (canCreateForum && isSimple) {
-			return <div className="create-forum" onClick={this.toggleCreateForum}>{t('create')}</div>;
+			return (
+				<div className="create-forum" onClick={this.toggleCreateForum}>
+					{t('create')}
+				</div>
+			);
 		}
 
 		return null;
 	}
 
-	render () {
+	render() {
 		const { items, loading, hasForums } = this.props;
 		const { showCreate } = this.state;
 
@@ -116,29 +138,44 @@ class ForumListView extends React.Component {
 				{loading && <Loading.Mask maskScreen message="Loading..." />}
 				{!loading && hasForums && (
 					<ul className="forum-list">
-						{
-							Object.keys(items).sort().map((key, i, bins) => (
+						{Object.keys(items)
+							.sort()
+							.map((key, i, bins) => (
 								<ForumBin
-									title={key.toLowerCase() === 'other' && bins.length === 1 ? '' : t(key.toLowerCase())}
+									title={
+										key.toLowerCase() === 'other' &&
+										bins.length === 1
+											? ''
+											: t(key.toLowerCase())
+									}
 									bin={items[key]}
 									key={key}
 								/>
-							))
-						}
+							))}
 					</ul>
 				)}
 				{!hasForums && !loading && (
-					<div className="forum-list-empty">
-						{t('empty')}
-					</div>
+					<div className="forum-list-empty">{t('empty')}</div>
 				)}
 				{this.renderCreate()}
-				{showCreate && <ForumCreate onBeforeDismiss={this.toggleCreateForum} onSubmit={this.createForum} />}
+				{showCreate && (
+					<ForumCreate
+						onBeforeDismiss={this.toggleCreateForum}
+						onSubmit={this.createForum}
+					/>
+				)}
 			</div>
 		);
 	}
 }
 
 export default decorate(ForumListView, [
-	Store.connect(['items', 'loading', 'loaded', 'error', 'isSimple', 'hasForums'])
+	Store.connect([
+		'items',
+		'loading',
+		'loaded',
+		'error',
+		'isSimple',
+		'hasForums',
+	]),
 ]);

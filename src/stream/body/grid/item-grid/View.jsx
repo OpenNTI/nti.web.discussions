@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {restProps} from '@nti/lib-commons';
-import {Monitor} from '@nti/web-commons';
+import { restProps } from '@nti/lib-commons';
+import { Monitor } from '@nti/web-commons';
 
 import Styles from './View.css';
-import {updateTilePositions, getColumnPercentage} from './utils';
+import { updateTilePositions, getColumnPercentage } from './utils';
 
 const cx = classnames.bind(Styles);
 
@@ -19,7 +19,7 @@ export default class ItemGrid extends React.Component {
 		renderItem: PropTypes.func.isRequired,
 		items: PropTypes.arrayOf(
 			PropTypes.shape({
-				getID: PropTypes.func
+				getID: PropTypes.func,
 			})
 		),
 
@@ -30,47 +30,50 @@ export default class ItemGrid extends React.Component {
 			PropTypes.number,
 			PropTypes.shape({
 				vertical: PropTypes.number,
-				horizontal: PropTypes.number
-			})
-		])
-	}
+				horizontal: PropTypes.number,
+			}),
+		]),
+	};
 
-	attachMonitor = x => this.monitor = x;
-	state = {tilePositions: {}}
+	attachMonitor = x => (this.monitor = x);
+	state = { tilePositions: {} };
 
-	get gap () {
-		const {gap = 0} = this.props;
+	get gap() {
+		const { gap = 0 } = this.props;
 
-		if (gap.vertical && gap.horizontal) { return gap; }
+		if (gap.vertical && gap.horizontal) {
+			return gap;
+		}
 
 		return {
 			vertical: gap,
-			horizontal: gap
+			horizontal: gap,
 		};
 	}
 
-	get columnCount () {
-		const {columns} = this.props;
+	get columnCount() {
+		const { columns } = this.props;
 
 		return columns || 1;
 	}
 
-	get tiles () {
-		if (!this.monitor) { return null; }
+	get tiles() {
+		if (!this.monitor) {
+			return null;
+		}
 
 		const children = this.monitor.querySelectorAll(CHILD_SELECTOR);
 		const list = Array.from(children);
 		const heights = this.heightMap;
 
-		return list
-			.map(item => {
-				const id = item.getAttribute(TILE_ITEM_ATTRIBUTE);
-			
-				return {
-					id,
-					height: heights[id]
-				};
-			});
+		return list.map(item => {
+			const id = item.getAttribute(TILE_ITEM_ATTRIBUTE);
+
+			return {
+				id,
+				height: heights[id],
+			};
+		});
 	}
 
 	onItemHeightChange = (li, height) => {
@@ -90,32 +93,41 @@ export default class ItemGrid extends React.Component {
 				this.updateTileLayout();
 			}, 100);
 		}
-	}
+	};
 
-	updateTileLayout () {
-		if (!this.monitor) { return; }
+	updateTileLayout() {
+		if (!this.monitor) {
+			return;
+		}
 
-		const {tilePositions: oldPositions} = this.state;
-		const {tiles, columnCount, gap: {vertical, horizontal}} = this;
+		const { tilePositions: oldPositions } = this.state;
+		const {
+			tiles,
+			columnCount,
+			gap: { vertical, horizontal },
+		} = this;
 		const width = this.monitor.clientWidth;
 
-		const {tilePositions, containerHeight} = updateTilePositions(tiles, oldPositions, {
-			width,
-			columnCount,
-			verticalGap: vertical,
-			horizontalGap: horizontal
-		});
+		const { tilePositions, containerHeight } = updateTilePositions(
+			tiles,
+			oldPositions,
+			{
+				width,
+				columnCount,
+				verticalGap: vertical,
+				horizontalGap: horizontal,
+			}
+		);
 
 		this.setState({
 			tilePositions,
-			containerHeight
+			containerHeight,
 		});
 	}
 
-
-	render () {
-		const {className} = this.props;
-		const {containerHeight} = this.state;
+	render() {
+		const { className } = this.props;
+		const { containerHeight } = this.state;
 		const otherProps = restProps(ItemGrid, this.props);
 
 		return (
@@ -126,39 +138,47 @@ export default class ItemGrid extends React.Component {
 				className={cx('nti-item-grid', className)}
 				childSelector={CHILD_SELECTOR}
 				onHeightChange={this.onItemHeightChange}
-				style={{minHeight: `${containerHeight || 0}px`}}
+				style={{ minHeight: `${containerHeight || 0}px` }}
 			>
 				{this.renderChildren()}
 			</Monitor.ChildHeight>
 		);
 	}
 
-
-	renderChildren () {
-		const {items, renderItem, columns} = this.props;
-		const {tilePositions} = this.state;
-		const columnWidthGuess = getColumnPercentage(columns, this.gap.vertical);
+	renderChildren() {
+		const { items, renderItem, columns } = this.props;
+		const { tilePositions } = this.state;
+		const columnWidthGuess = getColumnPercentage(
+			columns,
+			this.gap.vertical
+		);
 
 		return items
-			.map((item) => {
+			.map(item => {
 				const key = item.getID();
 				const itemCmp = renderItem(item);
 
-				if (!itemCmp) { return null; }
+				if (!itemCmp) {
+					return null;
+				}
 
 				const position = tilePositions[key];
 
 				const listAttributes = {
-					className: cx('item-tile', {computing: !position}),
+					className: cx('item-tile', { computing: !position }),
 					key,
 					[TILE_ITEM_ATTRIBUTE]: key,
-					style: !position ?
-						{width: `${columnWidthGuess}`} :
-						{top: `${position.topOffset}px`, left: `${position.columnOffset}px`, width: `${position.width}px`}
+					style: !position
+						? { width: `${columnWidthGuess}` }
+						: {
+								top: `${position.topOffset}px`,
+								left: `${position.columnOffset}px`,
+								width: `${position.width}px`,
+						  },
 				};
 
 				return (
-					<li  key={key} {...listAttributes}>
+					<li key={key} {...listAttributes}>
 						{renderItem(item)}
 					</li>
 				);

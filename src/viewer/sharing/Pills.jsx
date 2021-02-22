@@ -4,9 +4,9 @@ import classnames from 'classnames/bind';
 
 import Styles from './Styles.css';
 import Pill from './Pill';
-import {Types} from './utils';
+import { Types } from './utils';
 
-const {isGroup, isAnonymous} = Types;
+const { isGroup, isAnonymous } = Types;
 
 const cx = classnames.bind(Styles);
 
@@ -16,9 +16,9 @@ MentionPills.propTypes = {
 	displayNames: PropTypes.array,
 	onRemove: PropTypes.func,
 	noLink: PropTypes.bool,
-	loading: PropTypes.bool
+	loading: PropTypes.bool,
 };
-export default function MentionPills ({
+export default function MentionPills({
 	className,
 
 	sharedWith,
@@ -26,7 +26,7 @@ export default function MentionPills ({
 
 	loading,
 	onRemove,
-	noLink
+	noLink,
 }) {
 	if (loading) {
 		return (
@@ -46,17 +46,20 @@ export default function MentionPills ({
 		);
 	}
 
-	const {groups, users, anonymous} = (sharedWith || []).reduce((acc, entity) => {
-		if (isAnonymous(entity)) {
-			acc.anonymous.push(entity);
-		} else if (isGroup(entity)) {
-			acc.groups.push(entity);
-		} else {
-			acc.users.push(entity);
-		}
+	const { groups, users, anonymous } = (sharedWith || []).reduce(
+		(acc, entity) => {
+			if (isAnonymous(entity)) {
+				acc.anonymous.push(entity);
+			} else if (isGroup(entity)) {
+				acc.groups.push(entity);
+			} else {
+				acc.users.push(entity);
+			}
 
-		return acc;
-	}, {groups: [], users: [], anonymous: []});
+			return acc;
+		},
+		{ groups: [], users: [], anonymous: [] }
+	);
 
 	//NOTE: We are making a lot of simplifying assumptions about displayNames here....
 	return (
@@ -64,18 +67,32 @@ export default function MentionPills ({
 			{(groups || []).map((entity, key) => {
 				return (
 					<li key={`sharedWith-${key}`}>
-						<Pill sharedWith={entity} displayName={displayNames?.[key]} onRemove={onRemove} noLink={noLink}/>
+						<Pill
+							sharedWith={entity}
+							displayName={displayNames?.[key]}
+							onRemove={onRemove}
+							noLink={noLink}
+						/>
 					</li>
 				);
 			})}
-			{(users.length > 0) && (
+			{users.length > 0 && (
 				<li>
-					<Pill sharedWith={users} onRemove={onRemove} noLink={noLink} />
+					<Pill
+						sharedWith={users}
+						onRemove={onRemove}
+						noLink={noLink}
+					/>
 				</li>
 			)}
-			{(anonymous.length > 0) && (
+			{anonymous.length > 0 && (
 				<li>
-					<Pill sharedWith={anonymous} onRemove={onRemove} unknown noLink={noLink}/>
+					<Pill
+						sharedWith={anonymous}
+						onRemove={onRemove}
+						unknown
+						noLink={noLink}
+					/>
 				</li>
 			)}
 		</ul>

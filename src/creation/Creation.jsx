@@ -10,9 +10,15 @@ DiscussionCreation.propTypes = {
 	initialContainer: PropTypes.any,
 
 	dialog: PropTypes.bool,
-	small: PropTypes.bool
+	small: PropTypes.bool,
 };
-export default function DiscussionCreation ({container:containerProp, initialContainer, dialog, small, ...otherProps}) {
+export default function DiscussionCreation({
+	container: containerProp,
+	initialContainer,
+	dialog,
+	small,
+	...otherProps
+}) {
 	const [container, setContainer] = React.useState(null);
 
 	React.useEffect(() => {
@@ -21,10 +27,13 @@ export default function DiscussionCreation ({container:containerProp, initialCon
 
 	return (
 		<Container dialog={dialog} small={small}>
-			<Header {...otherProps} small={small} container={container} setContainer={setContainer} />
-			{container && (
-				<Editor {...otherProps} container={container} />
-			)}
+			<Header
+				{...otherProps}
+				small={small}
+				container={container}
+				setContainer={setContainer}
+			/>
+			{container && <Editor {...otherProps} container={container} />}
 		</Container>
 	);
 }

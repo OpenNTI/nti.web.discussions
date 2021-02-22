@@ -1,22 +1,29 @@
-import {decorate} from '@nti/lib-commons';
-import {Stores, Mixins} from '@nti/lib-store';
-import {mixin} from '@nti/lib-decorators';
+import { decorate } from '@nti/lib-commons';
+import { Stores, Mixins } from '@nti/lib-store';
+import { mixin } from '@nti/lib-decorators';
 
-function getParams (batchSize, sortOn, sortOrder, searchTerm) {
+function getParams(batchSize, sortOn, sortOrder, searchTerm) {
 	const params = {};
 
-	if (batchSize != null) { params['batchSize'] = batchSize; }
-	if (sortOn != null) { params['sortOn'] = sortOn; }
-	if (sortOrder != null) { params['sortOrder'] = sortOrder; }
-	if (searchTerm != null) { params['searchTerm'] = searchTerm; }
+	if (batchSize != null) {
+		params['batchSize'] = batchSize;
+	}
+	if (sortOn != null) {
+		params['sortOn'] = sortOn;
+	}
+	if (sortOrder != null) {
+		params['sortOrder'] = sortOrder;
+	}
+	if (searchTerm != null) {
+		params['searchTerm'] = searchTerm;
+	}
 
 	return params;
 }
 
-
-function uniqueItems (items) {
-	const {unique} = items
-		.reduce((acc, p) => {
+function uniqueItems(items) {
+	const { unique } = items.reduce(
+		(acc, p) => {
 			const id = p.getID();
 
 			if (!acc.seen.has(id)) {
@@ -25,28 +32,36 @@ function uniqueItems (items) {
 			}
 
 			return acc;
-		}, {unique: [], seen: new Set()});
+		},
+		{ unique: [], seen: new Set() }
+	);
 
 	return unique;
 }
 
 class StreamStore extends Stores.BoundStore {
-	cleanup () {
+	cleanup() {
 		if (this.cleanupListeners) {
 			this.cleanupListeners();
 		}
 	}
 
+	bindingDidUpdate(prevBinding) {
+		const { context, sortOn, sortOrder } = this.binding;
+		const {
+			context: prevContext,
+			sortOn: prevSortOn,
+			sortOrder: prevSortOrder,
+		} = prevBinding;
 
-	bindingDidUpdate (prevBinding) {
-		const {context, sortOn, sortOrder} = this.binding;
-		const {context:prevContext, sortOn: prevSortOn, sortOrder: prevSortOrder} = prevBinding;
-
-		return context !== prevContext || sortOn !== prevSortOn || sortOrder !== prevSortOrder;
+		return (
+			context !== prevContext ||
+			sortOn !== prevSortOn ||
+			sortOrder !== prevSortOrder
+		);
 	}
 
-
-	async load () {
+	async load() {
 		//NOTE: even though we are defining a bindingDidUpdate, we have to check the binding again here
 		//because this has the searchable mixin which will call load
 		this.batchSize = this.binding.batchSize;
@@ -67,7 +82,9 @@ class StreamStore extends Stores.BoundStore {
 			this.binding.sortOn === this.sortOn &&
 			this.binding.sortOrder === this.sortOrder &&
 			this.searchTerm === this.lastSearchTerm
-		) { return; }
+		) {
+			return;
+		}
 
 		this.context = this.binding.context;
 		this.sortOn = this.binding.sortOn;
@@ -75,9 +92,11 @@ class StreamStore extends Stores.BoundStore {
 		this.lastSearchTerm = this.searchTerm;
 		this.currentPage = null;
 
-		if (this.cleanupListeners) { this.cleanupListeners(); }
+		if (this.cleanupListeners) {
+			this.cleanupListeners();
+		}
 
-		const onItemAdded = (item) => this.onItemAdded(item);
+		const onItemAdded = item => this.onItemAdded(item);
 
 		this.context.addListener('item-added', onItemAdded);
 
@@ -89,92 +108,113 @@ class StreamStore extends Stores.BoundStore {
 		this.setImmediate({
 			loading: false,
 			items: null,
-			error: null
+			error: null,
 		});
 
 		this.loadNextPage();
 	}
 
-	async loadNextPage () {
+	async loadNextPage() {
 		//Don't try to load if we are already loading...
-		if (this.get('loading')) { return; }
+		if (this.get('loading')) {
+			return;
+		}
 
-		const {context, sortOn, sortOrder, currentPage, batchSize, lastSearchTerm} = this;
-		const {contentsDataSource} = context;
+		const {
+			context,
+			sortOn,
+			sortOrder,
+			currentPage,
+			batchSize,
+			lastSearchTerm,
+		} = this;
+		const { contentsDataSource } = context;
 
 		this.setImmediate({
-			loading: true
+			loading: true,
 		});
 
 		try {
-			const page = currentPage ?
-				await currentPage.loadNextPage() :
-				await contentsDataSource.loadPage(0, getParams(batchSize, sortOn, sortOrder, lastSearchTerm));
+			const page = currentPage
+				? await currentPage.loadNextPage()
+				: await contentsDataSource.loadPage(
+						0,
+						getParams(batchSize, sortOn, sortOrder, lastSearchTerm)
+				  );
 
 			//If the context or search change, don't set the results
-			if (context !== this.context || lastSearchTerm !== this.lastSearchTerm) { return; }
+			if (
+				context !== this.context ||
+				lastSearchTerm !== this.lastSearchTerm
+			) {
+				return;
+			}
 
 			if (!page) {
-				this.set({loading: false, hasMore: false});
+				this.set({ loading: false, hasMore: false });
 				return;
 			}
 
 			this.currentPage = page;
 
 			const existingItems = this.get('items') || [];
-			const {hasMore, Items} = page;
+			const { hasMore, Items } = page;
 
 			this.setImmediate({
 				loading: false,
 				hasMore,
-				items: [...existingItems, ...Items]
+				items: [...existingItems, ...Items],
 			});
 		} catch (e) {
 			this.setImmediate({
 				loading: false,
 				error: e,
-				hasMore: false
+				hasMore: false,
 			});
 		}
 	}
 
-
-	get loadMore () {
+	get loadMore() {
 		const hasMore = this.get('hasMore');
 
-		return hasMore ? (() => this.loadNextPage()) : null;
+		return hasMore ? () => this.loadNextPage() : null;
 	}
 
-	async loadPinned (context, search) {
-		if (!context.loadPinnedContents) { return; }
+	async loadPinned(context, search) {
+		if (!context.loadPinnedContents) {
+			return;
+		}
 
 		this.setImmediate({
 			pinnedItems: null,
-			pinnedError: null
+			pinnedError: null,
 		});
 
 		try {
-			const pinned = await context.loadPinnedContents(getParams(null, null, null, search));
+			const pinned = await context.loadPinnedContents(
+				getParams(null, null, null, search)
+			);
 
 			this.setImmediate({
-				pinnedItems: pinned.Items
+				pinnedItems: pinned.Items,
 			});
 		} catch (e) {
 			this.setImmediate({
-				pinnedError: e
+				pinnedError: e,
 			});
 		}
 	}
 
-
-	itemPinned (item) {
-		const {context} = this;
+	itemPinned(item) {
+		const { context } = this;
 		const pinned = this.get('pinnedItems');
 
-		if (!context.containsPost(item)) { return; }
+		if (!context.containsPost(item)) {
+			return;
+		}
 
-		const {unique} = ([item, ...pinned])
-			.reduce((acc, p) => {
+		const { unique } = [item, ...pinned].reduce(
+			(acc, p) => {
 				const id = p.getID();
 
 				if (!acc.seen.has(id)) {
@@ -183,60 +223,59 @@ class StreamStore extends Stores.BoundStore {
 				}
 
 				return acc;
-			}, {unique: [], seen: new Set()});
+			},
+			{ unique: [], seen: new Set() }
+		);
 
 		if (unique.length !== pinned.length) {
 			this.setImmediate({
-				pinnedItems: unique
+				pinnedItems: unique,
 			});
 		}
 	}
 
-
-	itemUnpinned (item) {
+	itemUnpinned(item) {
 		const itemId = item.getID();
 		const pinned = this.get('pinnedItems');
 		const filtered = pinned.filter(p => p.getID() !== itemId);
 
 		if (filtered.length !== pinned.length) {
 			this.setImmediate({
-				pinnedItems: filtered
+				pinnedItems: filtered,
 			});
 		}
 	}
 
-
-	onItemAdded (item) {
+	onItemAdded(item) {
 		const items = this.get('items');
 
 		this.set({
-			items: uniqueItems([item, ...items])
+			items: uniqueItems([item, ...items]),
 		});
 	}
 
-	async itemUpdated (update) {
+	async itemUpdated(update) {
 		try {
 			const items = this.get('items');
 			const updated = await Promise.all(
-				items
-					.map((item) => {
-						if (item.NTIID === update.NTIID) {
-							return item.refresh(update);
-						}
+				items.map(item => {
+					if (item.NTIID === update.NTIID) {
+						return item.refresh(update);
+					}
 
-						return item;
-					})
+					return item;
+				})
 			);
 
 			this.set({
-				items: updated
+				items: updated,
 			});
 		} catch (e) {
 			//swallow
 		}
 	}
 
-	itemDeleted (deleted) {
+	itemDeleted(deleted) {
 		try {
 			const items = this.get('items');
 			const pinned = this.get('pinnedItems');
@@ -244,7 +283,9 @@ class StreamStore extends Stores.BoundStore {
 
 			this.set({
 				items: filtered,
-				pinnedItems: (pinned || []).filter(item => item.NTIID !== deleted.NTIID)
+				pinnedItems: (pinned || []).filter(
+					item => item.NTIID !== deleted.NTIID
+				),
 			});
 		} catch (e) {
 			//swallow
@@ -252,6 +293,4 @@ class StreamStore extends Stores.BoundStore {
 	}
 }
 
-export default decorate(StreamStore, [
-	mixin(Mixins.Searchable)
-]);
+export default decorate(StreamStore, [mixin(Mixins.Searchable)]);

@@ -8,11 +8,15 @@ const cx = classnames.bind(Styles);
 
 MentionDisplay.propTypes = {
 	children: PropTypes.any,
-	suggestion: PropTypes.any
+	suggestion: PropTypes.any,
 };
-export default function MentionDisplay ({children, suggestion}) {
+export default function MentionDisplay({ children, suggestion }) {
 	return (
-		<span className={cx('mention-display', {'has-suggestion': Boolean(suggestion)})}>
+		<span
+			className={cx('mention-display', {
+				'has-suggestion': Boolean(suggestion),
+			})}
+		>
 			{children}
 		</span>
 	);

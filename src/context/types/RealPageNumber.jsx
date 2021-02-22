@@ -3,7 +3,7 @@ import React from 'react';
 import Registry from './Registry';
 
 export default class RealPageNumber extends React.PureComponent {
-	render () {
+	render() {
 		return null;
 	}
 }

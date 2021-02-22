@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Context from '../../Context';
 import Styles from '../../Styles.css';
@@ -8,14 +8,13 @@ import Styles from '../../Styles.css';
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.viewer.comments.parts.header.Pager', {
 	first: 'First',
-	last: 'Last'
+	last: 'Last',
 });
 
 const MaxVisible = 5;
 
-function getPagesToShow (current, total) {
+function getPagesToShow(current, total) {
 	const pages = [];
-
 
 	//If we have less than the max we can show them all!
 	if (total <= MaxVisible) {
@@ -35,8 +34,11 @@ function getPagesToShow (current, total) {
 		leftCount -= 1;
 	}
 
-	const rightCount = Math.min(MaxVisible - pages.length, total - pages.length);
-	for (let i = current; i < (current + rightCount) && i <= total; i++) {
+	const rightCount = Math.min(
+		MaxVisible - pages.length,
+		total - pages.length
+	);
+	for (let i = current; i < current + rightCount && i <= total; i++) {
 		pages.push(i);
 	}
 
@@ -52,8 +54,8 @@ function getPagesToShow (current, total) {
 	return pages;
 }
 
-export default function CommentPager () {
-	const {currentPage, totalPages, setPage} = React.useContext(Context);
+export default function CommentPager() {
+	const { currentPage, totalPages, setPage } = React.useContext(Context);
 	const current = currentPage + 1;
 
 	if (totalPages <= 1) {
@@ -67,7 +69,7 @@ export default function CommentPager () {
 	const renderPage = (page, label) => (
 		<li
 			key={page}
-			className={cx('page', {current: current === page})}
+			className={cx('page', { current: current === page })}
 			onClick={() => setPage(page - 1)}
 		>
 			{label || page}
@@ -76,7 +78,8 @@ export default function CommentPager () {
 
 	return (
 		<ul className={cx('comments-pager')}>
-			{pages.indexOf(firstPage) === -1 && renderPage(firstPage, t('first'))}
+			{pages.indexOf(firstPage) === -1 &&
+				renderPage(firstPage, t('first'))}
 			{pages.map(p => renderPage(p))}
 			{pages.indexOf(lastPage) === -1 && renderPage(lastPage, t('last'))}
 		</ul>

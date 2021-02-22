@@ -12,21 +12,21 @@ const stop = e => (e.preventDefault(), e.stopPropagation());
 
 export default class Image extends React.PureComponent {
 	static propTypes = {
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-	state = {}
+	state = {};
 
-	onLoad = (e) => {
-		const {clientWidth: width} = e.target;
-		this.setState({width, loaded: true});
-	}
+	onLoad = e => {
+		const { clientWidth: width } = e.target;
+		this.setState({ width, loaded: true });
+	};
 
-	render () {
-		let {item, itemprop, isSlide, parentType} = this.props.item;
+	render() {
+		let { item, itemprop, isSlide, parentType } = this.props.item;
 		const { loaded, width } = this.state;
 
-		let {markable} = item;
+		let { markable } = item;
 
 		let title = item.title;
 		let caption = item.caption;
@@ -37,17 +37,41 @@ export default class Image extends React.PureComponent {
 
 		//FIXME: The Item may not be an image, it could also be a video embed, a slide, or an iframe.
 
-		const className = cx('discussuion-context-markupframe', {loading: !loaded, bare, card: isCard});
+		const className = cx('discussuion-context-markupframe', {
+			loading: !loaded,
+			bare,
+			card: isCard,
+		});
 		return (
-			<div itemProp={itemprop} className={className} style={{width: width || 'auto'}}>
-				<img id={item.id} src={item.src} crossOrigin={item.crossorigin} onLoad={this.onLoad}/>
+			<div
+				itemProp={itemprop}
+				className={className}
+				style={{ width: width || 'auto' }}
+			>
+				<img
+					id={item.id}
+					src={item.src}
+					crossOrigin={item.crossorigin}
+					onLoad={this.onLoad}
+				/>
 
 				{bare ? null : (
-					<div className="bar" data-non-anchorable="true" data-no-anchors-within="true" unselectable="true">
+					<div
+						className="bar"
+						data-non-anchorable="true"
+						data-no-anchors-within="true"
+						unselectable="true"
+					>
 						{noDetails && !markable ? null : (
 							<div className="bar-cell">
-								<div className="image-title" {...rawContent(title)}/>
-								<div className="image-caption" {...rawContent(caption)}/>
+								<div
+									className="image-title"
+									{...rawContent(title)}
+								/>
+								<div
+									className="image-caption"
+									{...rawContent(caption)}
+								/>
 							</div>
 						)}
 					</div>
@@ -61,7 +85,7 @@ export default class Image extends React.PureComponent {
 						item={{
 							title,
 							desc: caption,
-							icon: item.src
+							icon: item.src,
 						}}
 					/>
 				)}

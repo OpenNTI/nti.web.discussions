@@ -10,33 +10,32 @@ const logger = Logger.get('lib:components:discussions:Context');
 
 export default class Context extends React.Component {
 	static propTypes = {
-		item: PropTypes.shape({ getContextData: PropTypes.func }).isRequired
-	}
+		item: PropTypes.shape({ getContextData: PropTypes.func }).isRequired,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.updateContext();
 	}
 
-	componentDidUpdate ({item}) {
+	componentDidUpdate({ item }) {
 		if (this.props.item !== item) {
 			this.updateContext();
 		}
 	}
 
-	componentDidCatch (e) {
+	componentDidCatch(e) {
 		logger.error(e);
 	}
 
-	async updateContext () {
+	async updateContext() {
 		const { item } = this.props;
 
 		try {
-			this.setState({loading: true, error: null});
+			this.setState({ loading: true, error: null });
 			//Do not combine these two lines... the second setState executes AFTER getContextData resolves
-			this.setState({context: await item.getContextData()});
-
+			this.setState({ context: await item.getContextData() });
 		} catch (error) {
 			logger.error(error.stack || error.message || error);
 			this.setState({ error });
@@ -45,13 +44,16 @@ export default class Context extends React.Component {
 		}
 	}
 
-
-
-	render () {
-		const {props: {item}, state: {context}} = this;
+	render() {
+		const {
+			props: { item },
+			state: { context },
+		} = this;
 		const Content = getType(context);
 		return (
-			<div className={cx('discussion-context-view', Content.cssClassName)}>
+			<div
+				className={cx('discussion-context-view', Content.cssClassName)}
+			>
 				{!context || !item ? null : (
 					<Content item={context} for={item} />
 				)}

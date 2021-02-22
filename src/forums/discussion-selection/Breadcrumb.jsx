@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
@@ -6,7 +6,7 @@ const Container = styled.div`
 	padding-top: 10px;
 `;
 
-const Separator = styled('span').attrs(props => ({children: '/', ...props}))`
+const Separator = styled('span').attrs(props => ({ children: '/', ...props }))`
 	margin-right: 3px;
 	font: normal 600 0.75em/1 var(--body-font-family);
 `;
@@ -29,8 +29,12 @@ Part.propTypes = {
 	onClick: PropTypes.func,
 };
 
-function Part ({inactive, onClick, item}) {
-	const handleClick = useCallback(() => (!inactive) && onClick?.(item), [inactive, item, onClick]);
+function Part({ inactive, onClick, item }) {
+	const handleClick = useCallback(() => !inactive && onClick?.(item), [
+		inactive,
+		item,
+		onClick,
+	]);
 	return (
 		<Breadcrumb
 			data-testid="discussion-selection-breadcrumb"
@@ -42,20 +46,17 @@ function Part ({inactive, onClick, item}) {
 	);
 }
 
-
-
 Breadcrumbs.propTypes = {
 	breadcrumb: PropTypes.arrayOf(PropTypes.object),
-	onClick: PropTypes.func
+	onClick: PropTypes.func,
 };
 
 /**
  * @deprecated This code is retained for legacy content-backed discussions.
  */
-export default function Breadcrumbs ({breadcrumb, onClick}) {
-
-	if(!breadcrumb?.length) {
-		return (<div/>);
+export default function Breadcrumbs({ breadcrumb, onClick }) {
+	if (!breadcrumb?.length) {
+		return <div />;
 	}
 
 	const getKey = i => `${i.step}--${i.title}`;
@@ -63,13 +64,14 @@ export default function Breadcrumbs ({breadcrumb, onClick}) {
 
 	// don't worry about rendering hidden breadcrumbs.. those only exist
 	// for accurate step tracking in the container
-	const filteredBreadcrumbs = breadcrumb.filter((bc) => { return !bc.isHidden; });
+	const filteredBreadcrumbs = breadcrumb.filter(bc => {
+		return !bc.isHidden;
+	});
 
-	for(let i = 0; i < filteredBreadcrumbs.length - 1; i++) {
-
+	for (let i = 0; i < filteredBreadcrumbs.length - 1; i++) {
 		const item = filteredBreadcrumbs[i];
 		components.push(
-			<Part key={getKey(item)} item={item} onClick={onClick}/>
+			<Part key={getKey(item)} item={item} onClick={onClick} />
 		);
 		components.push(
 			<Separator
@@ -77,13 +79,17 @@ export default function Breadcrumbs ({breadcrumb, onClick}) {
 				data-testid="discussion-selection-breadcrumb-separator"
 			/>
 		);
-
 	}
 
 	const lastItem = filteredBreadcrumbs[filteredBreadcrumbs.length - 1];
 
 	components.push(
-		<Part key={getKey(lastItem)} item={lastItem} onClick={onClick} inactive/>
+		<Part
+			key={getKey(lastItem)}
+			item={lastItem}
+			onClick={onClick}
+			inactive
+		/>
 	);
 
 	return (
@@ -92,4 +98,3 @@ export default function Breadcrumbs ({breadcrumb, onClick}) {
 		</Container>
 	);
 }
-

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
-import {List} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
+import { List } from '@nti/web-commons';
 
-import {Controls} from '../../components';
+import { Controls } from '../../components';
 import Context from '../Context';
 import CommentCount from '../CommentCount';
 import Report from '../Report';
@@ -18,17 +18,20 @@ import Header from './Header';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.item.common.post-card.View', {
-	reported: 'Reported'
+	reported: 'Reported',
 });
 
 PostCard.propTypes = {
-	item: PropTypes.object
+	item: PropTypes.object,
 };
-export default function PostCard (props) {
-	const {item} = props;
+export default function PostCard(props) {
+	const { item } = props;
 
 	return (
-		<LinkTo.Object object={item} className={cx('post-card', {deleting: Boolean(item.deleting)})}>
+		<LinkTo.Object
+			object={item}
+			className={cx('post-card', { deleting: Boolean(item.deleting) })}
+		>
 			<div className={cx('card-context')}>
 				<Context {...props} />
 			</div>
@@ -40,7 +43,7 @@ export default function PostCard (props) {
 				<div className={cx('footer')}>
 					<List.SeparatedInline className={cx('list-items')}>
 						<CommentCount {...props} />
-						{item.isFlagged && (<span>{t('reported')}</span>)}
+						{item.isFlagged && <span>{t('reported')}</span>}
 					</List.SeparatedInline>
 					<Report className={cx('card-report')} {...props} />
 				</div>

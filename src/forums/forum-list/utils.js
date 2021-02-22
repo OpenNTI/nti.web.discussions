@@ -25,8 +25,7 @@
 export const binDiscussions = (section, parent) => {
 	let bins = {};
 
-	function addTo (key, group) {
-
+	function addTo(key, group) {
 		let items = (group && group.Items) || [];
 		for (let item of items) {
 			let bin = item.getBin();
@@ -51,16 +50,15 @@ export const binDiscussions = (section, parent) => {
 		bins.Other = {
 			...bins.Other,
 			Section: {
-				id: section.NTIID
-			}
+				id: section.NTIID,
+			},
 		};
 	}
 
 	return bins;
 };
 
-
-export const getFirstForum = (items) => {
+export const getFirstForum = items => {
 	const parts = items[Object.keys(items).sort()[0]];
 	let part;
 

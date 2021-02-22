@@ -9,9 +9,11 @@ describe('Forum Item', () => {
 		const item = {
 			title: 'Forum',
 			TopicCount: 0,
-			hasLink: () => { return false; },
+			hasLink: () => {
+				return false;
+			},
 			edit: () => {},
-			Links: []
+			Links: [],
 		};
 		const itemCmp = renderer.create(<ForumItem item={item} />);
 		const tree = itemCmp.toJSON();

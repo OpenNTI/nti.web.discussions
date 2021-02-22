@@ -7,29 +7,34 @@ import TopicList from '../TopicList';
 describe('Topic list test', () => {
 	test('Simple list', async () => {
 		const student = {
-			alias: 'student'
+			alias: 'student',
 		};
 
 		const instructor = {
-			alias: 'instructor'
+			alias: 'instructor',
 		};
 
 		const topics = [
 			{ title: 'item 1', user: student },
 			{ title: 'item 2', user: student },
-			{ title: 'item 3', user: instructor }
+			{ title: 'item 3', user: instructor },
 		];
 
 		const selectedTopics = new Set();
 
 		const onTopicSelect = jest.fn();
 
-		const results = render(<TopicList topics={topics} selectedTopics={selectedTopics} onTopicSelect={onTopicSelect}/>);
+		const results = render(
+			<TopicList
+				topics={topics}
+				selectedTopics={selectedTopics}
+				onTopicSelect={onTopicSelect}
+			/>
+		);
 		expect(results.getAllByText(/item \d/).length).toBe(3);
 
 		fireEvent.click(await results.queryByText(/item 1/));
 
-		await waitFor(() =>
-			expect(onTopicSelect).toHaveBeenCalled());
+		await waitFor(() => expect(onTopicSelect).toHaveBeenCalled());
 	});
 });

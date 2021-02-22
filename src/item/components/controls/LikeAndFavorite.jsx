@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Like, Favorite} from '@nti/web-commons';
+import { Like, Favorite } from '@nti/web-commons';
 
 import Styles from './Styles.css';
 
@@ -11,10 +11,13 @@ DiscussionItemControlsLikeAndFavorite.propTypes = {
 	className: PropTypes.string,
 	item: PropTypes.shape({
 		isTopLevel: PropTypes.func,
-		placeholder: PropTypes.bool
-	}).isRequired
+		placeholder: PropTypes.bool,
+	}).isRequired,
 };
-export default function DiscussionItemControlsLikeAndFavorite ({className, item}) {
+export default function DiscussionItemControlsLikeAndFavorite({
+	className,
+	item,
+}) {
 	if (!item || !item.isTopLevel || item.placeholder) {
 		return null;
 	}
@@ -22,7 +25,7 @@ export default function DiscussionItemControlsLikeAndFavorite ({className, item}
 	return (
 		<div className={cx('like-and-favorite', className)}>
 			<Like item={item} asButton />
-			{item.isTopLevel() && (<Favorite item={item} asButton />)}
+			{item.isTopLevel() && <Favorite item={item} asButton />}
 		</div>
 	);
 }

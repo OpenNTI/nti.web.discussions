@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Hooks} from '@nti/web-commons';
+import { Hooks } from '@nti/web-commons';
 
-import {getCardCmpFor} from './types';
+import { getCardCmpFor } from './types';
 
-DiscussionItemCard.supportsItem = (item) => Boolean(getCardCmpFor(item));
+DiscussionItemCard.supportsItem = item => Boolean(getCardCmpFor(item));
 DiscussionItemCard.propTypes = {
-	item: PropTypes.object
+	item: PropTypes.object,
 };
-export default function DiscussionItemCard ({item, ...otherProps}) {
+export default function DiscussionItemCard({ item, ...otherProps }) {
 	const Cmp = getCardCmpFor(item);
 
 	Hooks.useChanges(item);
 
-	if (!Cmp) { return null; }
+	if (!Cmp) {
+		return null;
+	}
 
-	return (
-		<Cmp item={item} {...otherProps} />
-	);
+	return <Cmp item={item} {...otherProps} />;
 }

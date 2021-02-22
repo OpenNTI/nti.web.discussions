@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {LinkTo} from '@nti/web-routing';
-import {FillToBottom} from '@nti/web-commons';
+import { LinkTo } from '@nti/web-routing';
+import { FillToBottom } from '@nti/web-commons';
 
 import Styles from './View.css';
 import Summary from './summary';
@@ -18,30 +18,41 @@ export default class NotesSidebar extends React.Component {
 		fillToBottom: PropTypes.bool,
 		sticky: PropTypes.bool,
 
-		onNewNote: PropTypes.func
-	}
+		onNewNote: PropTypes.func,
+	};
 
-	render () {
-		const {className, fillToBottom, sticky} = this.props;
-		const cls = cx('note-sidebar', className, {sticky, fill: fillToBottom});
+	render() {
+		const { className, fillToBottom, sticky } = this.props;
+		const cls = cx('note-sidebar', className, {
+			sticky,
+			fill: fillToBottom,
+		});
 		const content = this.renderNoteList();
 
-		return fillToBottom ?
-			(<FillToBottom className={cls} limit padding={18}>{content}</FillToBottom>) :
-			(<div className={cls}>{content}</div>);
+		return fillToBottom ? (
+			<FillToBottom className={cls} limit padding={18}>
+				{content}
+			</FillToBottom>
+		) : (
+			<div className={cls}>{content}</div>
+		);
 	}
 
-	renderNoteList () {
-		const {notes = [], onNewNote} = this.props;
+	renderNoteList() {
+		const { notes = [], onNewNote } = this.props;
 		const loading = !notes;
 		const empty = !(notes || []).length;
 
-		if (loading) { return null; }
-		if (empty) { return (<EmptyState onNewNote={onNewNote} />); }
+		if (loading) {
+			return null;
+		}
+		if (empty) {
+			return <EmptyState onNewNote={onNewNote} />;
+		}
 
 		return (
 			<ul className={cx('note-list')}>
-				{notes.map((note) => {
+				{notes.map(note => {
 					return (
 						<li key={note.getID()}>
 							<LinkTo.Object object={note}>

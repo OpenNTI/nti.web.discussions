@@ -1,7 +1,7 @@
 import './ForumItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 import { LinkTo } from '@nti/web-routing';
 import { HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
@@ -11,8 +11,8 @@ const DEFAULT_TEXT = {
 	count: {
 		zero: 'No Discussions',
 		one: '1 Discussion',
-		other: '%(count)s Discussions'
-	}
+		other: '%(count)s Discussions',
+	},
 };
 
 const t = scoped('forums.topic', DEFAULT_TEXT);
@@ -26,39 +26,49 @@ class ForumItem extends React.Component {
 			TopicCount: PropTypes.number.isRequired,
 			hasLink: PropTypes.func.isRequired,
 			Links: PropTypes.array.isRequired,
-			Reports: PropTypes.array
+			Reports: PropTypes.array,
 		}).isRequired,
-	}
+	};
 
 	static contextTypes = {
-		router: PropTypes.object
-	}
+		router: PropTypes.object,
+	};
 
-	showReports = (e) => {
+	showReports = e => {
 		e.preventDefault();
 
 		const report = this.props.item.Reports[0];
 
 		Viewer.show(report);
-	}
+	};
 
-	render () {
+	render() {
 		const { item } = this.props;
 
-		const canShowReports = item.Links.some(x => x.rel.startsWith('report-')) && item.Reports;
+		const canShowReports =
+			item.Links.some(x => x.rel.startsWith('report-')) && item.Reports;
 
 		return (
 			<li className="forum-item-li">
-				<LinkTo.Object object={item} activeClassName="active" className="forum-link">
+				<LinkTo.Object
+					object={item}
+					activeClassName="active"
+					className="forum-link"
+				>
 					<div className="item-container">
 						<div className="item-main">
 							<span className="title">{item.displayTitle}</span>
 							<div className="meta">
-								<span className="see-all count">{t('count', { count: item.TopicCount })}</span>
+								<span className="see-all count">
+									{t('count', { count: item.TopicCount })}
+								</span>
 							</div>
 						</div>
 						{canShowReports && (
-							<div className="forum-item-reports" onClick={this.showReports}>
+							<div
+								className="forum-item-reports"
+								onClick={this.showReports}
+							>
 								<i className="icon-report" />
 							</div>
 						)}
@@ -69,7 +79,4 @@ class ForumItem extends React.Component {
 	}
 }
 
-
-export default decorate(ForumItem, [
-	HOC.ItemChanges.compose
-]);
+export default decorate(ForumItem, [HOC.ItemChanges.compose]);

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {Events} from '@nti/web-session';
-import {Text, Prompt} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Events } from '@nti/web-session';
+import { Text, Prompt } from '@nti/web-commons';
 
 import Styles from './Styles.css';
 
@@ -15,23 +15,23 @@ const t = scoped('nti-web-discussions.item.components.controls.Pin', {
 		title: 'Error',
 		message: {
 			pinned: 'Unable to pin post to the channel.',
-			unpinned: 'Unable to unpin post from the channel.'
-		}
-	}
+			unpinned: 'Unable to unpin post from the channel.',
+		},
+	},
 });
 
-DiscussionItemPin.isAvailable = (item) => item.isPinnable;
+DiscussionItemPin.isAvailable = item => item.isPinnable;
 DiscussionItemPin.propTypes = {
 	item: PropTypes.shape({
 		isPinneable: PropTypes.bool,
 		isPinned: PropTypes.bool,
-		togglePinned: PropTypes.func
+		togglePinned: PropTypes.func,
 	}),
-	doClose: PropTypes.func
+	doClose: PropTypes.func,
 };
-export default function DiscussionItemPin ({item, doClose}) {
+export default function DiscussionItemPin({ item, doClose }) {
 	const [saving, setSaving] = React.useState(false);
-	const onClick = async (e) => {
+	const onClick = async e => {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -48,14 +48,24 @@ export default function DiscussionItemPin ({item, doClose}) {
 				Events.emit(Events.ITEM_PINNED, item);
 			}
 		} catch (err) {
-			Prompt.alert(item.isPinned ? t('failed.message.pinned') : t('failed.message.unpinned'), t('failed.title'));
+			Prompt.alert(
+				item.isPinned
+					? t('failed.message.pinned')
+					: t('failed.message.unpinned'),
+				t('failed.title')
+			);
 		} finally {
 			doClose();
 		}
 	};
 
 	return (
-		<Text.Base as="a" role="button" className={cx('action', {busy: saving})} onClick={onClick}>
+		<Text.Base
+			as="a"
+			role="button"
+			className={cx('action', { busy: saving })}
+			onClick={onClick}
+		>
 			{item.isPinned ? t('unpin') : t('pin')}
 		</Text.Base>
 	);

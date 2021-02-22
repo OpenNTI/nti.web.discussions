@@ -1,7 +1,7 @@
-import {Registry} from '@nti/lib-commons';
+import { Registry } from '@nti/lib-commons';
 
 export default class ContextTypeRegistry extends Registry.Map {
-	getItemFor (str) {
+	getItemFor(str) {
 		str = str.split(' ')[0];
 		return super.getItemFor(str);
 	}

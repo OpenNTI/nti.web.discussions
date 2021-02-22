@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {HOC, Prompt} from '@nti/web-commons';
-import {Editor} from '@nti/web-modeled-content';
-import {Prompt as RouterPrompt} from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { HOC, Prompt } from '@nti/web-commons';
+import { Editor } from '@nti/web-modeled-content';
+import { Prompt as RouterPrompt } from '@nti/web-routing';
 
 import usePostInterface from './use-post-interface';
 import Container from './parts/Container';
@@ -12,7 +12,7 @@ import Title from './parts/Title';
 import Body from './parts/Body';
 import Controls from './parts/controls';
 
-const {Variant} = HOC;
+const { Variant } = HOC;
 
 const Full = Symbol('Full');
 const BodyOnly = Symbol('Body');
@@ -21,21 +21,19 @@ const NoTitle = Symbol('No Title');
 const t = scoped('nti-discussions.editor.Editor', {
 	navWarning: {
 		title: 'Cancel Post?',
-		message: 'You haven\'t finished your post.<br />Are you sure you want to leave?',
+		message:
+			"You haven't finished your post.<br />Are you sure you want to leave?",
 		confirm: 'Leave',
-		cancel: 'Keep Editing'
-	}
+		cancel: 'Keep Editing',
+	},
 });
 
-DiscussionEditor.NoTitle = Variant(DiscussionEditor, {style: NoTitle});
-DiscussionEditor.Body = Variant(DiscussionEditor, {style: BodyOnly});
+DiscussionEditor.NoTitle = Variant(DiscussionEditor, { style: NoTitle });
+DiscussionEditor.Body = Variant(DiscussionEditor, { style: BodyOnly });
 DiscussionEditor.propTypes = {
 	className: PropTypes.string,
 	discussion: PropTypes.object,
-	container: PropTypes.oneOfType([
-		PropTypes.object,
-		PropTypes.array
-	]),
+	container: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 	extraData: PropTypes.object,
 
 	initialContent: PropTypes.object,
@@ -49,9 +47,9 @@ DiscussionEditor.propTypes = {
 	titlePlaceholder: PropTypes.string,
 	saveLabel: PropTypes.string,
 
-	style: PropTypes.oneOf([Full, BodyOnly, NoTitle])
+	style: PropTypes.oneOf([Full, BodyOnly, NoTitle]),
 };
-export default function DiscussionEditor ({
+export default function DiscussionEditor({
 	className,
 	discussion,
 	container,
@@ -68,7 +66,7 @@ export default function DiscussionEditor ({
 	titlePlaceholder,
 	saveLabel,
 
-	style = Full
+	style = Full,
 }) {
 	const explicitCancelRef = React.useRef(false);
 
@@ -78,38 +76,43 @@ export default function DiscussionEditor ({
 			return;
 		}
 
-		Prompt.areYouSure(
-			t('navWarning.message'),
-			t('navWarning.title'),
-			{
-				confirmButtonLabel: t('navWarning.confirm'),
-				cancelButtonLabel: t('navWarning.cancel')
-			}
-		).then(cont, stop);
+		Prompt.areYouSure(t('navWarning.message'), t('navWarning.title'), {
+			confirmButtonLabel: t('navWarning.confirm'),
+			cancelButtonLabel: t('navWarning.cancel'),
+		}).then(cont, stop);
 	}, []);
 
-	const cancel = onCancel ?
-		((...args) => {
-			explicitCancelRef.current = true;
-			onCancel(...args);
+	const cancel = onCancel
+		? (...args) => {
+				explicitCancelRef.current = true;
+				onCancel(...args);
 
-			//Give onCancel a chance to run
-			setTimeout(() => {
-				explicitCancelRef.current = false;
-			}, 100);
+				//Give onCancel a chance to run
+				setTimeout(() => {
+					explicitCancelRef.current = false;
+				}, 100);
+		  }
+		: null;
 
-		}) :
-		null;
-
-	const post = usePostInterface({discussion, initialContent, container, afterSave, extraData});
+	const post = usePostInterface({
+		discussion,
+		initialContent,
+		container,
+		afterSave,
+		extraData,
+	});
 
 	let content = null;
 
-	
 	if (style === BodyOnly) {
 		content = (
 			<Container.Body post={post} className={className}>
-				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} autoFocus />
+				<Body
+					post={post}
+					noSharing={noSharing}
+					placeholder={bodyPlaceholder}
+					autoFocus
+				/>
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Body>
 		);
@@ -117,19 +120,32 @@ export default function DiscussionEditor ({
 		content = (
 			<Container.NoTitle post={post} className={className}>
 				<Identity post={post} />
-				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} autoFocus />
+				<Body
+					post={post}
+					noSharing={noSharing}
+					placeholder={bodyPlaceholder}
+					autoFocus
+				/>
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.NoTitle>
 		);
 	} else {
 		content = (
-			<Container.Full post={post} className={className} >
+			<Container.Full post={post} className={className}>
 				<Identity post={post} />
-				<Title post={post} placeholder={titlePlaceholder} autoFocus={post.isNew} />
-				<Body post={post} noSharing={noSharing} placeholder={bodyPlaceholder} autoFocus={!post.isNew} />
+				<Title
+					post={post}
+					placeholder={titlePlaceholder}
+					autoFocus={post.isNew}
+				/>
+				<Body
+					post={post}
+					noSharing={noSharing}
+					placeholder={bodyPlaceholder}
+					autoFocus={!post.isNew}
+				/>
 				<Controls post={post} onCancel={cancel} saveLabel={saveLabel} />
 			</Container.Full>
-
 		);
 	}
 

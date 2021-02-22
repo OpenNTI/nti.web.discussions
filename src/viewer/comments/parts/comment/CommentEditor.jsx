@@ -1,29 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {Events} from '@nti/web-session';
-import {StandardUI} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Events } from '@nti/web-session';
+import { StandardUI } from '@nti/web-commons';
 
 import Editor from '../../../../editor';
 import Styles from '../../Styles.css';
 import Context from '../../Context';
 
 const cx = classnames.bind(Styles);
-const t = scoped('nti-discussions.viewer.comments.parts.comment.CommentEditor', {
-	comment: 'Comment',
-	update: 'Update',
-	placeholder: 'Share your thoughts...'
-});
+const t = scoped(
+	'nti-discussions.viewer.comments.parts.comment.CommentEditor',
+	{
+		comment: 'Comment',
+		update: 'Update',
+		placeholder: 'Share your thoughts...',
+	}
+);
 
-function getSessionNotifier (comment) {
-	return (newComment) => {
+function getSessionNotifier(comment) {
+	return newComment => {
 		let event = null;
 
 		if (newComment.isNote) {
 			event = comment ? Events.NOTE_UPDATED : Events.NOTE_CREATED;
 		} else if (newComment.isComment) {
-			event = comment ? Events.TOPIC_COMMENT_UPDATED : Events.TOPIC_COMMENT_CREATED;
+			event = comment
+				? Events.TOPIC_COMMENT_UPDATED
+				: Events.TOPIC_COMMENT_CREATED;
 		}
 
 		if (event) {
@@ -35,17 +40,23 @@ function getSessionNotifier (comment) {
 DiscussionCommentEditor.propTypes = {
 	className: PropTypes.string,
 	comment: PropTypes.object,
-	inReplyTo: PropTypes.object
+	inReplyTo: PropTypes.object,
 };
-export default function DiscussionCommentEditor ({className, comment, inReplyTo}) {
+export default function DiscussionCommentEditor({
+	className,
+	comment,
+	inReplyTo,
+}) {
 	const CommentList = React.useContext(Context);
 
 	const EditorCmp = comment ? Editor.Body : Editor.NoTitle;
 
 	const sessionNotify = getSessionNotifier(comment);
 
-	const focusComment = (updated) => {
-		if (comment === updated) { return; }
+	const focusComment = updated => {
+		if (comment === updated) {
+			return;
+		}
 
 		CommentList.focusComment(updated);
 	};
@@ -59,13 +70,22 @@ export default function DiscussionCommentEditor ({className, comment, inReplyTo}
 	};
 
 	return (
-		<StandardUI.Card className={cx('comment-editor', className, {reply: Boolean(inReplyTo)})} rounded>
+		<StandardUI.Card
+			className={cx('comment-editor', className, {
+				reply: Boolean(inReplyTo),
+			})}
+			rounded
+		>
 			<EditorCmp
 				discussion={comment}
 				container={inReplyTo ?? CommentList.post}
 				noSharing
 				saveLabel={comment ? t('update') : t('comment')}
-				afterSave={(newComment) => (stopEdit(), focusComment(newComment), sessionNotify(newComment))}
+				afterSave={newComment => (
+					stopEdit(),
+					focusComment(newComment),
+					sessionNotify(newComment)
+				)}
 				onCancel={stopEdit}
 				bodyPlaceholder={t('placeholder')}
 			/>

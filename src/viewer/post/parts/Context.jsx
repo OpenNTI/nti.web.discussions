@@ -9,22 +9,21 @@ const cx = classnames.bind(Styles);
 
 let ContextOverride = null;
 
-DiscussionPostContext.setContextOverride = (override) => ContextOverride = override;
+DiscussionPostContext.setContextOverride = override =>
+	(ContextOverride = override);
 DiscussionPostContext.propTypes = {
 	post: PropTypes.shape({
-		getContextData: PropTypes.func
+		getContextData: PropTypes.func,
 	}),
-	container: PropTypes.any
+	container: PropTypes.any,
 };
-export default function DiscussionPostContext ({post, container}) {
+export default function DiscussionPostContext({ post, container }) {
 	const empty = !post.getContextData;
 	const Cmp = ContextOverride ?? Context;
 
 	return (
-		<div className={cx('context', {empty})}>
-			{!empty && (
-				<Cmp item={post} container={container} />
-			)}
+		<div className={cx('context', { empty })}>
+			{!empty && <Cmp item={post} container={container} />}
 		</div>
 	);
 }

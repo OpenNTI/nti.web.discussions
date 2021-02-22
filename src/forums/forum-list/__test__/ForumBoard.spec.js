@@ -9,28 +9,36 @@ describe('Forum Board', () => {
 		const board = {
 			forums: [
 				{
-					MimeType: 'application/vnd.nextthought.forums.communityforum',
-					NTIID: 'tag:nextthought.com,2011-10:unknown-OID-0x0551b0:5573657273:ZkMpTMuJZhf',
+					MimeType:
+						'application/vnd.nextthought.forums.communityforum',
+					NTIID:
+						'tag:nextthought.com,2011-10:unknown-OID-0x0551b0:5573657273:ZkMpTMuJZhf',
 					TopicCount: 0,
 					title: 'One',
-					getID: () => 'tag:nextthought.com,2011-10:unknown-OID-0x0551b0:5573657273:ZkMpTMuJZhf',
+					getID: () =>
+						'tag:nextthought.com,2011-10:unknown-OID-0x0551b0:5573657273:ZkMpTMuJZhf',
 					edit: () => {},
 					hasLink: () => false,
-					Links: []
+					Links: [],
 				},
 				{
-					MimeType: 'application/vnd.nextthought.forums.communityforum',
-					NTIID: 'tag:nextthought.com,2011-10:unknown-OID-0x0551b8:5573657273:ZkMpTMuJZhe',
+					MimeType:
+						'application/vnd.nextthought.forums.communityforum',
+					NTIID:
+						'tag:nextthought.com,2011-10:unknown-OID-0x0551b8:5573657273:ZkMpTMuJZhe',
 					TopicCount: 0,
 					title: 'Two',
-					getID: () => 'tag:nextthought.com,2011-10:unknown-OID-0x0551b8:5573657273:ZkMpTMuJZhe',
+					getID: () =>
+						'tag:nextthought.com,2011-10:unknown-OID-0x0551b8:5573657273:ZkMpTMuJZhe',
 					edit: () => {},
 					hasLink: () => false,
-					Links: []
-				}
-			]
+					Links: [],
+				},
+			],
 		};
-		const tree = renderer.create(<ForumBoard title="Section" board={board} />).toJSON();
+		const tree = renderer
+			.create(<ForumBoard title="Section" board={board} />)
+			.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 });

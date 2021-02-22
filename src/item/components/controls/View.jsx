@@ -14,9 +14,13 @@ DiscussionItemControls.propTypes = {
 	className: PropTypes.string,
 	item: PropTypes.object,
 
-	afterDelete: PropTypes.func
+	afterDelete: PropTypes.func,
 };
-export default function DiscussionItemControls ({className, item, afterDelete}) {
+export default function DiscussionItemControls({
+	className,
+	item,
+	afterDelete,
+}) {
 	return (
 		<div className={cx('discussion-item-controls', className)}>
 			<LikeAndFavorite item={item} />

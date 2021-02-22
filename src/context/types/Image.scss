@@ -53,7 +53,8 @@
 			}
 		}
 
-		img[id], .bar {
+		img[id],
+		.bar {
 			//This is for anchors
 			visibility: hidden;
 			position: absolute;

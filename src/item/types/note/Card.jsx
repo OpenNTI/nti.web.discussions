@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import PostCard from '../../common/post-card';
 
-import {makePostInterface} from './utils';
+import { makePostInterface } from './utils';
 
 NoteDiscussionCard.propTypes = {
-	item: PropTypes.object
+	item: PropTypes.object,
 };
-export default function NoteDiscussionCard ({item, ...otherProps}) {
+export default function NoteDiscussionCard({ item, ...otherProps }) {
 	return (
 		<PostCard post={makePostInterface(item)} item={item} {...otherProps} />
 	);

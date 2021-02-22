@@ -7,6 +7,6 @@ export * from './constants';
 export const ForumList = Router.for([
 	Route({
 		path: '/',
-		component: ForumListView
-	})
+		component: ForumListView,
+	}),
 ]);

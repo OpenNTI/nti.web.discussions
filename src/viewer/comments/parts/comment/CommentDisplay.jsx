@@ -1,27 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
-import {User, DateTime, Text, List, Hooks} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
+import { User, DateTime, Text, List, Hooks } from '@nti/web-commons';
 
 import Styles from '../../Styles.css';
 import Body from '../../../body';
-import {Controls} from '../../../../item';
+import { Controls } from '../../../../item';
 
 import CommentEditor from './CommentEditor';
 
 const cx = classnames.bind(Styles);
-const t = scoped('nti-discussions.viewer.commments.parts.comment.CommentDisplay', {
-	comments: {
-		one: '%(count)s Comment',
-		other: '%(count)s Comments'
-	},
-	comment: 'Reply',
-	deleted: 'This comment has been deleted',
-	repliedTo: 'Replied to %(name)s'
-});
-
+const t = scoped(
+	'nti-discussions.viewer.commments.parts.comment.CommentDisplay',
+	{
+		comments: {
+			one: '%(count)s Comment',
+			other: '%(count)s Comments',
+		},
+		comment: 'Reply',
+		deleted: 'This comment has been deleted',
+		repliedTo: 'Replied to %(name)s',
+	}
+);
 
 CommentDisplay.propTypes = {
 	comment: PropTypes.shape({
@@ -30,11 +32,11 @@ CommentDisplay.propTypes = {
 		getCreatedTime: PropTypes.func,
 		getDiscussionCount: PropTypes.func,
 		canAddDiscussion: PropTypes.func,
-		subscribeToChange: PropTypes.func
+		subscribeToChange: PropTypes.func,
 	}),
 
 	post: PropTypes.shape({
-		getID: PropTypes.func
+		getID: PropTypes.func,
 	}),
 
 	inReplyTo: PropTypes.object,
@@ -46,9 +48,20 @@ CommentDisplay.propTypes = {
 	afterDelete: PropTypes.func,
 
 	focused: PropTypes.bool,
-	editing: PropTypes.bool
+	editing: PropTypes.bool,
 };
-export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expanded, expand, collapse, focused, editing, afterDelete}) {
+export default function CommentDisplay({
+	comment,
+	post,
+	inReplyTo,
+	tooDeep,
+	expanded,
+	expand,
+	collapse,
+	focused,
+	editing,
+	afterDelete,
+}) {
 	const forceUpdate = Hooks.useForceUpdate();
 	const user = User.useUser(comment.creator);
 	const commentCount = comment.getDiscussionCount();
@@ -58,7 +71,7 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 
 	React.useEffect(() => {
 		if (focused) {
-			afterRender.current = (body) => {
+			afterRender.current = body => {
 				body?.scrollIntoView?.();
 				afterRender.current = null;
 			};
@@ -67,14 +80,12 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 
 	const commentCountCmp = (expand || collapse) && (
 		<Text.Base
-			className={cx('comment-count', {'has-comments': commentCount > 0})}
-			onClick={
-				commentCount <= 0 ?
-					null :
-					(expanded ? collapse : expand)
-			}
+			className={cx('comment-count', {
+				'has-comments': commentCount > 0,
+			})}
+			onClick={commentCount <= 0 ? null : expanded ? collapse : expand}
 		>
-			{t('comments', {count: commentCount})}
+			{t('comments', { count: commentCount })}
 		</Text.Base>
 	);
 
@@ -82,9 +93,7 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 		return (
 			<div className={cx('comment-display', 'deleted')}>
 				<div className={cx('deleted-info')}>
-					<Text.Base>
-						{t('deleted')}
-					</Text.Base>
+					<Text.Base>{t('deleted')}</Text.Base>
 				</div>
 				{commentCount > 0 && (
 					<List.SeparatedInline className={cx('comment-replies')}>
@@ -95,10 +104,13 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 		);
 	}
 
-
 	return (
 		<div className={cx('comment-display', 'full')}>
-			<Controls item={comment} className={cx('controls')} afterDelete={afterDelete} />
+			<Controls
+				item={comment}
+				className={cx('controls')}
+				afterDelete={afterDelete}
+			/>
 			<div className={cx('identity')}>
 				<User.Avatar user={comment.creator} />
 			</div>
@@ -108,10 +120,22 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 						<User.DisplayName user={user} />
 					</LinkTo.Object>
 				)}
-				{!tooDeep && (<DateTime date={comment.getCreatedTime()} relative className={cx('created')} />)}
+				{!tooDeep && (
+					<DateTime
+						date={comment.getCreatedTime()}
+						relative
+						className={cx('created')}
+					/>
+				)}
 				{tooDeep && (
-					<LinkTo.Object object={inReplyTo} className={cx('in-reply-to')}>
-						<User.DisplayName user={inReplyTo?.creator} localeKey={d => t('repliedTo', d)} />
+					<LinkTo.Object
+						object={inReplyTo}
+						className={cx('in-reply-to')}
+					>
+						<User.DisplayName
+							user={inReplyTo?.creator}
+							localeKey={d => t('repliedTo', d)}
+						/>
 					</LinkTo.Object>
 				)}
 			</div>
@@ -119,7 +143,7 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 				<Body
 					className={cx('comment-body')}
 					post={comment}
-					afterRender={(cmp) => afterRender.current?.(cmp)}
+					afterRender={cmp => afterRender.current?.(cmp)}
 					highlightContainer={post.getID()}
 				/>
 			)}
@@ -132,10 +156,12 @@ export default function CommentDisplay ({comment, post, inReplyTo, tooDeep, expa
 			<List.SeparatedInline className={cx('comment-replies')}>
 				{commentCountCmp}
 				{comment.canAddDiscussion() && (
-					<LinkTo.Object object={comment} context="reply" className={cx('reply')}>
-						<Text.Base>
-							{t('comment')}
-						</Text.Base>
+					<LinkTo.Object
+						object={comment}
+						context="reply"
+						className={cx('reply')}
+					>
+						<Text.Base>{t('comment')}</Text.Base>
 					</LinkTo.Object>
 				)}
 			</List.SeparatedInline>

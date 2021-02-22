@@ -9,12 +9,14 @@ describe('Breadcrumb test', () => {
 		const breadcrumb = [
 			{ step: 1, title: 'First' },
 			{ step: 2, title: 'Second' },
-			{ step: 3, title: 'Last' }
+			{ step: 3, title: 'Last' },
 		];
 
 		const clickHandler = jest.fn();
 
-		const result = render(<Breadcrumb breadcrumb={breadcrumb} onClick={clickHandler}/>);
+		const result = render(
+			<Breadcrumb breadcrumb={breadcrumb} onClick={clickHandler} />
+		);
 		const allBCs = result.getAllByTestId('discussion-selection-breadcrumb');
 
 		expect(allBCs.length).toBe(3);
@@ -33,10 +35,10 @@ describe('Breadcrumb test', () => {
 		const breadcrumb = [
 			{ step: 1, title: 'First' },
 			{ step: 2, title: 'Second', isHidden: true },
-			{ step: 3, title: 'Last' }
+			{ step: 3, title: 'Last' },
 		];
 
-		const result = render(<Breadcrumb breadcrumb={breadcrumb}/>);
+		const result = render(<Breadcrumb breadcrumb={breadcrumb} />);
 		const allBCs = result.getAllByTestId('discussion-selection-breadcrumb');
 
 		// only two items, since 'Second' was hidden, it should not be rendered

@@ -5,12 +5,9 @@ import ListItem from './ListItem';
 
 const components = {
 	Card,
-	ListItem
+	ListItem,
 };
 
-Registry.registerItem(
-	(item) => item && item.isBlogEntry,
-	components
-);
+Registry.registerItem(item => item && item.isBlogEntry, components);
 
 export default components;

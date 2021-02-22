@@ -3,4 +3,5 @@ export const getPrefix = (title = '') => {
 	return (found && found[0]) || null;
 };
 
-export const removePrefix = (title = '') => title.replace(/^(open|in-class)/i, '').trim();
+export const removePrefix = (title = '') =>
+	title.replace(/^(open|in-class)/i, '').trim();

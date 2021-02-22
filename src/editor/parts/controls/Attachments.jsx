@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Editor} from '@nti/web-modeled-content';
+import { Editor } from '@nti/web-modeled-content';
 
 import Styles from '../Styles.css';
 
@@ -9,9 +9,12 @@ const cx = classnames.bind(Styles);
 
 DiscussionEditorAttachmentControls.propTypes = {
 	active: PropTypes.bool,
-	setActive: PropTypes.func
+	setActive: PropTypes.func,
 };
-export default function DiscussionEditorAttachmentControls ({active, setActive}) {
+export default function DiscussionEditorAttachmentControls({
+	active,
+	setActive,
+}) {
 	return (
 		<div className={cx('control-group', 'attachments')}>
 			<Editor.Buttons.Image className={cx('button', 'blue')} />

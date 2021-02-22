@@ -7,8 +7,6 @@ import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 
-export default function DiscussionCreationEditor (props) {
-	return (
-		<Editor {...props} className={cx('creation-editor')} />
-	);
+export default function DiscussionCreationEditor(props) {
+	return <Editor {...props} className={cx('creation-editor')} />;
 }

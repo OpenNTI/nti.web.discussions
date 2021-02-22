@@ -6,8 +6,6 @@ import Styles from '../Styles.css';
 
 const cx = classnames.bind(Styles);
 
-export default function DiscussionBody (props) {
-	return (
-		<Body {...props} className={cx('body')}/>
-	);
+export default function DiscussionBody(props) {
+	return <Body {...props} className={cx('body')} />;
 }

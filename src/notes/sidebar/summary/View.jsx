@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {DisplayName} from '@nti/web-commons';
-import {Hooks, Events} from '@nti/web-session';
+import { decorate } from '@nti/lib-commons';
+import { DisplayName } from '@nti/web-commons';
+import { Hooks, Events } from '@nti/web-session';
 import classnames from 'classnames/bind';
 
 import NoteMetadata from './NoteMetadata';
@@ -13,12 +13,11 @@ const cx = classnames.bind(styles);
 
 class NoteSummary extends React.Component {
 	static propTypes = {
-		note: PropTypes.object.isRequired
-	}
+		note: PropTypes.object.isRequired,
+	};
 
-
-	noteUpdated (updated) {
-		const {note} = this.props;
+	noteUpdated(updated) {
+		const { note } = this.props;
 
 		if (note === updated) {
 			this.forceUpdate();
@@ -27,14 +26,18 @@ class NoteSummary extends React.Component {
 		}
 	}
 
-
-	render () {
-		const {note} = this.props;
-		const {placeholder} = note;
+	render() {
+		const { note } = this.props;
+		const { placeholder } = note;
 
 		return (
-			<div className={cx('note-summary', {placeholder})}>
-				{!placeholder && (<DisplayName className={cx('author')} entity={note.creator} />)}
+			<div className={cx('note-summary', { placeholder })}>
+				{!placeholder && (
+					<DisplayName
+						className={cx('author')}
+						entity={note.creator}
+					/>
+				)}
 				<NotePreview note={note} />
 				<NoteMetadata note={note} />
 			</div>
@@ -43,5 +46,5 @@ class NoteSummary extends React.Component {
 }
 
 export default decorate(NoteSummary, [
-	Hooks.onEvent(Events.NOTE_UPDATED, 'noteUpdated')
+	Hooks.onEvent(Events.NOTE_UPDATED, 'noteUpdated'),
 ]);

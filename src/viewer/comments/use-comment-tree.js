@@ -1,12 +1,14 @@
 import React from 'react';
-import {encodeForURI, decodeFromURI} from '@nti/lib-ntiids';
-import {getService} from '@nti/web-client';
-import {Router, getHistory, useLocation} from '@nti/web-routing';
+import { encodeForURI, decodeFromURI } from '@nti/lib-ntiids';
+import { getService } from '@nti/web-client';
+import { Router, getHistory, useLocation } from '@nti/web-routing';
 
 const BatchSize = 20;
 
-function getFocused (hash) {
-	if (!hash || hash === '#edit' || hash === '#comment') { return; }
+function getFocused(hash) {
+	if (!hash || hash === '#edit' || hash === '#comment') {
+		return;
+	}
 
 	const [possibleNtiid, action] = hash.replace(/^#/, '').split('#');
 	if (action === 'edit') {
@@ -16,17 +18,15 @@ function getFocused (hash) {
 	return decodeFromURI(possibleNtiid);
 }
 
-function getTopLevel (comment) {
+function getTopLevel(comment) {
 	return comment?.references[0] ?? comment.getID();
 }
 
-function getExpandedToShowComment (comment) {
+function getExpandedToShowComment(comment) {
 	return comment?.references[0];
 }
 
-
-
-export default function useCommentTree (post) {
+export default function useCommentTree(post) {
 	const router = Router.useRouter();
 	const location = useLocation();
 
@@ -42,11 +42,11 @@ export default function useCommentTree (post) {
 	const [editing, setEditing] = React.useState(null);
 	const [replying, setReplying] = React.useState(null);
 
-	const {hash} = location;
+	const { hash } = location;
 	const focusedComment = getFocused(hash, post);
 	const clearFocused = () => {
 		if (hash) {
-			router.routeTo.path({replace: true, href: '.'});
+			router.routeTo.path({ replace: true, href: '.' });
 		}
 	};
 
@@ -61,11 +61,11 @@ export default function useCommentTree (post) {
 	React.useEffect(() => {
 		let unmounted = false;
 
-		async function loadCommentTree () {
+		async function loadCommentTree() {
 			const params = {
 				batchSize: BatchSize,
 				sortOn: 'CreatedTime',
-				sortOrder: 'ascending'
+				sortOrder: 'ascending',
 			};
 
 			if (focusedComment) {
@@ -79,17 +79,26 @@ export default function useCommentTree (post) {
 
 			try {
 				const service = await getService();
-				const focused = focusedComment ? await service.getObject(focusedComment) : null;
+				const focused = focusedComment
+					? await service.getObject(focusedComment)
+					: null;
 
-				if (unmounted) { return; }
+				if (unmounted) {
+					return;
+				}
 
 				const focusedTopLevel = focused && getTopLevel(focused);
 
-				if (focusedTopLevel && comments?.some(comment => comment.getID() === focusedTopLevel)) {
+				if (
+					focusedTopLevel &&
+					comments?.some(
+						comment => comment.getID() === focusedTopLevel
+					)
+				) {
 					const toExpand = getExpandedToShowComment(focused);
 
 					if (toExpand) {
-						setExpanded({...expanded, [toExpand]: true});
+						setExpanded({ ...expanded, [toExpand]: true });
 					}
 
 					return;
@@ -103,7 +112,9 @@ export default function useCommentTree (post) {
 
 				const discussions = await post.getDiscussions(params);
 
-				if (unmounted) { return; }
+				if (unmounted) {
+					return;
+				}
 
 				if (focused) {
 					setPage(discussions.BatchPage - 1);
@@ -111,7 +122,7 @@ export default function useCommentTree (post) {
 					const toExpand = getExpandedToShowComment(focused);
 
 					if (toExpand) {
-						setExpanded({...expanded, [toExpand]: true});
+						setExpanded({ ...expanded, [toExpand]: true });
 					}
 				}
 
@@ -119,7 +130,9 @@ export default function useCommentTree (post) {
 				setComments(discussions.Items);
 				setLoading(false);
 			} catch (e) {
-				if (unmounted) { return; }
+				if (unmounted) {
+					return;
+				}
 				// eslint-disable-next-line no-console
 				console.log(e.stack || e.message || e);
 				setError(e);
@@ -134,7 +147,6 @@ export default function useCommentTree (post) {
 		};
 	}, [post, focusedComment || page]);
 
-
 	return {
 		loading: !comments && loading,
 		mask: comments && loading,
@@ -146,7 +158,7 @@ export default function useCommentTree (post) {
 
 		currentPage: page,
 		totalPages: totalPages,
-		setPage: (newPage) => {
+		setPage: newPage => {
 			clearFocused();
 			setPage(newPage);
 		},
@@ -157,7 +169,10 @@ export default function useCommentTree (post) {
 		editing,
 		replying,
 
-		setEditorState: async ({editing:newEditing, replying:newReplying}) => {
+		setEditorState: async ({
+			editing: newEditing,
+			replying: newReplying,
+		}) => {
 			try {
 				clearFocused();
 				await getHistory().awaitUserConfirmation();
@@ -168,8 +183,11 @@ export default function useCommentTree (post) {
 			}
 		},
 
-
 		focusedComment,
-		focusComment: (obj) => router.routeTo.path({replace: true, href: `#${encodeForURI(obj.getID())}`})
+		focusComment: obj =>
+			router.routeTo.path({
+				replace: true,
+				href: `#${encodeForURI(obj.getID())}`,
+			}),
 	};
 }

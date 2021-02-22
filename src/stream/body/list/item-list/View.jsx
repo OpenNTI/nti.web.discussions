@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {restProps} from '@nti/lib-commons';
+import { restProps } from '@nti/lib-commons';
 
 import Styles from './View.css';
-import {groupItems} from './utils';
-import {DefaultGroup} from './Constants';
+import { groupItems } from './utils';
+import { DefaultGroup } from './Constants';
 
 const cx = classnames.bind(Styles);
 
@@ -16,70 +16,72 @@ export default class ItemList extends React.Component {
 		renderItem: PropTypes.func.isRequired,
 		items: PropTypes.arrayOf(
 			PropTypes.shape({
-				getID: PropTypes.func
+				getID: PropTypes.func,
 			})
 		),
 
 		grouper: PropTypes.func,
-		getGroupInfo: PropTypes.func
-	}
+		getGroupInfo: PropTypes.func,
+	};
 
-	state = {groups: []}
+	state = { groups: [] };
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup(this.props);
 	}
 
-	componentDidUpdate (prevProps) {
-		const {items, grouper} = this.props;
-		const {items:oldItems, grouper: oldGrouper} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { items, grouper } = this.props;
+		const { items: oldItems, grouper: oldGrouper } = prevProps;
 
 		if (items !== oldItems || grouper !== oldGrouper) {
 			this.setup(this.props);
 		}
 	}
 
-	setup (props = this.props) {
-		const {items, grouper} = this.props;
+	setup(props = this.props) {
+		const { items, grouper } = this.props;
 
 		this.setState({
-			groups: groupItems(items, grouper)
+			groups: groupItems(items, grouper),
 		});
 	}
 
-	render () {
-		const {groups} = this.state;
+	render() {
+		const { groups } = this.state;
 
-		return groups.length === 1 ?
-			this.renderSingleGroup(groups[0]) :
-			this.renderMultipleGroups(groups);
+		return groups.length === 1
+			? this.renderSingleGroup(groups[0])
+			: this.renderMultipleGroups(groups);
 	}
 
-	renderSingleGroup (group) {
-		const {name, items} = group;
+	renderSingleGroup(group) {
+		const { name, items } = group;
 
-		if (name !== DefaultGroup) { return this.renderMultipleGroups([group]); }
+		if (name !== DefaultGroup) {
+			return this.renderMultipleGroups([group]);
+		}
 
-		return this.renderItems(
-			items.map(item => this.renderItem(item))
-		);
+		return this.renderItems(items.map(item => this.renderItem(item)));
 	}
 
-	renderMultipleGroups (groups) {
-		return this.renderItems(
-			groups.map(group => this.renderGroup(group))
-		);
+	renderMultipleGroups(groups) {
+		return this.renderItems(groups.map(group => this.renderGroup(group)));
 	}
 
-
-	renderGroup (group) {
-		const {getGroupInfo} = this.props;
-		const {name, items} = group;
-		const {className, label, labelClassName, itemListClassName} = getGroupInfo ? (getGroupInfo(name) || {}) : {};
+	renderGroup(group) {
+		const { getGroupInfo } = this.props;
+		const { name, items } = group;
+		const {
+			className,
+			label,
+			labelClassName,
+			itemListClassName,
+		} = getGroupInfo ? getGroupInfo(name) || {} : {};
 
 		return (
 			<li key={name} className={cx('item-list-group', className)}>
-				{label && (<div className={labelClassName}>{label}</div>)}
+				{label && <div className={labelClassName}>{label}</div>}
 				<ul className={cx('group-list', itemListClassName)}>
 					{items.map(item => this.renderItem(item))}
 				</ul>
@@ -87,13 +89,14 @@ export default class ItemList extends React.Component {
 		);
 	}
 
-
-	renderItem (item) {
-		const {renderItem} = this.props;
+	renderItem(item) {
+		const { renderItem } = this.props;
 		const key = item.getID();
 		const itemCmp = renderItem(item);
 
-		if (!itemCmp) { return null; }
+		if (!itemCmp) {
+			return null;
+		}
 
 		return (
 			<li key={key} className={cx('item-list-item')}>
@@ -102,9 +105,8 @@ export default class ItemList extends React.Component {
 		);
 	}
 
-
-	renderItems (items) {
-		const {className} = this.props;
+	renderItems(items) {
+		const { className } = this.props;
 		const otherProps = restProps(ItemList, this.props);
 
 		return (

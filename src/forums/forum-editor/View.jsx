@@ -11,12 +11,12 @@ const DEFAULT_TEXT = {
 	title: 'Create Forum',
 	name: 'Forum Name',
 	save: 'Create',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
 };
 const EDIT_TEXT = {
 	title: 'Edit Forum',
 	save: 'Save',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
 };
 const t = scoped('nti.web.disscussions.forums.create', DEFAULT_TEXT);
 const editScope = scoped('nti.web.disscussions.forums.create.edit', EDIT_TEXT);
@@ -30,19 +30,19 @@ export default class ForumEditor extends Component {
 		error: PropTypes.string,
 		loading: PropTypes.bool,
 		title: PropTypes.string,
-		isEditing: PropTypes.bool
-	}
+		isEditing: PropTypes.bool,
+	};
 
 	static defaultProps = {
-		title: ''
-	}
+		title: '',
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			title: removePrefix(props.title),
 			missingFields: !props.title || props.title.trim() === '',
-			prefix: getPrefix(props.title)
+			prefix: getPrefix(props.title),
 		};
 	}
 
@@ -50,7 +50,7 @@ export default class ForumEditor extends Component {
 		const missingFields = !value || value.trim() === '';
 
 		this.setState({ [name]: value, missingFields });
-	}
+	};
 
 	onSave = () => {
 		const { onSubmit, loading } = this.props;
@@ -58,9 +58,9 @@ export default class ForumEditor extends Component {
 			const { title, prefix } = this.state;
 			onSubmit({ title: prefix ? `${prefix} ${title}` : title });
 		}
-	}
+	};
 
-	render () {
+	render() {
 		const { onBeforeDismiss, loading, isEditing } = this.props;
 		const { title, missingFields } = this.state;
 
@@ -76,7 +76,7 @@ export default class ForumEditor extends Component {
 					<Text
 						className="forum-title"
 						value={title}
-						onChange={(value) => this.onChange('title', value)}
+						onChange={value => this.onChange('title', value)}
 						name="title"
 						required
 					/>

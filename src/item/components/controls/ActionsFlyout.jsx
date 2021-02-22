@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Flyout} from '@nti/web-commons';
+import { Flyout } from '@nti/web-commons';
 
 import Styles from './Styles.css';
 import Delete from './Delete';
@@ -11,18 +11,13 @@ import Report from './Report';
 
 const cx = classnames.bind(Styles);
 
-const Actions = [
-	Pin,
-	Edit,
-	Delete,
-	Report
-];
+const Actions = [Pin, Edit, Delete, Report];
 
 ActionsFlyout.propTypes = {
 	item: PropTypes.object,
-	afterDelete: PropTypes.func
+	afterDelete: PropTypes.func,
 };
-export default function ActionsFlyout ({item, afterDelete}) {
+export default function ActionsFlyout({ item, afterDelete }) {
 	const trigger = (
 		<div className={cx('actions-trigger')}>
 			<span className={cx('icon')}>...</span>
@@ -30,7 +25,9 @@ export default function ActionsFlyout ({item, afterDelete}) {
 	);
 	const available = Actions.filter(action => action.isAvailable(item));
 
-	if (!available.length) { return null; }
+	if (!available.length) {
+		return null;
+	}
 
 	const flyout = React.useRef();
 	const doClose = () => {
@@ -50,7 +47,11 @@ export default function ActionsFlyout ({item, afterDelete}) {
 				{available.map((Cmp, key) => {
 					return (
 						<li key={key}>
-							<Cmp item={item} doClose={doClose} afterDelete={afterDelete}/>
+							<Cmp
+								item={item}
+								doClose={doClose}
+								afterDelete={afterDelete}
+							/>
 						</li>
 					);
 				})}

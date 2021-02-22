@@ -5,9 +5,7 @@ import Styles from './Tag.css';
 
 const cx = classnames.bind(Styles);
 
-Tag.handles = (attributes) => attributes['data-nti-entity-type'] === 'TAG';
-export default function Tag (props) {
-	return (
-		<span className={cx('tag')} {...props} />
-	);
+Tag.handles = attributes => attributes['data-nti-entity-type'] === 'TAG';
+export default function Tag(props) {
+	return <span className={cx('tag')} {...props} />;
 }

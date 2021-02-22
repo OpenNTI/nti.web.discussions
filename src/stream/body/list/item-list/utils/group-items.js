@@ -1,7 +1,9 @@
-import {DefaultGroup} from '../Constants';
+import { DefaultGroup } from '../Constants';
 
-export default function groupItems (items, grouper) {
-	if (!grouper || typeof grouper !== 'function') { return [{name: DefaultGroup, items}]; }
+export default function groupItems(items, grouper) {
+	if (!grouper || typeof grouper !== 'function') {
+		return [{ name: DefaultGroup, items }];
+	}
 
 	const groups = {};
 	const groupOrder = [];
@@ -12,7 +14,7 @@ export default function groupItems (items, grouper) {
 		if (groups[group]) {
 			groups[group].items.push(item);
 		} else {
-			groups[group] = {name: group, items: [item]};
+			groups[group] = { name: group, items: [item] };
 			groupOrder.push(group);
 		}
 	}

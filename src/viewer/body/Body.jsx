@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Hooks, ContentHighlighting} from '@nti/web-commons';
-import {Viewer} from '@nti/web-modeled-content';
+import { Hooks, ContentHighlighting } from '@nti/web-commons';
+import { Viewer } from '@nti/web-modeled-content';
 
-import {getLegacyBody} from './utils';
-import {renderAnchor} from './parts';
+import { getLegacyBody } from './utils';
+import { renderAnchor } from './parts';
 import Context from './Context';
 
-const {SearchStrategy} = ContentHighlighting.Strategies;
+const { SearchStrategy } = ContentHighlighting.Strategies;
 
 DiscussionBody.getLegacyBody = getLegacyBody;
 DiscussionBody.propTypes = {
@@ -17,15 +17,21 @@ DiscussionBody.propTypes = {
 		getID: PropTypes.func,
 		getBody: PropTypes.func,
 		getPostHash: PropTypes.func,
-		subscribeToPostChange: PropTypes.func
+		subscribeToPostChange: PropTypes.func,
 	}),
 
 	noHighlight: PropTypes.bool,
-	highlightContainer: PropTypes.any
+	highlightContainer: PropTypes.any,
 };
-export default function DiscussionBody ({className, post, noHighlight, highlightContainer, ...otherProps}) {
+export default function DiscussionBody({
+	className,
+	post,
+	noHighlight,
+	highlightContainer,
+	...otherProps
+}) {
 	const highlightStrat = SearchStrategy.useStrategy(
-		noHighlight ? null : (highlightContainer ?? post.getID())
+		noHighlight ? null : highlightContainer ?? post.getID()
 	);
 
 	const forceUpdate = Hooks.useForceUpdate();
@@ -38,8 +44,11 @@ export default function DiscussionBody ({className, post, noHighlight, highlight
 	}
 
 	return (
-		<Context.Provider value={{post}}>
-			<ContentHighlighting strategy={highlightStrat} className={cx('body', className)}>
+		<Context.Provider value={{ post }}>
+			<ContentHighlighting
+				strategy={highlightStrat}
+				className={cx('body', className)}
+			>
 				<Viewer
 					content={body}
 					renderAnchor={renderAnchor}

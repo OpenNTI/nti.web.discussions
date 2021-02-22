@@ -1,25 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {Editor, Plugins, Parsers, ContextProvider} from '@nti/web-editor';
-import {Errors} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Editor, Plugins, Parsers, ContextProvider } from '@nti/web-editor';
+import { Errors } from '@nti/web-commons';
 
 import Styles from './Styles.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('nti-discussions.editor.parts.Title', {
-	placeholder: 'Add a Title...'
+	placeholder: 'Add a Title...',
 });
 
 const toDraftState = value => Parsers.PlainText.toDraftState(value);
-const fromDraftState = draftState => (Parsers.PlainText.fromDraftState(draftState) ?? [])[0];
+const fromDraftState = draftState =>
+	(Parsers.PlainText.fromDraftState(draftState) ?? [])[0];
 
-const {CharacterCounter} = Plugins.Counter.components;
+const { CharacterCounter } = Plugins.Counter.components;
 const EditorPlugins = [
 	Plugins.Plaintext.create(),
 	Plugins.SingleLine.create(),
-	Plugins.Counter.create({character: {limit: 140}})
+	Plugins.Counter.create({ character: { limit: 140 } }),
 ];
 
 DiscussionEditorTitle.propTypes = {
@@ -27,17 +28,23 @@ DiscussionEditorTitle.propTypes = {
 		title: PropTypes.string,
 		setTitle: PropTypes.func,
 		titleError: PropTypes.any,
-		clearTitleError: PropTypes.func
+		clearTitleError: PropTypes.func,
 	}),
 	autoFocus: PropTypes.bool,
-	placeholder: PropTypes.string
+	placeholder: PropTypes.string,
 };
-export default function DiscussionEditorTitle ({post, autoFocus, placeholder}) {
-	const {title, setTitle, titleError, clearTitleError} = post;
+export default function DiscussionEditorTitle({
+	post,
+	autoFocus,
+	placeholder,
+}) {
+	const { title, setTitle, titleError, clearTitleError } = post;
 
 	const [editor, setEditor] = React.useState(null);
-	const setEditorRef = (ref) => {
-		if (ref !== editor) { setEditor(ref); }
+	const setEditorRef = ref => {
+		if (ref !== editor) {
+			setEditor(ref);
+		}
 	};
 
 	const titleRef = React.useRef(null);
@@ -49,7 +56,7 @@ export default function DiscussionEditorTitle ({post, autoFocus, placeholder}) {
 		}
 	}, [title]);
 
-	const onContentChange = (newEditorState) => {
+	const onContentChange = newEditorState => {
 		const newTitle = fromDraftState(newEditorState) ?? null;
 
 		if (newTitle !== titleRef.current) {
@@ -58,15 +65,15 @@ export default function DiscussionEditorTitle ({post, autoFocus, placeholder}) {
 		}
 	};
 
-	const maybeClearError = !titleError ?
-		null :
-		(newEditorState) => {
-			const newTitle = fromDraftState(newEditorState);
+	const maybeClearError = !titleError
+		? null
+		: newEditorState => {
+				const newTitle = fromDraftState(newEditorState);
 
-			if (newTitle !== titleRef.current) {
-				clearTitleError();
-			}
-		};
+				if (newTitle !== titleRef.current) {
+					clearTitleError();
+				}
+		  };
 
 	return (
 		<div className={cx('title')}>
@@ -84,8 +91,11 @@ export default function DiscussionEditorTitle ({post, autoFocus, placeholder}) {
 			)}
 			<ContextProvider editor={editor}>
 				<>
-					<CharacterCounter className={cx('title-limit')} showLimit/>
-					<Errors.Message error={titleError} className={cx('title-error')} />
+					<CharacterCounter className={cx('title-limit')} showLimit />
+					<Errors.Message
+						error={titleError}
+						className={cx('title-error')}
+					/>
 				</>
 			</ContextProvider>
 		</div>

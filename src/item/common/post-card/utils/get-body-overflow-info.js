@@ -1,4 +1,4 @@
-import {isTextNode} from '@nti/lib-dom';
+import { isTextNode } from '@nti/lib-dom';
 
 const PARAGRAPH = 'P';
 
@@ -10,30 +10,47 @@ const isInObject = (node, body) => {
 	let pointer = node.parentNode;
 
 	while (pointer && pointer !== body) {
-		if (isObject(pointer)) { return true; }
+		if (isObject(pointer)) {
+			return true;
+		}
 		pointer = pointer.parentNode;
 	}
 
 	return false;
 };
 
-function isLeafNode (node, body) {
-	if (!node) { return false; }
-	if (isInObject(node)) { return false; }
-	if (node.tagName === PARAGRAPH) { return true; }
-	if (isTextNode(node.firstChild)) { return true; }
-	if (isObject(node)) { return true; }
-	if (isWhiteboard(node)) { return true; }
-	if (isVideo(node)) { return true; }
+function isLeafNode(node, body) {
+	if (!node) {
+		return false;
+	}
+	if (isInObject(node)) {
+		return false;
+	}
+	if (node.tagName === PARAGRAPH) {
+		return true;
+	}
+	if (isTextNode(node.firstChild)) {
+		return true;
+	}
+	if (isObject(node)) {
+		return true;
+	}
+	if (isWhiteboard(node)) {
+		return true;
+	}
+	if (isVideo(node)) {
+		return true;
+	}
 }
 
-
-function shouldShowInFull (node) {
+function shouldShowInFull(node) {
 	return isObject(node) || isWhiteboard(node) || isVideo(node);
 }
 
-function getHeight (node) {
-	if (!global.getComputedStyle) { return node.clientHeight; }
+function getHeight(node) {
+	if (!global.getComputedStyle) {
+		return node.clientHeight;
+	}
 
 	const style = global.getComputedStyle(node);
 	const marginTop = parseFloat(style['marginTop'], 10) || 0;
@@ -42,28 +59,30 @@ function getHeight (node) {
 	return Math.ceil(node.clientHeight + marginTop + marginBottom);
 }
 
-export default function getBodyOverflowInfo (body, desiredMax) {
-	if (!global.document) { return {isOverflowing: true, maxHeight: desiredMax}; }
+export default function getBodyOverflowInfo(body, desiredMax) {
+	if (!global.document) {
+		return { isOverflowing: true, maxHeight: desiredMax };
+	}
 
 	try {
 		const walker = document.createTreeWalker(
 			body,
 			global.NodeFilter.SHOW_ELEMENT,
 			{
-				acceptNode: (node) => {
+				acceptNode: node => {
 					if (isLeafNode(node, body)) {
 						return global.NodeFilter.FILTER_ACCEPT;
 					}
 
 					return global.NodeFilter.FILTER_SKIP;
-				}
+				},
 			},
 			false
 		);
 
 		let knownHeight = 0;
 		let maxHeight = 0;
-		
+
 		while (walker.nextNode()) {
 			const node = walker.currentNode;
 			const height = getHeight(node);
@@ -81,17 +100,17 @@ export default function getBodyOverflowInfo (body, desiredMax) {
 			}
 		}
 
-
 		const adjustedMax = Math.max(desiredMax, maxHeight);
 
 		return {
-			isOverflowing: Boolean(walker.nextNode()) || knownHeight > adjustedMax,
-			maxHeight: adjustedMax
+			isOverflowing:
+				Boolean(walker.nextNode()) || knownHeight > adjustedMax,
+			maxHeight: adjustedMax,
 		};
 	} catch (e) {
 		return {
 			isOverflow: true,
-			maxHeight: desiredMax
+			maxHeight: desiredMax,
 		};
 	}
 }

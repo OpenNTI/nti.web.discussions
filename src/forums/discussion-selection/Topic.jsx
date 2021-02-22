@@ -1,14 +1,16 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import HighlightedContent from './HighlightedContent';
 import { ItemBox } from './parts';
 
-export const Avatar = styled('div').attrs(({src, style, ...props}) => ({
+export const Avatar = styled('div').attrs(({ src, style, ...props }) => ({
 	'data-testid': 'discussion-selection-avatar',
 	style: {
 		...style,
-		backgroundImage: `url("${src || '/app/resources/images/elements/discussion-icon.png'}")`
+		backgroundImage: `url("${
+			src || '/app/resources/images/elements/discussion-icon.png'
+		}")`,
 	},
 	...props,
 }))`
@@ -19,7 +21,9 @@ export const Avatar = styled('div').attrs(({src, style, ...props}) => ({
 	background-position: center;
 `;
 
-export const Title = styled(HighlightedContent).attrs({'data-testid':'discussion-selection-topic-title'})`
+export const Title = styled(HighlightedContent).attrs({
+	'data-testid': 'discussion-selection-topic-title',
+})`
 	color: var(--primary-grey);
 	font: normal 300 26px var(--header-font-family);
 	font-stretch: condensed;
@@ -57,16 +61,13 @@ Topic.propTypes = {
 /**
  * @deprecated This code is retained for legacy content-backed discussions.
  */
-export default function Topic ({onClick, topic, selectedTopics, searchTerm}) {
+export default function Topic({ onClick, topic, selectedTopics, searchTerm }) {
 	const handleClick = useCallback(() => onClick(topic), [onClick, topic]);
 
 	return (
 		<Container selected={selectedTopics.has(topic)} onClick={handleClick}>
-			<Avatar src={topic.icon}/>
-			<Title
-				content={topic.title}
-				term={searchTerm}
-			/>
+			<Avatar src={topic.icon} />
+			<Title content={topic.title} term={searchTerm} />
 		</Container>
 	);
 }

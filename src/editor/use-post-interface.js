@@ -2,24 +2,28 @@ import React from 'react';
 
 import Viewer from '../viewer';
 
-async function resolveSharingIds (sharing = []) {
+async function resolveSharingIds(sharing = []) {
 	const resolve = await Viewer.Sharing.resolveEntities(sharing);
 
-	return resolve.filter(Boolean).map(x => Viewer.Sharing.Types.getIdForEntity(x));
+	return resolve
+		.filter(Boolean)
+		.map(x => Viewer.Sharing.Types.getIdForEntity(x));
 }
 
-async function getSharing (discussion, container) {
+async function getSharing(discussion, container) {
 	if (discussion) {
 		const sharedWith = discussion.getSharedWith(container);
 		const resolved = await resolveSharingIds(sharedWith);
 
 		return {
 			sharedWith: resolved,
-			canEditSharing: discussion.canEditSharing()
+			canEditSharing: discussion.canEditSharing(),
 		};
 	}
 
-	const containers = Array.isArray(container) ? ([...container]).reverse() : [container];
+	const containers = Array.isArray(container)
+		? [...container].reverse()
+		: [container];
 
 	for (let parent of containers) {
 		if (parent.getDefaultSharing) {
@@ -29,7 +33,7 @@ async function getSharing (discussion, container) {
 			return {
 				sharedWith: resolved,
 				canEditSharing: !sharing.locked,
-				displayNames: sharing.displayNames
+				displayNames: sharing.displayNames,
 			};
 		}
 	}
@@ -37,7 +41,7 @@ async function getSharing (discussion, container) {
 	return null;
 }
 
-function fixError (e) {
+function fixError(e) {
 	if (e.field === 'description' && e.declared === 'ITitledDescribedContent') {
 		e.field = 'title';
 	}
@@ -45,15 +49,22 @@ function fixError (e) {
 	return e;
 }
 
-
-export default function usePostInterface ({discussion, initialContent = [], container, afterSave, extraData = {}}) {
+export default function usePostInterface({
+	discussion,
+	initialContent = [],
+	container,
+	afterSave,
+	extraData = {},
+}) {
 	const [creator, setCreator] = React.useState(null);
 	const [title, setTitle] = React.useState(null);
 	const [content, setContent] = React.useState(null);
 
 	const [sharing, setSharing] = React.useState(null);
 
-	const [hasChanged, setHasChanged] = React.useState((initialContent || []).length > 0);
+	const [hasChanged, setHasChanged] = React.useState(
+		(initialContent || []).length > 0
+	);
 	const [saving, setSaving] = React.useState(false);
 	const [error, setError] = React.useState(null);
 
@@ -63,15 +74,21 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 		const setupDiscusion = async () => {
 			const disucssionSharing = await getSharing(discussion, container);
 
-			if (unmounted) { return; }
+			if (unmounted) {
+				return;
+			}
 
 			setCreator(discussion?.creator);
 			setTitle(discussion?.getTitle());
 
 			setContent({
-				body: discussion ? Viewer.Body.getLegacyBody(discussion) : initialContent,
-				mentions: (discussion?.getMentions() ?? []).map(mention => Viewer.Sharing.Types.getIdForEntity(mention.User)),
-				tags: discussion?.getTags()
+				body: discussion
+					? Viewer.Body.getLegacyBody(discussion)
+					: initialContent,
+				mentions: (discussion?.getMentions() ?? []).map(mention =>
+					Viewer.Sharing.Types.getIdForEntity(mention.User)
+				),
+				tags: discussion?.getTags(),
 			});
 
 			setSharing(disucssionSharing);
@@ -79,16 +96,18 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 
 		setupDiscusion();
 
-		return () => unmounted = true;
+		return () => (unmounted = true);
 	}, [discussion]);
 
 	const onSave = async () => {
-		const containers = Array.isArray(container) ? container.reverse() : [container];
+		const containers = Array.isArray(container)
+			? container.reverse()
+			: [container];
 		const payload = {
 			title,
 			...content,
 			sharedWith: sharing?.sharedWith,
-			...extraData
+			...extraData,
 		};
 
 		setSaving(true);
@@ -120,10 +139,11 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 		}
 	};
 
-
 	const getUpdate = (fn, field) => {
 		return (...args) => {
-			if (!hasChanged) { setHasChanged(true); }
+			if (!hasChanged) {
+				setHasChanged(true);
+			}
 
 			fn(...args);
 		};
@@ -150,7 +170,9 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 		canEditSharing: sharing?.canEditSharing,
 		sharingDisplayNames: sharing?.displayNames,
 
-		setSharedWith: getUpdate((sharedWith) => setSharing({...sharing, sharedWith})),
+		setSharedWith: getUpdate(sharedWith =>
+			setSharing({ ...sharing, sharedWith })
+		),
 
 		hasChanged,
 		isNew: !discussion,
@@ -162,6 +184,6 @@ export default function usePostInterface ({discussion, initialContent = [], cont
 		clearTitleError: () => error?.field === 'title' && setError(null),
 
 		error: error?.field !== 'title' ? error : null,
-		clearError: () => error?.field !== 'title' && setError(null)
+		clearError: () => error?.field !== 'title' && setError(null),
 	};
 }
