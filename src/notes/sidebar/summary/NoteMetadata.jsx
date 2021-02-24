@@ -19,7 +19,7 @@ export default function NoteMetadata({ note }, ...props) {
 	return (
 		<div className={cx('note-metadata')}>
 			<span className={cx('comment-count')}>
-				{t('commentCount', { count: note.replyCount })}
+				{t('commentCount', { count: note.replyCount || 0 })}
 			</span>
 			<span className={cx('last-modified')}>
 				<DateTime date={note.getLastModified()} relative />
