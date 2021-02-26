@@ -66,7 +66,6 @@ export default function PostCardComment({ comment, deleted }) {
 								className={cx('content')}
 								content={comment.body}
 								limitLines={2}
-								overflow={Text.Overflow.Ellipsis}
 							/>
 						)}
 						{deleted && (

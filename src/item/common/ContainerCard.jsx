@@ -87,7 +87,6 @@ export default class DiscussionItemContainerCard extends React.Component {
 						{container?.label || ''}
 					</Text.Base>
 					<Text.Base
-						overflow={Text.Overflow.Ellipsis}
 						limitLines={2}
 						className={cx('title', { skeleton })}
 					>
