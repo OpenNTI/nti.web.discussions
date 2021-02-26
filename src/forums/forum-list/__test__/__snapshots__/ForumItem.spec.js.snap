@@ -5,7 +5,7 @@ exports[`Forum Item No Discussions - Snapshot 1`] = `
   className="forum-item-li"
 >
   <div
-    className="nti-link-to-path forum-link"
+    className="pathLink nti-link-to-path forum-link"
     to="#"
   >
     <div
