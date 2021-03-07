@@ -16,7 +16,7 @@ exports[`Forum Board General Snapshot 1`] = `
       className="forum-item-li"
     >
       <div
-        className="pathLink nti-link-to-path forum-link"
+        className="nti-link-to-path forum-link"
         to="/id/unknown-OID-0x0551b0%3A5573657273%3AZkMpTMuJZhf"
       >
         <div
@@ -45,7 +45,7 @@ exports[`Forum Board General Snapshot 1`] = `
       className="forum-item-li"
     >
       <div
-        className="pathLink nti-link-to-path forum-link"
+        className="nti-link-to-path forum-link"
         to="/id/unknown-OID-0x0551b8%3A5573657273%3AZkMpTMuJZhe"
       >
         <div
