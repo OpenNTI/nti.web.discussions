@@ -2,6 +2,7 @@ import './ParentComment.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Viewer } from '@nti/web-modeled-content';
 import { DisplayName } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

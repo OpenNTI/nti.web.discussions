@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 import { HOC, Prompt } from '@nti/web-commons';
 import { Editor } from '@nti/web-modeled-content';

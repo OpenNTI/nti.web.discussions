@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate, restProps } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Events, Hooks } from '@nti/web-session';

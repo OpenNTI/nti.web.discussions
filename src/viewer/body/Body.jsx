@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Hooks, ContentHighlighting } from '@nti/web-commons';
 import { Viewer } from '@nti/web-modeled-content';
 

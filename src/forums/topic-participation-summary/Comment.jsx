@@ -1,6 +1,7 @@
 import './Comment.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Viewer } from '@nti/web-modeled-content';
 import { Avatar, DisplayName, DateTime } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

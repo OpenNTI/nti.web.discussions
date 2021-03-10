@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
 import { decorate } from '@nti/lib-commons';
 import { DisplayName } from '@nti/web-commons';
 import { Hooks, Events } from '@nti/web-session';
-import classnames from 'classnames/bind';
 
 import NoteMetadata from './NoteMetadata';
 import NotePreview from './NotePreview';

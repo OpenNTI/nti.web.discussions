@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { Text, User } from '@nti/web-commons';
 
 import Styles from './Action.css';

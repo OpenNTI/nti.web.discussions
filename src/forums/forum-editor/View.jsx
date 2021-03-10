@@ -1,6 +1,7 @@
 import './View.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 import { Input, Loading, Prompt } from '@nti/web-commons';
 

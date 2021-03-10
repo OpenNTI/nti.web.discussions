@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
+
 import { Editor } from '@nti/web-modeled-content';
 
 import Styles from '../Styles.css';

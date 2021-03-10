@@ -1,6 +1,7 @@
 import './ForumItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate } from '@nti/lib-commons';
 import { LinkTo } from '@nti/web-routing';
 import { HOC } from '@nti/web-commons';

@@ -2,6 +2,8 @@ import './Page.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import getRenderer from 'html-reactifier';
+
 import * as Anchors from '@nti/lib-anchors';
 import {
 	getPageContent,
@@ -12,7 +14,6 @@ import { Models } from '@nti/lib-interfaces';
 import { getService } from '@nti/web-client';
 import { NTIContent } from '@nti/web-commons';
 import Logger from '@nti/util-logger';
-import getRenderer from 'html-reactifier';
 
 import Registry from './Registry';
 

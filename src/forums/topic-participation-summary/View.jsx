@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { getService } from '@nti/web-client';
 import { Loading, EmptyState } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

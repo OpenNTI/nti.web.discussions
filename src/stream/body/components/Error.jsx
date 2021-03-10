@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Error as ErrorCmp } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
