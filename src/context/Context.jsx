@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { reportError } from '@nti/web-client';
 import Logger from '@nti/util-logger';
 
 import getType from './types';
@@ -27,6 +28,7 @@ export default class Context extends React.Component {
 	}
 
 	componentDidCatch(e) {
+		reportError(e);
 		logger.error(e);
 	}
 
