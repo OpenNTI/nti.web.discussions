@@ -52,7 +52,7 @@ export const ItemContent = styled(HighlightedContent)`
 
 export const Chevron = styled('div').attrs(props => ({
 	...props,
-	children: <i className="icon-chevron-right" />,
+	children: React.createElement('i', { className: 'icon-chevron-right' }),
 }))`
 	position: relative;
 `;
