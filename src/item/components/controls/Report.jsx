@@ -44,7 +44,7 @@ export default function DiscussionItemReport({ item, doClose }) {
 
 			await item.flag();
 		} catch (err) {
-			if (err !== 'Prompt Canceled') {
+			if (err.message !== 'Prompt Canceled') {
 				Prompt.alert(t('failed.message'), t('failed.title'));
 			}
 
