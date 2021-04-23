@@ -24,6 +24,8 @@ const EditorPlugins = [
 	Plugins.Counter.create({ character: { limit: 140 } }),
 ];
 
+const Initial = Symbol('initial');
+
 DiscussionEditorTitle.propTypes = {
 	post: PropTypes.shape({
 		title: PropTypes.string,
@@ -48,7 +50,7 @@ export default function DiscussionEditorTitle({
 		}
 	};
 
-	const titleRef = React.useRef(null);
+	const titleRef = React.useRef(Initial);
 	const [editorState, setEditorState] = React.useState(null);
 
 	React.useEffect(() => {
