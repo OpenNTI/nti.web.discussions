@@ -41,6 +41,7 @@ DiscussionEditor.propTypes = {
 
 	noSharing: PropTypes.bool,
 
+	_doSave: PropTypes.func,//override the save method, but you really shouldn't
 	afterSave: PropTypes.func,
 	onCancel: PropTypes.func,
 
@@ -60,6 +61,7 @@ export default function DiscussionEditor({
 
 	noSharing,
 
+	_doSave,
 	afterSave,
 	onCancel,
 
@@ -99,6 +101,7 @@ export default function DiscussionEditor({
 		discussion,
 		initialContent,
 		container,
+		_doSave,
 		afterSave,
 		extraData,
 	});

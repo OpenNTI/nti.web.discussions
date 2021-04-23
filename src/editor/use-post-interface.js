@@ -53,6 +53,7 @@ export default function usePostInterface({
 	discussion,
 	initialContent = [],
 	container,
+	_doSave,
 	afterSave,
 	extraData = {},
 }) {
@@ -111,6 +112,20 @@ export default function usePostInterface({
 		};
 
 		setSaving(true);
+
+		if (_doSave) {
+			try {
+				await _doSave(payload);
+				setSaving(false);
+				setHasChanged(false);
+			} catch (e) {
+				setHasChanged(true);
+				setSaving(false);
+				setError(e);
+			}
+
+			return;
+		}
 
 		if (discussion) {
 			try {
