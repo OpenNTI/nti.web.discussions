@@ -54,7 +54,7 @@ export default function DiscussionEditorTitle({
 	const [editorState, setEditorState] = React.useState(null);
 
 	React.useEffect(() => {
-		if (title !== titleRef.current) {
+		if (titleRef.current === Initial || title !== titleRef.current) {
 			setEditorState(toDraftState(title));
 		}
 	}, [title]);
