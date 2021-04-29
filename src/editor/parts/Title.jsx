@@ -53,10 +53,14 @@ export default function DiscussionEditorTitle({
 	const titleRef = React.useRef(Initial);
 	const [editorState, setEditorState] = React.useState(null);
 
+	console.log('Rendering Title: ', title, titleRef);
+
 	React.useEffect(() => {
 		if (titleRef.current === Initial || title !== titleRef.current) {
 			setEditorState(toDraftState(title));
 		}
+
+		titleRef.current = title;
 	}, [title]);
 
 	const onContentChange = newEditorState => {
