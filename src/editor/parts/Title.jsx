@@ -24,8 +24,6 @@ const EditorPlugins = [
 	Plugins.Counter.create({ character: { limit: 140 } }),
 ];
 
-const Initial = Symbol('initial');
-
 DiscussionEditorTitle.propTypes = {
 	post: PropTypes.shape({
 		title: PropTypes.string,
@@ -50,17 +48,13 @@ export default function DiscussionEditorTitle({
 		}
 	};
 
-	const titleRef = React.useRef(Initial);
+	const titleRef = React.useRef(null);
 	const [editorState, setEditorState] = React.useState(null);
 
-	console.log('Rendering Title: ', title, titleRef);
-
 	React.useEffect(() => {
-		if (titleRef.current === Initial || title !== titleRef.current) {
+		if (title !== titleRef.current) {
 			setEditorState(toDraftState(title));
 		}
-
-		titleRef.current = title;
 	}, [title]);
 
 	const onContentChange = newEditorState => {
