@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
-import { TestUtils } from '@nti/web-client';
+import * as TestUtils from '@nti/web-client/test-utils';
 import { wait } from '@nti/lib-commons';
 
 import DiscussionSelectionEditor from '../DiscussionSelectionEditor';
