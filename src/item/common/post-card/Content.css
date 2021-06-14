@@ -70,6 +70,7 @@
 	border-top-width: 1px;
 	border-bottom-width: 1px;
 	width: auto;
+	pointer-events: none;
 }
 
 .body :global(.body-divider.file .file-icon) {
