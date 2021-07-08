@@ -21,9 +21,9 @@ export default function DiscussionPostContext({ post, container }) {
 	const empty = !post.getContextData;
 	const Cmp = ContextOverride ?? Context;
 
-	return (
-		<div className={cx('context', { empty })}>
-			{!empty && <Cmp item={post} container={container} />}
+	return empty ? null : (
+		<div className={cx('context')}>
+			<Cmp item={post} container={container} />
 		</div>
 	);
 }
