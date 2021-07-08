@@ -25,7 +25,7 @@ export const Title = styled(HighlightedContent).attrs({
 	'data-testid': 'discussion-selection-topic-title',
 })`
 	color: var(--primary-grey);
-	font: normal 300 26px var(--header-font-family);
+	font: normal 300 26px var(--legacy-header-font-family);
 	font-stretch: condensed;
 	padding: 4px;
 	padding-top: 3px;
