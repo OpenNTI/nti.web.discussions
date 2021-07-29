@@ -27,7 +27,7 @@ export default function DiscussionPost(props) {
 	const router = Router.useRouter();
 	const closeEdit = () => router.routeTo.path('./');
 
-	if (post?.isDeleted?.()) {
+	if (post?.isDeleted()) {
 		return (
 			<div className={cx('deleted-discussion')}>
 				<Context {...props} />

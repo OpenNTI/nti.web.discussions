@@ -28,7 +28,7 @@ export default function CommentsHeader(props) {
 		<div className={cx('comments-header')}>
 			<List.SeparatedInline>
 				<Count {...props} />
-				{post?.canAddDiscussion?.() && (
+				{post?.canAddDiscussion() && (
 					<LinkTo.Object
 						object={post}
 						context="reply"
