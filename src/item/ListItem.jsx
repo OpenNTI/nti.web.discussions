@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Hooks } from '@nti/web-commons';
+import { useChanges } from '@nti/web-core';
 
 import { getListItemCmpFor } from './types';
 
@@ -12,7 +12,7 @@ DiscussionItemListItem.propTypes = {
 export default function DiscussionItemListItem({ item, ...otherProps }) {
 	const Cmp = getListItemCmpFor(item);
 
-	Hooks.useChanges(item);
+	useChanges(item);
 
 	if (!Cmp) {
 		return null;
