@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Hooks, ContentHighlighting } from '@nti/web-commons';
+import { ContentHighlighting } from '@nti/web-commons';
 import { Viewer } from '@nti/web-modeled-content';
+import { useForceUpdate } from '@nti/web-core';
 
 import { getLegacyBody } from './utils';
 import { renderAnchor } from './parts';
@@ -35,7 +36,7 @@ export default function DiscussionBody({
 		noHighlight ? null : highlightContainer ?? post.getID()
 	);
 
-	const forceUpdate = Hooks.useForceUpdate();
+	const forceUpdate = useForceUpdate();
 	const body = React.useMemo(() => getLegacyBody(post), [post.getPostHash()]);
 
 	React.useEffect(() => post.subscribeToPostChange(forceUpdate), [post]);

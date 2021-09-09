@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
-import { Text, Hooks } from '@nti/web-commons';
+import { Text } from '@nti/web-commons';
+import { useForceUpdate } from '@nti/web-core';
 
 import Styles from '../../Styles.css';
 
@@ -22,7 +23,7 @@ DiscussionCommentCount.propTypes = {
 	}),
 };
 export default function DiscussionCommentCount({ post }) {
-	const forceUpdate = Hooks.useForceUpdate();
+	const forceUpdate = useForceUpdate();
 
 	React.useEffect(() => post.subscribeToChange(forceUpdate), [post]);
 

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { Text, Hooks, ContentHighlighting } from '@nti/web-commons';
+import { Text, ContentHighlighting } from '@nti/web-commons';
+import { useForceUpdate } from '@nti/web-core';
 
 import Styles from '../Styles.css';
 
@@ -25,7 +26,7 @@ export default function PostTitle({ className, as: cmp, post, noHighlight }) {
 		noHighlight ? null : post.getID()
 	);
 
-	const forceUpdate = Hooks.useForceUpdate();
+	const forceUpdate = useForceUpdate();
 
 	React.useEffect(() => post.subscribeToPostChange(forceUpdate), [post]);
 

@@ -4,6 +4,7 @@ import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
 import { Loading, Errors, Hooks } from '@nti/web-commons';
+import { useForceUpdate } from '@nti/web-core';
 
 import Styles from '../../Styles.css';
 import Context from '../../Context';
@@ -16,7 +17,7 @@ const t = scoped('nti-discussions.viewer.comments.parts.comment.Comment', {
 	error: 'Unable to load Comments',
 });
 
-const { useResolver, useForceUpdate } = Hooks;
+const { useResolver } = Hooks;
 const { isPending, isResolved, isErrored } = useResolver;
 
 const MaxDepth = 3;

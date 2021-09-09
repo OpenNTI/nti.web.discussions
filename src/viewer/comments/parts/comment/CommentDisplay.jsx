@@ -4,7 +4,8 @@ import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
-import { User, DateTime, Text, List, Hooks } from '@nti/web-commons';
+import { User, DateTime, Text, List } from '@nti/web-commons';
+import { useForceUpdate } from '@nti/web-core';
 
 import Styles from '../../Styles.css';
 import Body from '../../../body';
@@ -63,7 +64,7 @@ export default function CommentDisplay({
 	editing,
 	afterDelete,
 }) {
-	const forceUpdate = Hooks.useForceUpdate();
+	const forceUpdate = useForceUpdate();
 	const user = User.useUser(comment.creator);
 	const commentCount = comment.getDiscussionCount();
 	const afterRender = React.useRef(null);
