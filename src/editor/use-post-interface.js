@@ -79,8 +79,8 @@ export default function usePostInterface({
 				return;
 			}
 
-			setCreator(discussion?.creator);
-			setTitle(discussion?.getTitle());
+			setCreator(discussion?.creator ?? null);
+			setTitle(discussion?.getTitle() ?? null);
 
 			setContent({
 				body: discussion
