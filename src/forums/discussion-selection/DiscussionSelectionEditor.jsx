@@ -60,7 +60,9 @@ export default class DiscussionSelectionEditor extends React.Component {
 	}
 
 	async loadTopics(board, searchTerm) {
-		const topics = (await board.fetchLink('contents'))?.Items || [];
+		const topics =
+			(await board.fetchLink({ mode: 'raw', rel: 'contents' }))?.Items ||
+			[];
 
 		this.setState(
 			{
