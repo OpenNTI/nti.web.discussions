@@ -4,17 +4,16 @@ const MentionAttributes =
 	'data-nti-entity-id="tagging-strategy-@-MENTION-Mentions" data-nti-entity-mutability="IMMUTABLE" data-nti-entity-type="MENTION" ';
 
 const usernameFromMention = mention =>
-	(mention?.User ?? mention?.Entity).getID?.();
+	(mention?.User ?? mention?.Entity)?.getID?.();
 const displayFromMention = mention =>
-	(mention?.User ?? mention?.Entity).displayName;
+	(mention?.User ?? mention?.Entity)?.displayName;
 
 //Creates a safe html document that we can manipulate without affecting the
 //current page document
 function getSafeBody(html) {
 	try {
-		const doc = document?.implementation?.createHTMLDocument?.(
-			'scratchpad'
-		);
+		const doc =
+			document?.implementation?.createHTMLDocument?.('scratchpad');
 		doc.documentElement.innerHTML = html;
 
 		return doc.getElementsByTagName('body')[0];
