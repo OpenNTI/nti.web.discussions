@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { rawContent } from '@nti/lib-commons';
@@ -15,6 +14,10 @@ HighlightedContent.propTypes = {
 };
 
 /**
+ * @param root0
+ * @param root0.children
+ * @param root0.content
+ * @param root0.term
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function HighlightedContent({

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { filterItemsBySearchTerm } from './utils';
@@ -19,6 +18,8 @@ List.propTypes = TopicList.propTypes = {
 };
 
 /**
+ * @param root0
+ * @param root0.headerText
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function TopicList({ headerText: heading, ...props }) {

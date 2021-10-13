@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { ItemBox, ItemContent, Chevron } from './parts';
@@ -24,6 +24,10 @@ Item.propTypes = {
 	onClick: PropTypes.func,
 };
 /**
+ * @param root0
+ * @param root0.onClick
+ * @param root0.item
+ * @param root0.searchTerm
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function Item({ onClick, item, searchTerm }) {

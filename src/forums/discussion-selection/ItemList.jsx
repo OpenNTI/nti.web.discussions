@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { filterItemsBySearchTerm } from './utils';
@@ -22,6 +21,8 @@ ItemList.defaultProps = {
 };
 
 /**
+ * @param root0
+ * @param root0.headerText
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function ItemList({ headerText: heading, ...props }) {

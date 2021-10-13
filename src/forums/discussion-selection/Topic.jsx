@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import HighlightedContent from './HighlightedContent';
@@ -59,6 +59,11 @@ Topic.propTypes = {
 };
 
 /**
+ * @param root0
+ * @param root0.onClick
+ * @param root0.topic
+ * @param root0.selectedTopics
+ * @param root0.searchTerm
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function Topic({ onClick, topic, selectedTopics, searchTerm }) {

@@ -1,5 +1,4 @@
 /* eslint-env jest */
-import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import * as TestUtils from '@nti/web-client/test-utils';

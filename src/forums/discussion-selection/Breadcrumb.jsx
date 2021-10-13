@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
@@ -52,6 +52,9 @@ Breadcrumbs.propTypes = {
 };
 
 /**
+ * @param root0
+ * @param root0.breadcrumb
+ * @param root0.onClick
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function Breadcrumbs({ breadcrumb, onClick }) {
