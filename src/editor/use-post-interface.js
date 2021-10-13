@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import Viewer from '../viewer';
 
@@ -57,19 +57,19 @@ export default function usePostInterface({
 	afterSave,
 	extraData = {},
 }) {
-	const [creator, setCreator] = React.useState(null);
-	const [title, setTitle] = React.useState(null);
-	const [content, setContent] = React.useState(null);
+	const [creator, setCreator] = useState(null);
+	const [title, setTitle] = useState(null);
+	const [content, setContent] = useState(null);
 
-	const [sharing, setSharing] = React.useState(null);
+	const [sharing, setSharing] = useState(null);
 
-	const [hasChanged, setHasChanged] = React.useState(
+	const [hasChanged, setHasChanged] = useState(
 		(initialContent || []).length > 0
 	);
-	const [saving, setSaving] = React.useState(false);
-	const [error, setError] = React.useState(null);
+	const [saving, setSaving] = useState(false);
+	const [error, setError] = useState(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		let unmounted = false;
 
 		const setupDiscusion = async () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -30,7 +30,7 @@ DiscussionItemReport.propTypes = {
 	doClose: PropTypes.func,
 };
 export default function DiscussionItemReport({ item, doClose }) {
-	const [reporting, setReporting] = React.useState(false);
+	const [reporting, setReporting] = useState(false);
 	const onClick = async e => {
 		e.preventDefault();
 		e.stopPropagation();

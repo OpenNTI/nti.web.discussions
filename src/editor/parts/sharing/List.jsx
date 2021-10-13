@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -38,9 +38,9 @@ export default function SharingList({ post }) {
 		canEditSharing,
 	} = post;
 
-	const activeMentions = React.useRef(null);
+	const activeMentions = useRef(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const prevMentions = activeMentions.current;
 		activeMentions.current = mentions;
 

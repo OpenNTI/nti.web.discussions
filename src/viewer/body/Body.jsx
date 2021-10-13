@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -37,9 +37,9 @@ export default function DiscussionBody({
 	);
 
 	const forceUpdate = useForceUpdate();
-	const body = React.useMemo(() => getLegacyBody(post), [post.getPostHash()]);
+	const body = useMemo(() => getLegacyBody(post), [post.getPostHash()]);
 
-	React.useEffect(() => post.subscribeToPostChange(forceUpdate), [post]);
+	useEffect(() => post.subscribeToPostChange(forceUpdate), [post]);
 
 	if (!body) {
 		return null;

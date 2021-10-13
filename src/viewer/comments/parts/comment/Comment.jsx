@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -48,7 +48,7 @@ function useDiscussionTree(comment, expanded) {
 	const error = isErrored(treeResolver) ? treeResolver : null;
 	const tree = isResolved(treeResolver) ? treeResolver : null;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!tree) {
 			return;
 		}
@@ -72,7 +72,7 @@ SubTree.propTypes = {
 	post: PropTypes.any,
 };
 function SubTree({ tree, inReplyTo, post }) {
-	const CommentList = React.useContext(Context);
+	const CommentList = useContext(Context);
 	const children = tree?.children ?? [];
 
 	if (children.length === 0) {
@@ -121,7 +121,7 @@ DiscussionComment.propTypes = {
 	post: PropTypes.any,
 };
 export default function DiscussionComment({ comment, post, ...otherProps }) {
-	const CommentList = React.useContext(Context);
+	const CommentList = useContext(Context);
 	const isExpanded = CommentList.isExpanded(comment);
 
 	const { loading, error, tree } = useDiscussionTree(comment, isExpanded);

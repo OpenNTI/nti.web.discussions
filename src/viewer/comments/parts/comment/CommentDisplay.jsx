@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -67,11 +67,11 @@ export default function CommentDisplay({
 	const forceUpdate = useForceUpdate();
 	const user = User.useUser(comment.creator);
 	const commentCount = comment.getDiscussionCount();
-	const afterRender = React.useRef(null);
+	const afterRender = useRef(null);
 
-	React.useEffect(() => comment.subscribeToChange(forceUpdate), [comment]);
+	useEffect(() => comment.subscribeToChange(forceUpdate), [comment]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (focused) {
 			afterRender.current = body => {
 				body?.scrollIntoView?.();

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -25,7 +25,7 @@ DiscussionCommentCount.propTypes = {
 export default function DiscussionCommentCount({ post }) {
 	const forceUpdate = useForceUpdate();
 
-	React.useEffect(() => post.subscribeToChange(forceUpdate), [post]);
+	useEffect(() => post.subscribeToChange(forceUpdate), [post]);
 
 	if (!post) {
 		return null;

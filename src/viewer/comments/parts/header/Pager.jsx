@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
@@ -56,7 +56,7 @@ function getPagesToShow(current, total) {
 }
 
 export default function CommentPager() {
-	const { currentPage, totalPages, setPage } = React.useContext(Context);
+	const { currentPage, totalPages, setPage } = useContext(Context);
 	const current = currentPage + 1;
 
 	if (totalPages <= 1) {

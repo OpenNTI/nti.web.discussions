@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import classnames from 'classnames/bind';
 
 import { Editor } from '@nti/web-modeled-content';
@@ -19,7 +19,7 @@ function DiscussionEditorControlBar(props) {
 	const editor = Editor.ContextProvider.useEditorContext();
 	const collapsedSelection = editor?.getSelection?.()?.isCollapsed?.();
 
-	const [active, setActive] = React.useState(null);
+	const [active, setActive] = useState(null);
 
 	const toggleActive = newActive => {
 		if (active === newActive) {

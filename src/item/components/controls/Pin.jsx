@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -31,7 +31,7 @@ DiscussionItemPin.propTypes = {
 	doClose: PropTypes.func,
 };
 export default function DiscussionItemPin({ item, doClose }) {
-	const [saving, setSaving] = React.useState(false);
+	const [saving, setSaving] = useState(false);
 	const onClick = async e => {
 		e.preventDefault();
 		e.stopPropagation();

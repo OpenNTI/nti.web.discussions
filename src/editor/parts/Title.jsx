@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -43,17 +43,17 @@ export default function DiscussionEditorTitle({
 }) {
 	const { title, setTitle, titleError, clearTitleError } = post;
 
-	const [editor, setEditor] = React.useState(null);
+	const [editor, setEditor] = useState(null);
 	const setEditorRef = ref => {
 		if (ref !== editor) {
 			setEditor(ref);
 		}
 	};
 
-	const titleRef = React.useRef(Initial);
-	const [editorState, setEditorState] = React.useState(null);
+	const titleRef = useRef(Initial);
+	const [editorState, setEditorState] = useState(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (title !== titleRef.current) {
 			setEditorState(toDraftState(title));
 		}

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -48,7 +48,7 @@ export default function DiscussionCommentEditor({
 	comment,
 	inReplyTo,
 }) {
-	const CommentList = React.useContext(Context);
+	const CommentList = useContext(Context);
 
 	const EditorCmp = comment ? Editor.Body : Editor.NoTitle;
 

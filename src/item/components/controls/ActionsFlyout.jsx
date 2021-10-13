@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -30,7 +30,7 @@ export default function ActionsFlyout({ item, afterDelete }) {
 		return null;
 	}
 
-	const flyout = React.useRef();
+	const flyout = useRef();
 	const doClose = () => {
 		if (flyout.current) {
 			flyout.current.doClose();

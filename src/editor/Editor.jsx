@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
@@ -41,7 +41,7 @@ DiscussionEditor.propTypes = {
 
 	noSharing: PropTypes.bool,
 
-	_doSave: PropTypes.func,//override the save method, but you really shouldn't
+	_doSave: PropTypes.func, //override the save method, but you really shouldn't
 	afterSave: PropTypes.func,
 	onCancel: PropTypes.func,
 
@@ -71,9 +71,9 @@ export default function DiscussionEditor({
 
 	style = Full,
 }) {
-	const explicitCancelRef = React.useRef(false);
+	const explicitCancelRef = useRef(false);
 
-	const navPrompt = React.useCallback((cont, stop) => {
+	const navPrompt = useCallback((cont, stop) => {
 		if (explicitCancelRef.current) {
 			cont();
 			return;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import { encodeForURI, decodeFromURI } from '@nti/lib-ntiids';
 import { getService } from '@nti/web-client';
@@ -31,17 +31,17 @@ export default function useCommentTree(post) {
 	const router = Router.useRouter();
 	const location = useLocation();
 
-	const [page, setPage] = React.useState(0);
-	const [totalPages, setTotalPages] = React.useState(1);
+	const [page, setPage] = useState(0);
+	const [totalPages, setTotalPages] = useState(1);
 
-	const [loading, setLoading] = React.useState(false);
-	const [error, setError] = React.useState(null);
-	const [comments, setComments] = React.useState(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [comments, setComments] = useState(null);
 
-	const [expanded, setExpanded] = React.useState({});
+	const [expanded, setExpanded] = useState({});
 
-	const [editing, setEditing] = React.useState(null);
-	const [replying, setReplying] = React.useState(null);
+	const [editing, setEditing] = useState(null);
+	const [replying, setReplying] = useState(null);
 
 	const { hash } = location;
 	const focusedComment = getFocused(hash, post);
@@ -51,7 +51,7 @@ export default function useCommentTree(post) {
 		}
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (hash === '#comment') {
 			if (replying !== post.getID()) {
 				setReplying(post.getID());
@@ -59,7 +59,7 @@ export default function useCommentTree(post) {
 		}
 	}, [hash]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		let unmounted = false;
 
 		async function loadCommentTree() {

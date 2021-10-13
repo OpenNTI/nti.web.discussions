@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -26,7 +26,7 @@ export default function DiscussionItemCommentCount({ className, item }) {
 	const forceUpdate = useForceUpdate();
 	const count = item.getDiscussionCount();
 
-	React.useEffect(
+	useEffect(
 		() =>
 			item.subscribeToChange(() => {
 				forceUpdate();

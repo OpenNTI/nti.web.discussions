@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -34,7 +34,7 @@ DiscussionItemDelete.propTypes = {
 	afterDelete: PropTypes.func,
 };
 export default function DiscussionItemDelete({ item, doClose, afterDelete }) {
-	const [deleting, setDeleting] = React.useState(false);
+	const [deleting, setDeleting] = useState(false);
 	const onClick = async e => {
 		e.preventDefault();
 		e.stopPropagation();

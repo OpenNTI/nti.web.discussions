@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Container from './parts/Container';
@@ -19,9 +19,9 @@ export default function DiscussionCreation({
 	small,
 	...otherProps
 }) {
-	const [container, setContainer] = React.useState(null);
+	const [container, setContainer] = useState(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		setContainer(containerProp ?? initialContainer);
 	}, [containerProp, initialContainer]);
 

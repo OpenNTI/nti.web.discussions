@@ -1,4 +1,4 @@
-import React from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -31,7 +31,7 @@ Mention.propTypes = {
 	children: PropTypes.any,
 };
 export default function Mention(props) {
-	const { post } = React.useContext(Context) ?? {};
+	const { post } = useContext(Context) ?? {};
 	const username = props['data-nti-entity-username'];
 	const user = User.useUser(username);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -61,7 +61,7 @@ export default function DiscussionViewer({
 		}
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const cls = 'discussion-detail-open';
 		if (dialog) {
 			document.body.classList.add(cls);
@@ -69,7 +69,7 @@ export default function DiscussionViewer({
 		}
 	}, [dialog]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		return () =>
 			ContentHighlighting.Strategies.SearchHitStore.clearHitForContainer(
 				discussion.getID()

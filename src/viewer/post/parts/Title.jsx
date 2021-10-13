@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -28,7 +28,7 @@ export default function PostTitle({ className, as: cmp, post, noHighlight }) {
 
 	const forceUpdate = useForceUpdate();
 
-	React.useEffect(() => post.subscribeToPostChange(forceUpdate), [post]);
+	useEffect(() => post.subscribeToPostChange(forceUpdate), [post]);
 
 	return (
 		<ContentHighlighting
