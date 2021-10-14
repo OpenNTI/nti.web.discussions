@@ -127,7 +127,7 @@ export default function useCommentTree(post) {
 					}
 				}
 
-				setTotalPages(discussions.TotalPageCount);
+				setTotalPages(discussions.pageCount);
 				setComments(discussions.Items);
 				setLoading(false);
 			} catch (e) {
