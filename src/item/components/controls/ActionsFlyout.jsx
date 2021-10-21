@@ -1,8 +1,9 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { Flyout } from '@nti/web-commons';
+import { MenuList } from '@nti/web-core';
 
 import Styles from './Styles.css';
 import Delete from './Delete';
@@ -37,6 +38,19 @@ export default function ActionsFlyout({ item, afterDelete }) {
 		}
 	};
 
+	const options = available.map((Cmp, key) => {
+		return (
+			<Cmp
+				key={key}
+				item={item}
+				doClose={doClose}
+				afterDelete={afterDelete}
+			/>
+		);
+	});
+
+	const [value, setValue] = useState(options[0]);
+
 	return (
 		<Flyout.Triggered
 			ref={flyout}
@@ -44,19 +58,12 @@ export default function ActionsFlyout({ item, afterDelete }) {
 			verticalAlign={Flyout.Triggered.ALIGNMENTS.BOTTOM}
 			horizontalAlign={Flyout.Triggered.ALIGNMENTS.RIGHT}
 		>
-			<ul className={cx('discussion-item-actions')}>
-				{available.map((Cmp, key) => {
-					return (
-						<li key={key}>
-							<Cmp
-								item={item}
-								doClose={doClose}
-								afterDelete={afterDelete}
-							/>
-						</li>
-					);
-				})}
-			</ul>
+			<MenuList
+				options={options}
+				value={value}
+				onChange={setValue}
+				getText={x => x}
+			/>
 		</Flyout.Triggered>
 	);
 }
