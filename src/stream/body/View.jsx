@@ -112,7 +112,6 @@ class DiscussionsStream extends React.Component {
 		const otherProps = restProps(DiscussionsStream, this.props);
 		const initial = !items && !searchTerm;
 		const ItemCmp = layout === List ? ListCmp : GridCmp;
-		const shouldShowSearch = loading || (items && items.length > 0);
 
 		return (
 			<Loading.Placeholder
@@ -124,8 +123,8 @@ class DiscussionsStream extends React.Component {
 					loadMore={loadMore}
 					buffer={200}
 				>
+					{searchTerm && <SearchInfo searchTerm={searchTerm} />}
 					{items && !items.length && this.renderEmpty()}
-					{shouldShowSearch && <SearchInfo searchTerm={searchTerm} />}
 					<PinnedPosts
 						items={pinnedItems}
 						context={context}
