@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 import { List } from '@nti/web-commons';
@@ -29,6 +30,8 @@ export default function PostCard(props) {
 
 	return (
 		<LinkTo.Object
+			as={Button}
+			plain
 			object={item}
 			className={cx('post-card', { deleting: Boolean(item.deleting) })}
 		>
