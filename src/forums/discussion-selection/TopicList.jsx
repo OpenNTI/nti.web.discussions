@@ -18,8 +18,9 @@ List.propTypes = TopicList.propTypes = {
 };
 
 /**
- * @param root0
- * @param root0.headerText
+ * @param {object} props
+ * @param {string} props.headerText
+ * @returns {JSX.Element}
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function TopicList({ headerText: heading, ...props }) {

@@ -39,8 +39,8 @@
 	left: 0;
 	right: 0;
 	background-image: linear-gradient(
-		rgba(255, 255, 255, 0) 50%,
-		rgba(255, 255, 255, 1)
+		rgb(255 255 255 / 0%) 50%,
+		rgb(255 255 255 / 100%)
 	);
 }
 

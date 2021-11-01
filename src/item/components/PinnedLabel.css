@@ -3,7 +3,7 @@
 	vertical-align: middle;
 	width: 16px;
 	height: 16px;
-	background-image: url(./assets/Pin.svg);
+	background-image: url('./assets/Pin.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 70%;

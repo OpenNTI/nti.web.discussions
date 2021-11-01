@@ -38,7 +38,7 @@ export default class Image extends React.PureComponent {
 
 		//FIXME: The Item may not be an image, it could also be a video embed, a slide, or an iframe.
 
-		const className = cx('discussuion-context-markupframe', {
+		const className = cx('discussion-context-markupframe', {
 			loading: !loaded,
 			bare,
 			card: isCard,

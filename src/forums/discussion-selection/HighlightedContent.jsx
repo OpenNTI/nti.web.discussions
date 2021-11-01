@@ -14,10 +14,11 @@ HighlightedContent.propTypes = {
 };
 
 /**
- * @param root0
- * @param root0.children
- * @param root0.content
- * @param root0.term
+ * @param {object} props
+ * @param {any} props.children
+ * @param {string} props.content
+ * @param {string} props.term
+ * @returns {JSX.Element}
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function HighlightedContent({

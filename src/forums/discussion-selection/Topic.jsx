@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import HighlightedContent from './HighlightedContent';
 import { ItemBox } from './parts';
 
+/** @typedef {import('@nti/lib-interfaces').Models.forums.Topic} TopicModel */
+
 export const Avatar = styled('div').attrs(({ src, style, ...props }) => ({
 	'data-testid': 'discussion-selection-avatar',
 	style: {
@@ -37,6 +39,7 @@ export const Title = styled(HighlightedContent).attrs({
 
 	@supports (display: -webkit-box) {
 		/* autoprefixer: off */
+		/* stylelint-disable-next-line value-no-vendor-prefix */
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
@@ -59,11 +62,12 @@ Topic.propTypes = {
 };
 
 /**
- * @param root0
- * @param root0.onClick
- * @param root0.topic
- * @param root0.selectedTopics
- * @param root0.searchTerm
+ * @param {object} props
+ * @param {(item: TopicModel) => void} props.onClick
+ * @param {TopicModel} props.topic
+ * @param {Set<TopicModel>} props.selectedTopics
+ * @param {string=} props.searchTerm
+ * @returns {JSX.Element}
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function Topic({ onClick, topic, selectedTopics, searchTerm }) {

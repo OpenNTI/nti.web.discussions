@@ -1,6 +1,6 @@
 @import '~@nti/style-common';
 
-.discussuion-context-markupframe {
+.discussion-context-markupframe {
 	border: 1px solid var(--border-grey);
 	overflow: hidden;
 
@@ -55,7 +55,7 @@
 
 		img[id],
 		.bar {
-			//This is for anchors
+			// This is for anchors
 			visibility: hidden;
 			position: absolute;
 			top: 0;

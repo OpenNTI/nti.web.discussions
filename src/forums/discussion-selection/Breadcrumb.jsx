@@ -30,11 +30,10 @@ Part.propTypes = {
 };
 
 function Part({ inactive, onClick, item }) {
-	const handleClick = useCallback(() => !inactive && onClick?.(item), [
-		inactive,
-		item,
-		onClick,
-	]);
+	const handleClick = useCallback(
+		() => !inactive && onClick?.(item),
+		[inactive, item, onClick]
+	);
 	return (
 		<Breadcrumb
 			data-testid="discussion-selection-breadcrumb"
@@ -52,9 +51,16 @@ Breadcrumbs.propTypes = {
 };
 
 /**
- * @param root0
- * @param root0.breadcrumb
- * @param root0.onClick
+ * @typedef {object} breadcrumb
+ * @property {boolean} isHidden
+ * @property {string} title
+ */
+
+/**
+ * @param {object} props
+ * @param {breadcrumb[]} props.breadcrumb
+ * @param {(e: Event)=> void} props.onClick
+ * @returns {JSX.Element}
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function Breadcrumbs({ breadcrumb, onClick }) {

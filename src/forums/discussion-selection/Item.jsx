@@ -24,10 +24,12 @@ Item.propTypes = {
 	onClick: PropTypes.func,
 };
 /**
- * @param root0
- * @param root0.onClick
- * @param root0.item
- * @param root0.searchTerm
+ * @template {{title:string}} T
+ * @param {object} props
+ * @param {(item: T) => void} props.onClick
+ * @param {T} props.item
+ * @param {string} props.searchTerm
+ * @returns {JSX.Element}
  * @deprecated This code is retained for legacy content-backed discussions.
  */
 export default function Item({ onClick, item, searchTerm }) {
