@@ -1,8 +1,8 @@
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef } from 'react';
 import classnames from 'classnames/bind';
 
 import { Flyout } from '@nti/web-commons';
+import { MenuList } from '@nti/web-core';
 
 import Styles from './Styles.css';
 import Delete from './Delete';
@@ -14,49 +14,40 @@ const cx = classnames.bind(Styles);
 
 const Actions = [Pin, Edit, Delete, Report];
 
-ActionsFlyout.propTypes = {
-	item: PropTypes.object,
-	afterDelete: PropTypes.func,
-};
+const Trigger = React.forwardRef((props, ref) => (
+	<div className={cx('actions-trigger')} {...props} ref={ref}>
+		<span className={cx('icon')}>...</span>
+	</div>
+));
+
+/**
+ * @param {object} props
+ * @param {import('@nti/lib-interfaces').Models.Base} props.item
+ * @param {() => void} props.afterDelete
+ * @returns {JSX.Element}
+ */
 export default function ActionsFlyout({ item, afterDelete }) {
-	const trigger = (
-		<div className={cx('actions-trigger')}>
-			<span className={cx('icon')}>...</span>
-		</div>
-	);
+	const flyout = useRef();
+
 	const available = Actions.filter(action => action.isAvailable(item));
 
-	if (!available.length) {
-		return null;
-	}
-
-	const flyout = useRef();
-	const doClose = () => {
-		if (flyout.current) {
-			flyout.current.doClose();
-		}
-	};
-
-	return (
+	return !available?.length ? null : (
 		<Flyout.Triggered
 			ref={flyout}
-			trigger={trigger}
+			trigger={<Trigger />}
 			verticalAlign={Flyout.Triggered.ALIGNMENTS.BOTTOM}
 			horizontalAlign={Flyout.Triggered.ALIGNMENTS.RIGHT}
 		>
-			<ul className={cx('discussion-item-actions')}>
-				{available.map((Cmp, key) => {
-					return (
-						<li key={key}>
-							<Cmp
-								item={item}
-								doClose={doClose}
-								afterDelete={afterDelete}
-							/>
-						</li>
-					);
-				})}
-			</ul>
+			<MenuList
+				options={available.map((Cmp, key) => (
+					<Cmp
+						key={key}
+						item={item}
+						doClose={() => flyout.current?.doClose()}
+						afterDelete={afterDelete}
+					/>
+				))}
+			/>
 		</Flyout.Triggered>
 	);
 }
