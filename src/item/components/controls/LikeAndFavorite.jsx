@@ -24,8 +24,8 @@ export default function DiscussionItemControlsLikeAndFavorite({
 
 	return (
 		<div className={cx('like-and-favorite', className)}>
-			<Like item={item} asButton />
-			{item.isTopLevel() && <Favorite item={item} asButton />}
+			<Like item={item} />
+			{item.isTopLevel() && <Favorite item={item} />}
 		</div>
 	);
 }
