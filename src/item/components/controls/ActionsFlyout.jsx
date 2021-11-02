@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef } from 'react';
 import classnames from 'classnames/bind';
 
 import { Flyout } from '@nti/web-commons';
@@ -15,11 +14,18 @@ const cx = classnames.bind(Styles);
 
 const Actions = [Pin, Edit, Delete, Report];
 
-ActionsFlyout.propTypes = {
-	item: PropTypes.object,
-	afterDelete: PropTypes.func,
-};
+const Trigger = React.forwardRef((props, ref) => (
+	<div className={cx('actions-trigger')} {...props}>
+		<span className={cx('icon')}>...</span>
+	</div>
+));
 
+/**
+ * @param {object} props
+ * @param {import('@nti/lib-interfaces').Models.Base} props.item
+ * @param {() => void} props.afterDelete
+ * @returns {JSX.Element}
+ */
 export default function ActionsFlyout({ item, afterDelete }) {
 	const flyout = useRef();
 
@@ -43,13 +49,5 @@ export default function ActionsFlyout({ item, afterDelete }) {
 				))}
 			/>
 		</Flyout.Triggered>
-	);
-}
-
-function Trigger(props) {
-	return (
-		<div className={cx('actions-trigger')} {...props}>
-			<span className={cx('icon')}>...</span>
-		</div>
 	);
 }
