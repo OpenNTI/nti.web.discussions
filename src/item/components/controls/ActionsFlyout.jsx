@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -19,51 +19,37 @@ ActionsFlyout.propTypes = {
 	item: PropTypes.object,
 	afterDelete: PropTypes.func,
 };
+
 export default function ActionsFlyout({ item, afterDelete }) {
-	const trigger = (
-		<div className={cx('actions-trigger')}>
-			<span className={cx('icon')}>...</span>
-		</div>
-	);
+	const flyout = useRef();
+
 	const available = Actions.filter(action => action.isAvailable(item));
 
-	if (!available.length) {
-		return null;
-	}
-
-	const flyout = useRef();
-	const doClose = () => {
-		if (flyout.current) {
-			flyout.current.doClose();
-		}
-	};
-
-	const options = available.map((Cmp, key) => {
-		return (
-			<Cmp
-				key={key}
-				item={item}
-				doClose={doClose}
-				afterDelete={afterDelete}
-			/>
-		);
-	});
-
-	const [value, setValue] = useState(options[0]);
-
-	return (
+	return !available?.length ? null : (
 		<Flyout.Triggered
 			ref={flyout}
-			trigger={trigger}
+			trigger={<Trigger />}
 			verticalAlign={Flyout.Triggered.ALIGNMENTS.BOTTOM}
 			horizontalAlign={Flyout.Triggered.ALIGNMENTS.RIGHT}
 		>
 			<MenuList
-				options={options}
-				value={value}
-				onChange={setValue}
-				getText={x => x}
+				options={available.map((Cmp, key) => (
+					<Cmp
+						key={key}
+						item={item}
+						doClose={() => flyout.current?.doClose()}
+						afterDelete={afterDelete}
+					/>
+				))}
 			/>
 		</Flyout.Triggered>
+	);
+}
+
+function Trigger(props) {
+	return (
+		<div className={cx('actions-trigger')} {...props}>
+			<span className={cx('icon')}>...</span>
+		</div>
 	);
 }
