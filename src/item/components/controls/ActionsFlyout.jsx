@@ -15,7 +15,7 @@ const cx = classnames.bind(Styles);
 const Actions = [Pin, Edit, Delete, Report];
 
 const Trigger = React.forwardRef((props, ref) => (
-	<div className={cx('actions-trigger')} {...props}>
+	<div className={cx('actions-trigger')} {...props} ref={ref}>
 		<span className={cx('icon')}>...</span>
 	</div>
 ));
