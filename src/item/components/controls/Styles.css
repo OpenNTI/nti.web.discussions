@@ -5,8 +5,8 @@
 }
 
 .like-and-favorite {
-	& :global(.like) {
-		margin: 4px 2px 0;
+	& :global(.like) > [data-button-label] {
+		margin: 0 2px;
 		color: var(--primary-blue);
 		text-decoration: none;
 	}
