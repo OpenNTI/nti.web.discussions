@@ -1,11 +1,19 @@
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 
 import { Like, Favorite } from '@nti/web-commons';
 
-import Styles from './Styles.css';
-
-const cx = classnames.bind(Styles);
+// TODO: this should be moved into LuckyCharms and kept as a shared implementation of this cluster.
+const Charms = styled.div`
+	:global {
+		.favorite,
+		.like:not(.count) {
+			&:not(.active):not(:focus) {
+				visibility: var(--inactive-charm-visibility, visible);
+			}
+		}
+	}
+`;
 
 DiscussionItemControlsLikeAndFavorite.propTypes = {
 	className: PropTypes.string,
@@ -23,9 +31,18 @@ export default function DiscussionItemControlsLikeAndFavorite({
 	}
 
 	return (
-		<div className={cx('like-and-favorite', className)}>
-			<Like item={item} />
+		<Charms className={cx('like-and-favorite', className)}>
+			<Like
+				item={item}
+				css={css`
+					[data-button-label] {
+						margin: 0 2px;
+						color: var(--primary-blue);
+						text-decoration: none;
+					}
+				`}
+			/>
 			{item.isTopLevel() && <Favorite item={item} />}
-		</div>
+		</Charms>
 	);
 }

@@ -4,19 +4,6 @@
 	padding: 0 0.25rem;
 }
 
-.like-and-favorite {
-	& :global(.like) > [data-button-label] {
-		margin: 0 2px;
-		color: var(--primary-blue);
-		text-decoration: none;
-	}
-
-	& :global(.like:not(.active):not(.count):not(:focus)),
-	& :global(.favorite:not(.active):not(:focus)) {
-		visibility: var(--inactive-charm-visibility, visible);
-	}
-}
-
 .actions-trigger {
 	padding: 0 3px;
 }
